@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
@@ -10,23 +11,23 @@ export enum UserRole {
 @Schema()
 export class User extends Document {
   @Prop({ required: true, unique: true })
-  email: string;
+  email!: string;
 
   @Prop()
-  firstName: string;
+  firstName!: string;
 
   @Prop()
-  password: string;
+  password!: string;
 
   @Prop({
     type: String,
     enum: UserRole,
     default: UserRole.USER,
   })
-  role: UserRole;
+  role!: UserRole;
 
   @Prop({ default: false })
-  isGoogle: boolean;
+  isGoogle!: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

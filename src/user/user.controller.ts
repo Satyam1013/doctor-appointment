@@ -1,8 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Controller, Get, Param, UseGuards, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+
+export interface AuthRequest extends Request {
+  user: {
+    email: string;
+    // add other JWT payload fields if needed (e.g., id, role, etc.)
+  };
+}
 
 @Controller('users')
 export class UserController {
@@ -11,21 +16,21 @@ export class UserController {
   // 🧑 Get current user (from JWT)
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  async getProfile(@Req() req) {
+  getProfile(@Req() req: AuthRequest) {
     return this.userService.findByEmail(req.user.email);
   }
 
   // 📦 Admin endpoint to get all users
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getAllUsers() {
+  getAllUsers() {
     return this.userService.findAll();
   }
 
   // 🔍 Get user by ID
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async getUserById(@Param('id') id: string) {
+  getUserById(@Param('id') id: string) {
     return this.userService.findById(id);
   }
 }

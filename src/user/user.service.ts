@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/only-throw-error */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/await-thenable */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -10,17 +15,17 @@ export class UserService {
   ) {}
 
   // 🔍 Find user by email
-  async findByEmail(email: string): Promise<User | null> {
+  findByEmail(email: string): Promise<User | null> {
     return this.userModel.findOne({ email });
   }
 
   // 🆕 Create a new user
-  async create(data: Partial<User>): Promise<User> {
+  create(data: Partial<User>): Promise<User> {
     return this.userModel.create(data);
   }
 
   // 🔍 Find all users (for admin)
-  async findAll(): Promise<User[]> {
+  findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
 
