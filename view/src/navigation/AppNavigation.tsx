@@ -5,6 +5,8 @@ import { AuthContext } from './AuthContext';
 import Login from '../screens/Login';
 import Signup from '../screens/Signup';
 import Home from '../screens/Home';
+import ProductsScreen from '../screens/Product';
+import TreatmentInfoScreen from '../screens/TreatmentInfo';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,11 +17,35 @@ export default function AppNavigator() {
     <NavigationContainer>
       <Stack.Navigator>
         {token ? (
-          <Stack.Screen name="Home" component={Home} />
+          <>
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ProductsScreen"
+              component={ProductsScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="TreatmentInfoScreen"
+              component={TreatmentInfoScreen}
+              options={{ headerShown: false }}
+            />
+          </>
         ) : (
           <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Signup" component={Signup} />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Signup"
+              component={Signup}
+              options={{ headerShown: false }}
+            />
           </>
         )}
       </Stack.Navigator>
