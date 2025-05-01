@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { AdminLoginDto } from './dto/admin.dto';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -40,16 +37,5 @@ export class AuthController {
   @Post('login/admin')
   loginAdmin(@Body() dto: AdminLoginDto) {
     return this.authService.adminLogin(dto.email, dto.password);
-  }
-
-  // ----------------- Google login (for user + doctor) -----------------
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleAuth() {}
-
-  @Get('google/redirect')
-  @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req: Request) {
-    return this.authService.googleLogin(req);
   }
 }

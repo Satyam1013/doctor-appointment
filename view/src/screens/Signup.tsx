@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-misused-promises */
@@ -8,10 +10,10 @@ import { useState, useContext } from 'react';
 import {
   View,
   TextInput,
-  Button,
   Text,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { signup } from '../api/auth-api';
 import { AuthContext } from '../navigation/AuthContext';
@@ -22,42 +24,107 @@ export default function SignupScreen({ navigation }: any) {
   const [firstName, setFirstName] = useState('');
   const [password, setPassword] = useState('');
 
+  const [emailError, setEmailError] = useState('');
+  const [firstNameError, setFirstNameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [signupError, setSignupError] = useState('');
+
+  const validateEmail = (value: string) => {
+    if (!value) {
+      setEmailError('Email is required');
+    } else if (!value.includes('@')) {
+      setEmailError('Please enter a valid email');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const validateFirstName = (value: string) => {
+    if (!value.trim()) {
+      setFirstNameError('First name is required');
+    } else {
+      setFirstNameError('');
+    }
+  };
+
+  const validatePassword = (value: string) => {
+    if (!value) {
+      setPasswordError('Password is required');
+    } else if (value.length < 5) {
+      setPasswordError('Password must be at least 5 characters');
+    } else {
+      setPasswordError('');
+    }
+  };
+
   const handleSignup = async () => {
+    validateEmail(email);
+    validateFirstName(firstName);
+    validatePassword(password);
+
+    if (emailError || firstNameError || passwordError) return;
+
     try {
+      setSignupError('');
       const res = await signup({ email, firstName, password });
       login(res.data.access_token);
     } catch (err) {
-      alert('Signup failed');
+      setSignupError('Signup failed. Please try again.');
     }
   };
 
   return (
     <View style={styles.container}>
+      <Image
+        source={require('../../assets/images/logo.jpeg')}
+        style={styles.logo}
+      />
+
       <Text style={styles.title}>Create Your Account</Text>
 
       <TextInput
         placeholder="Email"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={(value) => {
+          setEmail(value);
+          validateEmail(value);
+        }}
         style={styles.input}
         keyboardType="email-address"
         autoCapitalize="none"
       />
+      {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
 
       <TextInput
         placeholder="First Name"
         value={firstName}
-        onChangeText={setFirstName}
+        onChangeText={(value) => {
+          setFirstName(value);
+          validateFirstName(value);
+        }}
         style={styles.input}
       />
+      {firstNameError ? (
+        <Text style={styles.errorText}>{firstNameError}</Text>
+      ) : null}
 
       <TextInput
         placeholder="Password"
         value={password}
         secureTextEntry
-        onChangeText={setPassword}
+        onChangeText={(value) => {
+          setPassword(value);
+          validatePassword(value);
+        }}
         style={styles.input}
       />
+      {passwordError ? (
+        <Text style={styles.errorText}>{passwordError}</Text>
+      ) : null}
+
+      {signupError ? (
+        <Text style={styles.signupError}>{signupError}</Text>
+      ) : null}
 
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Sign Up</Text>
@@ -77,6 +144,13 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: '#f9fafe',
   },
+  logo: {
+    width: 120,
+    height: 120,
+    alignSelf: 'center',
+    marginBottom: 20,
+    borderRadius: 60,
+  },
   title: {
     fontSize: 24,
     fontWeight: '600',
@@ -89,8 +163,19 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     padding: 12,
     borderRadius: 8,
-    marginBottom: 15,
+    marginBottom: 5,
     backgroundColor: '#fff',
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
+    marginLeft: 5,
+  },
+  signupError: {
+    color: 'red',
+    textAlign: 'center',
+    marginBottom: 10,
+    fontWeight: '500',
   },
   button: {
     backgroundColor: '#1e90ff',

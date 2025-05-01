@@ -81,31 +81,4 @@ export class AuthService {
       }),
     };
   }
-
-  // ----------------- Google login (for user + doctor) -----------------
-  async googleLogin(req: any) {
-    if (!req.user) {
-      return 'No user from Google';
-    }
-
-    let user = await this.userService.findByEmail(req.user.email);
-    if (!user) {
-      user = await this.userService.create({
-        email: req.user.email,
-        firstName: req.user.firstName,
-        isGoogle: true,
-        role: UserRole.USER,
-      });
-    }
-
-    return {
-      message: 'Google login successful',
-      user,
-      token: await this.jwtService.signAsync({
-        sub: user._id,
-        email: user.email,
-        role: user.role,
-      }),
-    };
-  }
 }
