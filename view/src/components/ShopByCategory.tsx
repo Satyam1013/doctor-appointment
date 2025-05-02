@@ -3,16 +3,26 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from 'react-native';
 
 const categories = [
-  { name: 'Ayurvedic', img: require('../../assets/images/logo.jpeg') },
-  {
-    name: 'Personal Care',
-    img: require('../../assets/images/logo.jpeg'),
-  },
-  { name: 'Homeopathy', img: require('../../assets/images/logo.jpeg') },
-  { name: 'Immunity', img: require('../../assets/images/logo.jpeg') },
+  { name: 'Ayurvedic', img: require('../../assets/images/cat.png') },
+  { name: 'Ayurvedic', img: require('../../assets/images/cat2.png') },
+  { name: 'Ayurvedic', img: require('../../assets/images/cat3.png') },
+  { name: 'Ayurvedic', img: require('../../assets/images/cat4.png') },
+  { name: 'Ayurvedic', img: require('../../assets/images/cat5.png') },
+  { name: 'Ayurvedic', img: require('../../assets/images/cat6.png') },
+  { name: 'Ayurvedic', img: require('../../assets/images/cat7.png') },
+  { name: 'Ayurvedic', img: require('../../assets/images/cat8.png') },
+  { name: 'Ayurvedic', img: require('../../assets/images/cat9.png') },
+  { name: 'Ayurvedic', img: require('../../assets/images/cat10.png') },
 ];
 
 export default function ShopByCategory({ navigation }: any) {
@@ -27,7 +37,11 @@ export default function ShopByCategory({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.row}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.row}
+      >
         {categories.map((cat, idx) => (
           <TouchableOpacity
             key={idx}
@@ -35,10 +49,9 @@ export default function ShopByCategory({ navigation }: any) {
             onPress={() => navigation.navigate('MedicinesScreen')}
           >
             <Image source={cat.img} style={styles.image} />
-            <Text style={styles.name}>{cat.name}</Text>
           </TouchableOpacity>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -52,12 +65,19 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: 16, fontWeight: '600' },
   viewAll: { color: '#1e90ff' },
+
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
+    alignItems: 'center',
   },
-  item: { alignItems: 'center', width: '23%' },
-  image: { width: 50, height: 50, borderRadius: 25, marginBottom: 4 },
-  name: { fontSize: 12, textAlign: 'center' },
+  item: {
+    alignItems: 'center',
+    marginRight: 12, // space between items
+  },
+  image: {
+    width: 70,
+    height: 70,
+    borderRadius: 25,
+    marginBottom: 4,
+  },
 });

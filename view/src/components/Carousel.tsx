@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import { Image, StyleSheet, ScrollView } from 'react-native';
@@ -11,8 +14,9 @@ export default function Carousel() {
       style={styles.container}
     >
       {[
-        require('../../assets/images/logo.jpeg'),
-        require('../../assets/images/logo.jpeg'),
+        require('../../assets/images/banner.png'),
+        require('../../assets/images/banner2.png'),
+        require('../../assets/images/banner3.png'),
       ].map((img, idx) => (
         <Image key={idx} source={img} style={styles.image} />
       ))}

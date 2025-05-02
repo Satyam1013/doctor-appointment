@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -7,15 +9,17 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const specialities = [
-  { title: 'Diabetes', icon: 'needle' },
-  { title: 'Gynae', icon: 'human-female' },
-  { title: 'Sexual', icon: 'heart' },
-  { title: 'Digestive', icon: 'food' },
-  { title: 'Skin', icon: 'face' },
+const categories = [
+  { title: 'Ayurvedic', img: require('../../assets/images/video.png') },
+  { title: 'Ayurvedic', img: require('../../assets/images/video2.png') },
+  { title: 'Ayurvedic', img: require('../../assets/images/video3.png') },
+  { title: 'Ayurvedic', img: require('../../assets/images/video4.png') },
+  { title: 'Ayurvedic', img: require('../../assets/images/video5.png') },
+  { title: 'Ayurvedic', img: require('../../assets/images/video6.png') },
+  { title: 'Ayurvedic', img: require('../../assets/images/video7.png') },
 ];
 
 export default function DoctorSpecialties({ navigation }: any) {
@@ -24,20 +28,20 @@ export default function DoctorSpecialties({ navigation }: any) {
       <View style={styles.header}>
         <Text style={styles.title}>Find Ayurvedic Doctor By Specialties</Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate('DoctorSpecialtiesScreen')}
+          onPress={() => navigation.navigate('FindDoctorScreen')}
         >
           <Text style={styles.viewAll}>View All</Text>
         </TouchableOpacity>
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {specialities.map((item, idx) => (
+        {categories.map((item, idx) => (
           <TouchableOpacity
             key={idx}
             style={styles.item}
-            onPress={() => navigation.navigate('DoctorSpecialtiesScreen')}
+            onPress={() => navigation.navigate('FindDoctorScreen')}
           >
-            <Icon name={item.icon} size={32} color="#1e90ff" />
+            <Image source={item.img} style={styles.image} />
             <Text style={styles.itemText}>{item.title}</Text>
           </TouchableOpacity>
         ))}
@@ -56,5 +60,6 @@ const styles = StyleSheet.create({
   title: { fontSize: 16, fontWeight: '600' },
   viewAll: { color: '#1e90ff' },
   item: { alignItems: 'center', marginRight: 16 },
+  image: { width: 50, height: 50, borderRadius: 25, marginBottom: 4 },
   itemText: { marginTop: 4, fontSize: 12 },
 });

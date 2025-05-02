@@ -1,25 +1,35 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-require-imports */
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Linking,
+} from 'react-native';
 
-export default function BeforeAfterTreatment({ navigation }: any) {
+export default function BeforeAfterTreatment() {
+  const handleOpenLink = () => {
+    Linking.openURL(
+      'https://smile-view.invisalign.in/?campaign_name=SmileView-Consumer_IN_India-Consumer',
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Our Exclusive Therapy Services</Text>
 
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() => navigation.navigate('TreatmentInfoScreen')}
-      >
+      <TouchableOpacity style={styles.card} onPress={handleOpenLink}>
         <Image
-          source={require('../../assets/images/logo.jpeg')}
+          source={require('../../assets/images/ad.png')}
           style={styles.image}
         />
         <Text style={styles.cardText}>
-          Click here to see why our aligners can do for you
+          Click here to see what our aligners can do for you
         </Text>
       </TouchableOpacity>
     </View>
