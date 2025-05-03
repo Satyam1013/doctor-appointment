@@ -1,23 +1,33 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { View, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
+import { useUser } from '../contexts/UserContext';
 
 export default function Header() {
+  const { user } = useUser();
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.greeting}>Hi, User</Text>
+        <Text style={styles.greeting}>Hi, {user?.firstName}</Text>
         <Text style={styles.location}>Add location ▼</Text>
       </View>
 
       <View style={styles.icons}>
-        <Icon name="heart-outline" size={22} color="#333" style={styles.icon} />
-        <Icon
+        <Ionicons
+          name="heart-outline"
+          size={22}
+          color="#333"
+          style={styles.icon}
+        />
+        <Ionicons
           name="notifications-outline"
           size={22}
           color="#333"
           style={styles.icon}
         />
-        <Icon name="person-circle-outline" size={26} color="#333" />
+        <Ionicons name="person-circle-outline" size={26} color="#333" />
       </View>
     </View>
   );

@@ -11,6 +11,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
+import { ResizeMode, Video } from 'expo-av';
 
 const categories = [
   { name: 'Ayurvedic', img: require('../../assets/images/cat.png') },
@@ -25,9 +26,19 @@ const categories = [
   { name: 'Ayurvedic', img: require('../../assets/images/cat10.png') },
 ];
 
+const videos = [
+  require('../../assets/images/v1.mp4'),
+  require('../../assets/images/v2.mp4'),
+  require('../../assets/images/v3.mp4'),
+  require('../../assets/images/v4.mp4'),
+  require('../../assets/images/v5.mp4'),
+  require('../../assets/images/v6.mp4'),
+];
+
 export default function ShopByCategory({ navigation }: any) {
   return (
     <View style={styles.container}>
+      {/* Category Section */}
       <View style={styles.header}>
         <Text style={styles.title}>Shop By Category</Text>
         <TouchableOpacity
@@ -52,6 +63,25 @@ export default function ShopByCategory({ navigation }: any) {
           </TouchableOpacity>
         ))}
       </ScrollView>
+
+      {/* Video Section */}
+      <View style={styles.videoSection}>
+        <Text style={styles.title}>Treatment Videos</Text>
+        <View style={styles.videoGrid}>
+          {videos.map((vid, idx) => (
+            <Video
+              key={idx}
+              source={vid}
+              rate={1.0}
+              volume={1.0}
+              isMuted={false}
+              resizeMode={ResizeMode.COVER}
+              useNativeControls
+              style={styles.video}
+            />
+          ))}
+        </View>
+      </View>
     </View>
   );
 }
@@ -65,19 +95,34 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: 16, fontWeight: '600' },
   viewAll: { color: '#1e90ff' },
-
   row: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   item: {
     alignItems: 'center',
-    marginRight: 12, // space between items
+    marginRight: 12,
   },
   image: {
     width: 70,
     height: 70,
     borderRadius: 25,
     marginBottom: 4,
+  },
+  videoSection: {
+    marginTop: 20,
+  },
+  videoGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 12,
+  },
+  video: {
+    width: '48%',
+    height: 180,
+    borderRadius: 8,
+    marginBottom: 12,
+    backgroundColor: '#000',
   },
 });

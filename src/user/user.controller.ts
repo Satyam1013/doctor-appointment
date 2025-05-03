@@ -1,15 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { Controller, Get, Param, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { UserRole } from './user.schema';
-
-export interface AuthRequest extends Request {
-  user: {
-    email: string;
-    role: UserRole;
-  };
-}
+import { AuthRequest } from 'src/common/auth-req';
 
 @Controller('users')
 export class UserController {
@@ -17,9 +9,10 @@ export class UserController {
 
   // 🧑 Get current user (from JWT)
   @UseGuards(JwtAuthGuard)
-  @Get('me')
-  getProfile(@Req() req: AuthRequest) {
-    return this.userService.findByEmail(req.user.email);
+  @Get('/details')
+  getUserById(@Req() req: AuthRequest) {
+    const id = req.user._id;
+    return this.userService.findById(id);
   }
 
   // 📦 Admin endpoint to get all users
@@ -27,12 +20,5 @@ export class UserController {
   @Get()
   getAllUsers() {
     return this.userService.findAll();
-  }
-
-  // 🔍 Get user by ID
-  @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  getUserById(@Param('id') id: string) {
-    return this.userService.findById(id);
   }
 }

@@ -15,6 +15,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/metro-runtime": "~5.0.4",
     "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "2.1.2",
     "@react-native-community/masked-view": "^0.1.11",
@@ -25,6 +26,7 @@
     "axios": "^1.9.0",
     "expo": "^53.0.5",
     "expo-auth-session": "~6.1.5",
+    "expo-av": "~15.1.4",
     "expo-blur": "~14.1.4",
     "expo-constants": "~17.1.5",
     "expo-font": "~13.3.0",

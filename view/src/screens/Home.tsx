@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ScrollView, StyleSheet } from 'react-native';
@@ -12,8 +11,8 @@ import TopDoctors from '../components/TopDoctors';
 import ShopByCategory from '../components/ShopByCategory';
 import Transformation from '../components/Transformation';
 import BeforeAfterTreatment from '../components/Treatment';
-import MapPicker from '../components/MapPicker';
-import { Platform } from 'react-native';
+// import MapPicker from '../components/MapPicker';
+// import { Platform } from 'react-native';
 
 export default function HomeScreen({ navigation }: any) {
   return (
@@ -27,7 +26,7 @@ export default function HomeScreen({ navigation }: any) {
       <ShopByCategory navigation={navigation} />
       <Transformation navigation={navigation} />
       <BeforeAfterTreatment />
-      {Platform.OS !== 'web' && <MapPicker />}
+      {/* {Platform.OS !== 'web' && <MapPicker />} */}
     </ScrollView>
   );
 }

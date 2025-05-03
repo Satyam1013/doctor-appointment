@@ -19,7 +19,7 @@ import {
   Image,
 } from 'react-native';
 import { login } from '../api/auth-api';
-import { AuthContext } from '../navigation/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function LoginScreen({ navigation }: any) {
   const { login: setToken } = useContext(AuthContext);

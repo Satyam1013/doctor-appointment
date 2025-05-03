@@ -16,7 +16,7 @@ import {
   Image,
 } from 'react-native';
 import { signup } from '../api/auth-api';
-import { AuthContext } from '../navigation/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function SignupScreen({ navigation }: any) {
   const { login } = useContext(AuthContext);

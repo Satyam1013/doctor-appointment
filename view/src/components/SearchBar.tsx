@@ -2,22 +2,22 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { View, TextInput, StyleSheet } from 'react-native';
-// import Icon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function SearchBar() {
   return (
     <View style={styles.container}>
-      {/* <Icon
+      <Ionicons
         name="search-outline"
         size={20}
         color="#777"
         style={styles.searchIcon}
-      /> */}
+      />
       <TextInput
         placeholder="Search for medicines and..."
         style={styles.input}
       />
-      {/* <Icon name="cart-outline" size={24} color="#333" /> */}
+      <Ionicons name="cart-outline" size={24} color="#333" />
     </View>
   );
 }
