@@ -1,17 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
-import { UserService } from '../user/user.service';
 import { SignupDto } from './dto/signup.dto';
-import { UserRole } from '../user/user.schema';
+import { User, UserRole } from '../user/user.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UserService,
+    @InjectModel(User.name) private readonly userModel: Model<User>,
     private jwtService: JwtService,
   ) {}
 
@@ -29,11 +27,12 @@ export class AuthService {
   }
 
   private async signup(dto: SignupDto, role: UserRole) {
-    const user = await this.userService.findByEmail(dto.email);
+    // Correct query for finding a user by email
+    const user = await this.userModel.findOne({ email: dto.email });
     if (user) throw new ConflictException('Email already registered');
 
     const hashed = await bcrypt.hash(dto.password, 10);
-    const newUser = await this.userService.create({
+    const newUser = await this.userModel.create({
       email: dto.email,
       firstName: dto.firstName,
       password: hashed,
@@ -63,7 +62,8 @@ export class AuthService {
   }
 
   private async login(email: string, password: string, role: UserRole) {
-    const user = await this.userService.findByEmail(email);
+    const user = await this.userModel.findOne({ email });
+
     if (!user || user.role !== role) {
       throw new ConflictException(`Invalid credentials or not a ${role}`);
     }
