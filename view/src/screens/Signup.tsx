@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -17,6 +16,7 @@ import {
 } from 'react-native';
 import { signup } from '../api/auth-api';
 import { AuthContext } from '../contexts/AuthContext';
+import React from 'react';
 
 export default function SignupScreen({ navigation }: any) {
   const { login } = useContext(AuthContext);

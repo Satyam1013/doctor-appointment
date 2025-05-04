@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 
 export default function DoctorDetailsScreen({ route }: any) {

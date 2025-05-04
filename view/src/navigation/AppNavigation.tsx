@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useContext } from 'react';
@@ -12,8 +10,20 @@ import FindDoctorScreen from '../screens/FindDoctor';
 import DoctorDetailsScreen from '../screens/TopDoctorsScreens';
 import TransformationScreen from '../screens/TransformationScreen';
 import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet } from 'react-native';
 
 const Stack = createNativeStackNavigator();
+
+// HOC to wrap a screen with SafeAreaView
+const withSafeArea = (Component: React.ComponentType<any>) => {
+  return (props: any) => (
+    <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
+      <Component {...props} />
+    </SafeAreaView>
+  );
+};
 
 export default function AppNavigator() {
   const { token } = useContext(AuthContext);
@@ -30,28 +40,27 @@ export default function AppNavigator() {
             />
             <Stack.Screen
               name="TransformationScreen"
-              component={TransformationScreen}
+              component={withSafeArea(TransformationScreen)}
               options={{ headerShown: false }}
             />
             <Stack.Screen
               name="TransformationBlogDetailsScreen"
-              component={TransformationBlogDetailsScreen}
+              component={withSafeArea(TransformationBlogDetailsScreen)}
               options={{ headerShown: true, title: 'Blog Details' }}
             />
-
             <Stack.Screen
               name="TreatmentInfoScreen"
-              component={TreatmentInfoScreen}
+              component={withSafeArea(TreatmentInfoScreen)}
               options={{ headerShown: false }}
             />
             <Stack.Screen
               name="FindDoctorScreen"
-              component={FindDoctorScreen}
+              component={withSafeArea(FindDoctorScreen)}
               options={{ headerShown: false }}
             />
             <Stack.Screen
               name="DoctorDetailsScreen"
-              component={DoctorDetailsScreen}
+              component={withSafeArea(DoctorDetailsScreen)}
               options={{ headerShown: true, title: 'Doctor Details' }}
             />
           </>
@@ -59,12 +68,12 @@ export default function AppNavigator() {
           <>
             <Stack.Screen
               name="Login"
-              component={Login}
+              component={withSafeArea(Login)}
               options={{ headerShown: false }}
             />
             <Stack.Screen
               name="Signup"
-              component={Signup}
+              component={withSafeArea(Signup)}
               options={{ headerShown: false }}
             />
           </>
@@ -73,3 +82,10 @@ export default function AppNavigator() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});

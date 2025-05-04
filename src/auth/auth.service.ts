@@ -27,7 +27,6 @@ export class AuthService {
   }
 
   private async signup(dto: SignupDto, role: UserRole) {
-    // Correct query for finding a user by email
     const user = await this.userModel.findOne({ email: dto.email });
     if (user) throw new ConflictException('Email already registered');
 

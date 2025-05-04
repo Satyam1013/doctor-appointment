@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ScrollView, StyleSheet } from 'react-native';
 import Header from '../components/Header';
@@ -11,6 +9,7 @@ import TopDoctors from '../components/TopDoctors';
 import ShopByCategory from '../components/ShopByCategory';
 import Transformation from '../components/Transformation';
 import BeforeAfterTreatment from '../components/Treatment';
+import React from 'react';
 // import MapPicker from '../components/MapPicker';
 // import { Platform } from 'react-native';
 

@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
+import React from 'react';
 import {
   View,
   Text,
@@ -27,12 +28,12 @@ const categories = [
 ];
 
 const videos = [
-  require('../../assets/images/v1.mp4'),
-  require('../../assets/images/v2.mp4'),
-  require('../../assets/images/v3.mp4'),
-  require('../../assets/images/v4.mp4'),
-  require('../../assets/images/v5.mp4'),
-  require('../../assets/images/v6.mp4'),
+  { uri: '/videos/v1.mp4' },
+  { uri: '/videos/v2.mp4' },
+  { uri: '/videos/v3.mp4' },
+  { uri: '/videos/v4.mp4' },
+  { uri: '/videos/v5.mp4' },
+  { uri: '/videos/v6.mp4' },
 ];
 
 export default function ShopByCategory({ navigation }: any) {
@@ -72,11 +73,9 @@ export default function ShopByCategory({ navigation }: any) {
             <Video
               key={idx}
               source={vid}
-              rate={1.0}
-              volume={1.0}
-              isMuted={false}
-              resizeMode={ResizeMode.COVER}
+              onError={(e) => console.log('Video error:', e)}
               useNativeControls
+              resizeMode={ResizeMode.COVER}
               style={styles.video}
             />
           ))}
@@ -116,11 +115,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginTop: 12,
+    gap: 10,
   },
   video: {
-    width: '48%',
-    height: 180,
+    flexBasis: '48%',
+    aspectRatio: 1080 / 1350,
     borderRadius: 8,
     marginBottom: 12,
     backgroundColor: '#000',
