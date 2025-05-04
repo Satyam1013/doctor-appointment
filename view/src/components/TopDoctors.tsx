@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   card: {
-    width: '48%',
+    width: '30%',
     aspectRatio: 0.8,
     borderRadius: 8,
     overflow: 'hidden',
