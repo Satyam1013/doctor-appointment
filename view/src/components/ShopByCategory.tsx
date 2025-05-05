@@ -11,8 +11,10 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Dimensions,
 } from 'react-native';
-import { ResizeMode, Video } from 'expo-av';
+
+const { width } = Dimensions.get('window');
 
 const categories = [
   { name: 'Ayurvedic', img: require('../../assets/images/cat.png') },
@@ -27,28 +29,29 @@ const categories = [
   { name: 'Ayurvedic', img: require('../../assets/images/cat10.png') },
 ];
 
-const videos = [
-  { uri: '/videos/v1.mp4' },
-  { uri: '/videos/v2.mp4' },
-  { uri: '/videos/v3.mp4' },
-  { uri: '/videos/v4.mp4' },
-  { uri: '/videos/v5.mp4' },
-  { uri: '/videos/v6.mp4' },
+const treatmentItems = [
+  require('../../assets/images/videoposter.png'),
+  require('../../assets/images/videoposter2.png'),
+  require('../../assets/images/videoposter3.png'),
+  require('../../assets/images/videoposter4.png'),
+  require('../../assets/images/videoposter5.png'),
+  require('../../assets/images/videoposter6.png'),
 ];
 
 export default function ShopByCategory({ navigation }: any) {
   return (
-    <View style={styles.container}>
-      {/* Category Section */}
+    <ScrollView style={styles.container}>
+      {/* Category Header */}
       <View style={styles.header}>
         <Text style={styles.title}>Shop By Category</Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate('MedicinesScreen')}
+          onPress={() => navigation.navigate('TeethTreatmentScreen')}
         >
           <Text style={styles.viewAll}>View All</Text>
         </TouchableOpacity>
       </View>
 
+      {/* Horizontal Category Scroll */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -58,45 +61,74 @@ export default function ShopByCategory({ navigation }: any) {
           <TouchableOpacity
             key={idx}
             style={styles.item}
-            onPress={() => navigation.navigate('MedicinesScreen')}
+            onPress={() => navigation.navigate('TeethTreatmentScreen')}
           >
             <Image source={cat.img} style={styles.image} />
           </TouchableOpacity>
         ))}
       </ScrollView>
 
-      {/* Video Section */}
+      {/* Video Section Header */}
       <View style={styles.videoSection}>
         <Text style={styles.title}>Treatment Videos</Text>
-        <View style={styles.videoGrid}>
-          {videos.map((vid, idx) => (
-            <Video
-              key={idx}
-              source={vid}
-              onError={(e) => console.log('Video error:', e)}
-              useNativeControls
-              resizeMode={ResizeMode.COVER}
-              style={styles.video}
-            />
-          ))}
-        </View>
       </View>
-    </View>
+
+      {/* Video Grid */}
+      <View style={styles.treatmentGrid}>
+        {treatmentItems.map((item, idx) => (
+          <TouchableOpacity
+            key={idx}
+            style={styles.treatmentItem}
+            onPress={() =>
+              navigation.navigate('TeethTreatmentScreen', {
+                videoUri: `/public/videos/v${idx + 1}.mp4`,
+              })
+            }
+          >
+            <Image
+              source={item}
+              style={styles.treatmentImage}
+              resizeMode="cover"
+            />
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* Banner Images (Full Width Ads) */}
+      <View style={styles.adContainer}>
+        <Image
+          source={require('../../assets/images/ad.png')}
+          style={styles.adImage}
+          resizeMode="cover"
+        />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 12 },
+  container: {
+    padding: 12,
+    backgroundColor: '#fff',
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 8,
   },
-  title: { fontSize: 16, fontWeight: '600' },
-  viewAll: { color: '#1e90ff' },
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  viewAll: {
+    color: '#1e90ff',
+    fontWeight: '500',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: 8,
   },
   item: {
     alignItems: 'center',
@@ -105,23 +137,63 @@ const styles = StyleSheet.create({
   image: {
     width: 70,
     height: 70,
-    borderRadius: 25,
-    marginBottom: 4,
+    borderRadius: 35,
+    backgroundColor: '#f0f0f0',
   },
   videoSection: {
     marginTop: 20,
+    marginBottom: 10,
   },
   videoGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    gap: 10,
   },
-  video: {
-    flexBasis: '48%',
-    aspectRatio: 1080 / 1350,
+  card: {
+    width: '48%',
+    aspectRatio: 1.5,
     borderRadius: 8,
+    overflow: 'hidden',
     marginBottom: 12,
-    backgroundColor: '#000',
+    elevation: 3,
+    backgroundColor: '#fff',
+  },
+  posterImage: {
+    width: '100%',
+    height: '100%',
+  },
+  adContainer: {
+    marginTop: 20,
+  },
+  adImage: {
+    width: width - 24,
+    height: 140,
+    borderRadius: 10,
+    marginBottom: 12,
+    alignSelf: 'center',
+  },
+  treatmentGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  treatmentItem: {
+    width: '30%',
+    marginBottom: 16,
+    alignItems: 'center',
+  },
+  treatmentImage: {
+    width: '100%',
+    height: 130,
+    aspectRatio: 0.75,
+    borderRadius: 8,
+    backgroundColor: '#eee',
+  },
+  treatmentLabel: {
+    marginTop: 6,
+    fontSize: 13,
+    textAlign: 'center',
+    color: '#333',
   },
 });

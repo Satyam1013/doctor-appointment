@@ -45,7 +45,7 @@ export default function TopDoctors({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 12 },
+  container: { padding: 12, backgroundColor: '#fff0f0' },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import React from 'react';
@@ -26,11 +28,27 @@ const services = [
   },
 ];
 
-export default function ServiceCards() {
+export default function ServiceCards({ navigation }: any) {
+  const handlePress = (title: string) => {
+    if (
+      title === 'Book Appointment' ||
+      title === 'Instant Video Consultation'
+    ) {
+      navigation.navigate('ConsultationOption');
+    } else {
+      navigation.navigate('EComScreen', {
+        title: title,
+      });
+    }
+  };
   return (
     <View style={styles.grid}>
       {services.map((item, idx) => (
-        <TouchableOpacity key={idx} style={styles.card}>
+        <TouchableOpacity
+          key={idx}
+          style={styles.card}
+          onPress={() => handlePress(item.title)}
+        >
           <Image source={item.image} style={styles.image} resizeMode="cover" />
         </TouchableOpacity>
       ))}

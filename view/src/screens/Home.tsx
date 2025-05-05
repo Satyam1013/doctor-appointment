@@ -19,7 +19,7 @@ export default function HomeScreen({ navigation }: any) {
       <Header />
       <SearchBar />
       <Carousel />
-      <ServiceCards />
+      <ServiceCards navigation={navigation} />
       <DoctorSpecialties navigation={navigation} />
       <TopDoctors navigation={navigation} />
       <ShopByCategory navigation={navigation} />

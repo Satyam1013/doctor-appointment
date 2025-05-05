@@ -13,6 +13,18 @@ import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
+import ConsultationOptionScreen from '../screens/ConsultationOptionScreen';
+import AgeSelectionScreen from '../screens/AgeSelectionScreen';
+import TeethIssueSelectionScreen from '../screens/TeethIssueSelectionScreen';
+import ProblemDetailScreen from '../screens/ProblemDetailScreen';
+import MedicalHistoryScreen from '../screens/MedicalHistoryScreen';
+import GenderSelectionScreen from '../screens/GenderSelectionScreen';
+import SmokingStatusScreen from '../screens/SmokingStatusScreen';
+import AvailabilityScreen from '../screens/AvailabilityScreen';
+import CheckoutSummaryScreen from '../screens/CheckoutSummaryScreen';
+import EComScreen from '../screens/ECommerceScreen';
+import ProductDetailScreen from '../screens/ProductDetailScreen';
+import TeethTreatmentScreen from '../screens/TeethTreatmentScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +49,66 @@ export default function AppNavigator() {
               name="Home"
               component={Home}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ConsultationOption"
+              component={ConsultationOptionScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="AgeSelection"
+              component={AgeSelectionScreen}
+              options={{ headerShown: true, title: 'Select Age' }}
+            />
+            <Stack.Screen
+              name="TeethIssueSelection"
+              component={TeethIssueSelectionScreen}
+              options={{ headerShown: true, title: 'Select Teeth Issue' }}
+            />
+            <Stack.Screen
+              name="ProblemDetail"
+              component={ProblemDetailScreen}
+              options={{ headerShown: true, title: 'Problem Details' }}
+            />
+            <Stack.Screen
+              name="MedicalHistory"
+              component={MedicalHistoryScreen}
+              options={{ headerShown: true, title: 'Medical History' }}
+            />
+            <Stack.Screen
+              name="GenderSelection"
+              component={GenderSelectionScreen}
+              options={{ headerShown: true, title: 'Select Gender' }}
+            />
+            <Stack.Screen
+              name="SmokingStatus"
+              component={SmokingStatusScreen}
+              options={{ headerShown: true, title: 'Smoking Status' }}
+            />
+            <Stack.Screen
+              name="Availability"
+              component={AvailabilityScreen}
+              options={{ headerShown: true, title: 'Availability' }}
+            />
+            <Stack.Screen
+              name="CheckoutSummary"
+              component={CheckoutSummaryScreen}
+              options={{ headerShown: true, title: 'Checkout Summary' }}
+            />
+            <Stack.Screen
+              name="EComScreen"
+              component={EComScreen}
+              options={{ headerShown: true, title: 'E-Commerce' }}
+            />
+            <Stack.Screen
+              name="ProductDetailScreen"
+              component={ProductDetailScreen}
+              options={{ headerShown: true, title: 'Product Details' }}
+            />
+            <Stack.Screen
+              name="TeethTreatmentScreen"
+              component={TeethTreatmentScreen}
+              options={{ headerShown: true, title: 'Teeth Treatment' }}
             />
             <Stack.Screen
               name="TransformationScreen"
