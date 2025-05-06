@@ -25,6 +25,7 @@ import CheckoutSummaryScreen from '../screens/CheckoutSummaryScreen';
 import EComScreen from '../screens/ECommerceScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import TeethTreatmentScreen from '../screens/TeethTreatmentScreen';
+import ProfileScreen from '../screens/UserProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,9 +52,14 @@ export default function AppNavigator() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
+              name="Profile"
+              component={ProfileScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
               name="ConsultationOption"
               component={ConsultationOptionScreen}
-              options={{ headerShown: false }}
+              options={{ title: 'Consultation Options' }}
             />
             <Stack.Screen
               name="AgeSelection"

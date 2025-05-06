@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import Carousel from '../components/Carousel';
@@ -16,7 +16,9 @@ import React from 'react';
 export default function HomeScreen({ navigation }: any) {
   return (
     <ScrollView style={styles.container}>
-      <Header />
+      <View style={{ zIndex: 100, top: 0, width: '100%' }}>
+        <Header navigation={navigation} />
+      </View>
       <SearchBar />
       <Carousel />
       <ServiceCards navigation={navigation} />
