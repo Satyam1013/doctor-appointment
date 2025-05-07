@@ -11,10 +11,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Dimensions,
 } from 'react-native';
-
-const { width } = Dimensions.get('window');
 
 const categories = [
   { name: 'Ayurvedic', img: require('../../assets/images/cat.png') },
@@ -93,15 +90,6 @@ export default function ShopByCategory({ navigation }: any) {
           </TouchableOpacity>
         ))}
       </View>
-
-      {/* Banner Images (Full Width Ads) */}
-      <View style={styles.adContainer}>
-        <Image
-          source={require('../../assets/images/ad.png')}
-          style={styles.adImage}
-          resizeMode="cover"
-        />
-      </View>
     </ScrollView>
   );
 }
@@ -161,16 +149,6 @@ const styles = StyleSheet.create({
   posterImage: {
     width: '100%',
     height: '100%',
-  },
-  adContainer: {
-    marginTop: 20,
-  },
-  adImage: {
-    width: width - 24,
-    height: 140,
-    borderRadius: 10,
-    marginBottom: 12,
-    alignSelf: 'center',
   },
   treatmentGrid: {
     flexDirection: 'row',

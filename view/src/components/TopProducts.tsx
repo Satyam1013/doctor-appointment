@@ -15,7 +15,7 @@ const doctors = [
   { img: require('../../assets/images/doctor6.png') },
 ];
 
-export default function TopDoctors({ navigation }: any) {
+export default function TopProducts({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>

@@ -1,9 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
 import React from 'react';
-import { Image, StyleSheet, ScrollView } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  ScrollView,
+  ImageSourcePropType,
+} from 'react-native';
 
-export default function Carousel() {
+interface CarouselProps {
+  images: ImageSourcePropType[];
+}
+
+export default function Carousel({ images }: CarouselProps) {
   return (
     <ScrollView
       horizontal
@@ -11,11 +18,7 @@ export default function Carousel() {
       showsHorizontalScrollIndicator={false}
       style={styles.container}
     >
-      {[
-        require('../../assets/images/banner.png'),
-        require('../../assets/images/banner2.png'),
-        require('../../assets/images/banner3.png'),
-      ].map((img, idx) => (
+      {images.map((img, idx) => (
         <Image key={idx} source={img} style={styles.image} />
       ))}
     </ScrollView>

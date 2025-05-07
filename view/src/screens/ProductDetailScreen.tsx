@@ -75,8 +75,6 @@ export default function ProductDetailScreen({ route }: any) {
           <Text style={styles.strike}>₹{product.originalPrice}</Text>{' '}
           <Text style={styles.discount}>{discount}% off</Text>
         </Text>
-        <Text style={styles.delivery}>Free shipping by 9th May</Text>
-
         <Text style={styles.description}>{product.description}</Text>
       </View>
 
@@ -131,7 +129,6 @@ const styles = StyleSheet.create({
   price: { fontSize: 20, fontWeight: 'bold', marginVertical: 8 },
   strike: { textDecorationLine: 'line-through', color: '#888', fontSize: 16 },
   discount: { color: 'green', fontWeight: '600', fontSize: 16 },
-  delivery: { color: '#ff6347', marginBottom: 12 },
   description: { fontSize: 14, color: '#333', lineHeight: 20 },
   sectionContainer: { paddingHorizontal: 16, marginTop: 16 },
   section: { marginBottom: 12 },

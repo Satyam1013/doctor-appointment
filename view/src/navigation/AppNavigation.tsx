@@ -26,6 +26,7 @@ import EComScreen from '../screens/ECommerceScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import TeethTreatmentScreen from '../screens/TeethTreatmentScreen';
 import ProfileScreen from '../screens/UserProfile';
+// import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -141,6 +142,11 @@ export default function AppNavigator() {
               component={withSafeArea(DoctorDetailsScreen)}
               options={{ headerShown: true, title: 'Doctor Details' }}
             />
+            {/* <Stack.Screen
+              name="ClinicMap"
+              component={ClinicMapScreen}
+              options={{ headerShown: true, title: 'Clinic Location' }}
+            /> */}
           </>
         ) : (
           <>

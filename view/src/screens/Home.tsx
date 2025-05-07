@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Header from '../components/Header';
@@ -5,29 +9,46 @@ import SearchBar from '../components/SearchBar';
 import Carousel from '../components/Carousel';
 import ServiceCards from '../components/ServiceCards';
 import DoctorSpecialties from '../components/DoctorSpecialtiesScreen';
-import TopDoctors from '../components/TopDoctors';
+import TopProducts from '../components/TopProducts';
 import ShopByCategory from '../components/ShopByCategory';
 import Transformation from '../components/Transformation';
 import BeforeAfterTreatment from '../components/Treatment';
 import React from 'react';
-// import MapPicker from '../components/MapPicker';
-// import { Platform } from 'react-native';
+import ClinicVisitCard from '../components/VisitClinic';
+import FeaturedIn from '../components/FeaturedIn';
+import FeatureStats from '../components/FeatureStats';
+import DoctorCard from '../components/ConsultDoctors';
 
 export default function HomeScreen({ navigation }: any) {
+  const topCarousel = [
+    require('../../assets/images/banner.png'),
+    require('../../assets/images/banner2.png'),
+    require('../../assets/images/banner3.png'),
+  ];
+  const bottomCarousel = [
+    require('../../assets/images/adbottom.jpeg'),
+    require('../../assets/images/adbottom2.png'),
+    require('../../assets/images/adbottom3.png'),
+  ];
+
   return (
     <ScrollView style={styles.container}>
       <View style={{ zIndex: 100, top: 0, width: '100%' }}>
         <Header navigation={navigation} />
       </View>
       <SearchBar />
-      <Carousel />
+      <Carousel images={topCarousel} />
       <ServiceCards navigation={navigation} />
       <DoctorSpecialties navigation={navigation} />
-      <TopDoctors navigation={navigation} />
+      <TopProducts navigation={navigation} />
       <ShopByCategory navigation={navigation} />
       <Transformation navigation={navigation} />
       <BeforeAfterTreatment />
-      {/* {Platform.OS !== 'web' && <MapPicker />} */}
+      <ClinicVisitCard onPress={() => navigation.navigate('ClinicMap')} />
+      <Carousel images={bottomCarousel} />
+      <DoctorCard navigation={navigation} />
+      <FeaturedIn />
+      <FeatureStats />
     </ScrollView>
   );
 }
