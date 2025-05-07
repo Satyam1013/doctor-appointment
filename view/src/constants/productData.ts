@@ -12,6 +12,10 @@ export interface Product {
   productDetails?: string;
   benefits?: string;
   howToUse?: string;
+  ingredients?: string;
+  caution?: string;
+  information?: string;
+  contents?: string;
 }
 
 export const productData: Record<string, Product> = {
@@ -34,12 +38,13 @@ export const productData: Record<string, Product> = {
       'Apply a small amount on toothbrush along with toothpaste and brush as usual.',
   },
   whiteninggel: {
-    title: 'Whitening Gel',
+    title: 'Brightening Gel Toothpaste',
     categoryKey: 'whiteninggel',
     price: 899,
     originalPrice: 1299,
-    description: 'Advanced Whitening Gel for everyday oral care.',
-    tags: ['Teeth Care', 'Whitening'],
+    description:
+      'Vitamin C-infused whitening gel toothpaste that removes stains, strengthens gums, and provides long-lasting freshness with every brush.',
+    tags: ['Teeth Care', 'Whitening', 'Toothpaste', 'Daily Use'],
     images: [
       require('../../assets/images/ecom/whiteninggel/1.png'),
       require('../../assets/images/ecom/whiteninggel/2.png'),
@@ -47,34 +52,68 @@ export const productData: Record<string, Product> = {
       require('../../assets/images/ecom/whiteninggel/4.png'),
     ],
     productDetails:
-      'Gentle gel suitable for daily use to maintain white teeth.',
-    benefits: 'Reduces stains, maintains white appearance, gentle on enamel.',
-    howToUse: 'Apply directly on teeth or mix with toothpaste and brush.',
+      'mydent Brightening Gel Toothpaste is a fluoridated, Vitamin C-boosted formula that combines whitening, freshness, and gum health. Its foaming gel texture with clove and eucalyptus oil offers a gentle yet powerful clean, ideal for daily use—even on sensitive teeth.',
+    benefits:
+      '- Visibly whitens teeth and removes surface stains\n' +
+      '- Freshens breath with long-lasting clove and eucalyptus freshness\n' +
+      '- Strengthens gums and supports full-mouth health\n' +
+      '- Enamel-safe for sensitive teeth\n' +
+      '- Gentle, foaming formula with Vitamin C beads',
+    howToUse:
+      'Apply a pea-sized amount to a toothbrush and brush thoroughly twice daily or as directed by your dentist. Avoid swallowing and rinse thoroughly after use.',
+    ingredients:
+      'Sorbitol, Silica, PEG-8, Aqua, Hydrated Silica, Sodium Methyl Cocoyl Taurate, Flavour, Cellulose Gum, Sodium Benzoate, Cocamidopropyl Betaine, Sodium Fluoride, Zinc Sulfate, Cellulose, Lactose, Ascorbic Acid (Vitamin C), Hydroxypropyl Methylcellulose, Sucralose, Disodium EDTA, Eugenia Caryophyllus Oil (Clove Oil), Eucalyptus Globulus Oil (Eucalyptus Oil).',
+    caution:
+      'Keep out of reach of children under 6. In case of accidental ingestion, seek medical help. Avoid contact with eyes. If contact occurs, rinse with water immediately.',
+    information:
+      'mydent is India’s leading at-home smile makeover brand—created by orthodontists, backed by technology. Our refreshing gel toothpaste is part of a broader oral care line including whitening kits, aligners, and smart toothbrushes—crafted for a complete, confident smile routine.',
   },
   whiteningpen: {
-    title: 'Whitening Pen',
+    title: 'Spark Teeth Whitening Pen',
     categoryKey: 'whiteningpen',
     price: 599,
     originalPrice: 899,
-    description: 'Portable Whitening Pen for quick on-the-go application.',
-    tags: ['Oral Care', 'Portable', 'Whitening'],
+    description:
+      'Fast-acting whitening pen with enamel-safe PAP+ technology for a visibly brighter smile in just 30 minutes—perfect for travel and daily touch-ups.',
+    tags: [
+      'Oral Care',
+      'Portable',
+      'Whitening',
+      'PAP Technology',
+      'Teeth Brightening',
+    ],
     images: [
       require('../../assets/images/ecom/whiteningpen/1.png'),
       require('../../assets/images/ecom/whiteningpen/2.png'),
       require('../../assets/images/ecom/whiteningpen/3.png'),
     ],
     productDetails:
-      'Sleek design pen to quickly apply whitening formula on the go.',
-    benefits: 'Instant whitening, travel-friendly, easy to use.',
+      'The mydent Spark Teeth Whitening Pen is a compact, peroxide-free solution powered by PAP+ technology. It safely removes stains, fights plaque, and freshens breath without causing sensitivity—whiten anywhere, anytime.',
+    benefits:
+      '- Powered by PAP+ Technology\n' +
+      '- Enamel-safe & sensitivity-free\n' +
+      '- Whitens teeth in 30 minutes\n' +
+      '- Removes coffee, tea, wine & tobacco stains\n' +
+      '- Freshens breath and fights plaque\n' +
+      '- 100% toxin-free and travel-friendly',
     howToUse:
-      'Twist the pen and apply a thin layer on teeth. Leave for 30 minutes without eating or drinking.',
+      '1. Rinse your mouth before application\n' +
+      '2. Shake the pen well\n' +
+      '3. Twist bottom until gel appears (first use may require 20 twists)\n' +
+      '4. Apply a thin, even layer onto teeth\n' +
+      '5. Wait 30 seconds–1 minute, then rinse with water',
+    ingredients:
+      'Sorbitol, Aqua (Water), PAP (Phthalimidoperoxycaproic Acid), Propylene Glycol, Glycerin, Potassium Nitrate, PEG-8, Hydroxyapatite, Cellulose Gum, Hydroxyethyl Cellulose, Xanthan Gum, Sodium Saccharin, Menthol, Methylparaben, Aloe Vera Leaf Juice, Chamomile Extract, Pomegranate Seed Extract, Sodium Bicarbonate, Propylparaben',
+    information:
+      'Designed by orthodontists and built with cutting-edge tech, mydent offers India’s most advanced at-home oral care. The Spark Whitening Pen is certified by CE, CPSR, and RoHS, and is part of our larger lineup of smart dental solutions—from aligners to electric toothbrushes—all created to redefine your smile journey with comfort and confidence.',
   },
   teethwhiteningkit: {
     title: 'Teeth Whitening Kit',
     categoryKey: 'teethwhiteningkit',
-    price: 2199,
-    originalPrice: 2999,
-    description: 'Comprehensive teeth whitening kit for home use.',
+    price: 2100,
+    originalPrice: 7000,
+    description:
+      'Comprehensive teeth whitening kit for a fast, radiant smile—anytime, anywhere.',
     tags: ['Teeth Care', 'Complete Kit'],
     images: [
       require('../../assets/images/ecom/teethwhiteningkit/1.png'),
@@ -87,17 +126,25 @@ export const productData: Record<string, Product> = {
       require('../../assets/images/ecom/teethwhiteningkit/8.png'),
     ],
     productDetails:
-      'Includes LED light and whitening gel for professional-level results at home.',
-    benefits: 'Whitens deeply, easy home application, long-lasting effects.',
+      'Smile-Ready for Your Morning Meeting or Night Out? Introducing the mydent 1st Generation Whitening Kit – your go-to solution for a confident, radiant smile anytime, anywhere! Powered by advanced PAP technology, the whitening gel delivers effective results without sensitivity, while the portable LED accelerator mouthpiece uses blue light technology to boost whitening power on the go.',
+    benefits:
+      '- Advanced PAP Formulation: Safe and effective without harsh ingredients\n- Wireless LED Technology: Portable and hassle-free\n- Enamel-Safe: Protects teeth while whitening\n- Sensitivity-Free: Comfortable for daily use\n- CE, CPSR, and RoHS Certified: Meets top safety standards\n- At-Home Whitening: Get professional results at home in under 15 minutes',
     howToUse:
-      'Apply gel to mouth tray, insert into mouth, and turn on LED light for 15–20 minutes.',
+      'Step 1: Rinse mouth and tray\nStep 2: Use shade guide to note tooth color\nStep 3: Twist pen to release gel\nStep 4: Apply thin layer to dry teeth\nStep 5: Use 0.5–0.7 ml of gel total\nStep 6: Attach tray to LED and power on\nStep 7: Relax and minimize saliva\nStep 8: Keep tray in for 12–15 mins (up to 30 max)\nStep 9: Rinse mouth and tray after\nStep 10: Avoid food/drink for 30 mins\nStep 11: Repeat daily for 9–12 days',
+    ingredients:
+      'PAP (Phthalimidoperoxycaproic acid), Potassium Citrate, Hydroxyapatite, Propylene Glycol, Glycerin, PEG-8, Menthol, Flavoring Agents.',
+    caution:
+      'For external use only. Not suitable for children under 12. Do not swallow gel. Avoid use on broken gums or teeth. If irritation occurs, discontinue use and consult a dentist.',
+    information:
+      'What’s Inside:\n- 3 mydent Spark Whitening Pens with PAP gel\n- 1 Food-Grade Mouth Tray\n- 1 Wireless LED Light Accelerator\n- 1 Shade Card\n- 1 User Manual\nExpected delivery within 7–10 working days.',
   },
   teethwhiteningserum: {
     title: 'Teeth Whitening Serum',
     categoryKey: 'teethwhiteningserum',
-    price: 699,
-    originalPrice: 999,
-    description: 'Potent serum to enhance teeth whitening results.',
+    price: 480,
+    originalPrice: 600,
+    description:
+      'Instantly brightens your smile with purple-toned, enamel-safe whitening serum for daily touch-ups.',
     tags: ['Serum', 'Whitening', 'Dental'],
     images: [
       require('../../assets/images/ecom/teethwhiteningserum/1.png'),
@@ -108,16 +155,25 @@ export const productData: Record<string, Product> = {
       require('../../assets/images/ecom/teethwhiteningserum/6.png'),
     ],
     productDetails:
-      'Concentrated serum designed to work with whitening treatments.',
-    benefits: 'Enhances results, easy to apply, safe for enamel.',
-    howToUse: 'Apply a few drops on teeth or mix with gel in the tray.',
+      'Get a visibly brighter smile in seconds with the mydent teeth whitening Serum, expertly formulated to neutralize yellow tones and revive your natural whiteness. The non-cytotoxic, enamel-safe formula ensures effective results without harsh chemicals, ideal for sensitive teeth. Great for daily use or pre-event touch-ups.',
+    benefits:
+      '- Instantly brightens with advanced colour-correcting purple serum\n- Bleach-free and enamel-safe for worry-free use\n- Clinically tested and certified safe for all skin types\n- Sugar-free and gentle on teeth and gums\n- Infused with peppermint oil for long-lasting freshness\n- Compact and perfect for on-the-go confidence',
+    howToUse:
+      'Step 1: Dispense 2 pumps onto a soft-bristle toothbrush\nStep 2: Brush gently in circular motions for 2 minutes\nStep 3: Spit and rinse mouth thoroughly (do not swallow)\nPro Tip: Use as needed before events or daily for quick refresh',
+    ingredients:
+      'Glycerin, Hydrated Silica, Xylitol, Peppermint Oil (Mentha Piperita), Polysorbate 80, Cellulose Gum, Phenoxyethanol, Ethylhexylglycerin, Sucralose, Purple Colorants.',
+    caution:
+      'Do not swallow. For external use only. Not for children under 12. Avoid contact with eyes. If irritation occurs, stop use and consult a dentist.',
+    information:
+      'How It Works: Based on colour theory, purple neutralizes yellow—making this serum ideal for removing visible discoloration. Safe for daily use and suitable for all skin/teeth types. Travel-ready, compact design. Expected delivery in 7–10 working days.',
   },
   teethwhiteningstrips: {
     title: 'Teeth Whitening Strips',
     categoryKey: 'teethwhiteningstrips',
     price: 749,
     originalPrice: 1099,
-    description: 'Easy-to-use whitening strips for daily teeth care.',
+    description:
+      'Effective and enamel-safe bamboo charcoal whitening strips for a brighter, healthier smile—without sensitivity.',
     tags: ['Strips', 'Teeth Whitening'],
     images: [
       require('../../assets/images/ecom/teethwhiteningstrips/1.png'),
@@ -128,30 +184,50 @@ export const productData: Record<string, Product> = {
       require('../../assets/images/ecom/teethwhiteningstrips/6.png'),
     ],
     productDetails:
-      'Flexible strips coated with whitening gel for easy application.',
-    benefits: 'No mess, visibly whitens teeth, convenient.',
-    howToUse: 'Apply strip on upper and lower teeth for 30 minutes daily.',
+      'Discover a fast, safe way to whiten your teeth at home with mydent Bamboo Charcoal Teeth Whitening Strips. Formulated to tackle even stubborn stains, these strips offer noticeable results without causing sensitivity.',
+    benefits:
+      '- Whitens teeth in 30 minutes per session\n- Safe and gentle for daily use\n- No sensitivity formula\n- Easy peel-and-stick application\n- Fresh finish with clean rinse\n- Charcoal-infused for deep stain removal',
+    howToUse:
+      'Step 1: Peel off the upper and lower whitening strips.\nStep 2: Apply the top strip to upper teeth and bottom strip to lower teeth.\nStep 3: Leave on for 30 minutes without eating or drinking.\nStep 4: Remove strips and rinse any remaining gel. Optionally brush gently for best finish.',
+    ingredients:
+      'Bamboo Charcoal, Hydrogen Peroxide (safe concentration), PVP, Glycerin, Menthol, Water, Carbomer, Sodium Hydroxide, Cellulose Gum.',
+    caution:
+      'For external use only. Not recommended for children under 12. Avoid contact with eyes. If irritation occurs, stop use and consult a dentist.',
+    information:
+      'Achieve professional-level whitening at home. Use daily or as needed for touch-ups. Results may vary based on stain intensity. Delivery in 7–10 working days.',
   },
   toothpaste: {
-    title: 'Toothpaste',
+    title: 'Crystal Cool Toothpaste',
     categoryKey: 'toothpaste',
     price: 199,
     originalPrice: 299,
-    description: 'Fluoride toothpaste for daily cleaning and whitening.',
-    tags: ['Toothpaste', 'Daily Use'],
+    description:
+      'Start your day with an icy burst of freshness and confidence with mydent Crystal Cool Toothpaste. Long-lasting minty freshness, enamel-safe formula, and advanced plaque protection make this your daily essential for a radiant smile.',
+    tags: ['Toothpaste', 'Mint Freshness', 'Daily Use', 'Enamel Safe'],
     images: [
       require('../../assets/images/ecom/toothpaste/1.png'),
       require('../../assets/images/ecom/toothpaste/2.png'),
     ],
-    productDetails: 'Whitening toothpaste with cavity protection.',
-    benefits: 'Cleans, protects, and whitens teeth.',
-    howToUse: 'Brush teeth twice daily for 2 minutes.',
+    productDetails:
+      '100g tube of advanced toothpaste that provides long-lasting icy freshness while fighting plaque and bacteria. Strengthens enamel and supports healthy gums.',
+    benefits:
+      '❄️ Long-Lasting Icy Freshness\n' +
+      '🛡️ Daily Germ Protection against bacteria and plaque\n' +
+      '🌿 Mint-powered fresh breath\n' +
+      '🦷 Supports healthy gums and strong teeth\n' +
+      '✅ Enamel-safe, ideal for daily use without sensitivity',
+    howToUse:
+      'Brush your teeth twice daily for 2 minutes, especially after meals, for lasting freshness and oral protection.',
+    ingredients:
+      'Sorbitol, Aqua, Glycerin, Sodium Lauryl Sulfate, Sodium Fluoride, Xylitol, Sodium Saccharin, Menthol, Sodium Bicarbonate, Titanium Dioxide, Cellulose Gum, Clove Oil, Natural Mint Extracts.',
+    information:
+      'mydent Crystal Cool Toothpaste offers a cool burst of freshness with every brush, formulated to deliver all-day freshness and protect your smile. This advanced formula is perfect for individuals looking for a long-lasting refreshing sensation, healthier gums, and stronger enamel. As part of mydent’s commitment to providing innovative, at-home oral care solutions, Crystal Cool offers an enamel-safe, gentle formula for daily use, making it a must-have for your morning and nighttime routines.',
   },
   waterflosser: {
     title: 'Water Flosser',
     categoryKey: 'waterflosser',
-    price: 1599,
-    originalPrice: 2299,
+    price: 2000,
+    originalPrice: 4000,
     description: 'Cordless water flosser for deep cleaning between teeth.',
     tags: ['Water Flosser', 'Dental Hygiene'],
     images: [
@@ -160,16 +236,25 @@ export const productData: Record<string, Product> = {
       require('../../assets/images/ecom/waterflosser/3.png'),
     ],
     productDetails:
-      'Rechargeable water flosser for effective interdental cleaning.',
-    benefits: 'Removes plaque, massages gums, portable.',
-    howToUse: 'Fill with water and direct stream between teeth.',
+      'Elevate your oral hygiene routine with the mydent Advanced Water Flosser – a portable, rechargeable solution designed for effective and convenient dental care. Featuring a large-capacity water tank and customizable water pressure settings, it offers three cleaning modes: Normal, Point, and Pulse, to suit your individual needs. The flosser comes equipped with 2 jet tips, 1 orthodontic tip, 1 periodontal tip, and 1 tongue cleaner tip for a complete clean. Its ergonomic design, gravity ball technology for consistent water flow, and built-in charging indicator make it both user-friendly and travel-ready. Safe, efficient, and perfect for on-the-go use!',
+    benefits:
+      'mydent Advanced Water Flosser – Complete, Customizable, and Travel-Ready Oral Care\n- Three Modes: Normal, Point, Pulse with 4 adjustable water pressures.\n- Portable & Ergonomic: Large tank, gravity ball for consistent flow, and compact design.\n- Accessory Kit: Includes 2 jet tips, 1 orthodontic, 1 periodontal, and 1 tongue cleaner tip.\n- Smart Operation: Power key, jet tip lock, charging indicator, and water level display.\n- Factory-Tested: May contain traces of distilled water; safe for use.',
+    howToUse:
+      'How to Use the mydent Advanced Water Flosser:\n1. Fill the Reservoir: Open and fill the tank with clean water, then secure the lid.\n2. Attach the Jet Tip: Choose a tip (jet, ortho, perio, tongue) and insert until it clicks.\n3. Power On: Press ON/OFF and let water flow stabilize.\n4. Start with Soft Mode: Ideal for beginners or sensitive gums.\n5. Position the Nozzle: Aim between teeth at the gumline.\n6. Adjust Pressure: Move slowly, changing pressure/modes as needed.\n7. Finish & Rinse: Turn off, remove the tip, empty tank, and rinse parts.',
+    ingredients:
+      'ABS plastic body, BPA-free water reservoir, food-grade silicone sealings, stainless steel internals, electronic components.',
+    caution:
+      'Do not use with mouthwash or any liquid other than clean water unless specified. Not recommended for children under 12 without supervision. Avoid pointing the stream directly into the throat or eyes.',
+    information:
+      'The device is water-resistant but not waterproof—do not submerge. Charge fully before first use. Distilled water residue from factory testing is safe and harmless.',
   },
   chewes: {
     title: 'Chewes',
     categoryKey: 'chewes',
-    price: 299,
-    originalPrice: 499,
-    description: 'Mint-flavored chewes to maintain oral freshness.',
+    price: 300,
+    originalPrice: 600,
+    description:
+      'Gotcha! Like many others, you’ve fallen for our clickbait title! 😜 But don’t worry—these aren’t candies (unfortunately). However, they do come in three exciting flavors that make your experience even better!\n🛒 Order now and get it delivered within 7-10 working days.\n💰 Price includes all taxes.',
     tags: ['Oral Freshener', 'Chewables'],
     images: [
       require('../../assets/images/ecom/chewes/1.png'),
@@ -178,17 +263,28 @@ export const productData: Record<string, Product> = {
       require('../../assets/images/ecom/chewes/4.png'),
       require('../../assets/images/ecom/chewes/5.png'),
     ],
-    productDetails: 'Chewable tablets that freshen breath and clean teeth.',
-    benefits: 'Freshens breath, easy to carry, helps oral hygiene.',
-    howToUse: 'Chew 1–2 tablets after meals or when needed.',
+    productDetails:
+      'Why Use Chewies?\nAs you embark on your smile journey, your new aligners may not fit tightly at first. Chewies help provide extra pressure, allowing your aligners to fit more comfortably and straighten your teeth faster. Simply bite down on one chewie on each side of your mouth for 5 to 10 minutes, three to four times a day, and feel the pressure work to improve your aligner fit and speed up your results.\n\nWho Is It For?\nPerfect for anyone using aligners as part of their smile transformation.\n\nWhat’s in the Box?\n1 Chewie',
+    benefits:
+      'Chewies – The Easy & Effective Way to Enhance Your Smile Journey\n- Easy to Use: Simply bite down for 5–10 minutes, three to four times a day, to help your aligners fit better and straighten your teeth faster.\n- Exciting Flavours: Available in three refreshing flavours – Strawberry, Grapes, and Mint.\n- Hygienic & Safe: Crafted with hygiene and safety in mind, ensuring a clean and comfortable experience.',
+    howToUse:
+      'How to Use Chewies:\nStep 1:\nAfter putting on your aligners, bite down on the chewie for up to two minutes. Start with your right side and gradually work your way to the left.\n\nStep 2:\nOnce you’re done, your aligners should now have a snug fit. Clean and dry your chewie after every use.\n\nStep 3:\nStore your chewie in a dry box to keep it hygienic and ready for the next use.\n\nRepeat these steps each time you use your aligners for best results.',
+    ingredients:
+      'Food-grade silicone or similar non-toxic, BPA-free, latex-free material, flavored with safe food-grade essences (Strawberry, Grapes, Mint).',
+    caution:
+      'Do not swallow. Not suitable for children under 12. Keep out of reach of pets and children. Clean regularly to maintain hygiene.',
+    information:
+      'Chewies are reusable and designed to assist aligner fit and comfort. They are not edible and should only be used as directed for orthodontic support.',
   },
+
   electronictoothbrush: {
-    title: 'Electronic Toothbrush',
+    title: 'Electro Sonic Electric Toothbrush',
     categoryKey: 'electronictoothbrush',
     price: 1899,
     originalPrice: 2699,
-    description: 'Rechargeable toothbrush with multiple brushing modes.',
-    tags: ['Toothbrush', 'Rechargeable', 'Electronic'],
+    description:
+      'The mydent Electro Sonic Electric Toothbrush is designed for optimal oral care with 6 customizable modes, 5 brush heads, and waterproof protection. Experience a tailored, deep clean wherever you go with long-lasting power and a travel-friendly design.',
+    tags: ['Toothbrush', 'Rechargeable', 'Electronic', 'Sonic Cleaning'],
     images: [
       require('../../assets/images/ecom/electronictoothbrush/1.png'),
       require('../../assets/images/ecom/electronictoothbrush/2.png'),
@@ -202,18 +298,33 @@ export const productData: Record<string, Product> = {
       require('../../assets/images/ecom/electronictoothbrush/10.png'),
     ],
     productDetails:
-      'Electric toothbrush with soft bristles and multiple settings.',
-    benefits: 'Thorough cleaning, improves gum health, easy to use.',
+      'The mydent Electro Sonic Electric Toothbrush offers a personalized brushing experience with 6 cleaning modes and 5 interchangeable brush heads. It is IPX7 waterproof for safe use in the shower and has a long-lasting rechargeable battery. Perfect for daily use and travel.',
+    benefits:
+      '• 6 Customizable Modes for tailored cleaning\n' +
+      '• 5 Interchangeable Brush Heads for optimized cleaning\n' +
+      '• IPX7 Waterproof for use in shower and easy cleaning\n' +
+      '• Rechargeable with up to 2 weeks of use on a single charge\n' +
+      '• Includes a travel case for portability\n' +
+      '• Superior teeth cleaning for a fresh smile every day',
     howToUse:
-      'Brush teeth for 2 minutes using desired mode. Recharge as needed.',
+      '1. Choose your desired cleaning mode.\n' +
+      '2. Brush for 2 minutes using the built-in timer for optimal cleaning.\n' +
+      '3. After use, rinse the toothbrush head and store it in the travel case for easy portability.',
+    contents:
+      '• Electric Toothbrush Handle\n' +
+      '• 5 Interchangeable Brush Heads\n' +
+      '• Rechargeable Battery\n' +
+      '• Travel Case\n' +
+      '• User Manual',
   },
   pulltool: {
-    title: 'Pull Tool',
+    title: 'Aligner Retriever Tool',
     categoryKey: 'pulltool',
     price: 499,
     originalPrice: 799,
-    description: 'Tool designed for safe and effective aligner removal.',
-    tags: ['Aligner Tool', 'Dental Tool'],
+    description:
+      'Effortlessly remove your aligners with this ergonomic Aligner Retriever Tool. Designed for comfort and safety, it ensures easy, hygienic removal of your aligners or retainers without damage.',
+    tags: ['Aligner Tool', 'Dental Tool', 'Aligner Removal'],
     images: [
       require('../../assets/images/ecom/pulltool/1.png'),
       require('../../assets/images/ecom/pulltool/2.png'),
@@ -225,45 +336,82 @@ export const productData: Record<string, Product> = {
       require('../../assets/images/ecom/pulltool/8.png'),
       require('../../assets/images/ecom/pulltool/9.png'),
     ],
-    productDetails: 'Compact tool to remove aligners comfortably.',
-    benefits: 'Reduces risk of damage, easy grip, safe material.',
+    productDetails:
+      'The Aligner Retriever Tool is designed with a specially crafted hook for easy and comfortable aligner removal. Its compact, ergonomic design makes it travel-friendly and easy to use wherever you are.',
+    benefits:
+      '• Ergonomic and easy-to-use design\n' +
+      '• Safely removes aligners without damaging them\n' +
+      '• Compact and travel-friendly\n' +
+      '• Ensures hygienic removal of aligners or retainers\n' +
+      '• Ideal for anyone using mydent aligners, from beginners to experienced users',
     howToUse:
-      'Use hook to gently dislodge aligner from molar area and peel forward.',
+      '1. Start from the back of your mouth, positioning the tool along your gum line on both sides.\n' +
+      '2. Gently move towards the front of your mouth, pulling the aligners off your teeth.\n' +
+      '3. Use gentle pressure to ensure no damage occurs to the aligners.',
+    contents: '• 1 Aligner Retriever Tool',
   },
   alignersandretainer: {
-    title: 'Aligners and Retainer',
+    title: 'Mydent Retainer',
     categoryKey: 'alignersandretainer',
     price: 4999,
     originalPrice: 6499,
-    description: 'Invisible aligners and retainers for perfect smiles.',
-    tags: ['Aligners', 'Retainers', 'Dental'],
+    description:
+      'The final step of your smile makeover journey. Maintain your stunning smile with our custom-fitted retainers, designed to preserve the results of your treatment for lasting perfection.',
+    tags: ['Retainers', 'Smile Makeover', 'Dental Care'],
     images: [
       require('../../assets/images/ecom/aligners/1.png'),
       require('../../assets/images/ecom/aligners/2.png'),
       require('../../assets/images/ecom/aligners/3.png'),
     ],
     productDetails:
-      'Custom-fitted aligners and retainers to straighten and maintain teeth.',
-    benefits: 'Discreet, effective alignment, personalized fit.',
+      'Ideal for maintaining the results of your smile makeover, these retainers should be worn for 24 hours a day for the first 6 months after your treatment. They are custom-fitted to ensure lasting results.',
+    benefits:
+      '• Custom-fitted for a perfect, comfortable fit\n' +
+      '• Ensures lasting results from your smile makeover\n' +
+      '• Wearable 24/7 for the first 6 months\n' +
+      '• Available in upper, lower, or both retainers, depending on your order\n' +
+      '• Preserve your smile in the most discreet way',
     howToUse:
-      'Wear aligners as instructed by dentist, usually 20–22 hours per day.',
+      '• Wear the retainer 24 hours a day for the first 6 months after your smile makeover.\n' +
+      '• After 6 months, wear the retainer at night to maintain the results.',
+    contents:
+      '• Upper Retainer\n' +
+      '• Lower Retainer\n' +
+      '• Or Both, depending on your order',
   },
   alignersfoam: {
-    title: 'Aligners Foam Cleaner',
+    title: 'Foamy Aligner Cleaning Foam',
     categoryKey: 'alignersfoam',
     price: 599,
     originalPrice: 899,
-    description: 'Foam cleaner for aligners and retainers.',
-    tags: ['Aligner Care', 'Cleaner'],
+    description:
+      'Gentle, peppermint-infused foam cleanser that whitens and refreshes aligners while killing 99% of bacteria—perfect for on-the-go care.',
+    tags: ['Aligner Care', 'Cleaner', 'Whitening', 'Oral Hygiene'],
     images: [
       require('../../assets/images/ecom/alignersfoam/1.png'),
       require('../../assets/images/ecom/alignersfoam/2.png'),
       require('../../assets/images/ecom/alignersfoam/3.png'),
       require('../../assets/images/ecom/alignersfoam/4.png'),
     ],
-    productDetails: 'Antibacterial foam for cleaning aligners without rinsing.',
-    benefits: 'Kills odor-causing bacteria, no rinse needed, gentle formula.',
-    howToUse: 'Pump foam onto aligner, spread evenly, let sit or wipe clean.',
+    productDetails:
+      'Foamy Aligner Cleaning Foam by mydent is a powerful yet safe cleaner formulated for all clear aligners and retainers. With a BPA-free, antibacterial blend and peppermint freshness, it whitens, deodorizes, and protects without harsh chemicals. Portable and easy to use—just apply, wait 30 seconds, and rinse.',
+    benefits:
+      '- BPA-Free: Safe, chemical-free formula\n' +
+      '- Stain-Free: Removes yellowing and buildup\n' +
+      '- Odor-Free: Eliminates bacteria-causing smells\n' +
+      '- 99% Germ Kill: Strong antibacterial protection\n' +
+      '- Minty Freshness: Leaves aligners clean and invigorated\n' +
+      '- Easy & Portable: Ideal for home or travel use',
+    howToUse:
+      '1. Remove aligners from your mouth\n' +
+      '2. Pump foam directly onto aligners\n' +
+      '3. Let sit for 30 seconds\n' +
+      '4. Rinse thoroughly with water\n' +
+      '5. Repeat as needed before each use',
+    ingredients:
+      'Cocamidopropyl Betaine, Benzalkonium Chloride, Propylene Glycol, Diazolidinyl Urea, Iodopropynyl Butylcarbamate, Water, Peppermint, Glycerine',
+    information:
+      'Crafted by orthodontists and powered by cutting-edge tech, mydent is India’s leading at-home smile makeover brand. The Foamy Aligner Cleaning Foam is part of our modern oral care lineup, including aligners, whitening pens, smart toothbrushes, and more. It delivers easy, fast, and refreshing aligner hygiene—just apply, wait, rinse, and smile!',
   },
   checkretractor: {
     title: 'Cheek Retractor',
@@ -278,9 +426,16 @@ export const productData: Record<string, Product> = {
       require('../../assets/images/ecom/checkretractor/3.png'),
     ],
     productDetails:
-      'Durable retractors to keep cheeks away for clear oral view.',
-    benefits: 'Comfortable fit, reusable, easy to sterilize.',
+      'Cheek retractors help keep the oral cavity open by gently pulling back the cheeks, offering an unobstructed view for dental exams, procedures, or clear intraoral photography. Made from durable, medical-grade material for professional or at-home aligner check-ups.',
+    benefits:
+      '- Provides clear visibility of teeth and gums for dental procedures and aligner checks.\n- Comfortable ergonomic fit designed to reduce strain and irritation.\n- Reusable and easy to clean—can be sterilized using hot water or disinfectants.',
     howToUse:
-      'Insert ends into mouth to retract cheeks. Hold or let rest during procedures.',
+      '1. Hold the retractor by its arms and gently place each end inside the mouth, hooking behind the lips.\n2. Adjust to ensure both cheeks are comfortably and fully retracted.\n3. Use hands to hold in place or allow it to rest during the procedure or photography.\n4. After use, wash thoroughly and dry before storing.',
+    ingredients:
+      'High-quality medical-grade BPA-free plastic (polycarbonate or polypropylene).',
+    caution:
+      'Do not force into mouth. Avoid use if you have mouth sores or irritation. Supervise children using cheek retractors.',
+    information:
+      'Cheek retractors are non-invasive tools commonly used in dentistry and orthodontics. Suitable for both clinic and home use. Wash before and after each use to maintain hygiene.',
   },
 };

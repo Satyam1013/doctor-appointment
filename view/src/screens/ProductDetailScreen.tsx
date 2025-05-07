@@ -20,11 +20,16 @@ export default function ProductDetailScreen({ route }: any) {
   const key = formatTitleToKey(category);
   const product = productData[key];
 
-  const sections: { label: string; key: keyof Product }[] = [
+  const possibleSections: { label: string; key: keyof Product }[] = [
     { label: 'Product Details', key: 'productDetails' },
     { label: 'Benefits', key: 'benefits' },
     { label: 'How to Use', key: 'howToUse' },
+    { label: 'Ingredients', key: 'ingredients' },
+    { label: 'Caution', key: 'caution' },
+    { label: 'Information', key: 'information' },
   ];
+
+  const sections = possibleSections.filter((section) => product[section.key]);
 
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const toggleSection = (section: string) => {
