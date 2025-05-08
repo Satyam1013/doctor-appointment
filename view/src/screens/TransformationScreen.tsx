@@ -39,7 +39,7 @@ const products = [
 export default function TransformationScreen({ navigation }: any) {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Top Transformation Blogs</Text>
+      <Text style={styles.title}>Before vs After Treatment</Text>
 
       <View style={styles.grid}>
         {products.map((item, idx) => (

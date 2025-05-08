@@ -14,16 +14,16 @@ import {
 } from 'react-native';
 
 const categories = [
-  { name: 'Ayurvedic', img: require('../../assets/images/cat.png') },
-  { name: 'Ayurvedic', img: require('../../assets/images/cat2.png') },
-  { name: 'Ayurvedic', img: require('../../assets/images/cat3.png') },
-  { name: 'Ayurvedic', img: require('../../assets/images/cat4.png') },
-  { name: 'Ayurvedic', img: require('../../assets/images/cat5.png') },
-  { name: 'Ayurvedic', img: require('../../assets/images/cat6.png') },
-  { name: 'Ayurvedic', img: require('../../assets/images/cat7.png') },
-  { name: 'Ayurvedic', img: require('../../assets/images/cat8.png') },
-  { name: 'Ayurvedic', img: require('../../assets/images/cat9.png') },
-  { name: 'Ayurvedic', img: require('../../assets/images/cat10.png') },
+  { img: require('../../assets/images/cat.png') },
+  { img: require('../../assets/images/cat2.png') },
+  { img: require('../../assets/images/cat3.png') },
+  { img: require('../../assets/images/cat4.png') },
+  { img: require('../../assets/images/cat5.png') },
+  { img: require('../../assets/images/cat6.png') },
+  { img: require('../../assets/images/cat7.png') },
+  { img: require('../../assets/images/cat8.png') },
+  { img: require('../../assets/images/cat9.png') },
+  { img: require('../../assets/images/cat10.png') },
 ];
 
 const treatmentItems = [
@@ -38,14 +38,8 @@ const treatmentItems = [
 export default function MydentCenters({ navigation }: any) {
   return (
     <ScrollView style={styles.container}>
-      {/* Category Header */}
       <View style={styles.header}>
         <Text style={styles.title}>Mydent Centers</Text>
-        {/* <TouchableOpacity
-          onPress={() => navigation.navigate('TeethTreatmentScreen')}
-        >
-          <Text style={styles.viewAll}>View All</Text>
-        </TouchableOpacity> */}
       </View>
 
       {/* Horizontal Category Scroll */}
@@ -66,29 +60,33 @@ export default function MydentCenters({ navigation }: any) {
       </ScrollView>
 
       {/* Video Section Header */}
-      <View style={styles.videoSection}>
-        <Text style={styles.title}>Understanding teeth alignment problems</Text>
-      </View>
+      <View style={styles.bgColor}>
+        <View style={styles.videoSection}>
+          <Text style={styles.title}>
+            Understanding teeth alignment problems
+          </Text>
+        </View>
 
-      {/* Video Grid */}
-      <View style={styles.treatmentGrid}>
-        {treatmentItems.map((item, idx) => (
-          <TouchableOpacity
-            key={idx}
-            style={styles.treatmentItem}
-            onPress={() =>
-              navigation.navigate('TeethTreatmentScreen', {
-                videoUri: `/public/videos/v${idx + 1}.mp4`,
-              })
-            }
-          >
-            <Image
-              source={item}
-              style={styles.treatmentImage}
-              resizeMode="cover"
-            />
-          </TouchableOpacity>
-        ))}
+        {/* Video Grid */}
+        <View style={styles.treatmentGrid}>
+          {treatmentItems.map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.treatmentItem}
+              onPress={() =>
+                navigation.navigate('TeethTreatmentScreen', {
+                  videoUri: `/public/videos/v${idx + 1}.mp4`,
+                })
+              }
+            >
+              <Image
+                source={item}
+                style={styles.treatmentImage}
+                resizeMode="cover"
+              />
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
@@ -98,6 +96,11 @@ const styles = StyleSheet.create({
   container: {
     padding: 12,
     backgroundColor: '#fff',
+  },
+  bgColor: {
+    backgroundColor: '#CEEDD9',
+    marginHorizontal: -12,
+    padding: 12,
   },
   header: {
     flexDirection: 'row',

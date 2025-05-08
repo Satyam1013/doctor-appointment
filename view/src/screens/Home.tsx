@@ -18,6 +18,7 @@ import ClinicVisitCard from '../components/VisitClinic';
 import FeaturedIn from '../components/FeaturedIn';
 import FeatureStats from '../components/FeatureStats';
 import DoctorCard from '../components/ConsultDoctors';
+import FloatingButtons from '../components/FloatingButtons';
 
 export default function HomeScreen({ navigation }: any) {
   const topCarousel = [
@@ -32,24 +33,27 @@ export default function HomeScreen({ navigation }: any) {
   ];
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={{ zIndex: 100, top: 0, width: '100%' }}>
-        <Header navigation={navigation} />
-      </View>
-      <SearchBar />
-      <Carousel images={topCarousel} />
-      <ServiceCards navigation={navigation} />
-      <FindTeethType navigation={navigation} />
-      <TopProducts navigation={navigation} />
-      <MydentCenters navigation={navigation} />
-      <Transformation navigation={navigation} />
-      <BeforeAfterTreatment />
-      <ClinicVisitCard onPress={() => navigation.navigate('ClinicMap')} />
-      <Carousel images={bottomCarousel} />
-      <DoctorCard navigation={navigation} />
-      <FeaturedIn />
-      <FeatureStats />
-    </ScrollView>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={{ zIndex: 100, top: 0, width: '100%' }}>
+          <Header navigation={navigation} />
+        </View>
+        <SearchBar />
+        <Carousel images={topCarousel} />
+        <ServiceCards navigation={navigation} />
+        <FindTeethType navigation={navigation} />
+        <TopProducts navigation={navigation} />
+        <MydentCenters navigation={navigation} />
+        <Transformation navigation={navigation} />
+        <BeforeAfterTreatment />
+        <ClinicVisitCard onPress={() => navigation.navigate('ClinicMap')} />
+        <Carousel images={bottomCarousel} />
+        <DoctorCard />
+        <FeaturedIn />
+        <FeatureStats />
+      </ScrollView>
+      <FloatingButtons />
+    </View>
   );
 }
 

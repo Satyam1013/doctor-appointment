@@ -23,7 +23,7 @@ export default function Transformation({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Top Transformation Blogs</Text>
+        <Text style={styles.title}>Before vs After Treatment</Text>
         <TouchableOpacity
           onPress={() => navigation.navigate('TransformationScreen')}
         >

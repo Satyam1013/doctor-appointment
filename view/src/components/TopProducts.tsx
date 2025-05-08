@@ -18,14 +18,6 @@ const doctors = [
 export default function TopProducts({ navigation }: any) {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('DoctorDetailsScreen')}
-        >
-          <Text style={styles.viewAll}>View All</Text>
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.grid}>
         {doctors.map((doc, idx) => (
           <TouchableOpacity
@@ -45,11 +37,6 @@ export default function TopProducts({ navigation }: any) {
 
 const styles = StyleSheet.create({
   container: { padding: 12, backgroundColor: '#fff0f0' },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
   title: { fontSize: 16, fontWeight: '600' },
   viewAll: { color: '#1e90ff' },
   grid: {
