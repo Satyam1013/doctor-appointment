@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useContext } from 'react';
@@ -12,7 +13,7 @@ import TransformationScreen from '../screens/TransformationScreen';
 import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import ConsultationOptionScreen from '../screens/ConsultationOptionScreen';
 import AgeSelectionScreen from '../screens/AgeSelectionScreen';
 import TeethIssueSelectionScreen from '../screens/TeethIssueSelectionScreen';
@@ -28,6 +29,8 @@ import TeethTreatmentScreen from '../screens/TeethTreatmentScreen';
 import ProfileScreen from '../screens/UserProfile';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ContactUsScreen from '../screens/ContactUsScreen';
+import OverlayFloatingButtons from '../components/FloatingButtons';
 // import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
@@ -46,8 +49,28 @@ const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: '#fff' },
-        tabBarLabelStyle: { fontSize: 12 },
+        tabBarShowLabel: true,
+        tabBarLabelPosition: 'below-icon',
+        tabBarStyle: {
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          elevation: 0,
+          backgroundColor: '#fff',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          height: 60,
+          ...Platform.select({
+            android: { elevation: 10 },
+            ios: {
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 10 },
+              shadowOpacity: 0.12,
+              shadowRadius: 6,
+            },
+          }),
+        },
         headerShown: false,
       }}
     >
@@ -55,30 +78,62 @@ const BottomTabNavigator = () => {
         name="Home"
         component={Home}
         options={{
+          tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
       />
+
       <Tab.Screen
-        name="Find"
-        component={FindTeethTypeScreen}
+        name="Mydent"
+        component={Home}
         options={{
+          tabBarLabel: 'Mydent',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="scanner" color={color} size={size} />
+            <MaterialCommunityIcons name="medal" color={color} size={size} />
           ),
         }}
       />
+
+      {/* Middle Tab under the floating button */}
       <Tab.Screen
-        name="Medicines"
-        component={EComScreen}
+        name="Centers"
+        component={Home}
         options={{
+          tabBarLabel: 'Centers',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="prescription"
+              name="map-marker"
               color={color}
               size={size}
             />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Products"
+        component={EComScreen}
+        options={{
+          tabBarLabel: 'Products',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="shopping-outline"
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Contact Us"
+        component={ContactUsScreen}
+        options={{
+          tabBarLabel: 'Contact Us',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="contacts" color={color} size={size} />
           ),
         }}
       />
@@ -108,6 +163,11 @@ export default function AppNavigator() {
               name="Profile"
               component={ProfileScreen}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Contact Us"
+              component={ContactUsScreen}
+              options={{ title: 'Contact Us' }}
             />
             <Stack.Screen
               name="ConsultationOption"
@@ -199,6 +259,17 @@ export default function AppNavigator() {
               component={ClinicMapScreen}
               options={{ headerShown: true, title: 'Clinic Location' }}
             /> */}
+            <Stack.Screen
+              name="BottomTabsButtons"
+              options={{ headerShown: false }}
+            >
+              {() => (
+                <View style={{ flex: 1 }}>
+                  <BottomTabNavigator />
+                  <OverlayFloatingButtons />
+                </View>
+              )}
+            </Stack.Screen>
           </>
         ) : (
           <>

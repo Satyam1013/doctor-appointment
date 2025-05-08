@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React from 'react';
 import {
@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   View,
   Image,
-  Linking,
   Text,
+  Linking,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons'; // Make sure this is installed
 
-export default function FloatingButtons() {
+export default function OverlayFloatingButtons() {
   const navigation = useNavigation();
 
   const handleWhatsAppPress = () => {
@@ -23,57 +24,70 @@ export default function FloatingButtons() {
     navigation.navigate('ConsultationOption' as never);
   };
 
-  return (
-    <>
-      {/* WhatsApp Button - Bottom Right (icon only) */}
-      <View style={styles.whatsappContainer}>
-        <TouchableOpacity onPress={handleWhatsAppPress}>
-          <Image
-            source={require('../../assets/images/wa.png')}
-            style={styles.whatsappIcon}
-          />
-        </TouchableOpacity>
-      </View>
+  const handleConsultPress = () => {
+    navigation.navigate('ConsultationOption' as never);
+  };
 
-      {/* Book a Scan Button - Bottom Left (pill red) */}
-      <View style={styles.bookContainer}>
-        <TouchableOpacity style={styles.bookButton} onPress={handleBookPress}>
-          <Text style={styles.bookText}>Book a Scan</Text>
-        </TouchableOpacity>
-      </View>
-    </>
+  return (
+    <View style={styles.container}>
+      {/* Left: Book a Scan */}
+      <TouchableOpacity style={styles.bookAScan} onPress={handleBookPress}>
+        <MaterialIcons name="book-online" size={28} color="#fff" />
+      </TouchableOpacity>
+
+      {/* Center: Consult Doctor */}
+      <TouchableOpacity
+        style={styles.consultButton}
+        onPress={handleConsultPress}
+      >
+        <MaterialIcons name="local-hospital" size={28} color="#fff" />
+      </TouchableOpacity>
+
+      {/* Right: WhatsApp */}
+      <TouchableOpacity onPress={handleWhatsAppPress}>
+        <Image
+          source={require('../../assets/images/wa.png')}
+          style={styles.whatsappIcon}
+        />
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  whatsappContainer: {
+  container: {
     position: 'absolute',
-    bottom: 24,
-    right: 16,
+    bottom: 70,
+    left: 0,
+    right: 0,
+    zIndex: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    pointerEvents: 'box-none',
   },
-  bookContainer: {
-    position: 'absolute',
-    bottom: 24,
-    left: 16,
+  bookAScan: {
+    backgroundColor: 'red',
+    padding: 12,
+    borderRadius: 25,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+  },
+  consultButton: {
+    backgroundColor: '#0077b6',
+    padding: 12,
+    borderRadius: 25,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
   },
   whatsappIcon: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
     resizeMode: 'contain',
-  },
-  bookButton: {
-    backgroundColor: '#ff4d4d',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 25,
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-  },
-  bookText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: 'bold',
   },
 });
