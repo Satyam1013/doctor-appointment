@@ -26,9 +26,12 @@ import EComScreen from '../screens/ECommerceScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import TeethTreatmentScreen from '../screens/TeethTreatmentScreen';
 import ProfileScreen from '../screens/UserProfile';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 // HOC to wrap a screen with SafeAreaView
 const withSafeArea = (Component: React.ComponentType<any>) => {
@@ -36,6 +39,50 @@ const withSafeArea = (Component: React.ComponentType<any>) => {
     <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
       <Component {...props} />
     </SafeAreaView>
+  );
+};
+
+const BottomTabNavigator = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: { backgroundColor: '#fff' },
+        tabBarLabelStyle: { fontSize: 12 },
+        headerShown: false,
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Find"
+        component={FindTeethTypeScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="scanner" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Medicines"
+        component={EComScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="prescription"
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
@@ -47,6 +94,11 @@ export default function AppNavigator() {
       <Stack.Navigator>
         {token ? (
           <>
+            <Stack.Screen
+              name="BottomTabs"
+              component={BottomTabNavigator}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Home"
               component={Home}
