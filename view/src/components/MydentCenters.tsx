@@ -35,17 +35,17 @@ const treatmentItems = [
   require('../../assets/images/videoposter6.png'),
 ];
 
-export default function ShopByCategory({ navigation }: any) {
+export default function MydentCenters({ navigation }: any) {
   return (
     <ScrollView style={styles.container}>
       {/* Category Header */}
       <View style={styles.header}>
-        <Text style={styles.title}>Shop By Category</Text>
-        <TouchableOpacity
+        <Text style={styles.title}>Mydent Centers</Text>
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate('TeethTreatmentScreen')}
         >
           <Text style={styles.viewAll}>View All</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       {/* Horizontal Category Scroll */}
@@ -67,7 +67,7 @@ export default function ShopByCategory({ navigation }: any) {
 
       {/* Video Section Header */}
       <View style={styles.videoSection}>
-        <Text style={styles.title}>Treatment Videos</Text>
+        <Text style={styles.title}>Understanding teeth alignment problems</Text>
       </View>
 
       {/* Video Grid */}

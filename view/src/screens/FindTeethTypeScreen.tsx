@@ -12,18 +12,21 @@ import {
 } from 'react-native';
 
 const categories = [
-  { title: 'Diabetes', icon: require('../../assets/images/video.png') },
-  { title: 'Gynae', icon: require('../../assets/images/video2.png') },
-  { title: 'Sexual Disorder', icon: require('../../assets/images/video3.png') },
-  { title: 'Digestive', icon: require('../../assets/images/video4.png') },
-  { title: 'Acne & Skin', icon: require('../../assets/images/video5.png') },
-  { title: 'PCOS', icon: require('../../assets/images/video6.png') },
-  { title: 'Hair', icon: require('../../assets/images/video7.png') },
-  { title: 'Liver & Kidney', icon: require('../../assets/images/video8.png') },
-  { title: 'Cardiac', icon: require('../../assets/images/video9.png') },
+  { title: 'Under bite', icon: require('../../assets/images/video.png') },
+  { title: 'Open bite', icon: require('../../assets/images/video2.png') },
+  { title: 'Crooked teeth', icon: require('../../assets/images/video3.png') },
+  { title: 'Gap teeth', icon: require('../../assets/images/video4.png') },
+  { title: 'Deep bite', icon: require('../../assets/images/video5.png') },
+  { title: 'Cross bite', icon: require('../../assets/images/video6.png') },
+  {
+    title: 'Forwardly placed teeth',
+    icon: require('../../assets/images/video7.png'),
+  },
+  { title: 'Teeth Spacings', icon: require('../../assets/images/video8.png') },
+  { title: 'Jaw correction', icon: require('../../assets/images/video9.png') },
 ];
 
-export default function FindDoctorScreen() {
+export default function FindTeethTypeScreen() {
   return (
     <ScrollView style={styles.container}>
       {/* Search Bar */}

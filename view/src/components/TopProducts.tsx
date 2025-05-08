@@ -19,7 +19,6 @@ export default function TopProducts({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Top Doctors</Text>
         <TouchableOpacity
           onPress={() => navigation.navigate('DoctorDetailsScreen')}
         >

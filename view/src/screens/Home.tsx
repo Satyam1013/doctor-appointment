@@ -8,9 +8,9 @@ import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import Carousel from '../components/Carousel';
 import ServiceCards from '../components/ServiceCards';
-import DoctorSpecialties from '../components/DoctorSpecialtiesScreen';
+import FindTeethType from '../components/FindTeethType';
 import TopProducts from '../components/TopProducts';
-import ShopByCategory from '../components/ShopByCategory';
+import MydentCenters from '../components/MydentCenters';
 import Transformation from '../components/Transformation';
 import BeforeAfterTreatment from '../components/Treatment';
 import React from 'react';
@@ -39,9 +39,9 @@ export default function HomeScreen({ navigation }: any) {
       <SearchBar />
       <Carousel images={topCarousel} />
       <ServiceCards navigation={navigation} />
-      <DoctorSpecialties navigation={navigation} />
+      <FindTeethType navigation={navigation} />
       <TopProducts navigation={navigation} />
-      <ShopByCategory navigation={navigation} />
+      <MydentCenters navigation={navigation} />
       <Transformation navigation={navigation} />
       <BeforeAfterTreatment />
       <ClinicVisitCard onPress={() => navigation.navigate('ClinicMap')} />

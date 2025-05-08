@@ -6,7 +6,7 @@ import Login from '../screens/Login';
 import Signup from '../screens/Signup';
 import Home from '../screens/Home';
 import TreatmentInfoScreen from '../screens/TreatmentInfo';
-import FindDoctorScreen from '../screens/FindDoctor';
+import FindTeethTypeScreen from '../screens/FindTeethTypeScreen';
 import DoctorDetailsScreen from '../screens/TopDoctorsScreens';
 import TransformationScreen from '../screens/TransformationScreen';
 import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
@@ -133,8 +133,8 @@ export default function AppNavigator() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="FindDoctorScreen"
-              component={withSafeArea(FindDoctorScreen)}
+              name="FindTeethTypeScreen"
+              component={withSafeArea(FindTeethTypeScreen)}
               options={{ headerShown: false }}
             />
             <Stack.Screen

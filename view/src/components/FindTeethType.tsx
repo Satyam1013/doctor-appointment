@@ -14,22 +14,25 @@ import {
 } from 'react-native';
 
 const categories = [
-  { title: 'Ayurvedic', img: require('../../assets/images/video.png') },
-  { title: 'Ayurvedic', img: require('../../assets/images/video2.png') },
-  { title: 'Ayurvedic', img: require('../../assets/images/video3.png') },
-  { title: 'Ayurvedic', img: require('../../assets/images/video4.png') },
-  { title: 'Ayurvedic', img: require('../../assets/images/video5.png') },
-  { title: 'Ayurvedic', img: require('../../assets/images/video6.png') },
-  { title: 'Ayurvedic', img: require('../../assets/images/video7.png') },
+  { title: 'Under bite', img: require('../../assets/images/video.png') },
+  { title: 'Open bite', img: require('../../assets/images/video2.png') },
+  { title: 'Crooked teeth', img: require('../../assets/images/video3.png') },
+  { title: 'Gap teeth', img: require('../../assets/images/video4.png') },
+  { title: 'Deep bite', img: require('../../assets/images/video5.png') },
+  { title: 'Cross bite', img: require('../../assets/images/video6.png') },
+  {
+    title: 'Forwardly placed teeth',
+    img: require('../../assets/images/video7.png'),
+  },
 ];
 
-export default function DoctorSpecialties({ navigation }: any) {
+export default function FindTeethType({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Find Ayurvedic Doctor By Specialties</Text>
+        <Text style={styles.title}>Find your bite type</Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate('FindDoctorScreen')}
+          onPress={() => navigation.navigate('FindTeethTypeScreen')}
         >
           <Text style={styles.viewAll}>View All</Text>
         </TouchableOpacity>
@@ -40,7 +43,7 @@ export default function DoctorSpecialties({ navigation }: any) {
           <TouchableOpacity
             key={idx}
             style={styles.item}
-            onPress={() => navigation.navigate('FindDoctorScreen')}
+            onPress={() => navigation.navigate('FindTeethTypeScreen')}
           >
             <Image source={item.img} style={styles.image} />
             <Text style={styles.itemText}>{item.title}</Text>
