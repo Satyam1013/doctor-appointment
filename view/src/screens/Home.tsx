@@ -4,8 +4,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ScrollView, StyleSheet, View } from 'react-native';
-import Header from '../components/Header';
-import SearchBar from '../components/SearchBar';
 import Carousel from '../components/Carousel';
 import ServiceCards from '../components/ServiceCards';
 import FindTeethType from '../components/FindTeethType';
@@ -18,7 +16,6 @@ import ClinicVisitCard from '../components/VisitClinic';
 import FeaturedIn from '../components/FeaturedIn';
 import FeatureStats from '../components/FeatureStats';
 import DoctorCard from '../components/ConsultDoctors';
-import FloatingButtons from '../components/FloatingButtons';
 
 export default function HomeScreen({ navigation }: any) {
   const topCarousel = [
@@ -35,10 +32,6 @@ export default function HomeScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={{ zIndex: 100, top: 0, width: '100%' }}>
-          <Header navigation={navigation} />
-        </View>
-        <SearchBar />
         <Carousel images={topCarousel} />
         <ServiceCards navigation={navigation} />
         <FindTeethType navigation={navigation} />
@@ -52,7 +45,6 @@ export default function HomeScreen({ navigation }: any) {
         <FeaturedIn />
         <FeatureStats />
       </ScrollView>
-      <FloatingButtons />
     </View>
   );
 }
