@@ -8,7 +8,7 @@ import Signup from '../screens/Signup';
 import Home from '../screens/Home';
 import TreatmentInfoScreen from '../screens/TreatmentInfo';
 import FindTeethTypeScreen from '../screens/FindTeethTypeScreen';
-import DoctorDetailsScreen from '../screens/TopDoctorsScreens';
+import DoctorDetailsScreen from '../screens/TopDoctorsScreen';
 import TransformationScreen from '../screens/TransformationScreen';
 import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import React from 'react';
@@ -31,6 +31,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ContactUsScreen from '../screens/ContactUsScreen';
 import OverlayFloatingButtons from '../components/FloatingButtons';
+import CurvedTabBarBackground from '../components/CurvedTabBarBackground';
+import CentersScreen from '../screens/CentersScreen';
 // import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
@@ -53,25 +55,14 @@ const BottomTabNavigator = () => {
         tabBarLabelPosition: 'below-icon',
         tabBarStyle: {
           position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
+          backgroundColor: 'transparent',
+          borderTopWidth: 0,
           elevation: 0,
-          backgroundColor: '#fff',
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
           height: 60,
-          ...Platform.select({
-            android: { elevation: 10 },
-            ios: {
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 10 },
-              shadowOpacity: 0.12,
-              shadowRadius: 6,
-            },
-          }),
+          bottom: 0,
         },
         headerShown: false,
+        tabBarBackground: () => <CurvedTabBarBackground />,
       }}
     >
       <Tab.Screen
@@ -99,15 +90,17 @@ const BottomTabNavigator = () => {
       {/* Middle Tab under the floating button */}
       <Tab.Screen
         name="Centers"
-        component={Home}
+        component={CentersScreen}
         options={{
           tabBarLabel: 'Centers',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="map-marker"
-              color={color}
-              size={size}
-            />
+            <View style={{ marginTop: 10 }}>
+              <MaterialCommunityIcons
+                name="map-marker"
+                color={color}
+                size={size}
+              />
+            </View>
           ),
         }}
       />
