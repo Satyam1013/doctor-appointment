@@ -3,7 +3,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Navbar from './Navbar';
-import BottomTabNavigator from '../navigation/TabNavigator';
 import OverlayFloatingButtons from './FloatingButtons';
 
 export default function AppShell({ children, navigation }: any) {
@@ -14,7 +13,6 @@ export default function AppShell({ children, navigation }: any) {
       </View>
       <View style={styles.content}>{children}</View>
       <View style={styles.bottomTabWrapper}>
-        {/* <BottomTabNavigator /> */}
         <OverlayFloatingButtons />
       </View>
     </View>

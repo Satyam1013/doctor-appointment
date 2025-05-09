@@ -1,8 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CurvedTabBarBackground from '../components/CurvedTabBarBackground';
-import HomeScreen from '../screens/Home';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View } from 'react-native';
+import { withAppShell } from '../utils/AppShellWrapper';
+
+// Screens
+import HomeScreen from '../screens/Home';
 import Centers from '../screens/CentersScreen';
 import EComScreen from '../screens/ECommerceScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
@@ -29,7 +32,7 @@ export default function BottomTabNavigator() {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={withAppShell(HomeScreen)}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
@@ -40,7 +43,7 @@ export default function BottomTabNavigator() {
 
       <Tab.Screen
         name="Mydent"
-        component={HomeScreen}
+        component={withAppShell(HomeScreen)}
         options={{
           tabBarLabel: 'Mydent',
           tabBarIcon: ({ color, size }) => (
@@ -49,10 +52,9 @@ export default function BottomTabNavigator() {
         }}
       />
 
-      {/* Middle Tab under the floating button */}
       <Tab.Screen
         name="Centers"
-        component={Centers}
+        component={withAppShell(Centers)}
         options={{
           tabBarLabel: 'Centers',
           tabBarIcon: ({ color, size }) => (
@@ -69,7 +71,7 @@ export default function BottomTabNavigator() {
 
       <Tab.Screen
         name="Products"
-        component={EComScreen}
+        component={withAppShell(EComScreen)}
         options={{
           tabBarLabel: 'Products',
           tabBarIcon: ({ color, size }) => (
@@ -84,7 +86,7 @@ export default function BottomTabNavigator() {
 
       <Tab.Screen
         name="Contact Us"
-        component={ContactUsScreen}
+        component={withAppShell(ContactUsScreen)}
         options={{
           tabBarLabel: 'Contact Us',
           tabBarIcon: ({ color, size }) => (
