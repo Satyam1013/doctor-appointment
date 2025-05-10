@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useState, useContext } from 'react';
 import {
   View,
@@ -12,11 +10,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { Menu, Provider } from 'react-native-paper';
 import { useUser } from '../contexts/UserContext';
 import { AuthContext } from '../contexts/AuthContext';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-export default function Navbar({ navigation }: any) {
+export default function Navbar() {
   const { user } = useUser();
+  const navigation = useNavigation<NavigationProp<any>>();
   const { logout } = useContext(AuthContext);
-
   const [menuVisible, setMenuVisible] = useState(false);
 
   const openMenu = () => setMenuVisible(true);
@@ -30,7 +29,10 @@ export default function Navbar({ navigation }: any) {
   const handleLogout = () => {
     closeMenu();
     logout();
-    navigation.replace('Login');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
   };
 
   return (

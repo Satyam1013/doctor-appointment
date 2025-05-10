@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// navigation/HomeStack.tsx
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import TreatmentInfoScreen from '../screens/TreatmentInfo';
-import FindTeethTypeScreen from '../screens/FindTeethTypeScreen';
-import DoctorDetailsScreen from '../screens/TopDoctorsScreen';
-import TransformationScreen from '../screens/TransformationScreen';
-import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
-import React from 'react';
+import HomeScreen from '../screens/Home';
+import ProfileScreen from '../screens/UserProfile';
+import ContactUsScreen from '../screens/ContactUsScreen';
 import ConsultationOptionScreen from '../screens/ConsultationOptionScreen';
 import AgeSelectionScreen from '../screens/AgeSelectionScreen';
 import TeethIssueSelectionScreen from '../screens/TeethIssueSelectionScreen';
@@ -18,22 +15,22 @@ import CheckoutSummaryScreen from '../screens/CheckoutSummaryScreen';
 import EComScreen from '../screens/ECommerceScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import TeethTreatmentScreen from '../screens/TeethTreatmentScreen';
-import ProfileScreen from '../screens/UserProfile';
-import HomeScreen from '../screens/Home';
-import ContactUsScreen from '../screens/ContactUsScreen';
+import TreatmentInfoScreen from '../screens/TreatmentInfo';
+import FindTeethTypeScreen from '../screens/FindTeethTypeScreen';
+import DoctorDetailsScreen from '../screens/TopDoctorsScreen';
+import TransformationScreen from '../screens/TransformationScreen';
+import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import { withAppShell } from '../utils/AppShellWrapper';
-import BottomTabNavigator from './TabNavigator';
 
 const Stack = createNativeStackNavigator();
 
-export default function MainScreen() {
+export default function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Tabs" component={BottomTabNavigator} />
       <Stack.Screen name="Home" component={withAppShell(HomeScreen)} />
       <Stack.Screen name="Profile" component={withAppShell(ProfileScreen)} />
       <Stack.Screen
-        name="Contact Us"
+        name="ContactUs"
         component={withAppShell(ContactUsScreen)}
       />
       <Stack.Screen

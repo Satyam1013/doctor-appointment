@@ -2,13 +2,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CurvedTabBarBackground from '../components/CurvedTabBarBackground';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View } from 'react-native';
-import { withAppShell } from '../utils/AppShellWrapper';
-
-// Screens
-import HomeScreen from '../screens/Home';
 import Centers from '../screens/CentersScreen';
 import EComScreen from '../screens/ECommerceScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
+import HomeStack from './HomeStack';
+import TreatmentInfoScreen from '../screens/TreatmentInfo';
+import { withAppShell } from '../utils/AppShellWrapper';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,8 +30,8 @@ export default function BottomTabNavigator() {
       }}
     >
       <Tab.Screen
-        name="Home"
-        component={withAppShell(HomeScreen)}
+        name="HomeTab"
+        component={HomeStack}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
@@ -43,7 +42,7 @@ export default function BottomTabNavigator() {
 
       <Tab.Screen
         name="Mydent"
-        component={withAppShell(HomeScreen)}
+        component={withAppShell(TreatmentInfoScreen)}
         options={{
           tabBarLabel: 'Mydent',
           tabBarIcon: ({ color, size }) => (
@@ -51,9 +50,8 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
-
       <Tab.Screen
-        name="Centers"
+        name="CentersTab"
         component={withAppShell(Centers)}
         options={{
           tabBarLabel: 'Centers',
@@ -68,9 +66,8 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
-
       <Tab.Screen
-        name="Products"
+        name="ProductsTab"
         component={withAppShell(EComScreen)}
         options={{
           tabBarLabel: 'Products',
@@ -83,9 +80,8 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
-
       <Tab.Screen
-        name="Contact Us"
+        name="ContactUsTab"
         component={withAppShell(ContactUsScreen)}
         options={{
           tabBarLabel: 'Contact Us',
