@@ -3,14 +3,14 @@ import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 
 import AuthScreen from './AuthScreen';
-import BottomTabNavigator from './TabNavigator';
+import DrawerNavigator from './DrawerNavigation';
 
 export default function AppNavigator() {
   const { token } = useContext(AuthContext);
 
   return (
     <NavigationContainer>
-      {token ? <BottomTabNavigator /> : <AuthScreen />}
+      {token ? <DrawerNavigator /> : <AuthScreen />}
     </NavigationContainer>
   );
 }

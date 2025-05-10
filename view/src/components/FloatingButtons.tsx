@@ -25,11 +25,11 @@ export default function OverlayFloatingButtons() {
   };
 
   const handleBookPress = () => {
-    navigation.navigate('ConsultationOption' as never);
+    navigation.navigate('ConsultationOption');
   };
 
   const handleConsultPress = () => {
-    navigation.navigate('ConsultationOption' as never);
+    navigation.navigate('ConsultationOption');
   };
 
   return (

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import React, { useState, useContext } from 'react';
 import {
   View,
@@ -6,11 +8,15 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Menu, Provider } from 'react-native-paper';
 import { useUser } from '../contexts/UserContext';
 import { AuthContext } from '../contexts/AuthContext';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import {
+  useNavigation,
+  NavigationProp,
+  DrawerActions,
+} from '@react-navigation/native';
 
 export default function Navbar() {
   const { user } = useUser();
@@ -89,18 +95,39 @@ export default function Navbar() {
         </View>
 
         {/* Search Bar Section */}
-        <View style={styles.searchContainer}>
-          <Ionicons
-            name="search-outline"
-            size={20}
-            color="#777"
-            style={styles.searchIcon}
-          />
-          <TextInput
-            placeholder="Search for medicines and..."
-            style={styles.input}
-          />
-          <Ionicons name="cart-outline" size={24} color="#333" />
+        <View style={styles.searchRow}>
+          {/* Filter Icon */}
+          <TouchableOpacity
+            style={styles.filterButton}
+            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+          >
+            <MaterialCommunityIcons
+              name="filter-variant"
+              size={24}
+              color="#00BCD4"
+            />
+          </TouchableOpacity>
+
+          {/* Search Input Box */}
+          <View style={styles.searchContainer}>
+            <Ionicons
+              name="search-outline"
+              size={18}
+              color="#777"
+              style={styles.searchIcon}
+            />
+            <TextInput
+              placeholder="Search for medicines and..."
+              style={styles.input}
+              placeholderTextColor="#777"
+            />
+            <Ionicons name="mic-outline" size={18} color="#777" />
+          </View>
+
+          {/* Cart Icon */}
+          <TouchableOpacity style={styles.cartButton}>
+            <Ionicons name="cart-outline" size={22} color="#4CAF50" />
+          </TouchableOpacity>
         </View>
       </View>
     </Provider>
@@ -114,10 +141,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 12,
     paddingTop: 8,
-    paddingBottom: 4, // reduced bottom padding
+    paddingBottom: 4,
   },
   greeting: {
-    fontSize: 16, // slightly smaller
+    fontSize: 16,
     fontWeight: '600',
   },
   location: {
@@ -131,15 +158,26 @@ const styles = StyleSheet.create({
   icon: {
     marginHorizontal: 4,
   },
-  searchContainer: {
+  searchRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
     marginHorizontal: 12,
     marginBottom: 8,
+  },
+  filterButton: {
+    padding: 8,
+  },
+  searchContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
     paddingHorizontal: 8,
-    height: 40, // limit height of search bar
+    height: 40,
+    marginHorizontal: 6,
   },
   searchIcon: {
     marginRight: 6,
@@ -148,5 +186,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 4,
     fontSize: 14,
+    color: '#000',
+  },
+  cartButton: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 6,
   },
 });
