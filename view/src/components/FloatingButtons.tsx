@@ -9,16 +9,15 @@ import {
   Image,
   Linking,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
 export default function OverlayFloatingButtons() {
+  const navigation = useNavigation<NavigationProp<any>>();
   const [buttonWidth, setButtonWidth] = useState(0);
-
-  const navigation = useNavigation();
 
   const handleWhatsAppPress = () => {
     Linking.openURL('https://wa.me/+919999999999');

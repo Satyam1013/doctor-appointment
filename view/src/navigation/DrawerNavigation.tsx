@@ -5,6 +5,7 @@ import BottomTabNavigator from './TabNavigator';
 import ProfileScreen from '../screens/UserProfile';
 import ContactUsScreen from '../screens/ContactUsScreen';
 import CustomDrawerContent from '../components/CustomDrawerContent';
+import Centers from '../screens/CentersScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -20,6 +21,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="HomeTabs" component={BottomTabNavigator} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
       <Drawer.Screen name="Contact Us" component={ContactUsScreen} />
+      <Drawer.Screen name="Mydent Centers" component={Centers} />
     </Drawer.Navigator>
   );
 }

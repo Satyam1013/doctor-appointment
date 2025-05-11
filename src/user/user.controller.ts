@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { AuthRequest } from 'src/common/auth-req';
@@ -7,7 +7,6 @@ import { AuthRequest } from 'src/common/auth-req';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // 🧑 Get current user (from JWT)
   @UseGuards(JwtAuthGuard)
   @Get('/details')
   getUserById(@Req() req: AuthRequest) {
@@ -15,10 +14,19 @@ export class UserController {
     return this.userService.findById(id);
   }
 
-  // 📦 Admin endpoint to get all users
   @UseGuards(JwtAuthGuard)
   @Get()
   getAllUsers() {
     return this.userService.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('/edit')
+  async editUser(
+    @Req() req: AuthRequest,
+    @Body() updates: { firstName?: string; email?: string },
+  ) {
+    const id = req.user._id;
+    return this.userService.updateUser(id, updates);
   }
 }

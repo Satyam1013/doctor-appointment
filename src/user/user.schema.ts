@@ -24,9 +24,6 @@ export class User extends Document {
     default: UserRole.USER,
   })
   role!: UserRole;
-
-  @Prop({ default: false })
-  isGoogle!: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

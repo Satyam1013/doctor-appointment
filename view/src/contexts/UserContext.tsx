@@ -2,14 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { AuthContext } from './AuthContext'; // adjust path as needed
+import { AuthContext } from './AuthContext';
 
-// Define user type (match your backend User model)
 export interface User {
   _id: string;
   firstName: string;
   email: string;
-  // add other fields if needed
 }
 
 interface UserContextType {
@@ -18,10 +16,8 @@ interface UserContextType {
   isLoading: boolean;
 }
 
-// Create context
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-// Provider component
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -32,7 +28,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const fetchUser = async () => {
       if (!token) {
-        // No token = no API call
         setUser(null);
         setIsLoading(false);
         return;
@@ -55,7 +50,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     };
 
     fetchUser();
-  }, [token]); // 🔥 Rerun when token changes
+  }, [token]);
 
   return (
     <UserContext.Provider value={{ user, setUser, isLoading }}>
@@ -64,7 +59,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-// Hook to use UserContext easily
 export const useUser = () => {
   const context = useContext(UserContext);
   if (!context) {

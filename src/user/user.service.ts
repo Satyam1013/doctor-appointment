@@ -32,13 +32,22 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-  // ✏️ Optional: Update user info
   async updateUser(id: string, updates: Partial<User>): Promise<User> {
-    const user = await this.userModel.findByIdAndUpdate(id, updates, {
-      new: true,
-    });
-    if (!user) throw new NotFoundException('User not found');
-    return user;
+    try {
+      const user = await this.userModel.findByIdAndUpdate(id, updates, {
+        new: true,
+        runValidators: true,
+      });
+
+      if (!user) {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+
+      return user;
+    } catch (error) {
+      console.error(`Failed to update user with ID ${id}:`, error);
+      throw error;
+    }
   }
 
   // ❌ Optional: Delete user
