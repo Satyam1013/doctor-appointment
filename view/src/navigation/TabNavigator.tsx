@@ -8,6 +8,7 @@ import ContactUsScreen from '../screens/ContactUsScreen';
 import HomeStack from './HomeStack';
 import TreatmentInfoScreen from '../screens/TreatmentInfo';
 import { withAppShell } from '../utils/AppShellWrapper';
+import ProductDetailScreen from '../screens/ProductDetailScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +40,13 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
-
+      <Tab.Screen
+        name="CartScreen"
+        component={withAppShell(ProductDetailScreen)}
+        options={{
+          tabBarButton: () => null,
+        }}
+      />
       <Tab.Screen
         name="Mydent"
         component={withAppShell(TreatmentInfoScreen)}
@@ -48,6 +55,13 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="medal" color={color} size={size} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="Haha"
+        component={withAppShell(ProductDetailScreen)}
+        options={{
+          tabBarButton: () => null,
         }}
       />
       <Tab.Screen
@@ -67,6 +81,13 @@ export default function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
+        name="Lol"
+        component={withAppShell(ProductDetailScreen)}
+        options={{
+          tabBarButton: () => null,
+        }}
+      />
+      <Tab.Screen
         name="ProductsTab"
         component={withAppShell(EComScreen)}
         options={{
@@ -78,6 +99,13 @@ export default function BottomTabNavigator() {
               size={size}
             />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="ProductDetailScreen"
+        component={withAppShell(ProductDetailScreen)}
+        options={{
+          tabBarButton: () => null,
         }}
       />
       <Tab.Screen

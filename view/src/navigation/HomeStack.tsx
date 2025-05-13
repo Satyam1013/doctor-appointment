@@ -21,6 +21,7 @@ import DoctorDetailsScreen from '../screens/TopDoctorsScreen';
 import TransformationScreen from '../screens/TransformationScreen';
 import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import { withAppShell } from '../utils/AppShellWrapper';
+import Centers from '../screens/CentersScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,7 @@ export default function HomeStack() {
         name="ProblemDetail"
         component={withAppShell(ProblemDetailScreen)}
       />
+      <Stack.Screen name="Centers" component={withAppShell(Centers)} />
       <Stack.Screen
         name="MedicalHistory"
         component={withAppShell(MedicalHistoryScreen)}

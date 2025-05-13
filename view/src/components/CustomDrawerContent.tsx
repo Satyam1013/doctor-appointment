@@ -47,37 +47,52 @@ export default function CustomDrawerContent(props: any) {
       <View style={styles.menuItems}>
         <DrawerItem
           label="Home"
-          onPress={() => props.navigation.navigate('Home')}
+          onPress={() =>
+            props.navigation.navigate('HomeTabs', { screen: 'HomeTab' })
+          }
           icon={({ color, size }) => (
             <Ionicons name="home-outline" size={size} color={color} />
           )}
         />
         <DrawerItem
           label="Book Consultation"
-          onPress={() => props.navigation.navigate('ConsultationOption')}
+          onPress={() =>
+            props.navigation.navigate('HomeTabs', {
+              screen: 'HomeTab',
+              params: {
+                screen: 'ConsultationOption',
+              },
+            })
+          }
           icon={({ color, size }) => (
             <Ionicons name="book-sharp" size={size} color={color} />
           )}
         />
         <DrawerItem
           label="Buy Products"
-          onPress={() => props.navigation.navigate('EComScreen')}
+          onPress={() =>
+            props.navigation.navigate('HomeTabs', { screen: 'ProductsTab' })
+          }
           icon={({ color, size }) => (
             <Ionicons name="bag-add" size={size} color={color} />
           )}
         />
         <DrawerItem
           label="Mydent Centers"
-          onPress={() => props.navigation.navigate('Mydent Centers')}
+          onPress={() =>
+            props.navigation.navigate('HomeTabs', { screen: 'CentersTab' })
+          }
           icon={({ color, size }) => (
             <Ionicons name="business-outline" size={size} color={color} />
           )}
         />
         <DrawerItem
-          label="My Orders"
-          onPress={() => props.navigation.navigate('Mydent Centers')}
+          label="Contact Us"
+          onPress={() =>
+            props.navigation.navigate('HomeTabs', { screen: 'ContactUsTab' })
+          }
           icon={({ color, size }) => (
-            <Ionicons name="business-outline" size={size} color={color} />
+            <Ionicons name="call-outline" size={size} color={color} />
           )}
         />
       </View>

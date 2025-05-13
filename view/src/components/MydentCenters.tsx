@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import {
   View,
@@ -14,16 +14,29 @@ import {
 } from 'react-native';
 
 const categories = [
-  { img: require('../../assets/images/cat.png') },
-  { img: require('../../assets/images/cat2.png') },
-  { img: require('../../assets/images/cat3.png') },
-  { img: require('../../assets/images/cat4.png') },
-  { img: require('../../assets/images/cat5.png') },
-  { img: require('../../assets/images/cat6.png') },
-  { img: require('../../assets/images/cat7.png') },
-  { img: require('../../assets/images/cat8.png') },
-  { img: require('../../assets/images/cat9.png') },
-  { img: require('../../assets/images/cat10.png') },
+  { img: require('../../assets/images/ahmedabad.png') },
+  { img: require('../../assets/images/bengaluru.png') },
+  { img: require('../../assets/images/chennai.png') },
+  { img: require('../../assets/images/delhi.png') },
+  { img: require('../../assets/images/hyderabad.png') },
+  { img: require('../../assets/images/jaipur.png') },
+  { img: require('../../assets/images/kolkata.png') },
+  { img: require('../../assets/images/lucknow.png') },
+  { img: require('../../assets/images/mumbai.png') },
+  { img: require('../../assets/images/pune.png') },
+];
+
+const cityNames = [
+  'Ahmedabad',
+  'Bengaluru',
+  'Chennai',
+  'Delhi',
+  'Hyderabad',
+  'Jaipur',
+  'Kolkata',
+  'Lucknow',
+  'Mumbai',
+  'Pune',
 ];
 
 const treatmentItems = [
@@ -52,7 +65,11 @@ export default function MydentCenters({ navigation }: any) {
           <TouchableOpacity
             key={idx}
             style={styles.item}
-            onPress={() => navigation.navigate('TeethTreatmentScreen')}
+            onPress={() =>
+              navigation.navigate('Centers', {
+                selectedCity: cityNames[idx],
+              })
+            }
           >
             <Image source={cat.img} style={styles.image} />
           </TouchableOpacity>
@@ -112,10 +129,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  viewAll: {
-    color: '#1e90ff',
-    fontWeight: '500',
-  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -135,24 +148,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
-  videoGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  card: {
-    width: '48%',
-    aspectRatio: 1.5,
-    borderRadius: 8,
-    overflow: 'hidden',
-    marginBottom: 12,
-    elevation: 3,
-    backgroundColor: '#fff',
-  },
-  posterImage: {
-    width: '100%',
-    height: '100%',
-  },
   treatmentGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -170,11 +165,5 @@ const styles = StyleSheet.create({
     aspectRatio: 0.75,
     borderRadius: 8,
     backgroundColor: '#eee',
-  },
-  treatmentLabel: {
-    marginTop: 6,
-    fontSize: 13,
-    textAlign: 'center',
-    color: '#333',
   },
 });

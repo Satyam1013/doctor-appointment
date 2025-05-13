@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,6 +12,7 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Carousel from '../components/Carousel';
+import { useRoute } from '@react-navigation/native';
 
 const clinics = [
   {
@@ -27,8 +27,8 @@ const clinics = [
   },
   {
     id: 2,
-    city: 'Bangalore',
-    name: 'Bangalore - Indiranagar',
+    city: 'Bengaluru',
+    name: 'Bengaluru - Indiranagar',
     image: require('../../assets/images/news2.png'),
     address: '12, 1st Cross, Indiranagar, Bangalore 560038',
     time: 'Mon - Sat : 9:00 AM - 6:00 PM',
@@ -38,13 +38,16 @@ const clinics = [
 
 const cities = [
   'All',
-  'Mumbai',
-  'Bangalore',
-  'Delhi',
+  'Ahmedabad',
+  'Bengaluru',
   'Chennai',
+  'Delhi',
   'Hyderabad',
+  'Jaipur',
+  'Kolkata',
+  'Lucknow',
+  'Mumbai',
   'Pune',
-  'Kochi',
 ];
 
 const bottomCarousel = [
@@ -67,11 +70,17 @@ const services = [
     description: 'Get intense skin hydration and glow at ₹8000/-',
     image: require('../../assets/images/features2.png'),
   },
-  // Add more services as needed
 ];
 
 export default function Centers() {
+  const route = useRoute();
   const [selectedCity, setSelectedCity] = useState('All');
+
+  useEffect(() => {
+    if (route.params && route.params.selectedCity) {
+      setSelectedCity(route.params.selectedCity);
+    }
+  }, [route.params]);
 
   const filteredClinics =
     selectedCity === 'All'
@@ -119,53 +128,59 @@ export default function Centers() {
       </ScrollView>
 
       <View style={{ padding: 16 }}>
-        {filteredClinics.map((clinic) => (
-          <View key={clinic.id} style={styles.card}>
-            <Image source={clinic.image} style={styles.image} />
+        {filteredClinics.length > 0 ? (
+          filteredClinics.map((clinic) => (
+            <View key={clinic.id} style={styles.card}>
+              <Image source={clinic.image} style={styles.image} />
+              <View style={styles.infoContainer}>
+                <Text style={styles.name}>{clinic.name}</Text>
 
-            <View style={styles.infoContainer}>
-              <Text style={styles.name}>{clinic.name}</Text>
+                <View style={styles.row}>
+                  <MaterialCommunityIcons
+                    name="map-marker"
+                    color="#ff4d4d"
+                    size={18}
+                  />
+                  <Text style={styles.address}>{clinic.address}</Text>
+                </View>
 
-              <View style={styles.row}>
-                <MaterialCommunityIcons
-                  name="map-marker"
-                  color="#ff4d4d"
-                  size={18}
-                />
-                <Text style={styles.address}>{clinic.address}</Text>
+                <View style={styles.row}>
+                  <MaterialCommunityIcons
+                    name="clock"
+                    color="#ff4d4d"
+                    size={18}
+                  />
+                  <Text style={styles.time}>{clinic.time}</Text>
+                </View>
+
+                <View style={styles.row}>
+                  <MaterialCommunityIcons
+                    name="phone"
+                    color="#ff4d4d"
+                    size={18}
+                  />
+                  <Text
+                    style={styles.phone}
+                    onPress={() => Linking.openURL(`tel:${clinic.phone}`)}
+                  >
+                    {clinic.phone}
+                  </Text>
+                </View>
+
+                <TouchableOpacity style={styles.directionButton}>
+                  <MaterialCommunityIcons name="map" color="#fff" size={18} />
+                  <Text style={styles.directionText}>Directions</Text>
+                </TouchableOpacity>
               </View>
-
-              <View style={styles.row}>
-                <MaterialCommunityIcons
-                  name="clock"
-                  color="#ff4d4d"
-                  size={18}
-                />
-                <Text style={styles.time}>{clinic.time}</Text>
-              </View>
-
-              <View style={styles.row}>
-                <MaterialCommunityIcons
-                  name="phone"
-                  color="#ff4d4d"
-                  size={18}
-                />
-                <Text
-                  style={styles.phone}
-                  onPress={() => Linking.openURL(`tel:${clinic.phone}`)}
-                >
-                  {clinic.phone}
-                </Text>
-              </View>
-
-              <TouchableOpacity style={styles.directionButton}>
-                <MaterialCommunityIcons name="map" color="#fff" size={18} />
-                <Text style={styles.directionText}>Directions</Text>
-              </TouchableOpacity>
             </View>
-          </View>
-        ))}
+          ))
+        ) : (
+          <Text style={{ padding: 16, color: '#888' }}>
+            No clinics available in this city.
+          </Text>
+        )}
       </View>
+
       {/* Services Section */}
       <View style={{ paddingHorizontal: 16, marginBottom: 20 }}>
         <Text style={styles.servicesTitle}>
@@ -192,6 +207,7 @@ export default function Centers() {
 }
 
 const styles = StyleSheet.create({
+  // All existing styles unchanged...
   headerContainer: {
     padding: 16,
     alignItems: 'center',
