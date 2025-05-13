@@ -16,6 +16,7 @@ import ClinicVisitCard from '../components/VisitClinic';
 import FeaturedIn from '../components/FeaturedIn';
 import FeatureStats from '../components/FeatureStats';
 import DoctorCard from '../components/ConsultDoctors';
+import Blogs from '../components/Blogs';
 
 export default function HomeScreen({ navigation }: any) {
   const topCarousel = [
@@ -43,6 +44,7 @@ export default function HomeScreen({ navigation }: any) {
         <Carousel images={bottomCarousel} />
         <DoctorCard />
         <FeaturedIn />
+        <Blogs navigation={navigation} />
         <FeatureStats />
       </ScrollView>
     </View>

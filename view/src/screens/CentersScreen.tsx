@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import React, { useEffect, useState } from 'react';
@@ -12,7 +13,14 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Carousel from '../components/Carousel';
-import { useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
+
+type RootStackParamList = {
+  Centers: { selectedCity?: string };
+  MydentCenters: undefined;
+};
+
+type CentersRouteProp = RouteProp<RootStackParamList, 'Centers'>;
 
 const clinics = [
   {
@@ -73,7 +81,7 @@ const services = [
 ];
 
 export default function Centers() {
-  const route = useRoute();
+  const route = useRoute<CentersRouteProp>();
   const [selectedCity, setSelectedCity] = useState('All');
 
   useEffect(() => {

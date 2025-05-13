@@ -22,6 +22,7 @@ import TransformationScreen from '../screens/TransformationScreen';
 import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import { withAppShell } from '../utils/AppShellWrapper';
 import Centers from '../screens/CentersScreen';
+import BlogScreen from '../screens/BlogScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ export default function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={withAppShell(HomeScreen)} />
+      <Stack.Screen name="BlogScreen" component={withAppShell(BlogScreen)} />
       <Stack.Screen name="Profile" component={withAppShell(ProfileScreen)} />
       <Stack.Screen
         name="ContactUs"
