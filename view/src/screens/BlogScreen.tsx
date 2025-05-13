@@ -7,20 +7,26 @@ import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 const BlogScreen = ({ route }: any) => {
   const { blog } = route.params || {};
 
-  // Split content into paragraphs (you can adjust the split logic as per your content format)
+  // Split content into paragraphs
   const paragraphs = blog.content.split('\n');
 
   // Create an array of content blocks, alternating between text and images
   const contentArray: { type: string; content: any }[] = [];
   let imageIndex = 0;
+  let paragraphCount = 0;
 
-  paragraphs.forEach((paragraph: any, index: any) => {
+  paragraphs.forEach((paragraph: any) => {
     contentArray.push({ type: 'text', content: paragraph });
+    paragraphCount++;
 
-    // Add an image after every 2-3 paragraphs
-    if (imageIndex < blog.images.length) {
+    // Add an image after a random number of paragraphs between 7 and 15
+    if (
+      paragraphCount >= Math.floor(Math.random() * (15 - 7 + 1)) + 7 &&
+      imageIndex < blog.images.length
+    ) {
       contentArray.push({ type: 'image', content: blog.images[imageIndex] });
       imageIndex++;
+      paragraphCount = 0; // Reset paragraph counter after adding an image
     }
   });
 
