@@ -9,6 +9,14 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import { Video } from 'expo-av';
+
+const videoSources = [
+  require('../../assets/videos/mydentproducts1.mp4'),
+  require('../../assets/videos/mydentproducts2.mp4'),
+  require('../../assets/videos/mydentproducts3.mp4'),
+  require('../../assets/videos/mydentproducts4.mp4'),
+];
 
 const MyDentAlignersScreen = () => {
   return (
@@ -114,6 +122,17 @@ const MyDentAlignersScreen = () => {
           </View>
         ))}
       </View>
+      {/* Video Previews - Circular Layout */}
+      <View style={styles.section}>
+        <Text style={styles.title}>See Our Aligners in Action</Text>
+        <View style={styles.videoRow}>
+          {videoSources.map((source, index) => (
+            <View key={index} style={styles.videoWrapper}>
+              <Video source={source} style={styles.circularVideo} />
+            </View>
+          ))}
+        </View>
+      </View>
 
       {/* Pricing */}
       <View style={styles.section}>
@@ -173,6 +192,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: { color: '#fff', fontWeight: 'bold' },
+  videoRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
+
+  videoWrapper: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    overflow: 'hidden',
+    marginVertical: 10,
+  },
+
+  circularVideo: {
+    width: '100%',
+    height: '100%',
+  },
 });
 
 export default MyDentAlignersScreen;

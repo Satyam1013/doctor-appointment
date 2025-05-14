@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
-import Video from 'react-native-video';
+import { Video } from 'expo-av';
 
 const sections = [
   {
@@ -14,7 +14,7 @@ const sections = [
   },
   {
     title: 'teeth gap symptoms',
-    video: require('../../public/videos/v6.mp4'),
+    video: require('../../assets/videos/v6.mp4'),
     content:
       '• pain - if the gap in between your teeth is caused by underlying gum disease, then you may experience pain every time you bite or chew your food.\n\n• redness - gums turning bright red or purplish is common with gum disease.\n\n• swelling or tenderness - swollen or bleeding gums and loose teeth are other signs.',
   },
@@ -26,7 +26,7 @@ const sections = [
   },
   {
     title: 'teeth gap causes',
-    video: require('../../public/videos/v1.mp4'),
+    video: require('../../assets/videos/v1.mp4'),
     content:
       '• advanced gum disease - can damage tissues and bones.\n\n• poor habits - like thumb-sucking or lip biting in childhood can lead to gaps.',
   },
@@ -39,7 +39,7 @@ const sections = [
   },
   {
     title: 'teeth gap causes',
-    video: require('../../public/videos/v2.mp4'),
+    video: require('../../assets/videos/v2.mp4'),
     content:
       '• advanced gum disease - can damage tissues and bones.\n\n• poor habits - like thumb-sucking or lip biting in childhood can lead to gaps.',
   },
@@ -54,7 +54,7 @@ const sections = [
     title: 'crooked teeth',
     content:
       'Crooked teeth can affect chewing, oral hygiene, and self-confidence. Causes include genetics, thumb-sucking, and overcrowding.',
-    video: require('../../public/videos/v3.mp4'),
+    video: require('../../assets/videos/v3.mp4'),
   },
   {
     title: 'deep bite',
@@ -67,7 +67,7 @@ const sections = [
     title: 'underbite',
     content:
       'An underbite occurs when the lower teeth protrude past the upper teeth. It can make chewing difficult and cause jaw joint problems.',
-    video: require('../../public/videos/v5.mp4'),
+    video: require('../../assets/videos/v5.mp4'),
   },
   {
     title: 'overbite',
@@ -80,7 +80,7 @@ const sections = [
     title: 'crossbite',
     content:
       'A crossbite occurs when some of the upper teeth sit inside the lower teeth. It can lead to tooth wear, gum recession, and jaw problems.',
-    video: require('../../public/videos/v4.mp4'),
+    video: require('../../assets/videos/v4.mp4'),
   },
 ];
 
@@ -95,15 +95,7 @@ export default function TeethTreatmentScreen() {
             <Image source={sec.image} style={styles.image} resizeMode="cover" />
           )}
 
-          {sec.video && (
-            <Video
-              source={sec.video}
-              style={styles.video}
-              resizeMode="cover"
-              controls
-              paused
-            />
-          )}
+          {sec.video && <Video source={sec.video} style={styles.video} />}
 
           <Text style={styles.content}>{sec.content}</Text>
         </View>

@@ -1,32 +1,37 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native';
 
 const services = [
   {
     title: 'Book Appointment',
-    desc: 'With Top Ayurvedic Doctors',
     image: require('../../assets/images/book.png'),
   },
   {
     title: 'Instant Video Consultation',
-    desc: 'Connects within 60 seconds',
     image: require('../../assets/images/book2.png'),
   },
   {
     title: 'Buy Medicines',
-    desc: 'Top Ayurvedic Products',
     image: require('../../assets/images/book3.png'),
   },
   {
     title: 'Beauty Products',
-    desc: 'Exclusive lifestyle products',
     image: require('../../assets/images/book4.png'),
   },
 ];
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const CARD_WIDTH = (SCREEN_WIDTH - 48) / 2;
 
 export default function ServiceCards({ navigation }: any) {
   const handlePress = (title: string) => {
@@ -36,11 +41,10 @@ export default function ServiceCards({ navigation }: any) {
     ) {
       navigation.navigate('ConsultationOption');
     } else {
-      navigation.navigate('EComScreen', {
-        title: title,
-      });
+      navigation.navigate('EComScreen', { title });
     }
   };
+
   return (
     <View style={styles.grid}>
       {services.map((item, idx) => (
@@ -49,7 +53,7 @@ export default function ServiceCards({ navigation }: any) {
           style={styles.card}
           onPress={() => handlePress(item.title)}
         >
-          <Image source={item.image} style={styles.image} resizeMode="cover" />
+          <Image source={item.image} style={styles.image} />
         </TouchableOpacity>
       ))}
     </View>
@@ -60,23 +64,26 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     paddingHorizontal: 12,
+    marginTop: 6,
   },
   card: {
-    width: '48%',
-    aspectRatio: 1,
-    borderRadius: 10,
+    width: CARD_WIDTH * 0.8,
+    height: CARD_WIDTH,
+    borderRadius: 16,
     overflow: 'hidden',
-    marginBottom: 12,
+    backgroundColor: '#fff',
+    marginBottom: 10,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 1,
   },
   image: {
-    width: '80%',
+    width: '100%',
     height: '100%',
-    margin: 'auto',
+    borderRadius: 10,
   },
 });
