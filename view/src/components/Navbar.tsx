@@ -5,6 +5,7 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Menu, Provider } from 'react-native-paper';
@@ -41,7 +42,7 @@ export default function Navbar() {
 
   return (
     <Provider>
-      <View>
+      <View style={styles.navbarWrapper}>
         {/* Header Section */}
         <View style={styles.headerContainer}>
           <View>
@@ -49,7 +50,7 @@ export default function Navbar() {
             <Text style={styles.location}>Add location ▼</Text>
           </View>
 
-          <View style={styles.icons}>
+          <View style={[styles.icons, styles.menuWrapper]}>
             <Ionicons
               name="heart-outline"
               size={22}
@@ -63,32 +64,38 @@ export default function Navbar() {
               style={styles.icon}
             />
 
-            <Menu
-              visible={menuVisible}
-              onDismiss={closeMenu}
-              anchor={
-                <TouchableOpacity onPress={openMenu}>
-                  <Ionicons
-                    name="person-circle-outline"
-                    size={26}
-                    color="#333"
-                  />
-                </TouchableOpacity>
-              }
-              contentStyle={{ backgroundColor: 'white', marginTop: 6 }}
-              anchorPosition="bottom"
-            >
-              <Menu.Item
-                onPress={handleProfile}
-                title="My Profile"
-                titleStyle={{ color: '#000' }}
-              />
-              <Menu.Item
-                onPress={handleLogout}
-                title="Logout"
-                titleStyle={{ color: '#000' }}
-              />
-            </Menu>
+            {Platform.OS === 'web' ? (
+              <TouchableOpacity onPress={handleProfile}>
+                <Ionicons name="person-circle-outline" size={26} color="#333" />
+              </TouchableOpacity>
+            ) : (
+              <Menu
+                visible={menuVisible}
+                onDismiss={closeMenu}
+                anchor={
+                  <TouchableOpacity onPress={openMenu}>
+                    <Ionicons
+                      name="person-circle-outline"
+                      size={26}
+                      color="#333"
+                    />
+                  </TouchableOpacity>
+                }
+                contentStyle={{ backgroundColor: 'white', marginTop: 6 }}
+                anchorPosition="bottom"
+              >
+                <Menu.Item
+                  onPress={handleProfile}
+                  title="My Profile"
+                  titleStyle={{ color: '#000' }}
+                />
+                <Menu.Item
+                  onPress={handleLogout}
+                  title="Logout"
+                  titleStyle={{ color: '#000' }}
+                />
+              </Menu>
+            )}
           </View>
         </View>
 
@@ -144,6 +151,16 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 16,
     fontWeight: '600',
+  },
+  menuWrapper: {
+    zIndex: 1000,
+    elevation: 10, // for Android
+  },
+  navbarWrapper: {
+    position: 'relative',
+    zIndex: 1000,
+    elevation: 10, // important for Android
+    backgroundColor: '#fff', // helps visually stack above
   },
   location: {
     fontSize: 11,

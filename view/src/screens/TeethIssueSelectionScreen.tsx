@@ -18,32 +18,32 @@ const TEETH_ISSUES = [
   {
     id: 'crooked',
     label: 'Crooked teeth',
-    image: require('../../assets/images/videoposter.png'),
+    image: require('../../assets/images/teethgaps.png'),
   },
   {
     id: 'forward',
     label: 'Forwardly placed',
-    image: require('../../assets/images/videoposter2.png'),
+    image: require('../../assets/images/overbite.png'),
   },
   {
     id: 'crossbite',
     label: 'Crossbite',
-    image: require('../../assets/images/videoposter3.png'),
+    image: require('../../assets/images/crossbite.png'),
   },
   {
     id: 'other1',
     label: 'Other 1',
-    image: require('../../assets/images/videoposter4.png'),
+    image: require('../../assets/images/underbite.png'),
   },
   {
     id: 'other2',
     label: 'Other 2',
-    image: require('../../assets/images/videoposter5.png'),
+    image: require('../../assets/images/openbite.png'),
   },
   {
     id: 'other3',
     label: 'Other 3',
-    image: require('../../assets/images/videoposter6.png'),
+    image: require('../../assets/images/crookedteeth.png'),
   },
 ];
 

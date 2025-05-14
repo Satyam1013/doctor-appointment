@@ -1,4 +1,3 @@
-// navigation/HomeStack.tsx
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/Home';
 import ProfileScreen from '../screens/UserProfile';
@@ -25,6 +24,7 @@ import Centers from '../screens/CentersScreen';
 import BlogScreen from '../screens/BlogScreen';
 import AlignersForTeensScreen from '../screens/AlignersForTeens';
 import MyDentAlignersScreen from '../screens/MydentAligners';
+// import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -100,6 +100,10 @@ export default function HomeStack() {
         name="TransformationBlogDetailsScreen"
         component={withAppShell(TransformationBlogDetailsScreen)}
       />
+      {/* <Stack.Screen
+        name="ClinicMap"
+        component={withAppShell(ClinicMapScreen)}
+      /> */}
       <Stack.Screen
         name="TreatmentInfoScreen"
         component={withAppShell(TreatmentInfoScreen)}

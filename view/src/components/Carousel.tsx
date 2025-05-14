@@ -30,7 +30,7 @@ export default function Carousel({ images }: CarouselProps) {
 }
 
 const styles = StyleSheet.create({
-  container: { height: 150, marginBottom: 12 },
+  container: { height: 150, marginBottom: 12, zIndex: 1 },
   image: {
     width: imageWidth,
     height: 150,

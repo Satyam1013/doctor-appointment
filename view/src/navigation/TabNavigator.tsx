@@ -68,9 +68,9 @@ export default function BottomTabNavigator() {
         name="CentersTab"
         component={withAppShell(Centers)}
         options={{
-          tabBarLabel: 'Centers',
+          tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <View style={{ marginTop: 10 }}>
+            <View style={{ marginTop: 35 }}>
               <MaterialCommunityIcons
                 name="map-marker"
                 color={color}

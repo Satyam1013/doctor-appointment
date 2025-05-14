@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -24,7 +23,9 @@ export default function TopProducts({ navigation }: any) {
             key={idx}
             style={styles.card}
             onPress={() => {
-              if (idx === 1) {
+              if (idx === 0 || idx === 3) {
+                navigation.navigate('EComScreen');
+              } else if (idx === 1) {
                 navigation.navigate('AlignersForTeensScreen');
               } else if (idx === 4) {
                 navigation.navigate('MyDentAlignersScreen');

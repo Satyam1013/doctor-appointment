@@ -64,7 +64,7 @@ export default function OverlayFloatingButtons() {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 70,
+    bottom: 65,
     left: 0,
     right: 0,
     zIndex: 20,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   consultButton: {
     position: 'absolute',
-    bottom: -8,
+    bottom: -22,
     backgroundColor: '#0077b6',
     padding: 4,
     borderRadius: 30,

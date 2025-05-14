@@ -40,12 +40,30 @@ const cityNames = [
 ];
 
 const treatmentItems = [
-  require('../../assets/images/videoposter.png'),
-  require('../../assets/images/videoposter2.png'),
-  require('../../assets/images/videoposter3.png'),
-  require('../../assets/images/videoposter4.png'),
-  require('../../assets/images/videoposter5.png'),
-  require('../../assets/images/videoposter6.png'),
+  {
+    img: require('../../assets/images/teethgaps.png'),
+    route: 'teethgaps',
+  },
+  {
+    img: require('../../assets/images/overbite.png'),
+    route: 'overbite',
+  },
+  {
+    img: require('../../assets/images/crossbite.png'),
+    route: 'crossbite',
+  },
+  {
+    img: require('../../assets/images/underbite.png'),
+    route: 'underbite',
+  },
+  {
+    img: require('../../assets/images/openbite.png'),
+    route: 'openbite',
+  },
+  {
+    img: require('../../assets/images/crookedteeth.png'),
+    route: 'crookedteeth',
+  },
 ];
 
 export default function MydentCenters({ navigation }: any) {
@@ -76,15 +94,8 @@ export default function MydentCenters({ navigation }: any) {
         ))}
       </ScrollView>
 
-      {/* Video Section Header */}
       <View style={styles.bgColor}>
-        <View style={styles.videoSection}>
-          <Text style={styles.title}>
-            Understanding teeth alignment problems
-          </Text>
-        </View>
-
-        {/* Video Grid */}
+        <Text style={styles.title}>Understanding teeth alignment problems</Text>
         <View style={styles.treatmentGrid}>
           {treatmentItems.map((item, idx) => (
             <TouchableOpacity
@@ -92,12 +103,12 @@ export default function MydentCenters({ navigation }: any) {
               style={styles.treatmentItem}
               onPress={() =>
                 navigation.navigate('TeethTreatmentScreen', {
-                  videoUri: `/public/videos/v${idx + 1}.mp4`,
+                  routeKey: item.route,
                 })
               }
             >
               <Image
-                source={item}
+                source={item.img}
                 style={styles.treatmentImage}
                 resizeMode="cover"
               />
@@ -143,10 +154,6 @@ const styles = StyleSheet.create({
     height: 70,
     borderRadius: 35,
     backgroundColor: '#f0f0f0',
-  },
-  videoSection: {
-    marginTop: 20,
-    marginBottom: 10,
   },
   treatmentGrid: {
     flexDirection: 'row',

@@ -1,4 +1,3 @@
-// screens/ClinicMapScreen.tsx
 import React from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
