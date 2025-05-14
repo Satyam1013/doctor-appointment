@@ -36,7 +36,7 @@ export default function Blogs({ navigation }: any) {
             onPress={() => handlePress(blog)}
           >
             <Image source={blog.images[0]} style={styles.image} />
-            <Text style={styles.title} numberOfLines={2}>
+            <Text style={styles.title} numberOfLines={3}>
               {blog.title}
             </Text>
           </TouchableOpacity>
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: 200,
+    height: 190,
     marginRight: 12,
     backgroundColor: '#fff',
     borderRadius: 12,

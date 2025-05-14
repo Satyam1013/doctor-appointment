@@ -23,9 +23,15 @@ export default function TopProducts({ navigation }: any) {
           <TouchableOpacity
             key={idx}
             style={styles.card}
-            onPress={() =>
-              navigation.navigate('DoctorDetailsScreen', { doctor: doc })
-            }
+            onPress={() => {
+              if (idx === 1) {
+                navigation.navigate('AlignersForTeensScreen');
+              } else if (idx === 4) {
+                navigation.navigate('MyDentAlignersScreen');
+              } else {
+                navigation.navigate('DoctorDetailsScreen', { doctor: doc });
+              }
+            }}
           >
             <Image source={doc.img} style={styles.image} resizeMode="cover" />
           </TouchableOpacity>

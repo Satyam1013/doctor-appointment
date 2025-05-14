@@ -23,6 +23,8 @@ import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import { withAppShell } from '../utils/AppShellWrapper';
 import Centers from '../screens/CentersScreen';
 import BlogScreen from '../screens/BlogScreen';
+import AlignersForTeensScreen from '../screens/AlignersForTeens';
+import MyDentAlignersScreen from '../screens/MydentAligners';
 
 const Stack = createNativeStackNavigator();
 
@@ -74,6 +76,14 @@ export default function HomeStack() {
         component={withAppShell(CheckoutSummaryScreen)}
       />
       <Stack.Screen name="EComScreen" component={withAppShell(EComScreen)} />
+      <Stack.Screen
+        name="AlignersForTeensScreen"
+        component={withAppShell(AlignersForTeensScreen)}
+      />
+      <Stack.Screen
+        name="MyDentAlignersScreen"
+        component={withAppShell(MyDentAlignersScreen)}
+      />
       <Stack.Screen
         name="ProductDetailScreen"
         component={withAppShell(ProductDetailScreen)}
