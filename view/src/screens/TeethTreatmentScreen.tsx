@@ -156,7 +156,8 @@ const Section = ({
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#fff',
+    paddingBottom: 100,
+    backgroundColor: '#ffffff',
   },
   title: {
     fontSize: 26,

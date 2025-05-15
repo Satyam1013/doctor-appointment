@@ -96,7 +96,13 @@ export default function Centers() {
       : clinics.filter((clinic) => clinic.city === selectedCity);
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: '#f9f9f9' }}>
+    <ScrollView
+      style={{
+        flex: 1,
+        backgroundColor: '#f9f9f9',
+        paddingBottom: 100,
+      }}
+    >
       <Carousel images={bottomCarousel} />
 
       <View style={styles.headerContainer}>
@@ -215,7 +221,6 @@ export default function Centers() {
 }
 
 const styles = StyleSheet.create({
-  // All existing styles unchanged...
   headerContainer: {
     padding: 16,
     alignItems: 'center',

@@ -112,7 +112,11 @@ export default function ProductDetailScreen({ route }: any) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingBottom: 100,
+  },
   productImage: { width: 400, height: 300, resizeMode: 'cover' },
   detailsContainer: { padding: 16 },
   title: { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },

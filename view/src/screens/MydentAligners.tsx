@@ -158,7 +158,7 @@ const MyDentAlignersScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, paddingBottom: 100, backgroundColor: '#ffffff' },
   section: { padding: 20 },
   title: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
   subtitle: { fontSize: 16, fontWeight: '600', marginBottom: 10 },

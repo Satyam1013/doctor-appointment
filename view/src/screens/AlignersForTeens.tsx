@@ -143,7 +143,8 @@ export default function AlignersForTeensScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#fff',
+    paddingBottom: 100,
+    backgroundColor: '#ffffff',
   },
   heading: {
     fontSize: 20,

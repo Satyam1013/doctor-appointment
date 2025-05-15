@@ -32,7 +32,7 @@ export default function HomeScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Carousel images={topCarousel} />
         <ServiceCards navigation={navigation} />
         <FindTeethType navigation={navigation} />
@@ -54,6 +54,9 @@ export default function HomeScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff', // Keep this, it's your app's background
+  },
+  scrollContent: {
+    paddingBottom: 120,
   },
 });
