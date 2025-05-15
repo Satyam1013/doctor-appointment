@@ -24,7 +24,7 @@ export default function TopProducts({ navigation }: any) {
             style={styles.card}
             onPress={() => {
               if (idx === 0 || idx === 3) {
-                navigation.navigate('EComScreen');
+                navigation.navigate('ProductsTab');
               } else if (idx === 1) {
                 navigation.navigate('AlignersForTeensScreen');
               } else if (idx === 4) {

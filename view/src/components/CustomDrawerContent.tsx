@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
@@ -20,6 +20,8 @@ import EditProfileForm from './EditUserDetails';
 export default function CustomDrawerContent(props: any) {
   const { user } = useUser();
   const [isEditVisible, setEditVisible] = useState(false);
+
+  const iconColor = '#4CAF50';
 
   return (
     <DrawerContentScrollView
@@ -45,54 +47,81 @@ export default function CustomDrawerContent(props: any) {
       </View>
 
       <View style={styles.menuItems}>
+        {[
+          { label: 'Home', icon: 'home-outline', screen: 'HomeTab' },
+          {
+            label: 'Book Consultation',
+            icon: 'book-sharp',
+            screen: 'ConsultationOption',
+            parentTab: 'HomeTab',
+          },
+          { label: 'Buy Products', icon: 'bag-add', screen: 'ProductsTab' },
+          {
+            label: 'Mydent Centers',
+            icon: 'business-outline',
+            screen: 'CentersTab',
+          },
+          {
+            label: 'My addresses',
+            icon: 'location-outline',
+            screen: 'CentersTab',
+          },
+          { label: 'Mydent coins', icon: 'cash-outline', screen: 'CentersTab' },
+          {
+            label: 'Refer a friend',
+            icon: 'body-outline',
+            screen: 'CentersTab',
+          },
+          { label: 'Rate us', icon: 'star-outline', screen: 'CentersTab' },
+          { label: 'Help & Support', icon: 'help', screen: 'CentersTab' },
+          { label: 'Contact Us', icon: 'call-outline', screen: 'ContactUsTab' },
+        ].map((item, index) => (
+          <DrawerItem
+            key={index}
+            label={item.label}
+            onPress={() =>
+              props.navigation.navigate('HomeTabs', {
+                screen: item.parentTab ?? item.screen,
+                ...(item.parentTab && { params: { screen: item.screen } }),
+              })
+            }
+            icon={({ size }) => (
+              <Ionicons name={item.icon as any} size={size} color={iconColor} />
+            )}
+          />
+        ))}
+      </View>
+
+      <View style={styles.bottomSection}>
         <DrawerItem
-          label="Home"
-          onPress={() =>
-            props.navigation.navigate('HomeTabs', { screen: 'HomeTab' })
-          }
-          icon={({ color, size }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
+          label="New Ticket"
+          onPress={() => props.navigation.navigate('NewTicket')}
+          icon={({ size }) => (
+            <Ionicons
+              name="document-text-outline"
+              size={size}
+              color={iconColor}
+            />
           )}
         />
         <DrawerItem
-          label="Book Consultation"
-          onPress={() =>
-            props.navigation.navigate('HomeTabs', {
-              screen: 'HomeTab',
-              params: {
-                screen: 'ConsultationOption',
-              },
-            })
-          }
-          icon={({ color, size }) => (
-            <Ionicons name="book-sharp" size={size} color={color} />
+          label="View Ticket"
+          onPress={() => props.navigation.navigate('ViewTicket')}
+          icon={({ size }) => (
+            <Ionicons name="clipboard-outline" size={size} color={iconColor} />
           )}
         />
         <DrawerItem
-          label="Buy Products"
-          onPress={() =>
-            props.navigation.navigate('HomeTabs', { screen: 'ProductsTab' })
-          }
-          icon={({ color, size }) => (
-            <Ionicons name="bag-add" size={size} color={color} />
-          )}
-        />
-        <DrawerItem
-          label="Mydent Centers"
-          onPress={() =>
-            props.navigation.navigate('HomeTabs', { screen: 'CentersTab' })
-          }
-          icon={({ color, size }) => (
-            <Ionicons name="business-outline" size={size} color={color} />
-          )}
-        />
-        <DrawerItem
-          label="Contact Us"
-          onPress={() =>
-            props.navigation.navigate('HomeTabs', { screen: 'ContactUsTab' })
-          }
-          icon={({ color, size }) => (
-            <Ionicons name="call-outline" size={size} color={color} />
+          label="Logout"
+          onPress={() => {
+            // handle logout
+            props.navigation.reset({
+              index: 0,
+              routes: [{ name: 'Login' }],
+            });
+          }}
+          icon={({ size }) => (
+            <Ionicons name="log-out-outline" size={size} color={iconColor} />
           )}
         />
       </View>
@@ -147,5 +176,12 @@ const styles = StyleSheet.create({
   },
   menuItems: {
     marginTop: 8,
+  },
+  bottomSection: {
+    marginTop: 'auto',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    paddingTop: 8,
+    paddingBottom: 16,
   },
 });

@@ -84,7 +84,7 @@ export default function MydentCenters({ navigation }: any) {
             key={idx}
             style={styles.item}
             onPress={() =>
-              navigation.navigate('Centers', {
+              navigation.navigate('CentersTab', {
                 selectedCity: cityNames[idx],
               })
             }

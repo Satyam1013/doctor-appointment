@@ -41,7 +41,7 @@ export default function ServiceCards({ navigation }: any) {
     ) {
       navigation.navigate('ConsultationOption');
     } else {
-      navigation.navigate('EComScreen', { title });
+      navigation.navigate('ProductsTab', { title });
     }
   };
 

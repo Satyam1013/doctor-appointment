@@ -6,24 +6,30 @@ import { UserProvider } from './src/contexts/UserContext';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 const queryClient = new QueryClient();
 
 export default function App() {
   console.log('✅ App.tsx loaded successfully');
+
   return (
     <GestureHandlerRootView style={styles.root}>
-      <SafeAreaProvider>
-        <SafeAreaView style={styles.root} edges={['top', 'left', 'right']}>
-          <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-              <UserProvider>
-                <AppNavigator />
-              </UserProvider>
-            </AuthProvider>
-          </QueryClientProvider>
-        </SafeAreaView>
-      </SafeAreaProvider>
+      <PaperProvider>
+        {' '}
+        {/* ✅ WRAP EVERYTHING IN THIS */}
+        <SafeAreaProvider>
+          <SafeAreaView style={styles.root} edges={['top', 'left', 'right']}>
+            <QueryClientProvider client={queryClient}>
+              <AuthProvider>
+                <UserProvider>
+                  <AppNavigator />
+                </UserProvider>
+              </AuthProvider>
+            </QueryClientProvider>
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </PaperProvider>
     </GestureHandlerRootView>
   );
 }

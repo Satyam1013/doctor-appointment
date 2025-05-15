@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState } from 'react';
 import {
   StyleSheet,
@@ -10,7 +10,6 @@ import {
   Linking,
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { MaterialIcons } from '@expo/vector-icons';
 import { Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -34,26 +33,32 @@ export default function OverlayFloatingButtons() {
   return (
     <View style={styles.container}>
       {/* Left: Book a Scan */}
-      <TouchableOpacity style={styles.bookAScan} onPress={handleBookPress}>
-        <MaterialIcons name="book-online" size={28} color="#fff" />
+      <TouchableOpacity style={styles.imageWrapper} onPress={handleBookPress}>
+        <Image
+          source={require('../../assets/images/bottomtab/book.jpeg')}
+          style={styles.iconImage}
+        />
       </TouchableOpacity>
 
-      {/* Center: Consult Doctor */}
+      {/* Center: Consult Doctor (reusing same Book image here) */}
       <TouchableOpacity
-        style={[styles.consultButton, { left: width / 2 - buttonWidth / 2 }]}
+        style={[styles.centerWrapper, { left: width / 2 - buttonWidth / 2 }]}
         onLayout={(event) => {
           const { width } = event.nativeEvent.layout;
           setButtonWidth(width);
         }}
         onPress={handleConsultPress}
       >
-        <MaterialIcons name="local-hospital" size={28} color="#fff" />
+        <Image
+          source={require('../../assets/images/bottomtab/consult.jpeg')}
+          style={styles.centerIconImage}
+        />
       </TouchableOpacity>
 
       {/* Right: WhatsApp */}
       <TouchableOpacity onPress={handleWhatsAppPress}>
         <Image
-          source={require('../../assets/images/wa.png')}
+          source={require('../../assets/images/bottomtab/wa.jpeg')}
           style={styles.whatsappIcon}
         />
       </TouchableOpacity>
@@ -74,20 +79,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: 'center',
   },
-  bookAScan: {
-    backgroundColor: 'red',
-    padding: 8,
+  imageWrapper: {
+    backgroundColor: '#fff',
+    padding: 6,
     borderRadius: 25,
     elevation: 8,
     shadowColor: '#000',
     shadowOpacity: 0.3,
     shadowRadius: 5,
+    marginLeft: -4,
   },
-  consultButton: {
+  iconImage: {
+    width: 80,
+    height: 25,
+    resizeMode: 'contain',
+  },
+  centerWrapper: {
     position: 'absolute',
     bottom: -22,
-    backgroundColor: '#0077b6',
-    padding: 4,
+    backgroundColor: '#fff',
+    padding: 6,
     borderRadius: 30,
     zIndex: 50,
     elevation: 10,
@@ -95,9 +106,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
   },
+  centerIconImage: {
+    width: 40,
+    height: 40,
+    resizeMode: 'contain',
+    borderRadius: 25,
+  },
   whatsappIcon: {
     width: 50,
     height: 50,
     resizeMode: 'contain',
+    borderRadius: 25,
   },
 });

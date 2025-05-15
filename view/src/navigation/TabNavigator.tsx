@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CurvedTabBarBackground from '../components/CurvedTabBarBackground';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { View } from 'react-native';
+import { Image } from 'react-native';
 import Centers from '../screens/CentersScreen';
 import EComScreen from '../screens/ECommerceScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
@@ -9,6 +9,7 @@ import HomeStack from './HomeStack';
 import TreatmentInfoScreen from '../screens/TreatmentInfo';
 import { withAppShell } from '../utils/AppShellWrapper';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
+import CurvedTabBarBackground from '../components/CurvedTabBarBackground';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,8 +36,20 @@ export default function BottomTabNavigator() {
         component={HomeStack}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require('../../assets/images/bottomtab/home.jpeg')}
+              style={{
+                width: 28,
+                height: 28,
+                resizeMode: 'contain',
+                borderWidth: focused ? 2 : 1,
+                borderColor: focused ? '#0077b6' : '#ccc',
+                borderRadius: 8,
+                padding: 4,
+              }}
+              resizeMode="contain"
+            />
           ),
         }}
       />
@@ -52,8 +65,20 @@ export default function BottomTabNavigator() {
         component={withAppShell(TreatmentInfoScreen)}
         options={{
           tabBarLabel: 'Mydent',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="medal" color={color} size={size} />
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require('../../assets/images/bottomtab/mydent.jpeg')}
+              style={{
+                width: 28,
+                height: 28,
+                resizeMode: 'contain',
+                borderWidth: focused ? 2 : 1,
+                borderColor: focused ? '#0077b6' : '#ccc',
+                borderRadius: 8,
+                padding: 4,
+              }}
+              resizeMode="contain"
+            />
           ),
         }}
       />
@@ -69,14 +94,21 @@ export default function BottomTabNavigator() {
         component={withAppShell(Centers)}
         options={{
           tabBarLabel: '',
-          tabBarIcon: ({ color, size }) => (
-            <View style={{ marginTop: 35 }}>
-              <MaterialCommunityIcons
-                name="map-marker"
-                color={color}
-                size={size}
-              />
-            </View>
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require('../../assets/images/bottomtab/centers.jpeg')}
+              style={{
+                width: 28,
+                height: 28,
+                resizeMode: 'contain',
+                borderWidth: focused ? 2 : 1,
+                borderColor: focused ? '#0077b6' : '#ccc',
+                borderRadius: 8,
+                padding: 4,
+                marginTop: 40,
+              }}
+              resizeMode="contain"
+            />
           ),
         }}
       />
@@ -91,12 +123,20 @@ export default function BottomTabNavigator() {
         name="ProductsTab"
         component={withAppShell(EComScreen)}
         options={{
-          tabBarLabel: 'Products',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="shopping-outline"
-              color={color}
-              size={size}
+          tabBarLabel: 'Shop',
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require('../../assets/images/bottomtab/shop.jpeg')}
+              style={{
+                width: 28,
+                height: 28,
+                resizeMode: 'contain',
+                borderWidth: focused ? 2 : 1,
+                borderColor: focused ? '#0077b6' : '#ccc',
+                borderRadius: 8,
+                padding: 4,
+              }}
+              resizeMode="contain"
             />
           ),
         }}
@@ -112,9 +152,21 @@ export default function BottomTabNavigator() {
         name="ContactUsTab"
         component={withAppShell(ContactUsScreen)}
         options={{
-          tabBarLabel: 'Contact Us',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="contacts" color={color} size={size} />
+          tabBarLabel: 'Contact',
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require('../../assets/images/bottomtab/contact.jpeg')}
+              style={{
+                width: 28,
+                height: 28,
+                resizeMode: 'contain',
+                borderWidth: focused ? 2 : 1,
+                borderColor: focused ? '#0077b6' : '#ccc',
+                borderRadius: 8,
+                padding: 4,
+              }}
+              resizeMode="contain"
+            />
           ),
         }}
       />

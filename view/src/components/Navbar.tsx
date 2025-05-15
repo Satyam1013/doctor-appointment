@@ -5,10 +5,8 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Platform,
 } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { Menu, Provider } from 'react-native-paper';
 import { useUser } from '../contexts/UserContext';
 import { AuthContext } from '../contexts/AuthContext';
 import {
@@ -16,6 +14,7 @@ import {
   NavigationProp,
   DrawerActions,
 } from '@react-navigation/native';
+import { Menu } from 'react-native-paper';
 
 export default function Navbar() {
   const { user } = useUser();
@@ -41,101 +40,85 @@ export default function Navbar() {
   };
 
   return (
-    <Provider>
-      <View style={styles.navbarWrapper}>
-        {/* Header Section */}
-        <View style={styles.headerContainer}>
-          <View>
-            <Text style={styles.greeting}>Hi, {user?.firstName}</Text>
-            <Text style={styles.location}>Add location ▼</Text>
-          </View>
+    <View style={styles.navbarWrapper}>
+      {/* Header Section */}
+      <View style={styles.headerContainer}>
+        <View>
+          <Text style={styles.greeting}>Hi, {user?.firstName}</Text>
+          <Text style={styles.location}>Add location ▼</Text>
+        </View>
 
-          <View style={[styles.icons, styles.menuWrapper]}>
-            <Ionicons
-              name="heart-outline"
-              size={22}
-              color="#333"
-              style={styles.icon}
-            />
-            <Ionicons
-              name="notifications-outline"
-              size={22}
-              color="#333"
-              style={styles.icon}
-            />
-
-            {Platform.OS === 'web' ? (
-              <TouchableOpacity onPress={handleProfile}>
+        <View style={[styles.icons, styles.menuWrapper]}>
+          <Ionicons
+            name="heart-outline"
+            size={22}
+            color="#333"
+            style={styles.icon}
+          />
+          <Ionicons
+            name="notifications-outline"
+            size={22}
+            color="#333"
+            style={styles.icon}
+          />
+          <Menu
+            visible={menuVisible}
+            onDismiss={closeMenu}
+            anchor={
+              <TouchableOpacity onPress={openMenu} style={{ zIndex: 9999 }}>
                 <Ionicons name="person-circle-outline" size={26} color="#333" />
               </TouchableOpacity>
-            ) : (
-              <Menu
-                visible={menuVisible}
-                onDismiss={closeMenu}
-                anchor={
-                  <TouchableOpacity onPress={openMenu}>
-                    <Ionicons
-                      name="person-circle-outline"
-                      size={26}
-                      color="#333"
-                    />
-                  </TouchableOpacity>
-                }
-                contentStyle={{ backgroundColor: 'white', marginTop: 6 }}
-                anchorPosition="bottom"
-              >
-                <Menu.Item
-                  onPress={handleProfile}
-                  title="My Profile"
-                  titleStyle={{ color: '#000' }}
-                />
-                <Menu.Item
-                  onPress={handleLogout}
-                  title="Logout"
-                  titleStyle={{ color: '#000' }}
-                />
-              </Menu>
-            )}
-          </View>
-        </View>
-
-        {/* Search Bar Section */}
-        <View style={styles.searchRow}>
-          {/* Filter Icon */}
-          <TouchableOpacity
-            style={styles.filterButton}
-            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+            }
+            contentStyle={{ backgroundColor: 'white', marginTop: 6 }}
+            anchorPosition="bottom"
           >
-            <MaterialCommunityIcons
-              name="filter-variant"
-              size={24}
-              color="#00BCD4"
+            <Menu.Item
+              onPress={handleProfile}
+              title="My Profile"
+              titleStyle={{ color: '#000' }}
             />
-          </TouchableOpacity>
-
-          {/* Search Input Box */}
-          <View style={styles.searchContainer}>
-            <Ionicons
-              name="search-outline"
-              size={18}
-              color="#777"
-              style={styles.searchIcon}
+            <Menu.Item
+              onPress={handleLogout}
+              title="Logout"
+              titleStyle={{ color: '#000' }}
             />
-            <TextInput
-              placeholder="Search for medicines and..."
-              style={styles.input}
-              placeholderTextColor="#777"
-            />
-            <Ionicons name="mic-outline" size={18} color="#777" />
-          </View>
-
-          {/* Cart Icon */}
-          <TouchableOpacity style={styles.cartButton}>
-            <Ionicons name="cart-outline" size={22} color="#4CAF50" />
-          </TouchableOpacity>
+          </Menu>
         </View>
       </View>
-    </Provider>
+
+      {/* Search Bar Section */}
+      <View style={styles.searchRow}>
+        <TouchableOpacity
+          style={styles.filterButton}
+          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+        >
+          <MaterialCommunityIcons
+            name="filter-variant"
+            size={24}
+            color="#00BCD4"
+          />
+        </TouchableOpacity>
+
+        <View style={styles.searchContainer}>
+          <Ionicons
+            name="search-outline"
+            size={18}
+            color="#777"
+            style={styles.searchIcon}
+          />
+          <TextInput
+            placeholder="Search for medicines and..."
+            style={styles.input}
+            placeholderTextColor="#777"
+          />
+          <Ionicons name="mic-outline" size={18} color="#777" />
+        </View>
+
+        <TouchableOpacity style={styles.cartButton}>
+          <Ionicons name="cart-outline" size={22} color="#4CAF50" />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
