@@ -6,10 +6,10 @@ import Centers from '../screens/CentersScreen';
 import EComScreen from '../screens/ECommerceScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
 import HomeStack from './HomeStack';
-import TreatmentInfoScreen from '../screens/TreatmentInfo';
 import { withAppShell } from '../utils/AppShellWrapper';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import CurvedTabBarBackground from '../components/CurvedTabBarBackground';
+import MyDentAlignersScreen from '../screens/MydentAligners';
 
 const Tab = createBottomTabNavigator();
 
@@ -62,7 +62,7 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name="Mydent"
-        component={withAppShell(TreatmentInfoScreen)}
+        component={withAppShell(MyDentAlignersScreen)}
         options={{
           tabBarLabel: 'Mydent',
           tabBarIcon: ({ focused }) => (

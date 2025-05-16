@@ -89,7 +89,12 @@ export default function AgeSelectionScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F1F8FC', padding: 16 },
+  container: {
+    flex: 1,
+    backgroundColor: '#F1F8FC',
+    padding: 16,
+    paddingBottom: 120,
+  },
   header: { fontSize: 20, fontWeight: 'bold', marginBottom: 4 },
   subText: { color: '#555', marginBottom: 16 },
   grid: { justifyContent: 'space-between' },

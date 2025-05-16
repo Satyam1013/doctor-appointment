@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
 
@@ -13,7 +15,7 @@ import {
 
 export default function CheckoutSummaryScreen({ navigation }: any) {
   const handlePayment = () => {
-    // navigation.navigate('PaymentGateway');
+    navigation.navigate('CartScreen');
   };
 
   return (
@@ -66,6 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#e6f7ff',
     padding: 20,
+    paddingBottom: 120,
   },
   card: {
     flexDirection: 'row',

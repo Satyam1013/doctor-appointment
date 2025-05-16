@@ -11,7 +11,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-const genderOptions = ['Male', 'Female', 'Others'];
+const genderOptions = ['Male', 'Female'];
 
 export default function GenderSelectionScreen({ navigation }: any) {
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#fff',
+    paddingBottom: 120,
   },
   header: {
     fontSize: 18,

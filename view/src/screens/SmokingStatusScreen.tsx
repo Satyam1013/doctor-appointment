@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-// screens/SmokingStatusScreen.tsx
 
 import React, { useState } from 'react';
 import {
@@ -63,6 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#fff',
+    paddingBottom: 110,
   },
   header: {
     fontSize: 18,

@@ -114,7 +114,10 @@ export default function Navbar() {
           <Ionicons name="mic-outline" size={18} color="#777" />
         </View>
 
-        <TouchableOpacity style={styles.cartButton}>
+        <TouchableOpacity
+          style={styles.cartButton}
+          onPress={() => navigation.navigate('CartScreen')}
+        >
           <Ionicons name="cart-outline" size={22} color="#4CAF50" />
         </TouchableOpacity>
       </View>

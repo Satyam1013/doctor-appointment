@@ -24,6 +24,7 @@ import Centers from '../screens/CentersScreen';
 import BlogScreen from '../screens/BlogScreen';
 import AlignersForTeensScreen from '../screens/AlignersForTeens';
 import MyDentAlignersScreen from '../screens/MydentAligners';
+import CartScreen from '../screens/CartScreen';
 // import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +33,7 @@ export default function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={withAppShell(HomeScreen)} />
+      <Stack.Screen name="CartScreen" component={withAppShell(CartScreen)} />
       <Stack.Screen name="BlogScreen" component={withAppShell(BlogScreen)} />
       <Stack.Screen name="Profile" component={withAppShell(ProfileScreen)} />
       <Stack.Screen

@@ -63,6 +63,7 @@ export default function AvailabilityScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
   container: {
+    paddingBottom: 120,
     flex: 1,
     padding: 20,
     backgroundColor: '#fff',

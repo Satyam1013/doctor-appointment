@@ -71,6 +71,9 @@ export default function MydentCenters({ navigation }: any) {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Mydent Centers</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('CentersTab')}>
+          <Text style={styles.viewAll}>View All</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Horizontal Category Scroll */}
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   bgColor: {
-    backgroundColor: '#CEEDD9',
+    backgroundColor: '#E7FAFC',
     marginHorizontal: -12,
     padding: 12,
   },
@@ -172,5 +175,10 @@ const styles = StyleSheet.create({
     aspectRatio: 0.75,
     borderRadius: 8,
     backgroundColor: '#eee',
+  },
+  viewAll: {
+    fontSize: 14,
+    color: '#007AFF',
+    fontWeight: '500',
   },
 });

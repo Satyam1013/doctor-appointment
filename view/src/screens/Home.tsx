@@ -40,7 +40,7 @@ export default function HomeScreen({ navigation }: any) {
         <MydentCenters navigation={navigation} />
         <Transformation navigation={navigation} />
         <BeforeAfterTreatment />
-        <ClinicVisitCard onPress={() => navigation.navigate('ClinicMap')} />
+        <ClinicVisitCard onPress={() => navigation.navigate('CentersTab')} />
         <Carousel images={bottomCarousel} />
         <DoctorCard />
         <FeaturedIn />
@@ -54,9 +54,9 @@ export default function HomeScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff', // Keep this, it's your app's background
+    backgroundColor: '#fff',
   },
   scrollContent: {
-    paddingBottom: 120,
+    paddingBottom: 100,
   },
 });

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginRight: 12,
     width: Dimensions.get('window').width * 0.6,
-    height: 170,
+    height: 190,
   },
   image: {
     width: '100%',
