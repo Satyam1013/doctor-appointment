@@ -17,13 +17,14 @@ import {
 } from 'react-native';
 import { getProductById } from '../api/product-api';
 import { addToCart } from '../api/cart-api';
-import { Product } from '../constants/productData';
+import { Product } from '../constants/product.type';
 
 export default function ProductDetailScreen({ route }: any) {
   const { productId } = route.params;
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchProduct() {
@@ -73,7 +74,6 @@ export default function ProductDetailScreen({ route }: any) {
 
   const sections = possibleSections.filter((section) => product[section.key]);
 
-  const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
@@ -169,8 +169,6 @@ export default function ProductDetailScreen({ route }: any) {
     </ScrollView>
   );
 }
-
-// ... keep your styles as-is
 
 const styles = StyleSheet.create({
   container: {

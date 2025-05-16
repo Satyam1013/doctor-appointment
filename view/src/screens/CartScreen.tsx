@@ -72,7 +72,7 @@ export default function CartScreen() {
     <View style={styles.itemContainer}>
       <Text>{item.product.title}</Text>
       <Text>Qty: {item.quantity}</Text>
-      <Text>${(item.product.price * item.quantity).toFixed(2)}</Text>
+      <Text>₹{(item.product.price * item.quantity).toFixed(2)}</Text>
       <TouchableOpacity
         onPress={() => onUpdateQuantity(item.id, item.quantity + 1)}
       >
@@ -122,7 +122,12 @@ export default function CartScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+    paddingBottom: 120,
+  },
   itemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',

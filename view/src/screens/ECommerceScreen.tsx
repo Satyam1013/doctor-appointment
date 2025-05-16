@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ImageSourcePropType,
 } from 'react-native';
 import Carousel from '../components/Carousel';
 
@@ -19,73 +20,73 @@ const categories = [
   {
     title: 'Whitening booster gel',
     _id: '682779a388e60dac093dbb88',
-    icon: require('../../assets/images/ecom/whiteningboostergel/1.png'),
+    icon: 'https://i.ibb.co/PsMJw9bB/1.png',
   },
   {
     title: 'Whitening gel',
     _id: '682779a388e60dac093dbb89',
-    icon: require('../../assets/images/ecom/whiteninggel/1.png'),
+    icon: 'https://i.ibb.co/pBXnQNXm/1.png',
   },
   {
     title: 'Whitening pen',
     _id: '682779a388e60dac093dbb8a',
-    icon: require('../../assets/images/ecom/whiteningpen/1.png'),
+    icon: 'https://i.ibb.co/KjDBqrgG/1.png',
   },
   {
     title: 'Teeth whitening kit',
     _id: '682779a388e60dac093dbb8b',
-    icon: require('../../assets/images/ecom/teethwhiteningkit/1.png'),
+    icon: 'https://i.ibb.co/Jwspv8Yz/1.png',
   },
   {
     title: 'Teeth whitening serum',
     _id: '682779a388e60dac093dbb8c',
-    icon: require('../../assets/images/ecom/teethwhiteningserum/1.png'),
+    icon: 'https://i.ibb.co/6ccrZF2N/1.png',
   },
   {
     title: 'Teeth whitening strips',
     _id: '682779a388e60dac093dbb8d',
-    icon: require('../../assets/images/ecom/teethwhiteningstrips/1.png'),
+    icon: 'https://i.ibb.co/N6NhKYww/1.png',
   },
   {
     title: 'Tooth paste',
     _id: '682779a388e60dac093dbb8e',
-    icon: require('../../assets/images/ecom/toothpaste/1.png'),
+    icon: 'https://i.ibb.co/kVwPKD5v/1.png',
   },
   {
     title: 'Water flosser',
     _id: '682779a388e60dac093dbb8f',
-    icon: require('../../assets/images/ecom/waterflosser/1.png'),
+    icon: 'https://i.ibb.co/vCQrD1rC/1.png',
   },
   {
     title: 'Chewes',
     _id: '682779a388e60dac093dbb90',
-    icon: require('../../assets/images/ecom/chewes/1.png'),
+    icon: 'https://i.ibb.co/nMm1ZnF3/1.png',
   },
   {
     title: 'Electronic tooth brush',
     _id: '682779a388e60dac093dbb91',
-    icon: require('../../assets/images/ecom/electronictoothbrush/1.png'),
+    icon: 'https://i.ibb.co/WNRmqwj3/1.png',
   },
   {
     title: 'Pull tool',
     _id: '682779a388e60dac093dbb92',
-    icon: require('../../assets/images/ecom/pulltool/1.png'),
+    icon: 'https://i.ibb.co/S41Y360P/1.png',
   },
   {
     title: 'Aligners and retainer',
     _id: '682779a388e60dac093dbb93',
-    icon: require('../../assets/images/ecom/aligners/1.png'),
+    icon: 'https://i.ibb.co/m5mprWW4/1.png',
   },
   {
     title: 'Aligners foam',
     _id: '682779a388e60dac093dbb94',
 
-    icon: require('../../assets/images/ecom/alignersfoam/1.png'),
+    icon: 'https://i.ibb.co/PvJgx1LQ/1.png',
   },
   {
     title: 'Check retractor',
     _id: '682779a388e60dac093dbb95',
-    icon: require('../../assets/images/ecom/checkretractor/1.png'),
+    icon: 'https://i.ibb.co/YwV21hh/1.png',
   },
 ];
 
@@ -194,12 +195,15 @@ export default function EComScreen({ navigation }: any) {
             style={styles.item}
             onPress={() =>
               navigation.navigate('ProductDetailScreen', {
-                _id: item._id,
+                productId: item._id,
               })
             }
           >
             <View style={styles.imageWrapper}>
-              <Image source={item.icon} style={styles.icon} />
+              <Image
+                source={{ uri: item.icon } as ImageSourcePropType}
+                style={styles.icon}
+              />
             </View>
             <Text style={styles.label}>{item.title}</Text>
           </TouchableOpacity>
