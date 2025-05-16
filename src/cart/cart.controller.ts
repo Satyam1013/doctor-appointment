@@ -6,24 +6,36 @@ import {
   Param,
   Delete,
   Patch,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { CartService } from './cart.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Request as ExpressRequest } from 'express';
+
+export interface AuthenticatedRequest extends ExpressRequest {
+  user: {
+    _id: string;
+  };
+}
 
 @Controller('cart')
+@UseGuards(JwtAuthGuard)
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Post('add')
-  add(@Body() body: { userId: string; productId: string; quantity: number }) {
-    return this.cartService.addToCart(
-      body.userId,
-      body.productId,
-      body.quantity,
-    );
+  add(
+    @Req() req: AuthenticatedRequest,
+    @Body() body: { productId: string; quantity: number },
+  ) {
+    const userId = req.user._id;
+    return this.cartService.addToCart(userId, body.productId, body.quantity);
   }
 
-  @Get(':userId')
-  get(@Param('userId') userId: string) {
+  @Get()
+  get(@Req() req: AuthenticatedRequest) {
+    const userId = req.user._id;
     return this.cartService.getCart(userId);
   }
 
@@ -37,8 +49,9 @@ export class CartController {
     return this.cartService.removeFromCart(id);
   }
 
-  @Delete('clear/:userId')
-  clear(@Param('userId') userId: string) {
+  @Delete('clear')
+  clear(@Req() req: AuthenticatedRequest) {
+    const userId = req.user._id;
     return this.cartService.clearCart(userId);
   }
 }
