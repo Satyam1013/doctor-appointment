@@ -13,6 +13,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
+import Carousel from '../components/Carousel';
 
 const categories = [
   {
@@ -147,6 +148,12 @@ const sections = [
   },
 ];
 
+const topCarousel = [
+  require('../../assets/images/adbottom2.png'),
+  require('../../assets/images/banner2.png'),
+  require('../../assets/images/banner3.png'),
+];
+
 export default function EComScreen({ navigation }: any) {
   const renderProductCard = (item: any) => (
     <View style={styles.card}>
@@ -205,7 +212,7 @@ export default function EComScreen({ navigation }: any) {
             contentContainerStyle={styles.horizontalList}
           />
 
-          <Image source={section.ad} style={styles.adImage} />
+          <Carousel images={topCarousel} />
         </View>
       ))}
     </ScrollView>

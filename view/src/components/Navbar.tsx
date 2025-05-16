@@ -45,7 +45,9 @@ export default function Navbar() {
       <View style={styles.headerContainer}>
         <View>
           <Text style={styles.greeting}>Hi, {user?.firstName}</Text>
-          <Text style={styles.location}>Add location ▼</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('ClinicMap')}>
+            <Text style={styles.location}>Add location ▼</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={[styles.icons, styles.menuWrapper]}>
