@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 export interface Product {
+  _id?: string;
   title: string;
   categoryKey: string;
   price: number;
@@ -276,7 +277,6 @@ export const productData: Record<string, Product> = {
     information:
       'Chewies are reusable and designed to assist aligner fit and comfort. They are not edible and should only be used as directed for orthodontic support.',
   },
-
   electronictoothbrush: {
     title: 'Electro Sonic Electric Toothbrush',
     categoryKey: 'electronictoothbrush',

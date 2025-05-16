@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,16 +12,55 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
-import { Product, productData } from '../constants/productData';
-
-const formatTitleToKey = (title: string) =>
-  title.toLowerCase().replace(/ /g, '');
+import { getProductById } from '../api/product-api';
+import { addToCart } from '../api/cart-api';
+import { Product } from '../constants/productData';
 
 export default function ProductDetailScreen({ route }: any) {
-  const { category } = route.params;
-  const key = formatTitleToKey(category);
-  const product = productData[key];
+  const { productId } = route.params;
+
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProduct() {
+      try {
+        setLoading(true);
+        const fetchedProduct = await getProductById(productId);
+        setProduct(fetchedProduct);
+      } catch (error) {
+        Alert.alert('Error', 'Failed to load product data.');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProduct();
+  }, [productId]);
+
+  if (loading) {
+    return (
+      <View
+        style={[
+          styles.container,
+          { justifyContent: 'center', alignItems: 'center' },
+        ]}
+      >
+        <ActivityIndicator size="large" color="#ff4d4d" />
+      </View>
+    );
+  }
+
+  if (!product) {
+    return (
+      <View style={styles.container}>
+        <Text>Product not found.</Text>
+      </View>
+    );
+  }
 
   const possibleSections: { label: string; key: keyof Product }[] = [
     { label: 'Product Details', key: 'productDetails' },
@@ -36,17 +78,28 @@ export default function ProductDetailScreen({ route }: any) {
     setExpandedSection(expandedSection === section ? null : section);
   };
 
-  if (!product) {
-    return (
-      <View style={styles.container}>
-        <Text>Product not found.</Text>
-      </View>
-    );
-  }
-
   const discount = Math.round(
     ((product.originalPrice - product.price) / product.originalPrice) * 100,
   );
+
+  const handleAddToCart = async () => {
+    try {
+      if (!product) return;
+
+      const productId = product._id;
+
+      if (!productId) {
+        Alert.alert('Error', 'Product ID is missing');
+        return;
+      }
+
+      await addToCart(productId, 1);
+      Alert.alert('Success', 'Product added to cart');
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Failed to add product to cart');
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -55,19 +108,25 @@ export default function ProductDetailScreen({ route }: any) {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
       >
-        {product.images.map((imgSrc: any, idx: number) => (
-          <Image key={idx} source={imgSrc} style={styles.productImage} />
-        ))}
+        {product.images &&
+          product.images.map((imgSrc: string, idx: number) => (
+            <Image
+              key={idx}
+              source={{ uri: imgSrc }}
+              style={styles.productImage}
+            />
+          ))}
       </ScrollView>
 
       <View style={styles.detailsContainer}>
         <Text style={styles.title}>{product.title}</Text>
         <View style={styles.tags}>
-          {product.tags.map((tag, idx) => (
-            <Text key={idx} style={styles.tag}>
-              {tag}
-            </Text>
-          ))}
+          {product.tags &&
+            product.tags.map((tag: string, idx: number) => (
+              <Text key={idx} style={styles.tag}>
+                {tag}
+              </Text>
+            ))}
         </View>
 
         <Text style={styles.price}>
@@ -104,12 +163,14 @@ export default function ProductDetailScreen({ route }: any) {
         ))}
       </View>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleAddToCart}>
         <Text style={styles.buttonText}>Add to cart</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 }
+
+// ... keep your styles as-is
 
 const styles = StyleSheet.create({
   container: {

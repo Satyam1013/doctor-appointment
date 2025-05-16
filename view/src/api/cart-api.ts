@@ -1,29 +1,24 @@
 import axiosClient from './axios-client';
 
-export const addToCart = (
-  userId: string,
-  productId: string,
-  quantity: number,
-) => {
+export const addToCart = (productId: string, quantity: number) => {
   return axiosClient.post('/cart/add', {
-    userId,
     productId,
     quantity,
   });
 };
 
-export const getCart = (userId: string) => {
-  return axiosClient.get(`/cart/${userId}`);
+export const getCart = () => {
+  return axiosClient.get('/cart');
 };
 
-export const updateCartItem = (id: number, quantity: number) => {
+export const updateCartItem = (id: string, quantity: number) => {
   return axiosClient.patch(`/cart/update/${id}`, { quantity });
 };
 
-export const removeCartItem = (id: number) => {
+export const removeCartItem = (id: string) => {
   return axiosClient.delete(`/cart/${id}`);
 };
 
-export const clearCart = (userId: string) => {
-  return axiosClient.delete(`/cart/clear/${userId}`);
+export const clearCart = () => {
+  return axiosClient.delete('/cart/clear');
 };

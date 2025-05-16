@@ -20,11 +20,14 @@ export default function FeatureStats() {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    width: screenWidth,
+    marginHorizontal: 16, // left and right margin
+    borderRadius: 16,
+    overflow: 'hidden', // make borderRadius apply to child
     backgroundColor: '#E9F9FA',
   },
   image: {
-    width: screenWidth,
+    width: screenWidth - 32, // account for horizontal margin (16 + 16)
     height: 180,
+    borderRadius: 16,
   },
 });

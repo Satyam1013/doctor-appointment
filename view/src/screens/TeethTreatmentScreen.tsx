@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import React, { useState } from 'react';
 import { treatmentData } from '../constants/teethTreatment';
 import { useRoute, RouteProp } from '@react-navigation/native';
 
@@ -11,6 +18,12 @@ type TeethTreatmentRouteParams = {
 };
 
 export default function TeethTreatmentScreen() {
+  const [activeFAQIndex, setActiveFAQIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setActiveFAQIndex((prev) => (prev === index ? null : index));
+  };
+
   const route = useRoute<RouteProp<TeethTreatmentRouteParams, 'params'>>();
   const { routeKey } = route.params || {};
   const data = treatmentData.find((item) => item.route === routeKey);
@@ -113,8 +126,20 @@ export default function TeethTreatmentScreen() {
       <Section title={`FAQs about ${routeKey}`}>
         {data.faqs.map((faq, idx) => (
           <View key={idx} style={styles.faq}>
-            <Text style={styles.faqQuestion}>{faq.question}</Text>
-            <Text style={styles.faqAnswer}>{faq.answer}</Text>
+            <TouchableOpacity
+              onPress={() => toggleFAQ(idx)}
+              activeOpacity={0.8}
+            >
+              <View style={styles.faqRow}>
+                <Text style={styles.faqQuestion}>{faq.question}</Text>
+                <Text style={styles.faqIcon}>
+                  {activeFAQIndex === idx ? '▲' : '▼'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+            {activeFAQIndex === idx && (
+              <Text style={styles.faqAnswer}>{faq.answer}</Text>
+            )}
           </View>
         ))}
       </Section>
@@ -181,7 +206,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   faqQuestion: {
-    fontWeight: 'bold',
     fontSize: 16,
   },
   faqAnswer: {
@@ -204,5 +228,15 @@ const styles = StyleSheet.create({
     height: 120,
     marginRight: 10,
     borderRadius: 10,
+  },
+  faqRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  faqIcon: {
+    fontSize: 16,
+    marginLeft: 10,
+    color: '#1e90ff',
   },
 });

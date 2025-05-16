@@ -33,6 +33,6 @@ const styles = StyleSheet.create({
   container: { height: 160, marginBottom: 16, zIndex: 1 },
   image: {
     width: imageWidth,
-    height: 160,
+    height: 180,
   },
 });

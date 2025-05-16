@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import React from 'react';
 import {
   View,
@@ -46,7 +46,16 @@ export default function Transformation({ navigation }: any) {
               })
             }
           >
-            <Image source={item.img} style={styles.image} resizeMode="cover" />
+            <View style={styles.imageWrapper}>
+              <Image
+                source={item.img}
+                style={styles.image}
+                resizeMode="cover"
+              />
+            </View>
+            <View style={styles.footer}>
+              <Text style={styles.footerText}>View Story</Text>
+            </View>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -55,30 +64,58 @@ export default function Transformation({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 12 },
+  container: {
+    padding: 12,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 8,
   },
-  title: { fontSize: 16, fontWeight: '600' },
-  viewAll: { color: '#1e90ff' },
-
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  viewAll: {
+    color: '#1e90ff',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   card: {
-    width: 140, // Wider card for tall images
-    aspectRatio: 0.8, // Match image proportion (1024/1280 ~ 0.8)
-    borderRadius: 10,
+    width: 140,
+    borderRadius: 12,
     overflow: 'hidden',
     marginRight: 12,
     backgroundColor: '#fff',
-    elevation: 2,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  imageWrapper: {
+    height: 160,
+    overflow: 'hidden',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   },
   image: {
     width: '100%',
     height: '100%',
+  },
+  footer: {
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    backgroundColor: '#fff',
+  },
+  footerText: {
+    fontSize: 12,
+    color: '#444',
+    fontWeight: '500',
   },
 });

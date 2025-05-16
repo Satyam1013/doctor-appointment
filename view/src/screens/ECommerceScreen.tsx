@@ -18,63 +18,77 @@ import Carousel from '../components/Carousel';
 const categories = [
   {
     title: 'Whitening booster gel',
+    _id: '682779a388e60dac093dbb88',
     icon: require('../../assets/images/ecom/whiteningboostergel/1.png'),
   },
   {
     title: 'Whitening gel',
+    _id: '682779a388e60dac093dbb89',
     icon: require('../../assets/images/ecom/whiteninggel/1.png'),
   },
   {
     title: 'Whitening pen',
+    _id: '682779a388e60dac093dbb8a',
     icon: require('../../assets/images/ecom/whiteningpen/1.png'),
   },
   {
     title: 'Teeth whitening kit',
+    _id: '682779a388e60dac093dbb8b',
     icon: require('../../assets/images/ecom/teethwhiteningkit/1.png'),
   },
   {
     title: 'Teeth whitening serum',
+    _id: '682779a388e60dac093dbb8c',
     icon: require('../../assets/images/ecom/teethwhiteningserum/1.png'),
   },
   {
     title: 'Teeth whitening strips',
+    _id: '682779a388e60dac093dbb8d',
     icon: require('../../assets/images/ecom/teethwhiteningstrips/1.png'),
   },
   {
     title: 'Tooth paste',
+    _id: '682779a388e60dac093dbb8e',
     icon: require('../../assets/images/ecom/toothpaste/1.png'),
   },
   {
     title: 'Water flosser',
+    _id: '682779a388e60dac093dbb8f',
     icon: require('../../assets/images/ecom/waterflosser/1.png'),
   },
   {
     title: 'Chewes',
+    _id: '682779a388e60dac093dbb90',
     icon: require('../../assets/images/ecom/chewes/1.png'),
   },
   {
     title: 'Electronic tooth brush',
+    _id: '682779a388e60dac093dbb91',
     icon: require('../../assets/images/ecom/electronictoothbrush/1.png'),
   },
   {
     title: 'Pull tool',
+    _id: '682779a388e60dac093dbb92',
     icon: require('../../assets/images/ecom/pulltool/1.png'),
   },
   {
     title: 'Aligners and retainer',
+    _id: '682779a388e60dac093dbb93',
     icon: require('../../assets/images/ecom/aligners/1.png'),
   },
   {
     title: 'Aligners foam',
+    _id: '682779a388e60dac093dbb94',
+
     icon: require('../../assets/images/ecom/alignersfoam/1.png'),
   },
   {
     title: 'Check retractor',
+    _id: '682779a388e60dac093dbb95',
     icon: require('../../assets/images/ecom/checkretractor/1.png'),
   },
 ];
 
-// Sample ad placeholders (replace with actual ad images)
 const ad1 = require('../../assets/images/banner.png');
 const ad2 = require('../../assets/images/banner2.png');
 const ad3 = require('../../assets/images/banner3.png');
@@ -149,7 +163,7 @@ const sections = [
 ];
 
 const topCarousel = [
-  require('../../assets/images/adbottom2.png'),
+  require('../../assets/images/banner.png'),
   require('../../assets/images/banner2.png'),
   require('../../assets/images/banner3.png'),
 ];
@@ -180,7 +194,7 @@ export default function EComScreen({ navigation }: any) {
             style={styles.item}
             onPress={() =>
               navigation.navigate('ProductDetailScreen', {
-                category: item.title,
+                _id: item._id,
               })
             }
           >
