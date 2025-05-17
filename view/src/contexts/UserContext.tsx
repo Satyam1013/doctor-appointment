@@ -22,6 +22,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const { token } = useContext(AuthContext);
+  console.log('✨ ~ token:', token);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

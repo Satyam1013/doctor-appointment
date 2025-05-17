@@ -205,9 +205,6 @@ const styles = StyleSheet.create({
   faq: {
     marginBottom: 12,
   },
-  faqQuestion: {
-    fontSize: 16,
-  },
   faqAnswer: {
     fontSize: 15,
     marginTop: 2,
@@ -234,9 +231,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  faqQuestion: {
+    fontSize: 16,
+    flex: 1, // 🧩 Makes question take remaining space
+    paddingRight: 10, // 🧩 Adds spacing before arrow
+  },
+
   faqIcon: {
     fontSize: 16,
-    marginLeft: 10,
     color: '#1e90ff',
   },
 });
