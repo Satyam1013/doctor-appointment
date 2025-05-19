@@ -22,8 +22,10 @@ const products = [
 export default function Transformation({ navigation }: any) {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Before vs After Treatment</Text>
+      <Text style={styles.sectionTitle}>Transformations</Text>
+      <Text style={styles.sectionSubtitle}>Before vs After Treatment</Text>
+
+      <View style={styles.headerRight}>
         <TouchableOpacity
           onPress={() => navigation.navigate('TransformationScreen')}
         >
@@ -34,7 +36,7 @@ export default function Transformation({ navigation }: any) {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.row}
+        contentContainerStyle={styles.scrollRow}
       >
         {products.map((item, idx) => (
           <TouchableOpacity
@@ -46,16 +48,7 @@ export default function Transformation({ navigation }: any) {
               })
             }
           >
-            <View style={styles.imageWrapper}>
-              <Image
-                source={item.img}
-                style={styles.image}
-                resizeMode="cover"
-              />
-            </View>
-            <View style={styles.footer}>
-              <Text style={styles.footerText}>View Story</Text>
-            </View>
+            <Image source={item.img} style={styles.image} resizeMode="cover" />
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -65,52 +58,52 @@ export default function Transformation({ navigation }: any) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12,
+    paddingHorizontal: 16,
+    marginTop: 20,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#e53935',
+    marginBottom: 4,
+  },
+  sectionSubtitle: {
+    fontSize: 14,
+    color: '#333',
     marginBottom: 8,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
+  headerRight: {
+    alignItems: 'flex-end',
+    marginBottom: 8,
   },
   viewAll: {
+    fontSize: 13,
     color: '#1e90ff',
+    fontWeight: '500',
   },
-  row: {
+  scrollRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    paddingVertical: 4,
   },
   card: {
-    width: 140,
+    width: 180,
     borderRadius: 12,
     overflow: 'hidden',
     marginRight: 12,
     backgroundColor: '#fff',
-    elevation: 4,
+    elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
-  imageWrapper: {
-    height: 160,
-    overflow: 'hidden',
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-  },
   image: {
     width: '100%',
-    height: '100%',
+    height: 220,
   },
-  footer: {
-    height: 30,
-    justifyContent: 'center',
+  cardFooter: {
+    paddingVertical: 8,
     alignItems: 'center',
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
     backgroundColor: '#fff',
   },
   footerText: {

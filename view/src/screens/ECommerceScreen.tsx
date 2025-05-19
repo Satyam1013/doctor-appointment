@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -13,8 +15,11 @@ import {
   Image,
   ScrollView,
   ImageSourcePropType,
+  Alert,
 } from 'react-native';
 import Carousel from '../components/Carousel';
+import { addToCart } from '../api/cart-api';
+import FeatureStats from '../components/FeatureStats';
 
 const categories = [
   {
@@ -94,29 +99,21 @@ const ad1 = require('../../assets/images/banner.png');
 const ad2 = require('../../assets/images/banner2.png');
 const ad3 = require('../../assets/images/banner3.png');
 
-// Randomly pick category items for mock products
-const getRandomCategoryImage = () => {
-  const randomItem = categories[Math.floor(Math.random() * categories.length)];
-  return randomItem.icon;
-};
-
 const sections = [
   {
     title: 'Best Selling',
     data: [
       {
-        id: '1',
-        name: 'Amlant Tablet',
-        price: '₹130',
-        rating: '4.4',
-        image: getRandomCategoryImage(),
+        title: 'Aligners and retainer',
+        _id: '682779a388e60dac093dbb93',
+        image: 'https://i.ibb.co/m5mprWW4/1.png',
+        price: 4999,
       },
       {
-        id: '2',
-        name: 'Trailokya Vati',
-        price: '₹180',
-        rating: '4.5',
-        image: getRandomCategoryImage(),
+        title: 'Pull tool',
+        _id: '682779a388e60dac093dbb92',
+        image: 'https://i.ibb.co/S41Y360P/1.png',
+        price: 499,
       },
     ],
     ad: ad1,
@@ -125,18 +122,16 @@ const sections = [
     title: 'Save Big With Combos',
     data: [
       {
-        id: '3',
-        name: 'Get the Glow Combo',
-        price: '₹1,197',
-        rating: '4.6',
-        image: getRandomCategoryImage(),
+        title: 'Tooth paste',
+        _id: '682779a388e60dac093dbb8e',
+        image: 'https://i.ibb.co/kVwPKD5v/1.png',
+        price: 199,
       },
       {
-        id: '4',
-        name: 'Golden Radiance Combo',
-        price: '₹1,087',
-        rating: '4.7',
-        image: getRandomCategoryImage(),
+        title: 'Water flosser',
+        _id: '682779a388e60dac093dbb8f',
+        image: 'https://i.ibb.co/vCQrD1rC/1.png',
+        price: 2000,
       },
     ],
     ad: ad2,
@@ -145,18 +140,16 @@ const sections = [
     title: 'Recommended For You',
     data: [
       {
-        id: '5',
-        name: 'Amla Churna',
-        price: '₹88',
-        rating: '4.4',
-        image: getRandomCategoryImage(),
+        title: 'Whitening pen',
+        _id: '682779a388e60dac093dbb8a',
+        image: 'https://i.ibb.co/KjDBqrgG/1.png',
+        price: 599,
       },
       {
-        id: '6',
-        name: 'Fungiwin Ointment',
-        price: '₹133',
-        rating: '4.5',
-        image: getRandomCategoryImage(),
+        title: 'Teeth whitening kit',
+        _id: '682779a388e60dac093dbb8b',
+        image: 'https://i.ibb.co/Jwspv8Yz/1.png',
+        price: 2100,
       },
     ],
     ad: ad3,
@@ -170,14 +163,36 @@ const topCarousel = [
 ];
 
 export default function EComScreen({ navigation }: any) {
-  const renderProductCard = (item: any) => (
+  const handleAddToCart = async (product: any) => {
+    try {
+      if (!product || !product._id) {
+        Alert.alert('Error', 'Product ID is missing');
+        return;
+      }
+      await addToCart(product._id, 1);
+      Alert.alert('Success', `${product.title} added to cart`);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Failed to add product to cart');
+    }
+  };
+
+  const renderProductCard = (item: {
+    title: string;
+    _id: string;
+    image: string;
+    price: number;
+  }) => (
     <View style={styles.card}>
-      <Image source={item.image} style={styles.cardImage} />
+      <Image source={{ uri: item.image }} style={styles.cardImage} />
       <Text style={styles.cardName} numberOfLines={2}>
-        {item.name}
+        {item.title}
       </Text>
-      <Text style={styles.cardPrice}>{item.price}</Text>
-      <TouchableOpacity style={styles.addButton}>
+      <Text style={styles.cardPrice}>₹{item.price}</Text>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => handleAddToCart(item)}
+      >
         <Text style={styles.addText}>ADD</Text>
       </TouchableOpacity>
     </View>
@@ -225,7 +240,7 @@ export default function EComScreen({ navigation }: any) {
             horizontal
             showsHorizontalScrollIndicator={false}
             data={section.data}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item._id}
             renderItem={({ item }) => renderProductCard(item)}
             contentContainerStyle={styles.horizontalList}
           />
@@ -233,6 +248,7 @@ export default function EComScreen({ navigation }: any) {
           <Carousel images={topCarousel} />
         </View>
       ))}
+      <FeatureStats />
     </ScrollView>
   );
 }
@@ -313,14 +329,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-
   cardImage: {
     width: '100%',
     height: 100,
     resizeMode: 'contain',
     borderRadius: 8,
   },
-
   cardName: {
     fontSize: 12,
     marginTop: 6,

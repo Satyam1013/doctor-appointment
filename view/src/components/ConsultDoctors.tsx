@@ -7,33 +7,50 @@ import {
   Image,
   StyleSheet,
   FlatList,
-  Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 
 const doctors = [
-  { id: '1', image: require('../../assets/images/doc.png') },
-  { id: '2', image: require('../../assets/images/doc.png') },
+  {
+    id: '1',
+    image: require('../../assets/images/doc.png'),
+    name: 'Dr. Smita Shah',
+  },
+  {
+    id: '2',
+    image: require('../../assets/images/doc.png'),
+    name: 'Dr. Ramesh Kumar',
+  },
 ];
 
 export default function DoctorCard() {
-  const renderItem = ({ item }: { item: { id: string; image: any } }) => (
-    <View style={styles.card}>
+  const renderItem = ({
+    item,
+  }: {
+    item: { id: string; image: any; name: string };
+  }) => (
+    <TouchableOpacity style={styles.card}>
       <Image source={item.image} style={styles.image} resizeMode="cover" />
-    </View>
+      <Text style={styles.name} numberOfLines={2}>
+        {item.name}
+      </Text>
+    </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>
+      <Text style={styles.sectionTitle}>Our Experts</Text>
+      <Text style={styles.sectionSubtitle}>
         Meet the chief experts behind your care and safety
       </Text>
+
       <FlatList
         data={doctors}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={styles.scrollContainer}
       />
     </View>
   );
@@ -41,33 +58,45 @@ export default function DoctorCard() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 24,
+    paddingHorizontal: 16,
+    marginTop: 20,
   },
-  heading: {
-    fontSize: 18,
+  sectionTitle: {
+    fontSize: 16,
     fontWeight: 'bold',
-    paddingHorizontal: 16,
-    marginBottom: 12,
-    color: '#333',
+    color: '#e53935',
+    marginBottom: 4,
   },
-  listContent: {
-    paddingHorizontal: 16,
+  sectionSubtitle: {
+    fontSize: 14,
+    color: '#333',
+    marginBottom: 12,
+  },
+  scrollContainer: {
+    paddingVertical: 4,
   },
   card: {
+    width: 200,
+    height: 200,
+    marginRight: 12,
     backgroundColor: '#fff',
-    borderRadius: 16,
+    borderRadius: 12,
     overflow: 'hidden',
-    marginRight: 16,
-    width: Dimensions.get('window').width * 0.6,
-    height: 220,
+    elevation: 2,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
   },
   image: {
     width: '100%',
-    height: '100%',
+    height: 190,
+    resizeMode: 'cover',
+  },
+  name: {
+    padding: 8,
+    fontSize: 13,
+    color: '#444',
+    fontWeight: '500',
   },
 });

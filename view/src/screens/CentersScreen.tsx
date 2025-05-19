@@ -14,6 +14,7 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Carousel from '../components/Carousel';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import FeatureStats from '../components/FeatureStats';
 
 type RootStackParamList = {
   Centers: { selectedCity?: string };
@@ -216,6 +217,7 @@ export default function Centers() {
           ))}
         </ScrollView>
       </View>
+      <FeatureStats />
     </ScrollView>
   );
 }

@@ -124,6 +124,9 @@ export default function TeethTreatmentScreen() {
 
       {/* FAQs */}
       <Section title={`FAQs about ${routeKey}`}>
+        {/* Horizontal line after Section title */}
+        <View style={styles.divider} />
+
         {data.faqs.map((faq, idx) => (
           <View key={idx} style={styles.faq}>
             <TouchableOpacity
@@ -137,9 +140,14 @@ export default function TeethTreatmentScreen() {
                 </Text>
               </View>
             </TouchableOpacity>
+
+            {/* Show answer if active */}
             {activeFAQIndex === idx && (
               <Text style={styles.faqAnswer}>{faq.answer}</Text>
             )}
+
+            {/* Horizontal line after each question-answer */}
+            <View style={styles.divider} />
           </View>
         ))}
       </Section>
@@ -206,8 +214,10 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   faqAnswer: {
-    fontSize: 15,
-    marginTop: 2,
+    marginTop: 6,
+    fontSize: 14,
+    color: '#666',
+    lineHeight: 20,
   },
   illustration: {
     width: '100%',
@@ -236,7 +246,11 @@ const styles = StyleSheet.create({
     flex: 1, // 🧩 Makes question take remaining space
     paddingRight: 10, // 🧩 Adds spacing before arrow
   },
-
+  divider: {
+    height: 1,
+    backgroundColor: '#ccc',
+    marginVertical: 8,
+  },
   faqIcon: {
     fontSize: 16,
     color: '#1e90ff',

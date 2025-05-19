@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { ResizeMode, Video } from 'expo-av';
 import Carousel from '../components/Carousel';
+import FeatureStats from '../components/FeatureStats';
 
 const faqs = [
   {
@@ -334,6 +335,7 @@ const MyDentAlignersScreen = () => {
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Book Your Free Scan</Text>
       </TouchableOpacity>
+      <FeatureStats />
     </ScrollView>
   );
 };

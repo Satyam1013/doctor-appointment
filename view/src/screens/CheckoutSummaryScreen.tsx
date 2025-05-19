@@ -15,7 +15,7 @@ import {
 
 export default function CheckoutSummaryScreen({ navigation }: any) {
   const handlePayment = () => {
-    navigation.navigate('CartScreen');
+    navigation.navigate('BookingSuccessScreen');
   };
 
   return (

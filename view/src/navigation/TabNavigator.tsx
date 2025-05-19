@@ -150,7 +150,7 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name="ContactUsTab"
-        component={withAppShell(ContactUsScreen)}
+        component={ContactUsScreen}
         options={{
           tabBarLabel: 'Contact',
           tabBarIcon: ({ focused }) => (

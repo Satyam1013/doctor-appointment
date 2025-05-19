@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -13,10 +12,11 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { useUser } from '../contexts/UserContext';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { addToCart } from '../api/cart-api';
+import FeatureStats from '../components/FeatureStats';
+import { Ionicons } from '@expo/vector-icons';
 
 const products = [
   {
@@ -31,6 +31,14 @@ const products = [
     icon: 'https://i.ibb.co/pBXnQNXm/1.png',
     price: 899,
   },
+];
+
+const programSteps = [
+  { title: 'Orientation & Patient Information', sessions: '1 Live session' },
+  { title: 'Gynaecologist Consultation', sessions: '4 Sessions' },
+  { title: 'Nutritionist Consultation', sessions: '3 Sessions' },
+  { title: 'Yoga & Meditation Consultation', sessions: '3 Sessions' },
+  { title: 'Well being counselling & Monitoring', sessions: '3 Sessions' },
 ];
 
 export default function ContactUsScreen() {
@@ -54,51 +62,105 @@ export default function ContactUsScreen() {
   return (
     <ScrollView style={styles.container}>
       {/* 1. Welcome Section */}
-      <View style={styles.welcomeSection}>
-        <Text style={styles.helloText}>Hello, {user?.firstName}</Text>
-        <Text style={styles.subText}>
-          Start your journey of aligners with us
-        </Text>
-        <TouchableOpacity style={styles.coordinatorButton}>
-          <Text style={styles.buttonText}>
-            Reach out to your program co-ordinator
+      <View style={styles.welcomeContainer}>
+        {/* Left Section */}
+        <View style={styles.leftSection}>
+          <View style={styles.profileRow}>
+            <Image
+              source={require('../../assets/images/consultant.jpg')}
+              style={styles.profileImage}
+            />
+            <Text style={styles.helloText}>Hello, {user?.firstName}</Text>
+          </View>
+          <Text style={styles.subText}>
+            Start your journey of Parenthood with us
           </Text>
-          <Text style={styles.timeText}>🕒 10am - 6pm</Text>
+
+          <TouchableOpacity style={styles.coordinatorButton}>
+            <Text style={styles.buttonText}>
+              Reach out to your program co-ordinator
+            </Text>
+            <Text style={styles.timeText}>🕒 10am - 6pm</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Right Side: Bell Icon */}
+        <TouchableOpacity style={styles.bellIconWrapper}>
+          <Ionicons name="notifications-outline" size={24} color="#00788D" />
         </TouchableOpacity>
       </View>
 
       {/* 2. Program Structure Section */}
       <View style={styles.sectionCard}>
         <Text style={styles.sectionTitle}>Program Structure</Text>
-        {[
-          {
-            title: 'Orientation & Patient Information',
-            sessions: '1 Live session',
-          },
-          { title: 'Gynaecologist Consultation', sessions: '4 Sessions' },
-          { title: 'Nutritionist Consultation', sessions: '3 Sessions' },
-          { title: 'Yoga & Meditation Consultation', sessions: '3 Sessions' },
-          {
-            title: 'Well being counselling & Monitoring',
-            sessions: '3 Sessions',
-          },
-        ].map((item, index) => (
-          <View key={index} style={styles.programItem}>
-            <Ionicons
-              name="ellipse"
-              size={10}
-              color="#00A67E"
-              style={{ marginRight: 8 }}
-            />
-            <Text style={styles.programText}>
-              {item.title} -{' '}
-              <Text style={styles.sessionText}>{item.sessions}</Text>
-            </Text>
-          </View>
-        ))}
+        <View style={styles.timelineContainer}>
+          {programSteps.map((item, index) => (
+            <View key={index} style={styles.stepContainer}>
+              {/* Connector Line */}
+              {index !== programSteps.length - 1 && (
+                <View style={styles.verticalLine} />
+              )}
+              {/* Circle */}
+              <View
+                style={[
+                  styles.circle,
+                  index === 0 ? styles.filledCircle : styles.hollowCircle,
+                ]}
+              />
+              {/* Content */}
+              <View style={styles.stepTextContainer}>
+                <Text style={styles.stepTitle}>{item.title}</Text>
+                <Text style={styles.stepSession}>{item.sessions}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
       </View>
 
-      {/* 3. Team of Experts & Schedule */}
+      {/* 3. Schedule */}
+      <View style={styles.todayAppointmentCard}>
+        <Text style={styles.todayTitle}>Today Appointment</Text>
+        <Text style={styles.appointmentId}>
+          Appointment ID: 345567872782889
+        </Text>
+        <View style={styles.doctorInfo}>
+          <Image
+            source={require('../../assets/images/consultant.jpg')}
+            style={styles.expertImage}
+          />
+          <View style={{ flex: 1, marginLeft: 10 }}>
+            <Text style={styles.doctorName}>Dr. Preeti Chhabra</Text>
+            <Text style={styles.doctorSpeciality}>
+              Gynae and Fertility, General Medicine & Others
+            </Text>
+            <Text style={styles.ratingStars}>★★★★★</Text>
+            <View style={styles.timeRow}>
+              <Text style={styles.scheduleTime}>🕒 1:30PM</Text>
+              <Text style={[styles.scheduleDate, { marginLeft: 10 }]}>
+                📅 10 Aug
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.buttonRow}>
+          <TouchableOpacity style={styles.joinButton}>
+            <Text style={styles.joinButtonText}>Join video call</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.rescheduleButton}>
+            <Text style={styles.rescheduleText}>Reschedule</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.uploadRow}>
+          <Text style={styles.uploadText}>📎 Upload Reports</Text>
+          <TouchableOpacity>
+            <Text style={styles.viewText}>View</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* 4. Team of Experts*/}
       <View style={styles.sectionCard}>
         <Text style={styles.sectionTitle}>Your Team Of Experts</Text>
         <ScrollView
@@ -163,35 +225,30 @@ export default function ContactUsScreen() {
         ))}
       </View>
 
-      {/* 4. Product Section & FAQs */}
+      {/* 5. Product Section & FAQs */}
       <View style={styles.sectionCard}>
-        <View style={styles.sectionCard}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Buy Products</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('ProductsTab')}>
-              <Text style={styles.viewAllText}>View All</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Buy Products</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('ProductsTab')}>
+            <Text style={styles.viewAllText}>View All</Text>
+          </TouchableOpacity>
+        </View>
 
-          <View style={styles.productRow}>
-            {products.slice(0, 2).map((item) => (
-              <View key={item._id} style={styles.productCard}>
-                <Image
-                  source={{ uri: item.icon }}
-                  style={styles.productImage}
-                />
-                <Text style={styles.productName}>{item.title}</Text>
-                <Text style={styles.productPrice}>₹{item.price}</Text>
+        <View style={styles.productRow}>
+          {products.map((item) => (
+            <View key={item._id} style={styles.productCard}>
+              <Image source={{ uri: item.icon }} style={styles.productImage} />
+              <Text style={styles.productName}>{item.title}</Text>
+              <Text style={styles.productPrice}>₹{item.price}</Text>
 
-                <TouchableOpacity
-                  style={styles.addToCartButton}
-                  onPress={() => handleAddToCart(item)}
-                >
-                  <Text style={styles.addToCartText}>Add to Cart</Text>
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View>
+              <TouchableOpacity
+                style={styles.addToCartButton}
+                onPress={() => handleAddToCart(item)}
+              >
+                <Text style={styles.addToCartText}>Add to Cart</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
         </View>
 
         <Text style={[styles.sectionTitle, { marginTop: 16 }]}>FAQs</Text>
@@ -207,6 +264,8 @@ export default function ContactUsScreen() {
           </Text>
         ))}
       </View>
+
+      <FeatureStats />
     </ScrollView>
   );
 }
@@ -231,39 +290,79 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
   },
+  welcomeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    padding: 16,
+    backgroundColor: '#E6F9FB',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+
+  leftSection: {
+    flex: 1,
+  },
+
+  profileRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 8,
+  },
+
+  helloText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#00788D',
+  },
+
+  subText: {
+    fontSize: 14,
+    color: '#444',
+    marginBottom: 10,
+  },
+
+  coordinatorButton: {
+    backgroundColor: '#00AEEF',
+    padding: 10,
+    borderRadius: 12,
+    maxWidth: 250,
+  },
+
+  buttonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+
+  timeText: {
+    color: '#fff',
+    fontSize: 12,
+    marginTop: 4,
+  },
+
+  bellIconWrapper: {
+    padding: 8,
+  },
+
+  bellIcon: {
+    width: 24,
+    height: 24,
+    tintColor: '#00788D',
+  },
   welcomeSection: {
     backgroundColor: '#e5f8ff',
     padding: 20,
     borderRadius: 12,
     marginBottom: 16,
     alignItems: 'center',
-  },
-  helloText: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#00A67E',
-  },
-  subText: {
-    fontSize: 16,
-    color: '#555',
-    marginTop: 6,
-  },
-  coordinatorButton: {
-    marginTop: 12,
-    backgroundColor: '#00AEEF',
-    padding: 12,
-    borderRadius: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  timeText: {
-    color: '#fff',
-    fontSize: 12,
-    textAlign: 'center',
-    marginTop: 4,
   },
   sectionCard: {
     backgroundColor: '#fff',
@@ -279,13 +378,72 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#3b3b3b',
+    color: '#00A67E',
     marginBottom: 12,
   },
-  programItem: {
+  timelineContainer: {
+    paddingLeft: 12,
+    borderLeftWidth: 2,
+    borderLeftColor: '#00A67E',
+    marginLeft: 7,
+  },
+  stepContainer: {
+    position: 'relative',
+    marginBottom: 20,
+    paddingLeft: 16,
+  },
+  sectionHeader: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+  },
+  viewAllText: {
+    fontSize: 14,
+    color: '#00AEEF',
+    fontWeight: '600',
+  },
+  verticalLine: {
+    position: 'absolute',
+    top: 12,
+    left: -2,
+    height: '100%',
+    width: 2,
+    backgroundColor: '#00AEEF',
+    zIndex: -1,
+  },
+  circle: {
+    position: 'absolute',
+    left: -10,
+    top: 4,
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+  },
+  filledCircle: {
+    backgroundColor: '#00AEEF',
+  },
+  hollowCircle: {
+    borderWidth: 2,
+    borderColor: '#00AEEF',
+    backgroundColor: '#fff',
+  },
+  stepTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  stepTitle: {
+    color: '#00AEEF',
+    fontSize: 14,
+    flex: 1,
+    fontWeight: '500',
+  },
+  stepSession: {
+    fontSize: 14,
+    color: '#3b3b3b',
+    fontWeight: '500',
   },
   programText: {
     fontSize: 15,
@@ -318,9 +476,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#eaf7ff',
     padding: 12,
     borderRadius: 10,
+    marginBottom: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    alignItems: 'center',
   },
   scheduleDoctor: {
     fontSize: 16,
@@ -332,74 +491,133 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   scheduleTime: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#007bff',
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#00AEEF',
+    textAlign: 'right',
   },
   scheduleDate: {
-    fontSize: 13,
-    color: '#333',
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'right',
   },
   productRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  medicineCard: {
-    backgroundColor: '#f2f2f2',
-    borderRadius: 8,
-    padding: 12,
-    width: '48%',
-    alignItems: 'center',
-  },
-  medicineName: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 4,
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#00A67E',
-  },
-  faqText: {
-    fontSize: 15,
-    color: '#444',
-    marginVertical: 4,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  viewAllText: {
-    fontSize: 14,
-    color: '#00AEEF',
-    fontWeight: '600',
+    marginTop: 12,
   },
   productCard: {
-    backgroundColor: '#f2f2f2',
+    width: '48%',
+    backgroundColor: '#f5f5f5',
     borderRadius: 10,
     padding: 10,
-    width: '48%',
     alignItems: 'center',
   },
   productImage: {
-    width: 60,
-    height: 60,
-    resizeMode: 'contain',
+    width: 80,
+    height: 80,
     marginBottom: 8,
+    resizeMode: 'contain',
   },
   productName: {
     fontSize: 14,
-    fontWeight: '500',
-    textAlign: 'center',
-    marginBottom: 4,
+    fontWeight: '600',
     color: '#333',
+    textAlign: 'center',
   },
   productPrice: {
-    fontSize: 15,
+    fontSize: 14,
+    color: '#666',
+    marginTop: 4,
+  },
+  faqText: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 8,
+  },
+  todayAppointmentCard: {
+    backgroundColor: '#fff',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  todayTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 4,
+  },
+  appointmentId: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 8,
+  },
+  doctorInfo: {
+    flexDirection: 'row',
+    marginBottom: 12,
+  },
+  doctorName: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#00AEEF',
+  },
+  doctorSpeciality: {
+    fontSize: 13,
+    color: '#555',
+    marginTop: 2,
+  },
+  ratingStars: {
+    color: '#4CAF50',
+    marginTop: 2,
+  },
+  timeRow: {
+    flexDirection: 'row',
+    marginTop: 6,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 12,
+  },
+  joinButton: {
+    backgroundColor: '#00A67E',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 6,
+  },
+  joinButtonText: {
+    color: '#fff',
     fontWeight: '600',
-    color: '#00A67E',
+  },
+  rescheduleButton: {
+    borderColor: '#00AEEF',
+    borderWidth: 1,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 6,
+  },
+  rescheduleText: {
+    color: '#00AEEF',
+    fontWeight: '600',
+  },
+  uploadRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  uploadText: {
+    fontSize: 14,
+    color: '#666',
+  },
+  viewText: {
+    fontSize: 14,
+    color: '#00AEEF',
+    fontWeight: '600',
   },
 });
