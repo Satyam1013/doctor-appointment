@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
+
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
@@ -15,7 +14,7 @@ export default function ConsultationOptionScreen({ navigation }: any) {
       <Text style={styles.header}>Please select</Text>
       <View style={styles.card}>
         <Image
-          source={require('../../assets/images/doctor.png')}
+          source={{ uri: 'https://i.ibb.co/LzcYw7rR/doctor.png' }}
           style={styles.image}
         />
         <Text style={styles.title}>Consult with our Doctor</Text>

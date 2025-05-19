@@ -28,7 +28,7 @@ const clinics = [
     id: 1,
     city: 'Mumbai',
     name: 'Mumbai - Kharghar',
-    image: require('../../assets/images/news.png'),
+    image: 'https://i.ibb.co/PsMJw9bB/1.png',
     address:
       'No 23, Shree Krishna Paradise, Utsav Chowk, Sector 12, Kharghar, Navi Mumbai 410210',
     time: 'Mon - Sun : 8:00 AM - 8:00 PM',
@@ -38,7 +38,7 @@ const clinics = [
     id: 2,
     city: 'Bengaluru',
     name: 'Bengaluru - Indiranagar',
-    image: require('../../assets/images/news2.png'),
+    image: 'https://i.ibb.co/pBXnQNXm/1.png',
     address: '12, 1st Cross, Indiranagar, Bangalore 560038',
     time: 'Mon - Sat : 9:00 AM - 6:00 PM',
     phone: '9876543210',
@@ -60,9 +60,9 @@ const cities = [
 ];
 
 const bottomCarousel = [
-  require('../../assets/images/adbottom.jpeg'),
-  require('../../assets/images/adbottom2.png'),
-  require('../../assets/images/adbottom3.png'),
+  { uri: 'https://i.ibb.co/vCsV1v7m/adbottom.jpg' },
+  { uri: 'https://i.ibb.co/hRzqDXng/adbottom2.png' },
+  { uri: 'https://i.ibb.co/TMtXpC68/adbottom3.png' },
 ];
 
 const services = [

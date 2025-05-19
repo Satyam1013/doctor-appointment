@@ -3,8 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
+
 import React from 'react';
 import {
   View,
@@ -95,9 +94,9 @@ const categories = [
   },
 ];
 
-const ad1 = require('../../assets/images/banner.png');
-const ad2 = require('../../assets/images/banner2.png');
-const ad3 = require('../../assets/images/banner3.png');
+const ad1 = 'https://i.ibb.co/x88xsysH/banner.png';
+const ad2 = 'https://i.ibb.co/JWgXbwRD/ad.png';
+const ad3 = 'https://i.ibb.co/1f0q1t54/banner3.png';
 
 const sections = [
   {
@@ -157,9 +156,9 @@ const sections = [
 ];
 
 const topCarousel = [
-  require('../../assets/images/banner.png'),
-  require('../../assets/images/banner2.png'),
-  require('../../assets/images/banner3.png'),
+  { uri: 'https://i.ibb.co/x88xsysH/banner.png' },
+  { uri: 'https://i.ibb.co/JWgXbwRD/ad.png' },
+  { uri: 'https://i.ibb.co/1f0q1t54/banner3.png' },
 ];
 
 export default function EComScreen({ navigation }: any) {

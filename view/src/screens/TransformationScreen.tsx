@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
+
 import React from 'react';
 import {
   View,
@@ -14,26 +13,27 @@ import {
 } from 'react-native';
 
 const products = [
-  { img: require('../../assets/images/top.jpg') },
-  { img: require('../../assets/images/top2.jpg') },
-  { img: require('../../assets/images/top3.jpg') },
-  { img: require('../../assets/images/top4.jpg') },
-  { img: require('../../assets/images/top5.jpg') },
-  { img: require('../../assets/images/top6.png') },
-  { img: require('../../assets/images/top7.jpg') },
-  { img: require('../../assets/images/top8.png') },
-  { img: require('../../assets/images/top9.jpg') },
-  { img: require('../../assets/images/top10.jpg') },
-  { img: require('../../assets/images/top11.jpg') },
-  { img: require('../../assets/images/top12.jpg') },
-  { img: require('../../assets/images/top13.jpg') },
-  { img: require('../../assets/images/top14.jpg') },
-  { img: require('../../assets/images/top15.jpg') },
-  { img: require('../../assets/images/top16.png') },
-  { img: require('../../assets/images/top17.jpg') },
-  { img: require('../../assets/images/top18.jpg') },
-  { img: require('../../assets/images/top19.jpg') },
-  { img: require('../../assets/images/top20.jpg') },
+  { img: 'https://i.ibb.co/d4sRZBkM/top.jpg' },
+  { img: 'https://i.ibb.co/mCzkYKwb/top2.jpg' },
+  { img: 'https://i.ibb.co/RGrv0vh3/top3.jpg' },
+  { img: 'https://i.ibb.co/9k3HSkQv/top4.jpg' },
+  { img: 'https://i.ibb.co/8njCwJp3/top5.jpg' },
+  { img: 'https://i.ibb.co/rGKmXFmP/top6.png' },
+  { img: 'https://i.ibb.co/QvMt5R4Q/top7.jpg' },
+  { img: 'https://i.ibb.co/9kFQLP6Q/top8.png' },
+  { img: 'https://i.ibb.co/5xf0RRw2/top9.jpg' },
+  { img: 'https://i.ibb.co/Y4ySZ6Kx/top10.jpg' },
+  { img: 'https://i.ibb.co/q3ByqRT2/top11.jpg' },
+  { img: 'https://i.ibb.co/23cnTL7D/top12.jpg' },
+  { img: 'https://i.ibb.co/99gh6d36/top13.jpg' },
+  { img: 'https://i.ibb.co/Ld04SLYs/top14.jpg' },
+  { img: 'https://i.ibb.co/KcRJVtLR/top15.jpg' },
+  { img: 'https://i.ibb.co/Kpyw2VWn/top16.png' },
+  { img: 'https://i.ibb.co/HTgdzLqN/top17.jpg' },
+  { img: 'https://i.ibb.co/gMhDRM76/top18.jpg' },
+  { img: 'https://i.ibb.co/Qjq4zwyj/top19.jpg' },
+  { img: 'https://i.ibb.co/67XcFTrg/top20.jpg' },
+  { img: 'https://i.ibb.co/nMLDRxDd/top21.jpg' },
 ];
 
 export default function TransformationScreen({ navigation }: any) {

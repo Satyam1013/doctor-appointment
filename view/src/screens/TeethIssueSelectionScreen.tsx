@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
-// screens/TeethIssueSelectionScreen.tsx
 
 import React, { useState } from 'react';
 import {
@@ -18,32 +15,32 @@ const TEETH_ISSUES = [
   {
     id: 'crooked',
     label: 'Crooked teeth',
-    image: require('../../assets/images/teethgaps.png'),
+    image: 'https://i.ibb.co/WW0YY1sj/teethgaps.png',
   },
   {
     id: 'forward',
     label: 'Forwardly placed',
-    image: require('../../assets/images/overbite.png'),
+    image: 'https://i.ibb.co/MkcZ04hZ/overbite.png',
   },
   {
     id: 'crossbite',
     label: 'Crossbite',
-    image: require('../../assets/images/crossbite.png'),
+    image: 'https://i.ibb.co/1tzJZR1n/crossbite.png',
   },
   {
     id: 'other1',
     label: 'Other 1',
-    image: require('../../assets/images/underbite.png'),
+    image: 'https://i.ibb.co/fGPvzr8D/underbite.png',
   },
   {
     id: 'other2',
     label: 'Other 2',
-    image: require('../../assets/images/openbite.png'),
+    image: 'https://i.ibb.co/fV6zw10L/openbite.png',
   },
   {
     id: 'other3',
     label: 'Other 3',
-    image: require('../../assets/images/crookedteeth.png'),
+    image: 'https://i.ibb.co/1yPk7J8/crookedteeth.png',
   },
 ];
 
@@ -74,7 +71,7 @@ export default function TeethIssueSelectionScreen({ navigation }: any) {
             ]}
             onPress={() => setSelectedIssue(item.id)}
           >
-            <Image source={item.image} style={styles.image} />
+            <Image source={{ uri: item.image }} style={styles.image} />
             <Text style={styles.knowMore}>know more</Text>
           </TouchableOpacity>
         )}

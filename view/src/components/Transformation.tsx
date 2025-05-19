@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+
 import React from 'react';
 import {
   View,
@@ -14,9 +13,9 @@ import {
 } from 'react-native';
 
 const products = [
-  { img: require('../../assets/images/top.jpg') },
-  { img: require('../../assets/images/top2.jpg') },
-  { img: require('../../assets/images/top3.jpg') },
+  { img: 'https://i.ibb.co/d4sRZBkM/top.jpg' },
+  { img: 'https://i.ibb.co/mCzkYKwb/top2.jpg' },
+  { img: 'https://i.ibb.co/RGrv0vh3/top3.jpg' },
 ];
 
 export default function Transformation({ navigation }: any) {
@@ -48,7 +47,11 @@ export default function Transformation({ navigation }: any) {
               })
             }
           >
-            <Image source={item.img} style={styles.image} resizeMode="cover" />
+            <Image
+              source={{ uri: item.img }}
+              style={styles.image}
+              resizeMode="cover"
+            />
           </TouchableOpacity>
         ))}
       </ScrollView>

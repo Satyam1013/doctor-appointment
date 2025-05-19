@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-require-imports */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import {
   View,
@@ -14,19 +12,19 @@ import {
 const services = [
   {
     title: 'Book Appointment',
-    image: require('../../assets/images/book.png'),
+    image: 'https://i.ibb.co/8gtxBxF5/book.png',
   },
   {
     title: 'Instant Video Consultation',
-    image: require('../../assets/images/book2.png'),
+    image: 'https://i.ibb.co/xqKvY2zV/book2.png',
   },
   {
     title: 'Buy Medicines',
-    image: require('../../assets/images/book3.png'),
+    image: 'https://i.ibb.co/TMcrzV5w/book3.png',
   },
   {
     title: 'Beauty Products',
-    image: require('../../assets/images/book4.png'),
+    image: 'https://i.ibb.co/yBRPkhPz/book4.png',
   },
 ];
 
@@ -53,7 +51,7 @@ export default function ServiceCards({ navigation }: any) {
           style={styles.card}
           onPress={() => handlePress(item.title)}
         >
-          <Image source={item.image} style={styles.image} />
+          <Image source={{ uri: item.image }} style={styles.image} />
         </TouchableOpacity>
       ))}
     </View>

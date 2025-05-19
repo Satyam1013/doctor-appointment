@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-require-imports */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import {
   View,
@@ -13,17 +11,21 @@ import {
   ScrollView,
 } from 'react-native';
 
-const categories = [
-  { img: require('../../assets/images/ahmedabad.png') },
-  { img: require('../../assets/images/bengaluru.png') },
-  { img: require('../../assets/images/chennai.png') },
-  { img: require('../../assets/images/delhi.png') },
-  { img: require('../../assets/images/hyderabad.png') },
-  { img: require('../../assets/images/jaipur.png') },
-  { img: require('../../assets/images/kolkata.png') },
-  { img: require('../../assets/images/lucknow.png') },
-  { img: require('../../assets/images/mumbai.png') },
-  { img: require('../../assets/images/pune.png') },
+const categories: { img: string }[] = [
+  { img: 'https://i.ibb.co/6Rffw5Gk/ahmedabad.png' },
+  { img: 'https://i.ibb.co/99y75Czg/bengaluru.png' },
+  { img: 'https://i.ibb.co/C56PSmTL/chennai.png' },
+  { img: 'https://i.ibb.co/KPGK73W/delhi.png' },
+  { img: 'https://i.ibb.co/xSJ9yv6B/hyderabad.png' },
+  { img: 'https://i.ibb.co/v67zsBhn/jaipur.png' },
+  {
+    img: 'https://i.ibb.co/20cZw49R/kolkata.png',
+  },
+  { img: 'https://i.ibb.co/kVKdC9YY/lucknow.png' },
+  {
+    img: 'https://i.ibb.co/QjDqSmpt/mumbai.png',
+  },
+  { img: 'https://i.ibb.co/KjzGy6rX/pune.png' },
 ];
 
 const cityNames = [
@@ -41,27 +43,27 @@ const cityNames = [
 
 const treatmentItems = [
   {
-    img: require('../../assets/images/teethgaps.png'),
+    img: 'https://i.ibb.co/WW0YY1sj/teethgaps.png',
     route: 'teethgaps',
   },
   {
-    img: require('../../assets/images/overbite.png'),
+    img: 'https://i.ibb.co/MkcZ04hZ/overbite.png',
     route: 'overbite',
   },
   {
-    img: require('../../assets/images/crossbite.png'),
+    img: 'https://i.ibb.co/1tzJZR1n/crossbite.png',
     route: 'crossbite',
   },
   {
-    img: require('../../assets/images/underbite.png'),
+    img: 'https://i.ibb.co/fGPvzr8D/underbite.png',
     route: 'underbite',
   },
   {
-    img: require('../../assets/images/openbite.png'),
+    img: 'https://i.ibb.co/fV6zw10L/openbite.png',
     route: 'openbite',
   },
   {
-    img: require('../../assets/images/crookedteeth.png'),
+    img: 'https://i.ibb.co/1yPk7J8/crookedteeth.png',
     route: 'crookedteeth',
   },
 ];
@@ -92,7 +94,7 @@ export default function MydentCenters({ navigation }: any) {
               })
             }
           >
-            <Image source={cat.img} style={styles.image} />
+            <Image source={{ uri: cat.img }} style={styles.image} />
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -111,7 +113,7 @@ export default function MydentCenters({ navigation }: any) {
               }
             >
               <Image
-                source={item.img}
+                source={{ uri: item.img }}
                 style={styles.treatmentImage}
                 resizeMode="cover"
               />

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
 import React from 'react';
 import { View, Image, StyleSheet, Dimensions } from 'react-native';
 
@@ -9,7 +7,7 @@ export default function FeatureStats() {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/images/footer.jpeg')}
+        source={{ uri: 'https://i.ibb.co/spBPtGHg/footer.jpg' }}
         style={styles.image}
         resizeMode="cover"
       />
@@ -23,11 +21,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 16,
     marginBottom: 120,
-    overflow: 'hidden', // make borderRadius apply to child
+    overflow: 'hidden',
     backgroundColor: '#E9F9FA',
   },
   image: {
-    width: screenWidth - 32, // account for horizontal margin (16 + 16)
+    width: screenWidth - 32,
     height: 180,
     borderRadius: 16,
   },

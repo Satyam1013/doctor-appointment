@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Carousel from '../components/Carousel';
 import ServiceCards from '../components/ServiceCards';
@@ -20,19 +20,19 @@ import Blogs from '../components/Blogs';
 
 export default function HomeScreen({ navigation }: any) {
   const topCarousel = [
-    require('../../assets/images/banner.png'),
-    require('../../assets/images/banner2.png'),
-    require('../../assets/images/banner3.png'),
+    { uri: 'https://i.ibb.co/x88xsysH/banner.png' },
+    { uri: 'https://i.ibb.co/JWgXbwRD/ad.png' },
+    { uri: 'https://i.ibb.co/1f0q1t54/banner3.png' },
   ];
   const bottomCarousel = [
-    require('../../assets/images/adbottom.jpeg'),
-    require('../../assets/images/adbottom2.png'),
-    require('../../assets/images/adbottom3.png'),
+    { uri: 'https://i.ibb.co/vCsV1v7m/adbottom.jpg' },
+    { uri: 'https://i.ibb.co/hRzqDXng/adbottom2.png' },
+    { uri: 'https://i.ibb.co/TMtXpC68/adbottom3.png' },
   ];
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Carousel images={topCarousel} />
         <ServiceCards navigation={navigation} />
         <FindTeethType navigation={navigation} />
@@ -55,5 +55,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  scrollContent: {
+    paddingBottom: 100,
   },
 });

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
+
 import React from 'react';
 import {
   View,
@@ -21,10 +20,9 @@ export default function BeforeAfterTreatment() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Our Exclusive Therapy Services</Text>
-
       <TouchableOpacity style={styles.card} onPress={handleOpenLink}>
         <Image
-          source={require('../../assets/images/ad.png')}
+          source={{ uri: 'https://i.ibb.co/JWgXbwRD/ad.png' }}
           style={styles.image}
         />
         <Text style={styles.cardText}>

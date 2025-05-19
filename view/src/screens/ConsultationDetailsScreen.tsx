@@ -35,7 +35,7 @@ export default function ConsultationDetailsScreen({ navigation }: any) {
 
           <View style={styles.doctorRow}>
             <Image
-              source={require('../../assets/images/doctor.png')} // use real image or placeholder
+              source={{ uri: 'https://i.ibb.co/LzcYw7rR/doctor.png' }}
               style={styles.doctorImage}
             />
             <View>

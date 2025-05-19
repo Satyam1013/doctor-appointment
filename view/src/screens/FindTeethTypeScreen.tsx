@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
 import React from 'react';
 import {
   View,
@@ -12,18 +10,27 @@ import {
 } from 'react-native';
 
 const categories = [
-  { title: 'Under bite', icon: require('../../assets/images/video.png') },
-  { title: 'Open bite', icon: require('../../assets/images/video2.png') },
-  { title: 'Crooked teeth', icon: require('../../assets/images/video3.png') },
-  { title: 'Gap teeth', icon: require('../../assets/images/video4.png') },
-  { title: 'Deep bite', icon: require('../../assets/images/video5.png') },
-  { title: 'Cross bite', icon: require('../../assets/images/video6.png') },
+  { title: 'Under bite', icon: 'https: //i.ibb.co/Y70w2CK3/video.png' },
+  { title: 'Open bite', icon: 'https://i.ibb.co/pGJyFZL/video2.png' },
+  { title: 'Crooked teeth', icon: 'https://i.ibb.co/RTLKPd3q/video3.png' },
+  { title: 'Gap teeth', icon: 'https://i.ibb.co/5gNP6fPv/video4.png' },
+  {
+    title: 'Deep bite',
+    icon: 'https://i.ibb.co/nqzMPZ0m/video5.png',
+  },
+  {
+    title: 'Cross bite',
+    icon: 'https://i.ibb.co/3y09DJbX/video6.png',
+  },
   {
     title: 'Forwardly placed teeth',
-    icon: require('../../assets/images/video7.png'),
+    icon: 'https://i.ibb.co/W4564g62/video7.png',
   },
-  { title: 'Teeth Spacings', icon: require('../../assets/images/video8.png') },
-  { title: 'Jaw correction', icon: require('../../assets/images/video9.png') },
+  {
+    title: 'Teeth Spacings',
+    icon: 'https://i.ibb.co/nscrGgch/video8.png',
+  },
+  { title: 'Jaw correction', icon: 'https://i.ibb.co/1YW48x0v/video9.png' },
 ];
 
 export default function FindTeethTypeScreen() {
@@ -42,7 +49,7 @@ export default function FindTeethTypeScreen() {
 
       {/* Banner Image (Carousel dummy) */}
       <Image
-        source={require('../../assets/images/banner.png')}
+        source={{ uri: 'https://i.ibb.co/x88xsysH/banner.png' }}
         style={styles.banner}
         resizeMode="cover"
       />
@@ -56,7 +63,7 @@ export default function FindTeethTypeScreen() {
       <View style={styles.grid}>
         {categories.map((item, idx) => (
           <TouchableOpacity key={idx} style={styles.card}>
-            <Image source={item.icon} style={styles.icon} />
+            <Image source={{ uri: item.icon }} style={styles.icon} />
             <Text style={styles.label}>{item.title}</Text>
           </TouchableOpacity>
         ))}

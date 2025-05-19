@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
+
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const doctors = [
-  { img: require('../../assets/images/doctor.png') },
-  { img: require('../../assets/images/doctor2.png') },
-  { img: require('../../assets/images/doctor3.png') },
-  { img: require('../../assets/images/doctor4.png') },
-  { img: require('../../assets/images/doctor5.png') },
-  { img: require('../../assets/images/doctor6.png') },
+  { img: 'https://i.ibb.co/LzcYw7rR/doctor.png' },
+  { img: 'https://i.ibb.co/JWKKQk7M/doctor2.png' },
+  { img: 'https://i.ibb.co/fVtnwVYy/doctor3.png' },
+  { img: 'https://i.ibb.co/nqRzR2Qq/doctor4.png' },
+  { img: 'https://i.ibb.co/LdTLjzdt/doctor5.png' },
+  { img: 'https://i.ibb.co/dw5WMwj3/doctor6.png' },
 ];
 
 export default function TopProducts({ navigation }: any) {
@@ -28,13 +27,17 @@ export default function TopProducts({ navigation }: any) {
               } else if (idx === 1) {
                 navigation.navigate('AlignersForTeensScreen');
               } else if (idx === 4) {
-                navigation.navigate('MyDentAlignersScreen');
+                navigation.navigate('Mydent');
               } else {
                 navigation.navigate('DoctorDetailsScreen', { doctor: doc });
               }
             }}
           >
-            <Image source={doc.img} style={styles.image} resizeMode="cover" />
+            <Image
+              source={{ uri: doc.img }}
+              style={styles.image}
+              resizeMode="cover"
+            />
           </TouchableOpacity>
         ))}
       </View>

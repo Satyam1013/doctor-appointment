@@ -13,6 +13,7 @@ import {
 import { ResizeMode, Video } from 'expo-av';
 import Carousel from '../components/Carousel';
 import FeatureStats from '../components/FeatureStats';
+import { Ionicons } from '@expo/vector-icons';
 
 const faqs = [
   {
@@ -43,9 +44,9 @@ const faqs = [
 ];
 
 const topCarousel = [
-  require('../../assets/images/banner.png'),
-  require('../../assets/images/banner2.png'),
-  require('../../assets/images/banner3.png'),
+  { uri: 'https://i.ibb.co/x88xsysH/banner.png' },
+  { uri: 'https://i.ibb.co/JWgXbwRD/ad.png' },
+  { uri: 'https://i.ibb.co/1f0q1t54/banner3.png' },
 ];
 
 const MyDentAlignersScreen = () => {
@@ -211,27 +212,27 @@ const MyDentAlignersScreen = () => {
             description:
               'Book a scan at home or visit our 25+ experience centres for a scan and orthodontist consult',
             step: '01',
-            video: require('../../assets/videos/mydentproducts1.mp4'),
+            video: require('../../assets/videos/mydentproducts3.mp4'),
           },
           {
             title: 'At - Home',
             description: 'Get your aligners delivered & start your treatment',
             step: '02',
-            video: require('../../assets/videos/mydentproducts2.mp4'),
+            video: require('../../assets/videos/mydentproducts4.mp4'),
           },
           {
             title: 'Wear & Track',
             description:
               'Wear your aligners and track progress via our app with expert support',
             step: '03',
-            video: require('../../assets/videos/mydentproducts3.mp4'),
+            video: require('../../assets/videos/mydentproducts2.mp4'),
           },
           {
             title: 'Enjoy Your Smile',
             description:
               'Complete your journey and maintain your perfect smile with retainers',
             step: '04',
-            video: require('../../assets/videos/mydentproducts4.mp4'),
+            video: require('../../assets/videos/mydentproducts1.mp4'),
           },
         ].map((item, index) => (
           <View key={index} style={styles.videoStepContainer}>
@@ -310,6 +311,7 @@ const MyDentAlignersScreen = () => {
       </View>
       <View style={styles.faq}>
         <Text style={styles.title}>FAQs</Text>
+        <View style={[styles.separator, { marginTop: 16 }]} />
         {faqs.map((faq, index) => (
           <View key={index} style={styles.item}>
             <TouchableOpacity
@@ -318,14 +320,22 @@ const MyDentAlignersScreen = () => {
             >
               <View style={styles.questionRow}>
                 <Text style={styles.question}>{faq.question}</Text>
-                <Text style={styles.icon}>
-                  {activeIndex === index ? '▲' : '▼'}
-                </Text>
+                <Ionicons
+                  name={
+                    activeIndex === index
+                      ? 'chevron-up-outline'
+                      : 'chevron-down-outline'
+                  }
+                  size={20}
+                  color="#888"
+                />
               </View>
             </TouchableOpacity>
             {activeIndex === index && (
               <Text style={styles.answer}>{faq.answer}</Text>
             )}
+            {/* Horizontal line after each FAQ */}
+            <View style={styles.separator} />
           </View>
         ))}
       </View>
@@ -570,12 +580,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333',
   },
-
   tableHeader: {
     backgroundColor: '#F2F2F2',
     fontWeight: 'bold',
   },
-
+  separator: {
+    height: 1,
+    backgroundColor: '#E0E0E0',
+    marginVertical: 8,
+  },
   highlightRed: {
     color: '#FF3D00',
   },

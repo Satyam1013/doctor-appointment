@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
 import React from 'react';
 import {
   View,
@@ -14,10 +12,10 @@ const screenWidth = Dimensions.get('window').width;
 
 export default function FeaturedIn() {
   const images = [
-    require('../../assets/images/news.png'),
-    require('../../assets/images/news2.png'),
-    require('../../assets/images/news3.png'),
-    require('../../assets/images/news4.png'),
+    { uri: 'https://i.ibb.co/5hRkvbWH/news.png' },
+    { uri: 'https://i.ibb.co/N6GWXPvV/news2.png' },
+    { uri: 'https://i.ibb.co/N2ZHzJfz/news3.png' },
+    { uri: 'https://i.ibb.co/nqVjH0hq/news4.png' },
   ];
 
   return (

@@ -143,19 +143,21 @@ export default function ContactUsScreen() {
         <View style={styles.timelineContainer}>
           {programSteps.map((item, index) => (
             <View key={index} style={styles.stepContainer}>
-              {/* Connector Line */}
-              {index !== programSteps.length - 1 && (
-                <View style={styles.verticalLine} />
-              )}
-              {/* Circle */}
+              {/* Circle marker */}
               <View
                 style={[
                   styles.circle,
                   index === 0 ? styles.filledCircle : styles.hollowCircle,
                 ]}
               />
-              {/* Content */}
-              <View style={styles.stepTextContainer}>
+
+              {/* Vertical connector line */}
+              {index !== programSteps.length - 1 && (
+                <View style={styles.verticalLine} />
+              )}
+
+              {/* Text container */}
+              <View style={styles.stepTextWrapper}>
                 <Text style={styles.stepTitle}>{item.title}</Text>
                 <Text style={styles.stepSession}>{item.sessions}</Text>
               </View>
@@ -300,28 +302,89 @@ export default function ContactUsScreen() {
 
         <View style={[styles.faq, { marginTop: 24 }]}>
           <Text style={styles.title}>Aligner FAQs</Text>
+          <View style={[styles.separator, { marginTop: 16 }]} />
+
           {alignerFAQs.map((faq, index) => (
-            <View key={index} style={styles.item}>
-              <TouchableOpacity
-                onPress={() => toggleAlignerFAQ(index)}
-                activeOpacity={0.8}
-              >
-                <View style={styles.questionRow}>
-                  <Text style={styles.question}>{faq.question}</Text>
-                  <Text style={styles.icon}>
-                    {activeAlignerIndex === index ? '▲' : '▼'}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              {activeAlignerIndex === index && (
-                <Text style={styles.answer}>{faq.answer}</Text>
-              )}
+            <View key={index}>
+              <View style={styles.item}>
+                <TouchableOpacity
+                  onPress={() => toggleAlignerFAQ(index)}
+                  activeOpacity={0.8}
+                >
+                  <View style={styles.questionRow}>
+                    <Text style={styles.question}>{faq.question}</Text>
+                    <Ionicons
+                      name={
+                        activeAlignerIndex === index
+                          ? 'chevron-up-outline'
+                          : 'chevron-down-outline'
+                      }
+                      size={20}
+                      color="#888"
+                    />
+                  </View>
+                </TouchableOpacity>
+                {activeAlignerIndex === index && (
+                  <Text style={styles.answer}>{faq.answer}</Text>
+                )}
+              </View>
+
+              {/* Horizontal line after each FAQ */}
+              <View style={styles.separator} />
             </View>
           ))}
         </View>
       </View>
 
       <FeatureStats />
+      <View style={styles.footerContainer}>
+        {/* Quick Links */}
+        <Text style={styles.footerHeading}>Quick Links</Text>
+        <View style={styles.linkColumns}>
+          <View style={styles.linkColumn}>
+            <Text style={styles.linkText}>About Us</Text>
+            <Text style={styles.linkText}>Clinic Consultation</Text>
+            <Text style={styles.linkText}>Video Consultation</Text>
+            <Text style={styles.linkText}>Order Medicines</Text>
+            <Text style={styles.linkText}>Cancellation & Refund</Text>
+            <Text style={styles.linkText}>Policies</Text>
+            <Text style={styles.linkText}>Terms of Use</Text>
+            <Text style={styles.linkText}>Shipping Policy</Text>
+            <Text style={styles.linkText}>Become consultant</Text>
+          </View>
+
+          <View style={styles.linkColumn}>
+            <Text style={styles.linkText}>Success Stories</Text>
+            <Text style={styles.linkText}>Blogs</Text>
+            <Text style={styles.linkText}>Doctor Login</Text>
+            <Text style={styles.linkText}>Contact Detail</Text>
+            <Text style={styles.linkText}>care@sushainclinic.com</Text>
+
+            <Text style={[styles.linkText, { marginTop: 10 }]}>Mobile:</Text>
+            <Text style={styles.linkText}>+91 6390905453</Text>
+            <Text style={styles.linkText}>Post Health Concern</Text>
+          </View>
+        </View>
+
+        {/* About Company */}
+        <Text style={styles.footerHeading}>About Company</Text>
+        <Text style={styles.linkText}>
+          Registered Address:
+          {'\n'}3/196 Viram Khand, Gomti Nagar, Lucknow-226010, Uttar Pradesh,
+          India
+        </Text>
+        <Text style={styles.linkText}>
+          Corporate Office Address:
+          {'\n'}PRK Business Park, D-20, Sector 63, Noida 201301
+        </Text>
+        <Text style={styles.linkText}>GSTIN: 09ABGCS0900B1ZV</Text>
+
+        {/* Footer Note */}
+        <Text style={styles.footerNote}>
+          © 2021, Sushain Wellness and Wholeness Pvt. Ltd.
+          {'\n'}Today's Patient: 1803206 served.
+        </Text>
+      </View>
     </ScrollView>
   );
 }
@@ -332,7 +395,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 120,
   },
-  title: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#00A67E',
+  },
   addToCartButton: {
     marginTop: 8,
     backgroundColor: '#00AEEF',
@@ -419,7 +487,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#00AEEF',
     padding: 10,
     borderRadius: 12,
-    maxWidth: 250,
+    maxWidth: 300,
   },
 
   buttonText: {
@@ -437,19 +505,6 @@ const styles = StyleSheet.create({
   bellIconWrapper: {
     padding: 8,
   },
-
-  bellIcon: {
-    width: 24,
-    height: 24,
-    tintColor: '#00788D',
-  },
-  welcomeSection: {
-    backgroundColor: '#e5f8ff',
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 16,
-    alignItems: 'center',
-  },
   sectionCard: {
     backgroundColor: '#fff',
     padding: 16,
@@ -462,21 +517,86 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
-    color: '#00A67E',
+    color: '#65B300', // Matches your image's green heading
     marginBottom: 12,
   },
   timelineContainer: {
-    paddingLeft: 12,
-    borderLeftWidth: 2,
-    borderLeftColor: '#00A67E',
-    marginLeft: 7,
-  },
-  stepContainer: {
+    paddingLeft: 10,
     position: 'relative',
-    marginBottom: 20,
-    paddingLeft: 16,
+  },
+
+  stepContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 24,
+    position: 'relative',
+  },
+
+  circle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginTop: 2,
+    marginRight: 10,
+    zIndex: 1,
+  },
+
+  filledCircle: {
+    backgroundColor: '#00AEEF',
+  },
+
+  hollowCircle: {
+    borderWidth: 2,
+    borderColor: '#00AEEF',
+    backgroundColor: '#fff',
+  },
+
+  verticalLine: {
+    position: 'absolute',
+    top: 12,
+    left: 4,
+    height: '100%',
+    width: 2,
+    backgroundColor: '#00AEEF',
+    zIndex: 0,
+  },
+
+  stepTextWrapper: {
+    flex: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+    paddingBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+
+  stepTitle: {
+    color: '#00AEEF',
+    fontSize: 13,
+    fontWeight: '500',
+    flex: 1,
+  },
+
+  stepSession: {
+    fontSize: 13,
+    color: '#333',
+    fontWeight: '500',
+    marginLeft: 10,
+  },
+  bellIcon: {
+    width: 24,
+    height: 24,
+    tintColor: '#00788D',
+  },
+  welcomeSection: {
+    backgroundColor: '#e5f8ff',
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 16,
+    alignItems: 'center',
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -488,48 +608,13 @@ const styles = StyleSheet.create({
     color: '#00AEEF',
     fontWeight: '600',
   },
-  verticalLine: {
-    position: 'absolute',
-    top: 12,
-    left: -2,
-    height: '100%',
-    width: 2,
-    backgroundColor: '#00AEEF',
-    zIndex: -1,
-  },
-  circle: {
-    position: 'absolute',
-    left: -10,
-    top: 4,
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-  },
-  filledCircle: {
-    backgroundColor: '#00AEEF',
-  },
-  hollowCircle: {
-    borderWidth: 2,
-    borderColor: '#00AEEF',
-    backgroundColor: '#fff',
-  },
+
   stepTextContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     flexWrap: 'wrap',
     gap: 8,
-  },
-  stepTitle: {
-    color: '#00AEEF',
-    fontSize: 14,
-    flex: 1,
-    fontWeight: '500',
-  },
-  stepSession: {
-    fontSize: 14,
-    color: '#3b3b3b',
-    fontWeight: '500',
   },
   programText: {
     fontSize: 15,
@@ -705,5 +790,50 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#00AEEF',
     fontWeight: '600',
+  },
+  footerContainer: {
+    backgroundColor: '#f5f5f5',
+    padding: 20,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    marginTop: -60,
+    paddingBottom: 120,
+  },
+  footerHeading: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 10,
+  },
+  linkColumns: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  linkColumn: {
+    flex: 1,
+    marginRight: 10,
+  },
+  linkText: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 6,
+  },
+  footerNote: {
+    marginTop: 16,
+    fontSize: 12,
+    color: '#777',
+    lineHeight: 18,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#E0E0E0',
+    marginVertical: 8,
+  },
+  whatsappIcon: {
+    width: 40,
+    height: 40,
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
   },
 });
