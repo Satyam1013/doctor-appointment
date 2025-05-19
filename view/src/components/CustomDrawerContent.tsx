@@ -28,6 +28,12 @@ export default function CustomDrawerContent(props: any) {
       {...props}
       contentContainerStyle={styles.container}
     >
+      <View style={styles.logoContainer}>
+        <Image
+          source={require('../../assets/images/logoblue.jpeg')}
+          style={styles.logo}
+        />
+      </View>
       <View style={styles.profileContainer}>
         <Image
           source={require('../../assets/images/consultant.jpg')}
@@ -136,7 +142,23 @@ export default function CustomDrawerContent(props: any) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
+    paddingBottom: 30,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F0F4F8',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    height: 100,
+    paddingHorizontal: 10,
+    marginTop: -50,
+  },
+  logo: {
+    width: '100%',
+    height: 90,
+    resizeMode: 'contain',
   },
   profileContainer: {
     padding: 16,

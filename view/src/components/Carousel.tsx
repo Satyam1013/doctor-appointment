@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   StyleSheet,
   ScrollView,
   ImageSourcePropType,
   Dimensions,
+  View,
 } from 'react-native';
 
 interface CarouselProps {
@@ -13,26 +14,53 @@ interface CarouselProps {
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const imageWidth = screenWidth;
 export default function Carousel({ images }: CarouselProps) {
+  const scrollRef = useRef<ScrollView>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextIndex = (currentIndex + 1) % images.length;
+      scrollRef.current?.scrollTo({
+        x: nextIndex * screenWidth,
+        animated: true,
+      });
+      setCurrentIndex(nextIndex);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex, images.length]);
+
   return (
-    <ScrollView
-      horizontal
-      pagingEnabled
-      showsHorizontalScrollIndicator={false}
-      style={styles.container}
-    >
-      {images.map((img, idx) => (
-        <Image key={idx} source={img} style={styles.image} />
-      ))}
-    </ScrollView>
+    <View style={styles.wrapper}>
+      <ScrollView
+        horizontal
+        pagingEnabled
+        ref={scrollRef}
+        showsHorizontalScrollIndicator={false}
+        style={styles.container}
+        scrollEnabled={true}
+      >
+        {images.map((img, idx) => (
+          <Image key={idx} source={img} style={styles.image} />
+        ))}
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { height: 160, marginBottom: 16, zIndex: 1 },
-  image: {
-    width: imageWidth,
+  wrapper: {
     height: 180,
+    marginBottom: 16,
+    zIndex: 1,
+  },
+  container: {
+    flex: 1,
+  },
+  image: {
+    width: screenWidth,
+    height: 180,
+    resizeMode: 'cover',
   },
 });

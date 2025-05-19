@@ -101,7 +101,6 @@ export default function Centers() {
       style={{
         flex: 1,
         backgroundColor: '#f9f9f9',
-        paddingBottom: 100,
       }}
     >
       <Carousel images={bottomCarousel} />

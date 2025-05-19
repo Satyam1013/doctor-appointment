@@ -256,9 +256,8 @@ export default function EComScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 12,
+    // paddingHorizontal: 12,
     paddingTop: 16,
-    paddingBottom: 100,
     backgroundColor: '#ffffff',
   },
   header: {

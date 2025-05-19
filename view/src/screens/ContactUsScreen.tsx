@@ -17,6 +17,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { addToCart } from '../api/cart-api';
 import FeatureStats from '../components/FeatureStats';
 import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react';
 
 const products = [
   {
@@ -41,9 +42,55 @@ const programSteps = [
   { title: 'Well being counselling & Monitoring', sessions: '3 Sessions' },
 ];
 
+const alignerFAQs = [
+  {
+    question: 'Do aligners cause pain?',
+    answer:
+      'Mild discomfort is normal when starting aligners or switching to a new set. It means your teeth are moving as planned. This usually subsides within a few days.',
+  },
+  {
+    question: 'I feel discomfort while wearing my aligners. What should I do?',
+    answer:
+      'Discomfort can be managed by:\n\n• Wearing the aligners as instructed (usually 20–22 hours a day)\n• Using chewies to seat aligners properly\n• Taking a mild pain reliever if needed\n• Contacting the Mydent support team if pain is sharp or persistent',
+  },
+  {
+    question: 'How do I properly wear and remove my aligners?',
+    answer:
+      'To wear: Gently push them over your front teeth, then press down on your molars using your fingertips.\n\nTo remove: Use your fingers to lift the aligners from the molars on one side, then the other, and gently peel them off the front teeth.\n\nAlways use clean, dry hands and avoid using sharp objects.',
+  },
+  {
+    question: 'When can I expect to see visible results?',
+    answer:
+      'Most users notice changes within 6–8 weeks. However, this can vary based on the complexity of your case and your consistency in wearing the aligners.',
+  },
+  {
+    question: 'How can I avoid relapse after completing my treatment?',
+    answer:
+      'Relapse can be prevented by:\n\n• Wearing your retainers as instructed after treatment\n• Following post-treatment care guidance\n• Attending follow-ups if advised by your orthodontist',
+  },
+  {
+    question: 'What are Mydent Booster Aligners and Enhancement Aligners?',
+    answer:
+      'Booster Aligners are used to speed up or improve the results of ongoing treatment.\n\nEnhancement Aligners are provided after your initial treatment if slight corrections are still needed. These are designed to perfect your smile and ensure long-term stability.',
+  },
+  {
+    question:
+      'What dental procedures might be involved in my treatment journey?',
+    answer:
+      'Your treatment might include:\n\n• IPR (Interproximal Reduction) to create space between teeth\n• Attachments or buttons to help guide tooth movement\n• Dental cleanings before and during treatment\n• Extractions in select cases (rare for aligner-only plans)\n\nAll procedures are planned by a licensed orthodontist based on your need',
+  },
+];
+
 export default function ContactUsScreen() {
+  const [activeAlignerIndex, setActiveAlignerIndex] = useState<number | null>(
+    null,
+  );
   const navigation = useNavigation<NavigationProp<any>>();
   const { user } = useUser();
+
+  const toggleAlignerFAQ = (index: number) => {
+    setActiveAlignerIndex(activeAlignerIndex === index ? null : index);
+  };
 
   const handleAddToCart = async (product: any) => {
     try {
@@ -251,18 +298,27 @@ export default function ContactUsScreen() {
           ))}
         </View>
 
-        <Text style={[styles.sectionTitle, { marginTop: 16 }]}>FAQs</Text>
-        {[
-          'How is it different from other program?',
-          'How long will it take to complete?',
-          'How can I book a program?',
-          'What will be the procedure?',
-          'What benefit will I get?',
-        ].map((faq, idx) => (
-          <Text key={idx} style={styles.faqText}>
-            • {faq}
-          </Text>
-        ))}
+        <View style={[styles.faq, { marginTop: 24 }]}>
+          <Text style={styles.title}>Aligner FAQs</Text>
+          {alignerFAQs.map((faq, index) => (
+            <View key={index} style={styles.item}>
+              <TouchableOpacity
+                onPress={() => toggleAlignerFAQ(index)}
+                activeOpacity={0.8}
+              >
+                <View style={styles.questionRow}>
+                  <Text style={styles.question}>{faq.question}</Text>
+                  <Text style={styles.icon}>
+                    {activeAlignerIndex === index ? '▲' : '▼'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              {activeAlignerIndex === index && (
+                <Text style={styles.answer}>{faq.answer}</Text>
+              )}
+            </View>
+          ))}
+        </View>
       </View>
 
       <FeatureStats />
@@ -274,9 +330,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f8f9fb',
     flex: 1,
-    padding: 16,
     paddingBottom: 120,
   },
+  title: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
   addToCartButton: {
     marginTop: 8,
     backgroundColor: '#00AEEF',
@@ -284,6 +340,36 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 12,
   },
+  faq: {
+    padding: 20,
+    borderRadius: 12,
+  },
+  item: {
+    marginBottom: 12,
+  },
+  questionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  question: {
+    fontWeight: '600',
+    fontSize: 15,
+    color: '#333',
+    flex: 1,
+  },
+  icon: {
+    fontSize: 16,
+    color: '#888',
+    marginLeft: 8,
+  },
+  answer: {
+    marginTop: 6,
+    fontSize: 14,
+    color: '#666',
+    lineHeight: 20,
+  },
+
   addToCartText: {
     color: '#fff',
     fontSize: 14,
