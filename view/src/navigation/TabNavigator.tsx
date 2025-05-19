@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
 import Centers from '../screens/CentersScreen';
@@ -38,7 +36,9 @@ export default function BottomTabNavigator() {
           tabBarLabel: 'Home',
           tabBarIcon: ({ focused }) => (
             <Image
-              source={require('../../assets/images/bottomtab/home.jpeg')}
+              source={{
+                uri: 'https://i.ibb.co/VY7Q00tw/home.jpg',
+              }}
               style={{
                 width: 28,
                 height: 28,
@@ -67,7 +67,9 @@ export default function BottomTabNavigator() {
           tabBarLabel: 'Mydent',
           tabBarIcon: ({ focused }) => (
             <Image
-              source={require('../../assets/images/bottomtab/mydent.jpeg')}
+              source={{
+                uri: 'https: //i.ibb.co/6JtyT1Yz/mydent.jpg',
+              }}
               style={{
                 width: 28,
                 height: 28,
@@ -96,7 +98,9 @@ export default function BottomTabNavigator() {
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
             <Image
-              source={require('../../assets/images/bottomtab/centers.jpeg')}
+              source={{
+                uri: 'https: //i.ibb.co/qFgcN9ns/centers.jpg',
+              }}
               style={{
                 width: 28,
                 height: 28,
@@ -126,7 +130,9 @@ export default function BottomTabNavigator() {
           tabBarLabel: 'Shop',
           tabBarIcon: ({ focused }) => (
             <Image
-              source={require('../../assets/images/bottomtab/shop.jpeg')}
+              source={{
+                uri: 'https://i.ibb.co/qY480wNy/shop.jpg',
+              }}
               style={{
                 width: 28,
                 height: 28,
@@ -155,7 +161,9 @@ export default function BottomTabNavigator() {
           tabBarLabel: 'Contact',
           tabBarIcon: ({ focused }) => (
             <Image
-              source={require('../../assets/images/bottomtab/contact.jpeg')}
+              source={{
+                uri: 'https://i.ibb.co/hxLk5CKg/contact.jpg',
+              }}
               style={{
                 width: 28,
                 height: 28,

@@ -52,7 +52,11 @@ export default function TransformationScreen({ navigation }: any) {
               })
             }
           >
-            <Image source={item.img} style={styles.image} resizeMode="cover" />
+            <Image
+              source={{ uri: item.img }}
+              style={styles.image}
+              resizeMode="cover"
+            />
           </TouchableOpacity>
         ))}
       </View>

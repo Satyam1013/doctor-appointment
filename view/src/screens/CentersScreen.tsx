@@ -145,7 +145,7 @@ export default function Centers() {
         {filteredClinics.length > 0 ? (
           filteredClinics.map((clinic) => (
             <View key={clinic.id} style={styles.card}>
-              <Image source={clinic.image} style={styles.image} />
+              <Image source={{ uri: clinic.image }} style={styles.image} />
               <View style={styles.infoContainer}>
                 <Text style={styles.name}>{clinic.name}</Text>
 

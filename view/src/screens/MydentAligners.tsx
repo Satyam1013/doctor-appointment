@@ -65,7 +65,9 @@ const MyDentAlignersScreen = () => {
           Achieve Your Dream Smile with mydent Clear Aligners
         </Text>
         <Image
-          source={require('../../assets/images/mydentposter1.png')}
+          source={{
+            uri: 'https://i.ibb.co/S73S9Lks/mydentposter1.png',
+          }}
           style={styles.image}
         />
         <Text style={styles.text}>
@@ -92,7 +94,9 @@ const MyDentAlignersScreen = () => {
       {/* Problems We Address */}
       <View style={styles.section}>
         <Image
-          source={require('../../assets/images/mydentposter2.png')}
+          source={{
+            uri: 'https://i.ibb.co/M55kpWMh/mydentposter2.png',
+          }}
           style={styles.image}
         />
         <Text style={styles.title}>Dental Problems We Can Address</Text>
@@ -166,7 +170,9 @@ const MyDentAlignersScreen = () => {
       {/* Technology */}
       <View style={styles.section}>
         <Image
-          source={require('../../assets/images/mydentposter3.png')}
+          source={{
+            uri: 'https://i.ibb.co/8DNCLFKR/mydentposter3.png',
+          }}
           style={styles.image}
         />
         <Text style={styles.title}>The Technology Behind mydent Aligners</Text>
@@ -276,7 +282,9 @@ const MyDentAlignersScreen = () => {
 
           {/* Right side: Doctor image with badge */}
           <Image
-            source={require('../../assets/images/mydentposter4.png')}
+            source={{
+              uri: 'https://i.ibb.co/CK9Ckdby/mydentposter4.png',
+            }}
             style={styles.priceImage}
           />
         </View>

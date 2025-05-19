@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-require-imports */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import React, { useState } from 'react';
 import {
   StyleSheet,
@@ -29,13 +28,14 @@ export default function OverlayFloatingButtons() {
   const handleConsultPress = () => {
     navigation.navigate('ConsultationOption');
   };
-
   return (
     <View style={styles.container}>
       {/* Left: Book a Scan */}
       <TouchableOpacity style={styles.imageWrapper} onPress={handleBookPress}>
         <Image
-          source={require('../../assets/images/bottomtab/book.jpeg')}
+          source={{
+            uri: 'https://i.ibb.co/xKbs3w6D/book.jpg',
+          }}
           style={styles.iconImage}
         />
       </TouchableOpacity>
@@ -50,7 +50,9 @@ export default function OverlayFloatingButtons() {
         onPress={handleConsultPress}
       >
         <Image
-          source={require('../../assets/images/bottomtab/consult.jpeg')}
+          source={{
+            uri: 'https://i.ibb.co/zhYjTxWq/consult.jpg',
+          }}
           style={styles.centerIconImage}
         />
       </TouchableOpacity>
@@ -58,7 +60,9 @@ export default function OverlayFloatingButtons() {
       {/* Right: WhatsApp */}
       <TouchableOpacity onPress={handleWhatsAppPress}>
         <Image
-          source={require('../../assets/images/bottomtab/wa.jpeg')}
+          source={{
+            uri: 'https://i.ibb.co/DfpFd5JW/wa.jpg',
+          }}
           style={styles.whatsappIcon}
         />
       </TouchableOpacity>
