@@ -34,7 +34,7 @@ export class CentersController {
     @UploadedFile() file: Express.Multer.File,
     @Body('name') name: string,
   ) {
-    const imageUrl = `/uploads/centers/${file.filename}`;
+    const imageUrl = `https://doctor-appointment-5j6e.onrender.com/uploads/centers/${file.filename}`;
     return this.centersService.addCenter({ name, imageUrl });
   }
 

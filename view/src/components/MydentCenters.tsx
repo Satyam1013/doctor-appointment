@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,37 +10,9 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
-
-const categories: { img: string }[] = [
-  { img: 'https://i.ibb.co/6Rffw5Gk/ahmedabad.png' },
-  { img: 'https://i.ibb.co/99y75Czg/bengaluru.png' },
-  { img: 'https://i.ibb.co/C56PSmTL/chennai.png' },
-  { img: 'https://i.ibb.co/KPGK73W/delhi.png' },
-  { img: 'https://i.ibb.co/xSJ9yv6B/hyderabad.png' },
-  { img: 'https://i.ibb.co/v67zsBhn/jaipur.png' },
-  {
-    img: 'https://i.ibb.co/20cZw49R/kolkata.png',
-  },
-  { img: 'https://i.ibb.co/kVKdC9YY/lucknow.png' },
-  {
-    img: 'https://i.ibb.co/QjDqSmpt/mumbai.png',
-  },
-  { img: 'https://i.ibb.co/KjzGy6rX/pune.png' },
-];
-
-const cityNames = [
-  'Ahmedabad',
-  'Bengaluru',
-  'Chennai',
-  'Delhi',
-  'Hyderabad',
-  'Jaipur',
-  'Kolkata',
-  'Lucknow',
-  'Mumbai',
-  'Pune',
-];
+import { getCenters } from '../api/centers-api';
 
 const treatmentItems = [
   {
@@ -69,6 +42,24 @@ const treatmentItems = [
 ];
 
 export default function MydentCenters({ navigation }: any) {
+  const [centers, setCenters] = useState<
+    { name: string; imageUrl: string; _id: string }[]
+  >([]);
+  console.log('✨ ~ centers:', centers);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    getCenters()
+      .then((res) => {
+        setCenters(res.data);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch centers:', err);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -78,27 +69,36 @@ export default function MydentCenters({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
-      {/* Horizontal Category Scroll */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.row}
-      >
-        {categories.map((cat, idx) => (
-          <TouchableOpacity
-            key={idx}
-            style={styles.item}
-            onPress={() =>
-              navigation.navigate('CentersTab', {
-                selectedCity: cityNames[idx],
-              })
-            }
-          >
-            <Image source={{ uri: cat.img }} style={styles.image} />
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {loading ? (
+        <ActivityIndicator size="large" color="#007AFF" />
+      ) : (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.row}
+        >
+          {centers.map((center) => (
+            <TouchableOpacity
+              key={center._id}
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate('CentersTab', {
+                  selectedCity: center.name,
+                })
+              }
+            >
+              <Image
+                source={{ uri: center.imageUrl }}
+                style={styles.image}
+                resizeMode="cover"
+              />
+              <Text style={{ marginTop: 4 }}>{center.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      )}
 
+      {/* Rest of your treatmentItems section stays same */}
       <View style={styles.bgColor}>
         <Text style={styles.title}>Understanding teeth alignment problems</Text>
         <View style={styles.treatmentGrid}>
