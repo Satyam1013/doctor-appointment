@@ -9,9 +9,8 @@ export class CentersService {
     @InjectModel(Centers.name) private centersModel: Model<Centers>,
   ) {}
 
-  async addCenters(data: { name: string; imageUrl: string }[]) {
-    await this.centersModel.deleteMany(); // overwrite
-    return this.centersModel.insertMany(data);
+  async addCenter(data: { name: string; imageUrl: string }) {
+    return this.centersModel.create(data);
   }
 
   async getCenters() {
