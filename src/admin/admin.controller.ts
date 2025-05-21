@@ -1,22 +1,38 @@
-import { Controller, Get, Post, Delete, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+  Body,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 import { AdminService } from './admin.service';
 
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  @Get('carousels')
-  getCarousels() {
-    return this.adminService.getCarousels();
-  }
-
   @Post('carousels')
-  addCarouselImage(@Body() body: { type: 'top' | 'bottom'; imageUrl: string }) {
-    return this.adminService.addCarouselImage(body.type, body.imageUrl);
-  }
-
-  @Delete('carousels/:id')
-  deleteCarouselImage(@Param('id') id: string) {
-    return this.adminService.deleteCarouselImage(id);
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './uploads/carousel',
+        filename: (req, file, cb) => {
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const fileExt = extname(file.originalname);
+          cb(null, `${uniqueSuffix}${fileExt}`);
+        },
+      }),
+    }),
+  )
+  async uploadImage(
+    @UploadedFile() file: Express.Multer.File,
+    @Body('type') type: 'top' | 'bottom',
+  ) {
+    const imageUrl = `https://doctor-appointment-5j6e.onrender.com/uploads/carousel/${file.filename}`;
+    return this.adminService.addCarouselImage(type, imageUrl);
   }
 }
