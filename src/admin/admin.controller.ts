@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
   Controller,
   Post,
   UploadedFiles,
   UseInterceptors,
   Body,
+  Get,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -15,6 +14,11 @@ import { AdminService } from './admin.service';
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
+
+  @Get('carousels')
+  async getCarousels() {
+    return this.adminService.getCarousels();
+  }
 
   @Post('carousels/multiple')
   @UseInterceptors(
