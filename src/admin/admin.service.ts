@@ -28,4 +28,9 @@ export class AdminService {
   async deleteCarouselImage(id: string) {
     return await this.carouselModel.findByIdAndDelete(id);
   }
+
+  async addMultipleCarouselImages(type: 'top' | 'bottom', imageUrls: string[]) {
+    const documents = imageUrls.map((url) => ({ type, imageUrl: url }));
+    return await this.carouselModel.insertMany(documents);
+  }
 }

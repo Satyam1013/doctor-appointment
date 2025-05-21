@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
   Controller,
   Post,
-  UploadedFile,
+  UploadedFiles,
   UseInterceptors,
   Body,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { AdminService } from './admin.service';
@@ -14,9 +16,10 @@ import { AdminService } from './admin.service';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
-  @Post('carousels')
+  @Post('carousels/multiple')
   @UseInterceptors(
-    FileInterceptor('image', {
+    FilesInterceptor('images', 10, {
+      // 'images' should match React form field
       storage: diskStorage({
         destination: './uploads/carousel',
         filename: (req, file, cb) => {
@@ -28,11 +31,14 @@ export class AdminController {
       }),
     }),
   )
-  async uploadImage(
-    @UploadedFile() file: Express.Multer.File,
+  async uploadMultipleImages(
+    @UploadedFiles() files: Express.Multer.File[],
     @Body('type') type: 'top' | 'bottom',
   ) {
-    const imageUrl = `https://doctor-appointment-5j6e.onrender.com/uploads/carousel/${file.filename}`;
-    return this.adminService.addCarouselImage(type, imageUrl);
+    const imageUrls = files.map(
+      (file) =>
+        `https://doctor-appointment-5j6e.onrender.com/uploads/carousel/${file.filename}`,
+    );
+    return this.adminService.addMultipleCarouselImages(type, imageUrls);
   }
 }
