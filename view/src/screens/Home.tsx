@@ -24,6 +24,8 @@ export default function HomeScreen({ navigation }: any) {
   const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
   const [bottomCarousel, setBottomCarousel] = useState<{ uri: string }[]>([]);
   const [loading, setLoading] = useState(true);
+  console.log('topCarousel state:', topCarousel);
+  console.log('bottomCarousel state:', bottomCarousel);
 
   useEffect(() => {
     const fetchCarousels = async () => {
