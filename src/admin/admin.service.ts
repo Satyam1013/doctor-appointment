@@ -15,8 +15,8 @@ export class AdminService {
     const bottom = await this.carouselModel.find({ type: 'bottom' }).exec();
 
     return {
-      topCarousel: top.map((img) => ({ uri: img.imageUrl })),
-      bottomCarousel: bottom.map((img) => ({ uri: img.imageUrl })),
+      topCarousel: top,
+      bottomCarousel: bottom,
     };
   }
 
