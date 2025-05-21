@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,11 +13,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   LayoutAnimation,
+  ActivityIndicator,
 } from 'react-native';
 import { ResizeMode, Video } from 'expo-av';
 import Carousel from '../components/Carousel';
 import FeatureStats from '../components/FeatureStats';
 import { Ionicons } from '@expo/vector-icons';
+import { getCarousels } from '../api/carousel-api';
 
 const faqs = [
   {
@@ -43,14 +49,35 @@ const faqs = [
   },
 ];
 
-const topCarousel = [
-  { uri: 'https://i.ibb.co/x88xsysH/banner.png' },
-  { uri: 'https://i.ibb.co/JWgXbwRD/ad.png' },
-  { uri: 'https://i.ibb.co/1f0q1t54/banner3.png' },
-];
-
 const MyDentAlignersScreen = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCarousels = async () => {
+      try {
+        const res = await getCarousels();
+        setTopCarousel(
+          res.data.topCarousel.map((img: any) => ({ uri: img.imageUrl })),
+        );
+      } catch (error) {
+        console.error('Failed to load carousels:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCarousels();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
 
   const toggleFAQ = (index: number) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -377,6 +404,11 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'contain',
     marginVertical: 10,
+  },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   faq: {
     padding: 20,

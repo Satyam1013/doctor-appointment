@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -15,10 +17,12 @@ import {
   ScrollView,
   ImageSourcePropType,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import Carousel from '../components/Carousel';
 import { addToCart } from '../api/cart-api';
 import FeatureStats from '../components/FeatureStats';
+import { getCarousels } from '../api/carousel-api';
 
 const categories = [
   {
@@ -155,13 +159,34 @@ const sections = [
   },
 ];
 
-const topCarousel = [
-  { uri: 'https://i.ibb.co/x88xsysH/banner.png' },
-  { uri: 'https://i.ibb.co/JWgXbwRD/ad.png' },
-  { uri: 'https://i.ibb.co/1f0q1t54/banner3.png' },
-];
-
 export default function EComScreen({ navigation }: any) {
+  const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCarousels = async () => {
+      try {
+        const res = await getCarousels();
+        setTopCarousel(
+          res.data.topCarousel.map((img: any) => ({ uri: img.imageUrl })),
+        );
+      } catch (error) {
+        console.error('Failed to load carousels:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCarousels();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
   const handleAddToCart = async (product: any) => {
     try {
       if (!product || !product._id) {
@@ -315,7 +340,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 12,
   },
-
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   card: {
     width: 160,
     height: 220,

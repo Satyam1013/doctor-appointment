@@ -41,12 +41,9 @@ export default function Carousel({ images }: CarouselProps) {
         style={styles.container}
         scrollEnabled={true}
       >
-        <Image
-          source={{
-            uri: 'https://doctor-appointment-5j6e.onrender.com/uploads/carousel/1747813657177-415987041.png',
-          }}
-          style={{ width: screenWidth, height: 200, resizeMode: 'cover' }}
-        />
+        {images.map((img, idx) => (
+          <Image key={idx} source={img} style={styles.image} />
+        ))}
       </ScrollView>
     </View>
   );
