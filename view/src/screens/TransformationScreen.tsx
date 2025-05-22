@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,38 +14,30 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-
-const products = [
-  { img: 'https://i.ibb.co/d4sRZBkM/top.jpg' },
-  { img: 'https://i.ibb.co/mCzkYKwb/top2.jpg' },
-  { img: 'https://i.ibb.co/RGrv0vh3/top3.jpg' },
-  { img: 'https://i.ibb.co/9k3HSkQv/top4.jpg' },
-  { img: 'https://i.ibb.co/8njCwJp3/top5.jpg' },
-  { img: 'https://i.ibb.co/rGKmXFmP/top6.png' },
-  { img: 'https://i.ibb.co/QvMt5R4Q/top7.jpg' },
-  { img: 'https://i.ibb.co/9kFQLP6Q/top8.png' },
-  { img: 'https://i.ibb.co/5xf0RRw2/top9.jpg' },
-  { img: 'https://i.ibb.co/Y4ySZ6Kx/top10.jpg' },
-  { img: 'https://i.ibb.co/q3ByqRT2/top11.jpg' },
-  { img: 'https://i.ibb.co/23cnTL7D/top12.jpg' },
-  { img: 'https://i.ibb.co/99gh6d36/top13.jpg' },
-  { img: 'https://i.ibb.co/Ld04SLYs/top14.jpg' },
-  { img: 'https://i.ibb.co/KcRJVtLR/top15.jpg' },
-  { img: 'https://i.ibb.co/Kpyw2VWn/top16.png' },
-  { img: 'https://i.ibb.co/HTgdzLqN/top17.jpg' },
-  { img: 'https://i.ibb.co/gMhDRM76/top18.jpg' },
-  { img: 'https://i.ibb.co/Qjq4zwyj/top19.jpg' },
-  { img: 'https://i.ibb.co/67XcFTrg/top20.jpg' },
-  { img: 'https://i.ibb.co/nMLDRxDd/top21.jpg' },
-];
+import { getAllBlogs } from '../api/blogs-api';
 
 export default function TransformationScreen({ navigation }: any) {
+  const [blogs, setBlogs] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await getAllBlogs();
+        setBlogs(response.data);
+      } catch (error) {
+        console.error('Failed to fetch blogs:', error);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>Before vs After Treatment</Text>
 
       <View style={styles.grid}>
-        {products.map((item, idx) => (
+        {blogs.map((item, idx) => (
           <TouchableOpacity
             key={idx}
             style={styles.card}
@@ -53,7 +48,7 @@ export default function TransformationScreen({ navigation }: any) {
             }
           >
             <Image
-              source={{ uri: item.img }}
+              source={{ uri: item.imageUrl }}
               style={styles.image}
               resizeMode="cover"
             />
@@ -65,7 +60,11 @@ export default function TransformationScreen({ navigation }: any) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingBottom: 130,
+  },
   content: { padding: 12 },
   title: {
     fontSize: 18,

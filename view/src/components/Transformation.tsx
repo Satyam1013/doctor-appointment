@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -10,15 +13,29 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
-
-const products = [
-  { img: 'https://i.ibb.co/d4sRZBkM/top.jpg' },
-  { img: 'https://i.ibb.co/mCzkYKwb/top2.jpg' },
-  { img: 'https://i.ibb.co/RGrv0vh3/top3.jpg' },
-];
+import { getAllBlogs } from '../api/blogs-api';
 
 export default function Transformation({ navigation }: any) {
+  const [blogs, setBlogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await getAllBlogs();
+        setBlogs(response.data);
+      } catch (error) {
+        console.error('Failed to fetch blogs:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Transformations</Text>
@@ -32,29 +49,33 @@ export default function Transformation({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollRow}
-      >
-        {products.map((item, idx) => (
-          <TouchableOpacity
-            key={idx}
-            style={styles.card}
-            onPress={() =>
-              navigation.navigate('TransformationBlogDetailsScreen', {
-                blog: item,
-              })
-            }
-          >
-            <Image
-              source={{ uri: item.img }}
-              style={styles.image}
-              resizeMode="cover"
-            />
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {loading ? (
+        <ActivityIndicator size="large" color="#e53935" />
+      ) : (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollRow}
+        >
+          {blogs.slice(0, 4).map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={styles.card}
+              onPress={() =>
+                navigation.navigate('TransformationBlogDetailsScreen', {
+                  blog: item,
+                })
+              }
+            >
+              <Image
+                source={{ uri: item.imageUrl }}
+                style={styles.image}
+                resizeMode="cover"
+              />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      )}
     </View>
   );
 }
