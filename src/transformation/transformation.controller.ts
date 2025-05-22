@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   Controller,
@@ -6,9 +8,11 @@ import {
   UploadedFile,
   UseInterceptors,
   Body,
+  Delete,
+  Param,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { BlogsService } from './blogs.service';
+import { BlogsService } from './transformation.service';
 import { memoryStorage } from 'multer';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -48,5 +52,10 @@ export class BlogsController {
   @Get()
   async getAllBlogs(): Promise<any> {
     return this.blogsService.getAllBlogs();
+  }
+
+  @Delete(':id')
+  async deleteBlog(@Param('id') id: string): Promise<any> {
+    return this.blogsService.deleteBlog(id);
   }
 }

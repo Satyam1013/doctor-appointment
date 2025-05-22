@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Blog } from './blogs.schema';
+import { Blog } from './transformation.schema';
 
 @Injectable()
 export class BlogsService {
@@ -18,5 +18,13 @@ export class BlogsService {
 
   async getAllBlogs() {
     return this.blogModel.find().sort({ createdAt: -1 });
+  }
+
+  async deleteBlog(id: string): Promise<{ deleted: boolean }> {
+    const result = await this.blogModel.findByIdAndDelete(id);
+    if (!result) {
+      throw new NotFoundException(`Blog with ID ${id} not found`);
+    }
+    return { deleted: true };
   }
 }

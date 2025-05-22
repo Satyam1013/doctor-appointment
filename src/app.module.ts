@@ -7,7 +7,7 @@ import { CartModule } from './cart/cart.module';
 import { ProductsModule } from './product/product.module';
 import { AdminModule } from './admin/admin.module';
 import { CentersModule } from './centers/centers.module';
-import { BlogsModule } from './blogs/blogs.module';
+import { BlogsModule } from './transformation/transformation.module';
 
 @Module({
   imports: [
