@@ -11,9 +11,9 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { AdminService } from './admin.service';
-import { uploadToCloudinary } from 'cloudinary';
 import * as fs from 'fs';
 import * as path from 'path';
+import { uploadToCloudinary } from 'src/utils/cloudinary';
 
 @Controller('admin')
 export class AdminController {
