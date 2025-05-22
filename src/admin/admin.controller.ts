@@ -13,7 +13,8 @@ import { memoryStorage } from 'multer';
 import { AdminService } from './admin.service';
 import * as fs from 'fs';
 import * as path from 'path';
-import { uploadToCloudinary } from 'src/utils/cloudinary';
+import * as os from 'os';
+import { uploadToCloudinary } from '../utils/cloudinary';
 
 @Controller('admin')
 export class AdminController {
@@ -36,16 +37,12 @@ export class AdminController {
   ) {
     const uploadResults = await Promise.all(
       files.map(async (file) => {
-        // Save buffer to a temporary file
-        const tempPath = path.join(__dirname, `../../temp-${Date.now()}.jpg`);
+        const tempPath = path.join(os.tmpdir(), `upload-${Date.now()}.jpg`);
         fs.writeFileSync(tempPath, file.buffer);
 
-        // Upload to Cloudinary
         const result = await uploadToCloudinary(tempPath);
 
-        // Delete temp file
         fs.unlinkSync(tempPath);
-
         return result.secure_url;
       }),
     );
