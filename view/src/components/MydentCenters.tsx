@@ -45,7 +45,6 @@ export default function MydentCenters({ navigation }: any) {
   const [centers, setCenters] = useState<
     { name: string; imageUrl: string; _id: string }[]
   >([]);
-  console.log('✨ ~ centers:', centers);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

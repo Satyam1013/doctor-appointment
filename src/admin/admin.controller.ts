@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
   Controller,
   Post,
@@ -7,9 +9,11 @@ import {
   Get,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { memoryStorage } from 'multer';
 import { AdminService } from './admin.service';
+import { uploadToCloudinary } from 'cloudinary';
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Controller('admin')
 export class AdminController {
@@ -23,26 +27,29 @@ export class AdminController {
   @Post('carousels/multiple')
   @UseInterceptors(
     FilesInterceptor('images', 10, {
-      // 'images' should match React form field
-      storage: diskStorage({
-        destination: './uploads/carousel',
-        filename: (req, file, cb) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const fileExt = extname(file.originalname);
-          cb(null, `${uniqueSuffix}${fileExt}`);
-        },
-      }),
+      storage: memoryStorage(),
     }),
   )
   async uploadMultipleImages(
     @UploadedFiles() files: Express.Multer.File[],
     @Body('type') type: 'top' | 'bottom',
   ) {
-    const imageUrls = files.map(
-      (file) =>
-        `https://doctor-appointment-5j6e.onrender.com/uploads/carousel/${file.filename}`,
+    const uploadResults = await Promise.all(
+      files.map(async (file) => {
+        // Save buffer to a temporary file
+        const tempPath = path.join(__dirname, `../../temp-${Date.now()}.jpg`);
+        fs.writeFileSync(tempPath, file.buffer);
+
+        // Upload to Cloudinary
+        const result = await uploadToCloudinary(tempPath);
+
+        // Delete temp file
+        fs.unlinkSync(tempPath);
+
+        return result.secure_url;
+      }),
     );
-    return this.adminService.addMultipleCarouselImages(type, imageUrls);
+
+    return this.adminService.addMultipleCarouselImages(type, uploadResults);
   }
 }
