@@ -97,7 +97,7 @@ export default function Centers() {
   useEffect(() => {
     const fetchCarousels = async () => {
       try {
-        const res = await getCarousels(); // Assumes { topCarousel: [...], bottomCarousel: [...] }
+        const res = await getCarousels();
 
         setBottomCarousel(
           res.data.bottomCarousel.map((img: any) => ({ uri: img.imageUrl })),
