@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-require-imports */
+
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -15,6 +20,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Carousel from '../components/Carousel';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import FeatureStats from '../components/FeatureStats';
+import { getCenters } from '../api/centers-api';
+import { getCarousels } from '../api/carousel-api';
 
 type RootStackParamList = {
   Centers: { selectedCity?: string };
@@ -45,26 +52,6 @@ const clinics = [
   },
 ];
 
-const cities = [
-  'All',
-  'Ahmedabad',
-  'Bengaluru',
-  'Chennai',
-  'Delhi',
-  'Hyderabad',
-  'Jaipur',
-  'Kolkata',
-  'Lucknow',
-  'Mumbai',
-  'Pune',
-];
-
-const bottomCarousel = [
-  { uri: 'https://i.ibb.co/vCsV1v7m/adbottom.jpg' },
-  { uri: 'https://i.ibb.co/hRzqDXng/adbottom2.png' },
-  { uri: 'https://i.ibb.co/TMtXpC68/adbottom3.png' },
-];
-
 const services = [
   {
     id: 1,
@@ -84,12 +71,44 @@ const services = [
 export default function Centers() {
   const route = useRoute<CentersRouteProp>();
   const [selectedCity, setSelectedCity] = useState('All');
+  const [centers, setCenters] = useState<
+    { name: string; imageUrl: string; _id: string }[]
+  >([]);
+  const [bottomCarousel, setBottomCarousel] = useState<{ uri: string }[]>([]);
+
+  useEffect(() => {
+    getCenters()
+      .then((res) => {
+        const fetchedCenters = res.data;
+        const allOption = { name: 'All', imageUrl: '', _id: 'all' };
+        setCenters([allOption, ...fetchedCenters]);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch centers:', err);
+      });
+  }, []);
 
   useEffect(() => {
     if (route.params && route.params.selectedCity) {
       setSelectedCity(route.params.selectedCity);
     }
   }, [route.params]);
+
+  useEffect(() => {
+    const fetchCarousels = async () => {
+      try {
+        const res = await getCarousels(); // Assumes { topCarousel: [...], bottomCarousel: [...] }
+
+        setBottomCarousel(
+          res.data.bottomCarousel.map((img: any) => ({ uri: img.imageUrl })),
+        );
+      } catch (error) {
+        console.error('Failed to load carousels:', error);
+      }
+    };
+
+    fetchCarousels();
+  }, []);
 
   const filteredClinics =
     selectedCity === 'All'
@@ -120,22 +139,22 @@ export default function Centers() {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.cityTabs}
       >
-        {cities.map((city) => (
+        {centers.map((city) => (
           <TouchableOpacity
-            key={city}
-            onPress={() => setSelectedCity(city)}
+            key={city._id}
+            onPress={() => setSelectedCity(city.name)}
             style={[
               styles.cityButton,
-              selectedCity === city && styles.activeCityButton,
+              selectedCity === city.name && styles.activeCityButton,
             ]}
           >
             <Text
               style={[
                 styles.cityButtonText,
-                selectedCity === city && styles.activeCityButtonText,
+                selectedCity === city.name && styles.activeCityButtonText,
               ]}
             >
-              {city}
+              {city.name}
             </Text>
           </TouchableOpacity>
         ))}
