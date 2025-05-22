@@ -7,6 +7,8 @@ import {
   UseInterceptors,
   Body,
   Get,
+  Delete,
+  Param,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
@@ -48,5 +50,10 @@ export class AdminController {
     );
 
     return this.adminService.addMultipleCarouselImages(type, uploadResults);
+  }
+
+  @Delete('carousels/:id')
+  async deleteCarousel(@Param('id') id: string) {
+    return this.adminService.deleteCarousel(id);
   }
 }

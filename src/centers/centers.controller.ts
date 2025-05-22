@@ -25,9 +25,14 @@ export class CentersController {
       storage: memoryStorage(),
     }),
   )
-  async uploadCityImage(
+  async uploadCenterImage(
     @UploadedFile() file: Express.Multer.File,
     @Body('name') name: string,
+    @Body('address') address: string,
+    @Body('timeFrom') timeFrom: string,
+    @Body('timeTo') timeTo: string,
+    @Body('centerNumber') centerNumber: string,
+    @Body('directions') directions?: string,
   ): Promise<any> {
     const tempPath = path.join(os.tmpdir(), `center-${Date.now()}.jpg`);
     let imageUrl = '';
@@ -45,7 +50,15 @@ export class CentersController {
       }
     }
 
-    return this.centersService.addCenter({ name, imageUrl });
+    return this.centersService.addCenter({
+      name,
+      imageUrl,
+      address,
+      timeFrom,
+      timeTo,
+      centerNumber,
+      directions,
+    });
   }
 
   @Get()

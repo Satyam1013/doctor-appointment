@@ -22,3 +22,10 @@ export async function uploadToCloudinary(filePath: string) {
     public_id: result.public_id,
   };
 }
+
+export const deleteFromCloudinary = async (imageUrl: string) => {
+  const publicId = imageUrl.split('/').pop()?.split('.')[0];
+  if (publicId) {
+    await cloudinary.uploader.destroy(publicId);
+  }
+};

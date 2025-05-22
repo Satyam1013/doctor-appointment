@@ -9,7 +9,15 @@ export class CentersService {
     @InjectModel(Centers.name) private centersModel: Model<Centers>,
   ) {}
 
-  async addCenter(data: { name: string; imageUrl: string }) {
+  async addCenter(data: {
+    name: string;
+    imageUrl: string;
+    address: string;
+    timeFrom: string;
+    timeTo: string;
+    centerNumber: string;
+    directions?: string;
+  }) {
     return this.centersModel.create(data);
   }
 

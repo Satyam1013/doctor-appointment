@@ -1,7 +1,8 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Carousel, CarouselDocument } from '../carousel/carousel.schema';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { deleteFromCloudinary } from 'src/utils/cloudinary';
 
 @Injectable()
 export class AdminService {
@@ -25,8 +26,15 @@ export class AdminService {
     return await image.save();
   }
 
-  async deleteCarouselImage(id: string) {
-    return await this.carouselModel.findByIdAndDelete(id);
+  async deleteCarousel(id: string) {
+    const result = await this.carouselModel.findByIdAndDelete(id);
+    if (!result) {
+      throw new NotFoundException('Carousel not found');
+    }
+
+    await deleteFromCloudinary(result.imageUrl);
+
+    return { message: 'Carousel deleted successfully' };
   }
 
   async addMultipleCarouselImages(type: 'top' | 'bottom', imageUrls: string[]) {
