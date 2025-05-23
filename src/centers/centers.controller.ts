@@ -1,16 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   Controller,
   Post,
   Get,
-  UploadedFile,
+  UploadedFiles,
   UseInterceptors,
   Body,
   Delete,
   NotFoundException,
   Param,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { CentersService } from './centers.service';
 import { memoryStorage } from 'multer';
 import * as fs from 'fs';
@@ -24,43 +25,62 @@ export class CentersController {
 
   @Post('upload')
   @UseInterceptors(
-    FileInterceptor('image', {
-      storage: memoryStorage(),
-    }),
+    FileFieldsInterceptor(
+      [
+        { name: 'centerImage', maxCount: 1 },
+        { name: 'clinicImage', maxCount: 1 },
+      ],
+      { storage: memoryStorage() },
+    ),
   )
-  async uploadCenterImage(
-    @UploadedFile() file: Express.Multer.File,
-    @Body('name') name: string,
+  async uploadCenterData(
+    @UploadedFiles()
+    files: {
+      centerImage?: Express.Multer.File[];
+      clinicImage?: Express.Multer.File[];
+    },
+    @Body('cityName') cityName: string,
+    @Body('clinicName') clinicName: string,
     @Body('address') address: string,
     @Body('timeFrom') timeFrom: string,
     @Body('timeTo') timeTo: string,
     @Body('centerNumber') centerNumber: string,
     @Body('directions') directions?: string,
   ): Promise<any> {
-    const tempPath = path.join(os.tmpdir(), `center-${Date.now()}.jpg`);
-    let imageUrl = '';
-
-    try {
-      fs.writeFileSync(tempPath, file.buffer);
-      const result = await uploadToCloudinary(tempPath);
-      imageUrl = result.secure_url;
-    } catch (error) {
-      console.error('Image upload failed:', error);
-      throw error;
-    } finally {
-      if (fs.existsSync(tempPath)) {
-        fs.unlinkSync(tempPath);
+    const uploadImage = async (file?: Express.Multer.File) => {
+      if (!file) return '';
+      const tempPath = path.join(os.tmpdir(), `upload-${Date.now()}.jpg`);
+      try {
+        fs.writeFileSync(tempPath, file.buffer);
+        const result = await uploadToCloudinary(tempPath);
+        return result.secure_url;
+      } catch (error) {
+        console.error('Image upload failed:', error);
+        throw error;
+      } finally {
+        if (fs.existsSync(tempPath)) {
+          fs.unlinkSync(tempPath);
+        }
       }
-    }
+    };
+
+    const centerImageUrl = await uploadImage(files.centerImage?.[0]);
+    const clinicImageUrl = await uploadImage(files.clinicImage?.[0]);
 
     return this.centersService.addCenter({
-      name,
-      imageUrl,
-      address,
-      timeFrom,
-      timeTo,
-      centerNumber,
-      directions,
+      cityName,
+      imageUrl: centerImageUrl,
+      clinic: [
+        {
+          clinicName,
+          clinicImage: clinicImageUrl,
+          address,
+          timeFrom,
+          timeTo,
+          centerNumber,
+          directions,
+        },
+      ],
     });
   }
 

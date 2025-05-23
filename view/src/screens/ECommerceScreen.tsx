@@ -15,7 +15,6 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  ImageSourcePropType,
   Alert,
   ActivityIndicator,
 } from 'react-native';
@@ -23,80 +22,7 @@ import Carousel from '../components/Carousel';
 import { addToCart } from '../api/cart-api';
 import FeatureStats from '../components/FeatureStats';
 import { getCarousels } from '../api/carousel-api';
-
-const categories = [
-  {
-    title: 'Whitening booster gel',
-    _id: '682779a388e60dac093dbb88',
-    icon: 'https://i.ibb.co/PsMJw9bB/1.png',
-  },
-  {
-    title: 'Whitening gel',
-    _id: '682779a388e60dac093dbb89',
-    icon: 'https://i.ibb.co/pBXnQNXm/1.png',
-  },
-  {
-    title: 'Whitening pen',
-    _id: '682779a388e60dac093dbb8a',
-    icon: 'https://i.ibb.co/KjDBqrgG/1.png',
-  },
-  {
-    title: 'Teeth whitening kit',
-    _id: '682779a388e60dac093dbb8b',
-    icon: 'https://i.ibb.co/Jwspv8Yz/1.png',
-  },
-  {
-    title: 'Teeth whitening serum',
-    _id: '682779a388e60dac093dbb8c',
-    icon: 'https://i.ibb.co/6ccrZF2N/1.png',
-  },
-  {
-    title: 'Teeth whitening strips',
-    _id: '682779a388e60dac093dbb8d',
-    icon: 'https://i.ibb.co/N6NhKYww/1.png',
-  },
-  {
-    title: 'Tooth paste',
-    _id: '682779a388e60dac093dbb8e',
-    icon: 'https://i.ibb.co/kVwPKD5v/1.png',
-  },
-  {
-    title: 'Water flosser',
-    _id: '682779a388e60dac093dbb8f',
-    icon: 'https://i.ibb.co/vCQrD1rC/1.png',
-  },
-  {
-    title: 'Chewes',
-    _id: '682779a388e60dac093dbb90',
-    icon: 'https://i.ibb.co/nMm1ZnF3/1.png',
-  },
-  {
-    title: 'Electronic tooth brush',
-    _id: '682779a388e60dac093dbb91',
-    icon: 'https://i.ibb.co/WNRmqwj3/1.png',
-  },
-  {
-    title: 'Pull tool',
-    _id: '682779a388e60dac093dbb92',
-    icon: 'https://i.ibb.co/S41Y360P/1.png',
-  },
-  {
-    title: 'Aligners and retainer',
-    _id: '682779a388e60dac093dbb93',
-    icon: 'https://i.ibb.co/m5mprWW4/1.png',
-  },
-  {
-    title: 'Aligners foam',
-    _id: '682779a388e60dac093dbb94',
-
-    icon: 'https://i.ibb.co/PvJgx1LQ/1.png',
-  },
-  {
-    title: 'Check retractor',
-    _id: '682779a388e60dac093dbb95',
-    icon: 'https://i.ibb.co/YwV21hh/1.png',
-  },
-];
+import { getAllProducts } from '../api/product-api';
 
 const ad1 = 'https://i.ibb.co/x88xsysH/banner.png';
 const ad2 = 'https://i.ibb.co/JWgXbwRD/ad.png';
@@ -162,6 +88,7 @@ const sections = [
 export default function EComScreen({ navigation }: any) {
   const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchCarousels = async () => {
@@ -177,7 +104,17 @@ export default function EComScreen({ navigation }: any) {
       }
     };
 
+    const fetchProducts = async () => {
+      try {
+        const products = await getAllProducts();
+        setCategories(products);
+      } catch (error) {
+        console.error('Failed to load products:', error);
+      }
+    };
+
     fetchCarousels();
+    fetchProducts();
   }, []);
 
   if (loading) {
@@ -228,7 +165,7 @@ export default function EComScreen({ navigation }: any) {
       <FlatList
         data={categories}
         numColumns={4}
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.item}
@@ -239,12 +176,9 @@ export default function EComScreen({ navigation }: any) {
             }
           >
             <View style={styles.imageWrapper}>
-              <Image
-                source={{ uri: item.icon } as ImageSourcePropType}
-                style={styles.icon}
-              />
+              <Image source={{ uri: item.images[0] }} style={styles.icon} />
             </View>
-            <Text style={styles.label}>{item.title}</Text>
+            <Text style={styles.label}>{item.title || item.name}</Text>
           </TouchableOpacity>
         )}
         contentContainerStyle={styles.grid}

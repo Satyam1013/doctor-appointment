@@ -11,13 +11,17 @@ export class CentersService {
   ) {}
 
   async addCenter(data: {
-    name: string;
+    cityName: string;
     imageUrl: string;
-    address: string;
-    timeFrom: string;
-    timeTo: string;
-    centerNumber: string;
-    directions?: string;
+    clinic: {
+      clinicName: string;
+      clinicImage: string;
+      address: string;
+      timeFrom: string;
+      timeTo: string;
+      centerNumber: string;
+      directions?: string;
+    }[];
   }) {
     return this.centersModel.create(data);
   }
@@ -33,11 +37,25 @@ export class CentersService {
       return false;
     }
 
+    // Delete center image
     if (center.imageUrl) {
       try {
         await deleteFromCloudinary(center.imageUrl);
       } catch (err) {
-        console.error('Failed to delete image from Cloudinary:', err);
+        console.error('Failed to delete center image:', err);
+      }
+    }
+
+    // Delete all clinic images
+    if (center.clinic && Array.isArray(center.clinic)) {
+      for (const c of center.clinic) {
+        if (c.clinicImage) {
+          try {
+            await deleteFromCloudinary(c.clinicImage);
+          } catch (err) {
+            console.error('Failed to delete clinic image:', err);
+          }
+        }
       }
     }
 
