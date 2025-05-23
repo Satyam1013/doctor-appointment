@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -15,6 +16,7 @@ import {
   Image,
   StyleSheet,
   Linking,
+  Alert,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Carousel from '../components/Carousel';
@@ -29,28 +31,6 @@ type RootStackParamList = {
 };
 
 type CentersRouteProp = RouteProp<RootStackParamList, 'Centers'>;
-
-const clinics = [
-  {
-    id: 1,
-    city: 'Mumbai',
-    name: 'Mumbai - Kharghar',
-    image: 'https://i.ibb.co/PsMJw9bB/1.png',
-    address:
-      'No 23, Shree Krishna Paradise, Utsav Chowk, Sector 12, Kharghar, Navi Mumbai 410210',
-    time: 'Mon - Sun : 8:00 AM - 8:00 PM',
-    phone: '8422858004',
-  },
-  {
-    id: 2,
-    city: 'Bengaluru',
-    name: 'Bengaluru - Indiranagar',
-    image: 'https://i.ibb.co/pBXnQNXm/1.png',
-    address: '12, 1st Cross, Indiranagar, Bangalore 560038',
-    time: 'Mon - Sat : 9:00 AM - 6:00 PM',
-    phone: '9876543210',
-  },
-];
 
 const services = [
   {
@@ -72,7 +52,7 @@ export default function Centers() {
   const route = useRoute<CentersRouteProp>();
   const [selectedCity, setSelectedCity] = useState('All');
   const [centers, setCenters] = useState<
-    { name: string; imageUrl: string; _id: string }[]
+    { cityName: string; imageUrl: string; clinic: any[]; _id: string }[]
   >([]);
   const [bottomCarousel, setBottomCarousel] = useState<{ uri: string }[]>([]);
 
@@ -80,7 +60,7 @@ export default function Centers() {
     getCenters()
       .then((res) => {
         const fetchedCenters = res.data;
-        const allOption = { name: 'All', imageUrl: '', _id: 'all' };
+        const allOption = { cityName: 'All', imageUrl: '', clinic: [] };
         setCenters([allOption, ...fetchedCenters]);
       })
       .catch((err) => {
@@ -112,8 +92,8 @@ export default function Centers() {
 
   const filteredClinics =
     selectedCity === 'All'
-      ? clinics
-      : clinics.filter((clinic) => clinic.city === selectedCity);
+      ? centers.flatMap((city) => city.clinic)
+      : centers.find((city) => city.cityName === selectedCity)?.clinic || [];
 
   return (
     <ScrollView
@@ -142,19 +122,19 @@ export default function Centers() {
         {centers.map((city) => (
           <TouchableOpacity
             key={city._id}
-            onPress={() => setSelectedCity(city.name)}
+            onPress={() => setSelectedCity(city.cityName)}
             style={[
               styles.cityButton,
-              selectedCity === city.name && styles.activeCityButton,
+              selectedCity === city.cityName && styles.activeCityButton,
             ]}
           >
             <Text
               style={[
                 styles.cityButtonText,
-                selectedCity === city.name && styles.activeCityButtonText,
+                selectedCity === city.cityName && styles.activeCityButtonText,
               ]}
             >
-              {city.name}
+              {city.cityName}
             </Text>
           </TouchableOpacity>
         ))}
@@ -164,9 +144,12 @@ export default function Centers() {
         {filteredClinics.length > 0 ? (
           filteredClinics.map((clinic) => (
             <View key={clinic.id} style={styles.card}>
-              <Image source={{ uri: clinic.image }} style={styles.image} />
+              <Image
+                source={{ uri: clinic.clinicImage }}
+                style={styles.image}
+              />
               <View style={styles.infoContainer}>
-                <Text style={styles.name}>{clinic.name}</Text>
+                <Text style={styles.name}>{clinic.clinicName}</Text>
 
                 <View style={styles.row}>
                   <MaterialCommunityIcons
@@ -183,7 +166,9 @@ export default function Centers() {
                     color="#ff4d4d"
                     size={18}
                   />
-                  <Text style={styles.time}>{clinic.time}</Text>
+                  <Text style={styles.time}>
+                    {clinic.timeFrom} - {clinic.timeTo}
+                  </Text>
                 </View>
 
                 <View style={styles.row}>
@@ -194,13 +179,24 @@ export default function Centers() {
                   />
                   <Text
                     style={styles.phone}
-                    onPress={() => Linking.openURL(`tel:${clinic.phone}`)}
+                    onPress={() =>
+                      Linking.openURL(`tel:${clinic.centerNumber}`)
+                    }
                   >
-                    {clinic.phone}
+                    {clinic.centerNumber}
                   </Text>
                 </View>
 
-                <TouchableOpacity style={styles.directionButton}>
+                <TouchableOpacity
+                  style={styles.directionButton}
+                  onPress={() => {
+                    if (clinic.directions) {
+                      Linking.openURL(clinic.directions);
+                    } else {
+                      Alert.alert('No directions link available');
+                    }
+                  }}
+                >
                   <MaterialCommunityIcons name="map" color="#fff" size={18} />
                   <Text style={styles.directionText}>Directions</Text>
                 </TouchableOpacity>
