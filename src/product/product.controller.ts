@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
   Controller,
   Get,
@@ -7,9 +8,17 @@ import {
   Param,
   Body,
   NotFoundException,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { ProductsService } from './product.service';
 import { Product } from './product.schema';
+import { memoryStorage } from 'multer';
+import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
+import { uploadToCloudinary } from '../utils/cloudinary';
 
 @Controller('products')
 export class ProductsController {
@@ -27,8 +36,36 @@ export class ProductsController {
     return product;
   }
 
-  @Post()
-  async createProduct(@Body() productData: Partial<Product>): Promise<Product> {
+  // Upload multiple images along with product data
+  @Post('upload')
+  @UseInterceptors(
+    FilesInterceptor('images', 10, {
+      storage: memoryStorage(),
+    }),
+  )
+  async createProduct(
+    @UploadedFiles() files: Express.Multer.File[],
+    @Body() productData: Partial<Product>,
+  ): Promise<Product> {
+    // Upload each image file to Cloudinary and collect URLs
+    const imageUrls: string[] = [];
+
+    for (const file of files) {
+      const tempPath = path.join(os.tmpdir(), `product-${Date.now()}.jpg`);
+      try {
+        fs.writeFileSync(tempPath, file.buffer);
+        const result = await uploadToCloudinary(tempPath);
+        imageUrls.push(result.secure_url);
+      } finally {
+        if (fs.existsSync(tempPath)) {
+          fs.unlinkSync(tempPath);
+        }
+      }
+    }
+
+    // Assign uploaded URLs to product images array
+    productData.images = imageUrls;
+
     return this.productsService.create(productData);
   }
 
