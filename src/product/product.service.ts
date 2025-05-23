@@ -30,6 +30,17 @@ export class ProductsService {
     return updated;
   }
 
+  async updateFavorite(
+    id: string,
+    isFavorite: boolean,
+  ): Promise<Product | null> {
+    return this.productModel.findByIdAndUpdate(
+      id,
+      { isFavorite },
+      { new: true },
+    );
+  }
+
   async delete(id: string): Promise<boolean> {
     const result = await this.productModel.findByIdAndDelete(id).exec();
     return !!result;

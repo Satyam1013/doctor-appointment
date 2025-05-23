@@ -10,6 +10,7 @@ import {
   NotFoundException,
   UploadedFiles,
   UseInterceptors,
+  Patch,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ProductsService } from './product.service';
@@ -75,6 +76,19 @@ export class ProductsController {
     @Body() updates: Partial<Product>,
   ): Promise<Product> {
     const updatedProduct = await this.productsService.update(id, updates);
+    if (!updatedProduct) throw new NotFoundException('Product not found');
+    return updatedProduct;
+  }
+
+  @Patch(':id/favorite')
+  async updateFavoriteStatus(
+    @Param('id') id: string,
+    @Body('isFavorite') isFavorite: boolean,
+  ): Promise<Product> {
+    const updatedProduct = await this.productsService.updateFavorite(
+      id,
+      isFavorite,
+    );
     if (!updatedProduct) throw new NotFoundException('Product not found');
     return updatedProduct;
   }

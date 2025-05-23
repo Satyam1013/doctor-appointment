@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -23,72 +22,38 @@ import { addToCart } from '../api/cart-api';
 import FeatureStats from '../components/FeatureStats';
 import { getCarousels } from '../api/carousel-api';
 import { getAllProducts } from '../api/product-api';
+import ProductCard from '../components/ProductCard';
 
 const ad1 = 'https://i.ibb.co/x88xsysH/banner.png';
 const ad2 = 'https://i.ibb.co/JWgXbwRD/ad.png';
 const ad3 = 'https://i.ibb.co/1f0q1t54/banner3.png';
 
-const sections = [
-  {
-    title: 'Best Selling',
-    data: [
-      {
-        title: 'Aligners and retainer',
-        _id: '682779a388e60dac093dbb93',
-        image: 'https://i.ibb.co/m5mprWW4/1.png',
-        price: 4999,
-      },
-      {
-        title: 'Pull tool',
-        _id: '682779a388e60dac093dbb92',
-        image: 'https://i.ibb.co/S41Y360P/1.png',
-        price: 499,
-      },
-    ],
-    ad: ad1,
-  },
-  {
-    title: 'Save Big With Combos',
-    data: [
-      {
-        title: 'Tooth paste',
-        _id: '682779a388e60dac093dbb8e',
-        image: 'https://i.ibb.co/kVwPKD5v/1.png',
-        price: 199,
-      },
-      {
-        title: 'Water flosser',
-        _id: '682779a388e60dac093dbb8f',
-        image: 'https://i.ibb.co/vCQrD1rC/1.png',
-        price: 2000,
-      },
-    ],
-    ad: ad2,
-  },
-  {
-    title: 'Recommended For You',
-    data: [
-      {
-        title: 'Whitening pen',
-        _id: '682779a388e60dac093dbb8a',
-        image: 'https://i.ibb.co/KjDBqrgG/1.png',
-        price: 599,
-      },
-      {
-        title: 'Teeth whitening kit',
-        _id: '682779a388e60dac093dbb8b',
-        image: 'https://i.ibb.co/Jwspv8Yz/1.png',
-        price: 2100,
-      },
-    ],
-    ad: ad3,
-  },
-];
-
 export default function EComScreen({ navigation }: any) {
   const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<any[]>([]);
+
+  const bestSellers = categories.filter((p) => p.bestSeller);
+  const combos = categories.filter((p) => p.combos);
+  const recommended = categories.filter((p) => p.recommended);
+
+  const sections = [
+    {
+      title: 'Best Selling',
+      data: bestSellers,
+      ad: ad1,
+    },
+    {
+      title: 'Save Big With Combos',
+      data: combos,
+      ad: ad2,
+    },
+    {
+      title: 'Recommended For You',
+      data: recommended,
+      ad: ad3,
+    },
+  ].filter((section) => section.data.length > 0); // Avoid empty sections
 
   useEffect(() => {
     const fetchCarousels = async () => {
@@ -138,27 +103,6 @@ export default function EComScreen({ navigation }: any) {
     }
   };
 
-  const renderProductCard = (item: {
-    title: string;
-    _id: string;
-    image: string;
-    price: number;
-  }) => (
-    <View style={styles.card}>
-      <Image source={{ uri: item.image }} style={styles.cardImage} />
-      <Text style={styles.cardName} numberOfLines={2}>
-        {item.title}
-      </Text>
-      <Text style={styles.cardPrice}>₹{item.price}</Text>
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => handleAddToCart(item)}
-      >
-        <Text style={styles.addText}>ADD</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Oral Care Categories</Text>
@@ -199,7 +143,16 @@ export default function EComScreen({ navigation }: any) {
             showsHorizontalScrollIndicator={false}
             data={section.data}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => renderProductCard(item)}
+            renderItem={({ item }) => (
+              <ProductCard
+                item={item}
+                onAddToCart={() => handleAddToCart(item)}
+                onToggleFavorite={(id: string, isFav: boolean) => {
+                  // Handle favorite toggle if you want
+                  console.log('Favorite toggled:', id, isFav);
+                }}
+              />
+            )}
             contentContainerStyle={styles.horizontalList}
           />
 
@@ -214,9 +167,102 @@ export default function EComScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingHorizontal: 12,
     paddingTop: 16,
     backgroundColor: '#ffffff',
+  },
+  imageContainer: {
+    position: 'relative',
+    width: '100%',
+    height: 120,
+    borderRadius: 8,
+    overflow: 'hidden',
+    backgroundColor: '#f9f9f9',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  badge: {
+    position: 'absolute',
+    top: 6,
+    left: 6,
+    backgroundColor: '#ff5252',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    zIndex: 2,
+  },
+
+  badgeText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: 'bold',
+  },
+
+  card: {
+    width: 160,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    marginHorizontal: 8,
+    marginBottom: 16,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    justifyContent: 'space-between',
+  },
+
+  cardImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+
+  cardName: {
+    fontSize: 13,
+    fontWeight: '500',
+    marginTop: 8,
+    color: '#333',
+  },
+
+  priceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+    gap: 6,
+  },
+
+  cardPrice: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+
+  originalPrice: {
+    fontSize: 12,
+    color: '#888',
+    textDecorationLine: 'line-through',
+  },
+
+  discount: {
+    fontSize: 12,
+    color: '#ff5252',
+    fontWeight: '600',
+  },
+
+  addButton: {
+    marginTop: 10,
+    backgroundColor: '#007bff',
+    paddingVertical: 6,
+    borderRadius: 6,
+  },
+
+  addText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: '600',
+    fontSize: 12,
   },
   header: {
     fontSize: 18,
@@ -279,43 +325,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  card: {
-    width: 160,
-    height: 220,
-    backgroundColor: '#fff',
-    marginHorizontal: 8,
-    borderRadius: 10,
-    padding: 8,
-    elevation: 2,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  cardImage: {
-    width: '100%',
-    height: 100,
-    resizeMode: 'contain',
-    borderRadius: 8,
-  },
-  cardName: {
-    fontSize: 12,
-    marginTop: 6,
-  },
-  cardPrice: {
-    fontSize: 13,
-    fontWeight: 'bold',
-    marginTop: 4,
-  },
-  addButton: {
-    backgroundColor: '#e0f7fa',
-    paddingVertical: 4,
-    borderRadius: 4,
-    marginTop: 6,
-  },
-  addText: {
-    textAlign: 'center',
-    fontSize: 12,
-    fontWeight: '600',
-  },
+
   adImage: {
     width: '100%',
     height: 100,
