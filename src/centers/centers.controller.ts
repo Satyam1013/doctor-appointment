@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
@@ -25,78 +26,61 @@ import { uploadToCloudinary } from '../utils/cloudinary';
 export class CentersController {
   constructor(private readonly centersService: CentersService) {}
 
-  @Post('upload')
+  // 1. Upload a new CENTER (city) with center image only
+  @Post()
   @UseInterceptors(
-    FileFieldsInterceptor(
-      [
-        { name: 'centerImage', maxCount: 1 },
-        { name: 'clinicImage', maxCount: 1 },
-      ],
-      { storage: memoryStorage() },
-    ),
+    FileFieldsInterceptor([{ name: 'centerImage', maxCount: 1 }], {
+      storage: memoryStorage(),
+    }),
   )
-  async uploadCenterData(
+  async addCenter(
     @UploadedFiles()
-    files: {
-      centerImage?: Express.Multer.File[];
-      clinicImage?: Express.Multer.File[];
-    },
+    files: { centerImage?: Express.Multer.File[] },
     @Body('cityName') cityName: string,
-    @Body('clinicName') clinicName?: string,
-    @Body('address') address?: string,
-    @Body('timeFrom') timeFrom?: string,
-    @Body('timeTo') timeTo?: string,
-    @Body('centerNumber') centerNumber?: string,
-    @Body('directions') directions?: string,
   ): Promise<any> {
-    const uploadImage = async (file?: Express.Multer.File) => {
-      if (!file) return '';
-      const tempPath = path.join(os.tmpdir(), `upload-${Date.now()}.jpg`);
-      try {
-        fs.writeFileSync(tempPath, file.buffer);
-        const result = await uploadToCloudinary(tempPath);
-        return result.secure_url;
-      } catch (error) {
-        console.error('Image upload failed:', error);
-        throw error;
-      } finally {
-        if (fs.existsSync(tempPath)) {
-          fs.unlinkSync(tempPath);
-        }
-      }
-    };
-
-    const centerImageUrl = await uploadImage(files.centerImage?.[0]);
-    const clinicImageUrl = await uploadImage(files.clinicImage?.[0]);
-
-    const clinicFieldsProvided =
-      clinicName ||
-      address ||
-      timeFrom ||
-      timeTo ||
-      centerNumber ||
-      clinicImageUrl;
-
-    const centerData: any = {
-      cityName,
-      imageUrl: centerImageUrl,
-    };
-
-    if (clinicFieldsProvided) {
-      centerData.clinic = [
-        {
-          clinicName,
-          clinicImage: clinicImageUrl,
-          address,
-          timeFrom,
-          timeTo,
-          centerNumber,
-          directions,
-        },
-      ];
+    if (!cityName) {
+      throw new Error('cityName is required');
     }
 
-    return this.centersService.addCenter(centerData);
+    const centerImageUrl = await this.uploadImage(files.centerImage?.[0]);
+
+    return this.centersService.addCenter({
+      cityName,
+      imageUrl: centerImageUrl,
+    });
+  }
+
+  // 2. Add a new CLINIC to existing center by cityName
+  @Post(':cityName/clinics')
+  @UseInterceptors(
+    FileFieldsInterceptor([{ name: 'clinicImage', maxCount: 1 }], {
+      storage: memoryStorage(),
+    }),
+  )
+  async addClinic(
+    @Param('cityName') cityName: string,
+    @UploadedFiles()
+    files: { clinicImage?: Express.Multer.File[] },
+    @Body()
+    body: {
+      clinicName: string;
+      address: string;
+      timeFrom: string;
+      timeTo: string;
+      centerNumber: string;
+      directions?: string;
+    },
+  ): Promise<any> {
+    if (!cityName) throw new Error('City name param is required');
+
+    const clinicImageUrl = await this.uploadImage(files.clinicImage?.[0]);
+
+    const clinicData = {
+      ...body,
+      clinicImage: clinicImageUrl,
+    };
+
+    return this.centersService.addClinicToCenter(cityName, clinicData);
   }
 
   @Get()
@@ -111,5 +95,23 @@ export class CentersController {
       throw new NotFoundException('Center not found');
     }
     return { message: 'Center deleted successfully' };
+  }
+
+  private async uploadImage(file?: Express.Multer.File): Promise<string> {
+    if (!file) return '';
+
+    const tempPath = path.join(os.tmpdir(), `upload-${Date.now()}.jpg`);
+    try {
+      fs.writeFileSync(tempPath, file.buffer);
+      const result = await uploadToCloudinary(tempPath);
+      return result.secure_url;
+    } catch (error) {
+      console.error('Image upload failed:', error);
+      throw error;
+    } finally {
+      if (fs.existsSync(tempPath)) {
+        fs.unlinkSync(tempPath);
+      }
+    }
   }
 }

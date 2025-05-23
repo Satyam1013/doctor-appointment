@@ -10,20 +10,34 @@ export class CentersService {
     @InjectModel(Centers.name) private centersModel: Model<Centers>,
   ) {}
 
-  async addCenter(data: {
-    cityName: string;
-    imageUrl: string;
-    clinic?: {
-      clinicName?: string;
-      clinicImage?: string;
-      address?: string;
-      timeFrom?: string;
-      timeTo?: string;
-      centerNumber?: string;
-      directions?: string;
-    }[];
-  }) {
+  // Add new center (city)
+  async addCenter(data: { cityName: string; imageUrl: string }) {
     return this.centersModel.create(data);
+  }
+
+  // Add clinic to existing center by cityName
+  async addClinicToCenter(
+    cityName: string,
+    clinicData: {
+      clinicName: string;
+      clinicImage: string;
+      address: string;
+      timeFrom: string;
+      timeTo: string;
+      centerNumber: string;
+      directions?: string;
+    },
+  ) {
+    const updateResult = await this.centersModel.updateOne(
+      { cityName },
+      { $push: { clinic: clinicData } },
+    );
+
+    if (updateResult.matchedCount === 0) {
+      throw new Error(`Center with cityName "${cityName}" not found`);
+    }
+
+    return updateResult;
   }
 
   async getCenters() {
