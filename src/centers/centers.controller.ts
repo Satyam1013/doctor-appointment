@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
@@ -40,11 +42,11 @@ export class CentersController {
       clinicImage?: Express.Multer.File[];
     },
     @Body('cityName') cityName: string,
-    @Body('clinicName') clinicName: string,
-    @Body('address') address: string,
-    @Body('timeFrom') timeFrom: string,
-    @Body('timeTo') timeTo: string,
-    @Body('centerNumber') centerNumber: string,
+    @Body('clinicName') clinicName?: string,
+    @Body('address') address?: string,
+    @Body('timeFrom') timeFrom?: string,
+    @Body('timeTo') timeTo?: string,
+    @Body('centerNumber') centerNumber?: string,
     @Body('directions') directions?: string,
   ): Promise<any> {
     const uploadImage = async (file?: Express.Multer.File) => {
@@ -67,10 +69,21 @@ export class CentersController {
     const centerImageUrl = await uploadImage(files.centerImage?.[0]);
     const clinicImageUrl = await uploadImage(files.clinicImage?.[0]);
 
-    return this.centersService.addCenter({
+    const clinicFieldsProvided =
+      clinicName ||
+      address ||
+      timeFrom ||
+      timeTo ||
+      centerNumber ||
+      clinicImageUrl;
+
+    const centerData: any = {
       cityName,
       imageUrl: centerImageUrl,
-      clinic: [
+    };
+
+    if (clinicFieldsProvided) {
+      centerData.clinic = [
         {
           clinicName,
           clinicImage: clinicImageUrl,
@@ -80,8 +93,10 @@ export class CentersController {
           centerNumber,
           directions,
         },
-      ],
-    });
+      ];
+    }
+
+    return this.centersService.addCenter(centerData);
   }
 
   @Get()

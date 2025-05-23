@@ -13,13 +13,13 @@ export class CentersService {
   async addCenter(data: {
     cityName: string;
     imageUrl: string;
-    clinic: {
-      clinicName: string;
-      clinicImage: string;
-      address: string;
-      timeFrom: string;
-      timeTo: string;
-      centerNumber: string;
+    clinic?: {
+      clinicName?: string;
+      clinicImage?: string;
+      address?: string;
+      timeFrom?: string;
+      timeTo?: string;
+      centerNumber?: string;
       directions?: string;
     }[];
   }) {
@@ -32,12 +32,8 @@ export class CentersService {
 
   async deleteCenter(id: string): Promise<boolean> {
     const center = await this.centersModel.findById(id).exec();
+    if (!center) return false;
 
-    if (!center) {
-      return false;
-    }
-
-    // Delete center image
     if (center.imageUrl) {
       try {
         await deleteFromCloudinary(center.imageUrl);
@@ -46,7 +42,6 @@ export class CentersService {
       }
     }
 
-    // Delete all clinic images
     if (center.clinic && Array.isArray(center.clinic)) {
       for (const c of center.clinic) {
         if (c.clinicImage) {
@@ -60,7 +55,6 @@ export class CentersService {
     }
 
     await this.centersModel.findByIdAndDelete(id).exec();
-
     return true;
   }
 }

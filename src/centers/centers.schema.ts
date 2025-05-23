@@ -1,25 +1,25 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema()
+@Schema({ _id: false })
 class Clinic {
-  @Prop({ required: true })
-  clinicName!: string;
+  @Prop()
+  clinicName?: string;
 
-  @Prop({ required: true })
-  clinicImage!: string;
+  @Prop()
+  clinicImage?: string;
 
-  @Prop({ required: true })
-  address!: string;
+  @Prop()
+  address?: string;
 
-  @Prop({ required: true })
-  timeFrom!: string;
+  @Prop()
+  timeFrom?: string;
 
-  @Prop({ required: true })
-  timeTo!: string;
+  @Prop()
+  timeTo?: string;
 
-  @Prop({ required: true })
-  centerNumber!: string;
+  @Prop()
+  centerNumber?: string;
 
   @Prop()
   directions?: string;
@@ -35,8 +35,8 @@ export class Centers extends Document {
   @Prop({ required: true })
   imageUrl!: string;
 
-  @Prop({ type: [ClinicSchema], required: true })
-  clinic!: Clinic[];
+  @Prop({ type: [ClinicSchema], default: [] })
+  clinic?: Clinic[];
 }
 
 export const CentersSchema = SchemaFactory.createForClass(Centers);
