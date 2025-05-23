@@ -56,6 +56,7 @@ export default function Navbar() {
             size={22}
             color="#333"
             style={styles.icon}
+            onPress={() => navigation.navigate('FavProductScreen')}
           />
           <Ionicons
             name="notifications-outline"

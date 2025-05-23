@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -5,6 +7,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
+import { toggleFavoriteStatus } from '../api/product-api';
 
 const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
   const [isAdded, setIsAdded] = useState(false);
@@ -35,10 +38,18 @@ const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
     onAddToCart(item, newQty);
   };
 
-  const toggleFavorite = () => {
+  const toggleFavorite = async () => {
     const newState = !isFavorite;
-    setIsFavorite(newState);
-    onToggleFavorite(item._id, newState);
+    setIsFavorite(newState); // Optimistic UI update
+
+    try {
+      await toggleFavoriteStatus(item._id, newState); // Sync with backend
+      onToggleFavorite?.(item._id, newState); // Optional callback
+    } catch (error) {
+      // Rollback UI change if API call fails
+      setIsFavorite(!newState);
+      console.error('Failed to toggle favorite:', error);
+    }
   };
 
   return (
