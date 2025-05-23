@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Blog } from './transformation.schema';
+import { deleteFromCloudinary } from 'src/utils/cloudinary';
 
 @Injectable()
 export class BlogsService {
@@ -25,6 +26,9 @@ export class BlogsService {
     if (!result) {
       throw new NotFoundException(`Blog with ID ${id} not found`);
     }
+
+    await deleteFromCloudinary(result.imageUrl);
+
     return { deleted: true };
   }
 }

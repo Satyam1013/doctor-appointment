@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   Controller,
@@ -6,6 +7,9 @@ import {
   UploadedFile,
   UseInterceptors,
   Body,
+  Delete,
+  NotFoundException,
+  Param,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CentersService } from './centers.service';
@@ -64,5 +68,14 @@ export class CentersController {
   @Get()
   async getCenters(): Promise<any> {
     return this.centersService.getCenters();
+  }
+
+  @Delete(':id')
+  async deleteCenter(@Param('id') id: string): Promise<any> {
+    const deleted = await this.centersService.deleteCenter(id);
+    if (!deleted) {
+      throw new NotFoundException('Center not found');
+    }
+    return { message: 'Center deleted successfully' };
   }
 }
