@@ -75,10 +75,17 @@ export class CentersService {
   }
 
   async editClinic(centerId: string, clinicId: string, updateData: any) {
+    console.log('Editing clinic with:', centerId, clinicId);
     const center = await this.centersModel.findById(centerId);
-    const clinic = center?.clinic?.find(
-      (c) => c?._id && c._id.toString() === clinicId,
+    console.log('Center found:', !!center);
+
+    const clinic = center?.clinic?.find((c) => c?._id?.toString() === clinicId);
+    console.log('Clinic found:', !!clinic);
+    console.log(
+      'Clinic IDs:',
+      center?.clinic?.map((c) => c._id?.toString()),
     );
+
     if (!clinic) throw new Error('Clinic not found');
 
     if (updateData.clinicImage && clinic.clinicImage) {
@@ -99,10 +106,11 @@ export class CentersService {
     );
   }
 
-  async deleteClinic(centerId: string, clinicId: string) {
-    return await this.centersModel.updateOne(
+  async deleteClinic(centerId: string, clinicId: string): Promise<boolean> {
+    const result = await this.centersModel.updateOne(
       { _id: centerId },
       { $pull: { clinic: { _id: clinicId } } },
     );
+    return result.modifiedCount > 0;
   }
 }
