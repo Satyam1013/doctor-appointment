@@ -18,6 +18,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import { uploadToCloudinary } from '../utils/cloudinary';
+import { AddCenterDto, AddClinicDto } from './centers.dto';
 
 @Controller('admin/centers')
 export class CentersController {
@@ -32,14 +33,14 @@ export class CentersController {
   )
   async addCenter(
     @UploadedFiles() files: { centerImage?: Express.Multer.File[] },
-    @Body('cityName') cityName: string,
-  ): Promise<any> {
-    if (!cityName) throw new Error('cityName is required');
+    @Body() addCenterDto: AddCenterDto,
+  ) {
+    if (!addCenterDto.cityName) throw new Error('cityName is required');
 
     const centerImageUrl = await this.uploadImage(files.centerImage?.[0]);
 
     return this.centersService.addCenter({
-      cityName,
+      cityName: addCenterDto.cityName,
       imageUrl: centerImageUrl,
     });
   }
@@ -54,16 +55,8 @@ export class CentersController {
   async addClinic(
     @Param('cityName') cityName: string,
     @UploadedFiles() files: { clinicImage?: Express.Multer.File[] },
-    @Body()
-    body: {
-      clinicName: string;
-      address: string;
-      timeFrom: string;
-      timeTo: string;
-      centerNumber: string;
-      directions?: string;
-    },
-  ): Promise<any> {
+    @Body() body: AddClinicDto,
+  ) {
     if (!cityName) throw new Error('City name param is required');
 
     const clinicImageUrl = await this.uploadImage(files.clinicImage?.[0]);

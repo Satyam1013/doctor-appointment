@@ -23,6 +23,8 @@ class Clinic {
 
   @Prop()
   directions?: string;
+
+  _id?: string;
 }
 
 export const ClinicSchema = SchemaFactory.createForClass(Clinic);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -74,15 +75,25 @@ export class CentersService {
   }
 
   async editClinic(centerId: string, clinicId: string, updateData: any) {
-    return await this.centersModel.updateOne(
+    const center = await this.centersModel.findById(centerId);
+    const clinic = center?.clinic?.find(
+      (c) => c?._id && c._id.toString() === clinicId,
+    );
+    if (!clinic) throw new Error('Clinic not found');
+
+    if (updateData.clinicImage && clinic.clinicImage) {
+      await deleteFromCloudinary(clinic.clinicImage);
+    }
+
+    return this.centersModel.updateOne(
       { _id: centerId, 'clinic._id': clinicId },
       {
-        $set: Object.entries(updateData).reduce<Record<string, any>>(
-          (acc, [key, value]) => {
+        $set: Object.entries(updateData).reduce(
+          (acc: Record<string, any>, [key, value]) => {
             acc[`clinic.$.${key}`] = value;
             return acc;
           },
-          {},
+          {} as Record<string, any>,
         ),
       },
     );
