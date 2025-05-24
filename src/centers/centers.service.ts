@@ -75,16 +75,9 @@ export class CentersService {
   }
 
   async editClinic(centerId: string, clinicId: string, updateData: any) {
-    console.log('Editing clinic with:', centerId, clinicId);
     const center = await this.centersModel.findById(centerId);
-    console.log('Center found:', !!center);
 
     const clinic = center?.clinic?.find((c) => c?._id?.toString() === clinicId);
-    console.log('Clinic found:', !!clinic);
-    console.log(
-      'Clinic IDs:',
-      center?.clinic?.map((c) => c._id?.toString()),
-    );
 
     if (!clinic) throw new Error('Clinic not found');
 
