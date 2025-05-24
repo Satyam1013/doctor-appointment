@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Centers } from './centers.schema';
@@ -70,5 +71,27 @@ export class CentersService {
 
     await this.centersModel.findByIdAndDelete(id).exec();
     return true;
+  }
+
+  async editClinic(centerId: string, clinicId: string, updateData: any) {
+    return await this.centersModel.updateOne(
+      { _id: centerId, 'clinic._id': clinicId },
+      {
+        $set: Object.entries(updateData).reduce<Record<string, any>>(
+          (acc, [key, value]) => {
+            acc[`clinic.$.${key}`] = value;
+            return acc;
+          },
+          {},
+        ),
+      },
+    );
+  }
+
+  async deleteClinic(centerId: string, clinicId: string) {
+    return await this.centersModel.updateOne(
+      { _id: centerId },
+      { $pull: { clinic: { _id: clinicId } } },
+    );
   }
 }

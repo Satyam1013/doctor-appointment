@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   Controller,
   Post,
@@ -13,6 +9,7 @@ import {
   Delete,
   NotFoundException,
   Param,
+  Patch,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { CentersService } from './centers.service';
@@ -34,13 +31,10 @@ export class CentersController {
     }),
   )
   async addCenter(
-    @UploadedFiles()
-    files: { centerImage?: Express.Multer.File[] },
+    @UploadedFiles() files: { centerImage?: Express.Multer.File[] },
     @Body('cityName') cityName: string,
   ): Promise<any> {
-    if (!cityName) {
-      throw new Error('cityName is required');
-    }
+    if (!cityName) throw new Error('cityName is required');
 
     const centerImageUrl = await this.uploadImage(files.centerImage?.[0]);
 
@@ -59,8 +53,7 @@ export class CentersController {
   )
   async addClinic(
     @Param('cityName') cityName: string,
-    @UploadedFiles()
-    files: { clinicImage?: Express.Multer.File[] },
+    @UploadedFiles() files: { clinicImage?: Express.Multer.File[] },
     @Body()
     body: {
       clinicName: string;
@@ -83,23 +76,64 @@ export class CentersController {
     return this.centersService.addClinicToCenter(cityName, clinicData);
   }
 
+  // 3. Edit a CLINIC by centerId and clinicId
+  @Patch(':centerId/clinics/:clinicId')
+  @UseInterceptors(
+    FileFieldsInterceptor([{ name: 'clinicImage', maxCount: 1 }], {
+      storage: memoryStorage(),
+    }),
+  )
+  async editClinic(
+    @Param('centerId') centerId: string,
+    @Param('clinicId') clinicId: string,
+    @UploadedFiles() files: { clinicImage?: Express.Multer.File[] },
+    @Body()
+    body: {
+      clinicName?: string;
+      address?: string;
+      timeFrom?: string;
+      timeTo?: string;
+      centerNumber?: string;
+      directions?: string;
+    },
+  ): Promise<any> {
+    const clinicImageUrl = await this.uploadImage(files.clinicImage?.[0]);
+
+    const updateData = {
+      ...body,
+      ...(clinicImageUrl && { clinicImage: clinicImageUrl }),
+    };
+
+    return this.centersService.editClinic(centerId, clinicId, updateData);
+  }
+
+  // 4. Delete a CLINIC by centerId and clinicId
+  @Delete(':centerId/clinics/:clinicId')
+  async deleteClinic(
+    @Param('centerId') centerId: string,
+    @Param('clinicId') clinicId: string,
+  ): Promise<any> {
+    const deleted = await this.centersService.deleteClinic(centerId, clinicId);
+    if (!deleted) throw new NotFoundException('Clinic not found');
+    return { message: 'Clinic deleted successfully' };
+  }
+
+  // 5. Get all centers
   @Get()
   async getCenters(): Promise<any> {
     return this.centersService.getCenters();
   }
 
+  // 6. Delete a center
   @Delete(':id')
   async deleteCenter(@Param('id') id: string): Promise<any> {
     const deleted = await this.centersService.deleteCenter(id);
-    if (!deleted) {
-      throw new NotFoundException('Center not found');
-    }
+    if (!deleted) throw new NotFoundException('Center not found');
     return { message: 'Center deleted successfully' };
   }
 
   private async uploadImage(file?: Express.Multer.File): Promise<string> {
     if (!file) return '';
-
     const tempPath = path.join(os.tmpdir(), `upload-${Date.now()}.jpg`);
     try {
       fs.writeFileSync(tempPath, file.buffer);
@@ -109,9 +143,7 @@ export class CentersController {
       console.error('Image upload failed:', error);
       throw error;
     } finally {
-      if (fs.existsSync(tempPath)) {
-        fs.unlinkSync(tempPath);
-      }
+      if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
     }
   }
 }

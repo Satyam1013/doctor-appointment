@@ -35,11 +35,10 @@ const products = [
 ];
 
 const programSteps = [
-  { title: 'Orientation & Patient Information', sessions: '1 Live session' },
-  { title: 'Gynaecologist Consultation', sessions: '4 Sessions' },
-  { title: 'Nutritionist Consultation', sessions: '3 Sessions' },
-  { title: 'Yoga & Meditation Consultation', sessions: '3 Sessions' },
-  { title: 'Well being counselling & Monitoring', sessions: '3 Sessions' },
+  { title: 'Full month Intraoral scan', sessions: '1 Live Session' },
+  { title: 'Orthodontist Consultation', sessions: '3 Session' },
+  { title: 'Aligner Plan Confirmation', sessions: '2 Session' },
+  { title: 'Counselling and monitoring', sessions: '3 Session' },
 ];
 
 const alignerFAQs = [
@@ -211,7 +210,9 @@ export default function ContactUsScreen() {
 
       {/* 4. Team of Experts*/}
       <View style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>Your Team Of Experts</Text>
+        <Text style={styles.sectionTitle}>
+          Your Team of IOS certified Orthodontist
+        </Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -234,7 +235,9 @@ export default function ContactUsScreen() {
           ))}
         </ScrollView>
 
-        <Text style={[styles.sectionTitle, { marginTop: 16 }]}>Schedule</Text>
+        <Text style={[styles.sectionTitle, { marginTop: 16 }]}>
+          Schedule Appointments
+        </Text>
         {[
           {
             name: 'Dr. Preeti Chhabra',
