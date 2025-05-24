@@ -3,7 +3,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Centers } from './centers.schema';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { deleteFromCloudinary } from 'src/utils/cloudinary';
 
 @Injectable()
@@ -85,18 +85,21 @@ export class CentersService {
       await deleteFromCloudinary(clinic.clinicImage);
     }
 
-    return this.centersModel.updateOne(
-      { _id: centerId, 'clinic._id': clinicId },
+    // ✅ Use ObjectId to ensure type match in query
+    const result = await this.centersModel.updateOne(
+      { _id: centerId, 'clinic._id': new mongoose.Types.ObjectId(clinicId) },
       {
         $set: Object.entries(updateData).reduce(
           (acc: Record<string, any>, [key, value]) => {
             acc[`clinic.$.${key}`] = value;
             return acc;
           },
-          {} as Record<string, any>,
+          {},
         ),
       },
     );
+    console.log('Update result:', result.modifiedCount);
+    return result;
   }
 
   async deleteClinic(centerId: string, clinicId: string): Promise<boolean> {
