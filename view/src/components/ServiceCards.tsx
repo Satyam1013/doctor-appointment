@@ -20,11 +20,11 @@ const services = [
   },
   {
     title: 'Buy Medicines',
-    image: 'https://i.ibb.co/TMcrzV5w/book3.png',
+    image: 'https://i.ibb.co/yBRPkhPz/book4.png',
   },
   {
     title: 'Beauty Products',
-    image: 'https://i.ibb.co/yBRPkhPz/book4.png',
+    image: 'https://i.ibb.co/TMcrzV5w/book3.png',
   },
 ];
 

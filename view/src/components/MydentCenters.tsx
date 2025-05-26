@@ -20,24 +20,24 @@ const treatmentItems = [
     route: 'teethgaps',
   },
   {
-    img: 'https://i.ibb.co/MkcZ04hZ/overbite.png',
-    route: 'overbite',
+    img: 'https://i.ibb.co/1yPk7J8/crookedteeth.png',
+    route: 'crookedteeth',
   },
   {
     img: 'https://i.ibb.co/1tzJZR1n/crossbite.png',
     route: 'crossbite',
   },
   {
-    img: 'https://i.ibb.co/fGPvzr8D/underbite.png',
-    route: 'underbite',
-  },
-  {
     img: 'https://i.ibb.co/fV6zw10L/openbite.png',
     route: 'openbite',
   },
   {
-    img: 'https://i.ibb.co/1yPk7J8/crookedteeth.png',
-    route: 'crookedteeth',
+    img: 'https://i.ibb.co/MkcZ04hZ/overbite.png',
+    route: 'overbite',
+  },
+  {
+    img: 'https://i.ibb.co/fGPvzr8D/underbite.png',
+    route: 'underbite',
   },
 ];
 

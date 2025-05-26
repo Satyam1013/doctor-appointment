@@ -10,6 +10,7 @@ import {
 import React, { useState } from 'react';
 import { treatmentData } from '../constants/teethTreatment';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 type TeethTreatmentRouteParams = {
   params: {
@@ -135,9 +136,15 @@ export default function TeethTreatmentScreen() {
             >
               <View style={styles.faqRow}>
                 <Text style={styles.faqQuestion}>{faq.question}</Text>
-                <Text style={styles.faqIcon}>
-                  {activeFAQIndex === idx ? '▲' : '▼'}
-                </Text>
+                <Ionicons
+                  name={
+                    activeFAQIndex === idx
+                      ? 'chevron-up-outline'
+                      : 'chevron-down-outline'
+                  }
+                  size={20}
+                  color="#888"
+                />
               </View>
             </TouchableOpacity>
 
@@ -231,10 +238,10 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   galleryImage: {
-    width: 120,
-    height: 120,
+    width: 250, // Increased width
+    height: 200, // Increased height
     marginRight: 10,
-    borderRadius: 10,
+    borderRadius: 15, // Optional: make corners rounder
   },
   faqRow: {
     flexDirection: 'row',

@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema()
+@Schema({ _id: true })
 class Clinic {
   @Prop()
   clinicName?: string;
@@ -23,9 +23,6 @@ class Clinic {
 
   @Prop()
   directions?: string;
-
-  @Prop()
-  _id?: string;
 }
 
 export const ClinicSchema = SchemaFactory.createForClass(Clinic);
