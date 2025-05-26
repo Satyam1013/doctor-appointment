@@ -6,7 +6,10 @@ import {
   ImageSourcePropType,
   Dimensions,
   View,
+  Pressable,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface CarouselProps {
   images: ImageSourcePropType[];
@@ -17,6 +20,7 @@ const { width: screenWidth } = Dimensions.get('window');
 export default function Carousel({ images }: CarouselProps) {
   const scrollRef = useRef<ScrollView>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigation = useNavigation<NativeStackNavigationProp<any>>(); // Or define your stack type
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,10 +30,14 @@ export default function Carousel({ images }: CarouselProps) {
         animated: true,
       });
       setCurrentIndex(nextIndex);
-    }, 2000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [currentIndex, images.length]);
+
+  const handlePress = () => {
+    navigation.navigate('ConsultationOption');
+  };
 
   return (
     <View style={styles.wrapper}>
@@ -42,7 +50,9 @@ export default function Carousel({ images }: CarouselProps) {
         scrollEnabled={true}
       >
         {images.map((img, idx) => (
-          <Image key={idx} source={img} style={styles.image} />
+          <Pressable key={idx} onPress={handlePress}>
+            <Image source={img} style={styles.image} />
+          </Pressable>
         ))}
       </ScrollView>
     </View>

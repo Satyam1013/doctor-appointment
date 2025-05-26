@@ -55,7 +55,12 @@ const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
   return (
     <View style={styles.card}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: item.images[0] }} style={styles.cardImage} />
+        <Image
+          source={{
+            uri: Array.isArray(item.images) ? item.images[0] : item.images,
+          }}
+          style={styles.cardImage}
+        />
         <TouchableOpacity style={styles.heartIcon} onPress={toggleFavorite}>
           <IconButton icon={isFavorite ? 'heart' : 'heart-outline'} size={28} />
         </TouchableOpacity>
@@ -66,7 +71,7 @@ const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
         )}
       </View>
 
-      <Text style={styles.cardName} numberOfLines={2}>
+      <Text style={styles.cardName} numberOfLines={1}>
         {item.title}
       </Text>
 
@@ -144,6 +149,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontWeight: '600',
     fontSize: 14,
+    margin: 'auto',
   },
   priceRow: {
     flexDirection: 'row',

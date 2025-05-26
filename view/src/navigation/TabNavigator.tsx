@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import Centers from '../screens/CentersScreen';
 import EComScreen from '../screens/ECommerceScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
@@ -8,6 +8,10 @@ import { withAppShell } from '../utils/AppShellWrapper';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import CurvedTabBarBackground from '../components/CurvedTabBarBackground';
 import MyDentAlignersScreen from '../screens/MydentAligners';
+import CartScreen from '../screens/CartScreen';
+import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
+import FavProductScreen from '../screens/FavProductScreen';
+import TransformationScreen from '../screens/TransformationScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,32 +34,53 @@ export default function BottomTabNavigator() {
       }}
     >
       <Tab.Screen
+        name="Home"
+        component={HomeStack}
+        options={{
+          tabBarButton: () => null,
+        }}
+      />
+      <Tab.Screen
         name="HomeTab"
         component={HomeStack}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={{
-                uri: 'https://i.ibb.co/VY7Q00tw/home.jpg',
-              }}
+            <View
               style={{
-                width: 28,
-                height: 28,
-                resizeMode: 'contain',
-                borderWidth: focused ? 2 : 1,
-                borderColor: focused ? '#0077b6' : '#ccc',
-                borderRadius: 8,
-                padding: 4,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 16,
               }}
-              resizeMode="contain"
-            />
+            >
+              <Image
+                source={{
+                  uri: 'https://i.ibb.co/VY7Q00tw/home.jpg',
+                }}
+                style={{
+                  width: 28,
+                  height: 28,
+                  resizeMode: 'contain',
+                  borderWidth: focused ? 2 : 0,
+                  borderColor: focused ? '#0077b6' : 'transparent',
+                  borderRadius: 8,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 8,
+                  color: focused ? '#0077b6' : '#444',
+                }}
+              >
+                Home
+              </Text>
+            </View>
           ),
         }}
       />
       <Tab.Screen
         name="CartScreen"
-        component={withAppShell(ProductDetailScreen)}
+        component={withAppShell(CartScreen)}
         options={{
           tabBarButton: () => null,
         }}
@@ -64,29 +89,41 @@ export default function BottomTabNavigator() {
         name="Mydent"
         component={withAppShell(MyDentAlignersScreen)}
         options={{
-          tabBarLabel: 'Mydent',
+          tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={{
-                uri: 'https: //i.ibb.co/6JtyT1Yz/mydent.jpg',
-              }}
+            <View
               style={{
-                width: 28,
-                height: 28,
-                resizeMode: 'contain',
-                borderWidth: focused ? 2 : 1,
-                borderColor: focused ? '#0077b6' : '#ccc',
-                borderRadius: 8,
-                padding: 4,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 16,
               }}
-              resizeMode="contain"
-            />
+            >
+              <Image
+                source={{ uri: 'https://i.ibb.co/6JtyT1Yz/mydent.jpg' }}
+                style={{
+                  width: 28,
+                  height: 28,
+                  resizeMode: 'contain',
+                  borderWidth: focused ? 2 : 0,
+                  borderColor: focused ? '#0077b6' : 'transparent',
+                  borderRadius: 8,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 8,
+                  color: focused ? '#0077b6' : '#444',
+                }}
+              >
+                Mydent
+              </Text>
+            </View>
           ),
         }}
       />
       <Tab.Screen
-        name="Haha"
-        component={withAppShell(ProductDetailScreen)}
+        name="TransformationBlogDetailsScreen"
+        component={withAppShell(TransformationBlogDetailsScreen)}
         options={{
           tabBarButton: () => null,
         }}
@@ -117,8 +154,8 @@ export default function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Lol"
-        component={withAppShell(ProductDetailScreen)}
+        name="FavProductScreen"
+        component={withAppShell(FavProductScreen)}
         options={{
           tabBarButton: () => null,
         }}
@@ -127,23 +164,37 @@ export default function BottomTabNavigator() {
         name="ProductsTab"
         component={withAppShell(EComScreen)}
         options={{
-          tabBarLabel: 'Shop',
+          tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={{
-                uri: 'https://i.ibb.co/qY480wNy/shop.jpg',
-              }}
+            <View
               style={{
-                width: 28,
-                height: 28,
-                resizeMode: 'contain',
-                borderWidth: focused ? 2 : 1,
-                borderColor: focused ? '#0077b6' : '#ccc',
-                borderRadius: 8,
-                padding: 4,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 16,
               }}
-              resizeMode="contain"
-            />
+            >
+              <Image
+                source={{
+                  uri: 'https://i.ibb.co/qY480wNy/shop.jpg',
+                }}
+                style={{
+                  width: 28,
+                  height: 28,
+                  resizeMode: 'contain',
+                  borderWidth: focused ? 2 : 0,
+                  borderColor: focused ? '#0077b6' : 'transparent',
+                  borderRadius: 8,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 8,
+                  color: focused ? '#0077b6' : '#444',
+                }}
+              >
+                Shop
+              </Text>
+            </View>
           ),
         }}
       />
@@ -158,24 +209,46 @@ export default function BottomTabNavigator() {
         name="ContactUsTab"
         component={ContactUsScreen}
         options={{
-          tabBarLabel: 'Contact',
+          tabBarLabel: '', // hide default label
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={{
-                uri: 'https://i.ibb.co/hxLk5CKg/contact.jpg',
-              }}
+            <View
               style={{
-                width: 28,
-                height: 28,
-                resizeMode: 'contain',
-                borderWidth: focused ? 2 : 1,
-                borderColor: focused ? '#0077b6' : '#ccc',
-                borderRadius: 8,
-                padding: 4,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 16,
               }}
-              resizeMode="contain"
-            />
+            >
+              <Image
+                source={{
+                  uri: 'https://i.ibb.co/hxLk5CKg/contact.jpg',
+                }}
+                style={{
+                  width: 28,
+                  height: 28,
+                  resizeMode: 'contain',
+                  borderWidth: focused ? 2 : 0,
+                  borderColor: focused ? '#0077b6' : 'transparent',
+                  borderRadius: 8,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 8,
+                  color: focused ? '#0077b6' : '#444',
+                }}
+              >
+                Contact
+              </Text>
+            </View>
           ),
+        }}
+      />
+
+      <Tab.Screen
+        name="TransformationScreen"
+        component={withAppShell(TransformationScreen)}
+        options={{
+          tabBarButton: () => null,
         }}
       />
     </Tab.Navigator>

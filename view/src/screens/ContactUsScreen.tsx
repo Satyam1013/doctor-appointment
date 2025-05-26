@@ -18,18 +18,20 @@ import { addToCart } from '../api/cart-api';
 import FeatureStats from '../components/FeatureStats';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
+import Transformation from '../components/Transformation';
+import ProductCard from '../components/ProductCard';
 
 const products = [
   {
     title: 'Whitening pen',
     _id: '682779a388e60dac093dbb8a',
-    icon: 'https://i.ibb.co/KjDBqrgG/1.png',
+    images: 'https://i.ibb.co/KjDBqrgG/1.png',
     price: 899,
   },
   {
     title: 'Whitening gel',
     _id: '682779a388e60dac093dbb89',
-    icon: 'https://i.ibb.co/pBXnQNXm/1.png',
+    images: 'https://i.ibb.co/pBXnQNXm/1.png',
     price: 899,
   },
 ];
@@ -84,6 +86,7 @@ export default function ContactUsScreen() {
   const [activeAlignerIndex, setActiveAlignerIndex] = useState<number | null>(
     null,
   );
+
   const navigation = useNavigation<NavigationProp<any>>();
   const { user } = useUser();
 
@@ -91,13 +94,13 @@ export default function ContactUsScreen() {
     setActiveAlignerIndex(activeAlignerIndex === index ? null : index);
   };
 
-  const handleAddToCart = async (product: any) => {
+  const handleAddToCart = async (product: any, quantity: number) => {
     try {
       if (!product || !product._id) {
         Alert.alert('Error', 'Product ID is missing');
         return;
       }
-      await addToCart(product._id, 1);
+      await addToCart(product._id, quantity);
       Alert.alert('Success', `${product.title} added to cart`);
     } catch (error) {
       console.error(error);
@@ -288,20 +291,20 @@ export default function ContactUsScreen() {
 
         <View style={styles.productRow}>
           {products.map((item) => (
-            <View key={item._id} style={styles.productCard}>
-              <Image source={{ uri: item.icon }} style={styles.productImage} />
-              <Text style={styles.productName}>{item.title}</Text>
-              <Text style={styles.productPrice}>₹{item.price}</Text>
-
-              <TouchableOpacity
-                style={styles.addToCartButton}
-                onPress={() => handleAddToCart(item)}
-              >
-                <Text style={styles.addToCartText}>Add to Cart</Text>
-              </TouchableOpacity>
-            </View>
+            <ProductCard
+              key={item._id}
+              item={item}
+              onAddToCart={(product: any, quantity: any) =>
+                handleAddToCart(product, quantity)
+              }
+              onToggleFavorite={(id: string, isFav: boolean) => {
+                console.log('Favorite toggled:', id, isFav);
+              }}
+            />
           ))}
         </View>
+
+        <Transformation navigation={navigation} />
 
         <View style={[styles.faq, { marginTop: 24 }]}>
           <Text style={styles.title}>Aligner FAQs</Text>

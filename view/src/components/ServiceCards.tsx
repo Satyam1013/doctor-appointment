@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React from 'react';
@@ -7,6 +9,7 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  Linking,
 } from 'react-native';
 
 const services = [
@@ -19,12 +22,14 @@ const services = [
     image: 'https://i.ibb.co/xqKvY2zV/book2.png',
   },
   {
-    title: 'Buy Medicines',
+    title: 'Buy Products',
     image: 'https://i.ibb.co/yBRPkhPz/book4.png',
   },
   {
-    title: 'Beauty Products',
-    image: 'https://i.ibb.co/TMcrzV5w/book3.png',
+    title: 'Mydent AI',
+    image:
+      'https://i.ibb.co/Ld8mNMmX/Whats-App-Image-2025-05-24-at-5-47-21-PM.jpg',
+    url: 'https://smile-view.invisalign.in/?campaign_name=SmileView-Consumer_IN_India-Consumer',
   },
 ];
 
@@ -32,14 +37,18 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const CARD_WIDTH = (SCREEN_WIDTH - 48) / 2;
 
 export default function ServiceCards({ navigation }: any) {
-  const handlePress = (title: string) => {
-    if (
-      title === 'Book Appointment' ||
-      title === 'Instant Video Consultation'
+  const handlePress = (item: any) => {
+    if (item.url) {
+      Linking.openURL(item.url).catch((err) =>
+        console.error('Failed to open URL:', err),
+      );
+    } else if (
+      item.title === 'Book Appointment' ||
+      item.title === 'Instant Video Consultation'
     ) {
       navigation.navigate('ConsultationOption');
     } else {
-      navigation.navigate('ProductsTab', { title });
+      navigation.navigate('ProductsTab', { title: item.title });
     }
   };
 
@@ -49,7 +58,7 @@ export default function ServiceCards({ navigation }: any) {
         <TouchableOpacity
           key={idx}
           style={styles.card}
-          onPress={() => handlePress(item.title)}
+          onPress={() => handlePress(item)}
         >
           <Image source={{ uri: item.image }} style={styles.image} />
         </TouchableOpacity>
@@ -68,7 +77,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: CARD_WIDTH * 0.8,
-    height: CARD_WIDTH,
+    height: CARD_WIDTH * 1.1,
     borderRadius: 16,
     overflow: 'hidden',
     backgroundColor: '#fff',

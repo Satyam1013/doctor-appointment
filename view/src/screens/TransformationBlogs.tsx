@@ -12,7 +12,7 @@ export default function TransformationBlogDetailsScreen({ route }: any) {
       <Image
         source={{ uri: blog.imageUrl }}
         style={styles.image}
-        resizeMode="cover"
+        resizeMode="contain"
       />
 
       <View style={styles.details}>
@@ -26,12 +26,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingBottom: 130,
-    paddingTop: 20,
-    paddingHorizontal: 16,
+    paddingHorizontal: 15,
   },
   image: { width: '100%', height: 550 },
-  details: { padding: 16 },
+  details: { paddingBottom: 170 },
   title: {
     fontSize: 22,
     fontWeight: '700',

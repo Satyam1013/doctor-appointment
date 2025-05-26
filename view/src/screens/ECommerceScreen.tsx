@@ -89,13 +89,13 @@ export default function EComScreen({ navigation }: any) {
       </View>
     );
   }
-  const handleAddToCart = async (product: any) => {
+  const handleAddToCart = async (product: any, quantity: number) => {
     try {
       if (!product || !product._id) {
         Alert.alert('Error', 'Product ID is missing');
         return;
       }
-      await addToCart(product._id, 1);
+      await addToCart(product._id, quantity);
       Alert.alert('Success', `${product.title} added to cart`);
     } catch (error) {
       console.error(error);
@@ -146,7 +146,9 @@ export default function EComScreen({ navigation }: any) {
             renderItem={({ item }) => (
               <ProductCard
                 item={item}
-                onAddToCart={() => handleAddToCart(item)}
+                onAddToCart={(product: any, quantity: any) =>
+                  handleAddToCart(product, quantity)
+                }
                 onToggleFavorite={(id: string, isFav: boolean) => {
                   // Handle favorite toggle if you want
                   console.log('Favorite toggled:', id, isFav);
@@ -200,6 +202,7 @@ const styles = StyleSheet.create({
 
   card: {
     width: 160,
+    height: 260,
     padding: 10,
     backgroundColor: '#fff',
     borderRadius: 12,

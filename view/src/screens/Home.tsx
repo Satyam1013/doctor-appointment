@@ -28,7 +28,7 @@ export default function HomeScreen({ navigation }: any) {
   useEffect(() => {
     const fetchCarousels = async () => {
       try {
-        const res = await getCarousels(); // Assumes { topCarousel: [...], bottomCarousel: [...] }
+        const res = await getCarousels();
         setTopCarousel(
           res.data.topCarousel.map((img: any) => ({ uri: img.imageUrl })),
         );

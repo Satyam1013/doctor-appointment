@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -18,9 +19,12 @@ import {
 import { getProductById } from '../api/product-api';
 import { addToCart } from '../api/cart-api';
 import { Product } from '../constants/product.type';
+import { Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
 
 export default function ProductDetailScreen({ route }: any) {
-  const { productId } = route.params;
+  const { productId } = route?.params;
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -114,6 +118,7 @@ export default function ProductDetailScreen({ route }: any) {
               key={idx}
               source={{ uri: imgSrc }}
               style={styles.productImage}
+              resizeMode="contain"
             />
           ))}
       </ScrollView>
@@ -176,7 +181,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingBottom: 100,
   },
-  productImage: { width: 400, height: 300, resizeMode: 'cover' },
+  productImage: {
+    width: screenWidth,
+    height: 400,
+  },
   detailsContainer: { padding: 16 },
   title: { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
   tags: { flexDirection: 'row', flexWrap: 'wrap', marginBottom: 8 },
@@ -233,6 +241,7 @@ const styles = StyleSheet.create({
     margin: 16,
     paddingVertical: 12,
     borderRadius: 8,
+    marginBottom: 130,
   },
   buttonText: { color: '#fff', textAlign: 'center', fontSize: 16 },
 });
