@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 @Schema({ _id: true })
 class Clinic {
@@ -23,6 +23,8 @@ class Clinic {
 
   @Prop()
   directions?: string;
+
+  readonly _id!: Types.ObjectId;
 }
 
 export const ClinicSchema = SchemaFactory.createForClass(Clinic);
