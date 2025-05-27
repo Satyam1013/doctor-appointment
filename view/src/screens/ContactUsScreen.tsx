@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-require-imports */
@@ -26,13 +25,15 @@ const products = [
     title: 'Whitening pen',
     _id: '682779a388e60dac093dbb8a',
     images: 'https://i.ibb.co/KjDBqrgG/1.png',
-    price: 899,
+    price: 599,
+    originalPrice: 899,
   },
   {
     title: 'Whitening gel',
     _id: '682779a388e60dac093dbb89',
     images: 'https://i.ibb.co/pBXnQNXm/1.png',
     price: 899,
+    originalPrice: 1299,
   },
 ];
 
@@ -280,7 +281,9 @@ export default function ContactUsScreen() {
         ))}
       </View>
 
-      {/* 5. Product Section & FAQs */}
+      {/* 5. Video Section */}
+
+      {/* 6. Product Section & FAQs */}
       <View style={styles.sectionCard}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Buy Products</Text>
@@ -375,21 +378,13 @@ export default function ContactUsScreen() {
         {/* About Company */}
         <Text style={styles.footerHeading}>About Company</Text>
         <Text style={styles.linkText}>
-          Registered Address:
-          {'\n'}3/196 Viram Khand, Gomti Nagar, Lucknow-226010, Uttar Pradesh,
-          India
-        </Text>
-        <Text style={styles.linkText}>
           Corporate Office Address:
-          {'\n'}PRK Business Park, D-20, Sector 63, Noida 201301
+          {'\n'}VM Steel Project S.O, Pragati Maidan, Pivot Building, AMTZ
+          Campus, Visakhapatnam, Andhra Pradesh 530031
         </Text>
-        <Text style={styles.linkText}>GSTIN: 09ABGCS0900B1ZV</Text>
 
         {/* Footer Note */}
-        <Text style={styles.footerNote}>
-          © 2021, Sushain Wellness and Wholeness Pvt. Ltd.
-          {'\n'}Today's Patient: 1803206 served.
-        </Text>
+        <Text style={styles.footerNote}>@2025, Mydent</Text>
       </View>
     </ScrollView>
   );

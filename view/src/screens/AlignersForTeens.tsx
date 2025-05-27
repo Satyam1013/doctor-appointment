@@ -192,7 +192,7 @@ export default function AlignersForTeensScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    flex: 1,
     backgroundColor: '#ffffff',
   },
   heading: {
@@ -261,6 +261,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   scrollContent: {
+    padding: 16,
     paddingBottom: 100,
   },
   faq: {

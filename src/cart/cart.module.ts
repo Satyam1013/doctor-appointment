@@ -1,4 +1,3 @@
-// src/cart/cart.module.ts
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CartService } from './cart.service';

@@ -4,7 +4,7 @@ import { Document, Types } from 'mongoose';
 import { Product } from '../product/product.schema';
 
 @Schema({ timestamps: true })
-export class CartItem extends Document {
+export class FavItem extends Document {
   @Prop({ type: Types.ObjectId, ref: 'Product', required: true })
   product!: Types.ObjectId | Product;
 
@@ -15,4 +15,4 @@ export class CartItem extends Document {
   userId!: string;
 }
 
-export const CartItemSchema = SchemaFactory.createForClass(CartItem);
+export const FavItemSchema = SchemaFactory.createForClass(FavItem);

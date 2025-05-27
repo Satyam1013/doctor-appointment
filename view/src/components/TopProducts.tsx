@@ -5,12 +5,12 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const doctors = [
-  { img: 'https://i.ibb.co/LzcYw7rR/doctor.png' },
-  { img: 'https://i.ibb.co/JWKKQk7M/doctor2.png' },
-  { img: 'https://i.ibb.co/fVtnwVYy/doctor3.png' },
-  { img: 'https://i.ibb.co/nqRzR2Qq/doctor4.png' },
-  { img: 'https://i.ibb.co/LdTLjzdt/doctor5.png' },
-  { img: 'https://i.ibb.co/dw5WMwj3/doctor6.png' },
+  { img: 'https://i.ibb.co/LdTLjzdt/doctor5.png' }, // index 0
+  { img: 'https://i.ibb.co/JWKKQk7M/doctor2.png' }, // index 1
+  { img: 'https://i.ibb.co/fVtnwVYy/doctor3.png' }, // index 2
+  { img: 'https://i.ibb.co/dw5WMwj3/doctor6.png' }, // index 3
+  { img: 'https://i.ibb.co/nqRzR2Qq/doctor4.png' }, // index 4
+  { img: 'https://i.ibb.co/LzcYw7rR/doctor.png' }, // index 5
 ];
 
 export default function TopProducts({ navigation }: any) {
@@ -22,11 +22,11 @@ export default function TopProducts({ navigation }: any) {
             key={idx}
             style={styles.card}
             onPress={() => {
-              if (idx === 0 || idx === 3) {
+              if (idx === 4 || idx === 5) {
                 navigation.navigate('ProductsTab');
               } else if (idx === 1) {
                 navigation.navigate('AlignersForTeensScreen');
-              } else if (idx === 4) {
+              } else if (idx === 0) {
                 navigation.navigate('Mydent');
               } else {
                 navigation.navigate('DoctorDetailsScreen', { doctor: doc });
