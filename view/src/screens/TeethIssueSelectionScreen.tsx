@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
+  TextInput,
 } from 'react-native';
 
 const TEETH_ISSUES = [
@@ -42,10 +43,15 @@ const TEETH_ISSUES = [
     label: 'Other 3',
     image: 'https://i.ibb.co/1yPk7J8/crookedteeth.png',
   },
+  {
+    id: 'other_custom',
+    label: 'Other',
+  },
 ];
 
 export default function TeethIssueSelectionScreen({ navigation }: any) {
   const [selectedIssue, setSelectedIssue] = useState<string | null>(null);
+  const [customIssue, setCustomIssue] = useState('');
 
   const handleNext = () => {
     navigation.navigate('ProblemDetail');
@@ -70,9 +76,30 @@ export default function TeethIssueSelectionScreen({ navigation }: any) {
               selectedIssue === item.id && styles.cardSelected,
             ]}
             onPress={() => setSelectedIssue(item.id)}
+            activeOpacity={0.8}
           >
-            <Image source={{ uri: item.image }} style={styles.image} />
-            <Text style={styles.knowMore}>know more</Text>
+            {item.image ? (
+              <>
+                <Image source={{ uri: item.image }} style={styles.image} />
+                <Text style={styles.cardText}>{item.label}</Text>
+                <Text style={styles.knowMore}>know more</Text>
+              </>
+            ) : (
+              <>
+                <Text style={styles.cardText}>{item.label}</Text>
+                {selectedIssue === 'other_custom' && (
+                  <View style={styles.commentBoxContainer}>
+                    <TextInput
+                      style={styles.commentBox}
+                      placeholder="Describe your issue"
+                      value={customIssue}
+                      onChangeText={setCustomIssue}
+                      multiline
+                    />
+                  </View>
+                )}
+              </>
+            )}
           </TouchableOpacity>
         )}
       />
@@ -124,6 +151,18 @@ const styles = StyleSheet.create({
     margin: 4,
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  commentBoxContainer: {
+    marginTop: 8,
+    width: '100%',
+  },
+  commentBox: {
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 6,
+    padding: 8,
+    minHeight: 60,
+    textAlignVertical: 'top',
   },
   cardSelected: {
     borderColor: '#D43F3F',

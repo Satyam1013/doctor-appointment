@@ -123,14 +123,14 @@ export default function ContactUsScreen() {
             <Text style={styles.helloText}>Hello, {user?.firstName}</Text>
           </View>
           <Text style={styles.subText}>
-            Start your journey of Parenthood with us
+            Start your journey of Aligners with us
           </Text>
 
           <TouchableOpacity style={styles.coordinatorButton}>
             <Text style={styles.buttonText}>
               Reach out to your program co-ordinator
             </Text>
-            <Text style={styles.timeText}>🕒 10am - 6pm</Text>
+            <Text style={styles.timeText}>🕒 8Am - 11Pm</Text>
           </TouchableOpacity>
         </View>
 
@@ -183,7 +183,7 @@ export default function ContactUsScreen() {
           <View style={{ flex: 1, marginLeft: 10 }}>
             <Text style={styles.doctorName}>Dr. Preeti Chhabra</Text>
             <Text style={styles.doctorSpeciality}>
-              Gynae and Fertility, General Medicine & Others
+              Orthodontist (Aligner Specialist)
             </Text>
             <Text style={styles.ratingStars}>★★★★★</Text>
             <View style={styles.timeRow}>

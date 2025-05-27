@@ -23,6 +23,11 @@ import FeatureStats from '../components/FeatureStats';
 import { getCarousels } from '../api/carousel-api';
 import { getAllProducts } from '../api/product-api';
 import ProductCard from '../components/ProductCard';
+import {
+  addToFavorite,
+  getFavorites,
+  removeFavoriteItem,
+} from '../api/fav-api';
 
 const ad1 = 'https://i.ibb.co/x88xsysH/banner.png';
 const ad2 = 'https://i.ibb.co/JWgXbwRD/ad.png';
@@ -32,6 +37,7 @@ export default function EComScreen({ navigation }: any) {
   const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<any[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   const bestSellers = categories.filter((p) => p.bestSeller);
   const combos = categories.filter((p) => p.combos);
@@ -78,8 +84,18 @@ export default function EComScreen({ navigation }: any) {
       }
     };
 
+    const fetchFavorites = async () => {
+      try {
+        const favRes = await getFavorites();
+        setFavorites(favRes.data.map((item: any) => item.productId));
+      } catch (error) {
+        console.error('Failed to fetch favorites:', error);
+      }
+    };
+
     fetchCarousels();
     fetchProducts();
+    fetchFavorites();
   }, []);
 
   if (loading) {
@@ -89,6 +105,22 @@ export default function EComScreen({ navigation }: any) {
       </View>
     );
   }
+
+  const handleToggleFavorite = async (productId: string) => {
+    try {
+      if (favorites.includes(productId)) {
+        await removeFavoriteItem(productId);
+        setFavorites((prev) => prev.filter((id) => id !== productId));
+      } else {
+        await addToFavorite(productId);
+        setFavorites((prev) => [...prev, productId]);
+      }
+    } catch (error) {
+      console.error('Favorite toggle failed:', error);
+      Alert.alert('Error', 'Failed to update favorites');
+    }
+  };
+
   const handleAddToCart = async (product: any, quantity: number) => {
     try {
       if (!product || !product._id) {
@@ -146,13 +178,11 @@ export default function EComScreen({ navigation }: any) {
             renderItem={({ item }) => (
               <ProductCard
                 item={item}
-                onAddToCart={(product: any, quantity: any) =>
+                isFavorite={favorites.includes(item._id)}
+                onAddToCart={(product: any, quantity: number) =>
                   handleAddToCart(product, quantity)
                 }
-                onToggleFavorite={(id: string, isFav: boolean) => {
-                  // Handle favorite toggle if you want
-                  console.log('Favorite toggled:', id, isFav);
-                }}
+                onToggleFavorite={() => handleToggleFavorite(item._id)}
               />
             )}
             contentContainerStyle={styles.horizontalList}

@@ -16,14 +16,38 @@ export class CartService {
     const product = await this.productModel.findById(productId);
     if (!product) throw new NotFoundException('Product not found');
 
+    // If quantity is not set or is 0
+    if (product.quantity === undefined || product.quantity <= 0) {
+      throw new Error('Product is out of stock');
+    }
+
+    // If requested quantity > available stock
+    if (quantity > product.quantity) {
+      throw new Error(`Only ${product.quantity} item(s) in stock`);
+    }
+
     const existing = await this.cartModel.findOne({
       userId,
       product: product._id,
     });
 
     if (existing) {
-      existing.quantity += quantity;
-      return existing.save();
+      const newCartQuantity = existing.quantity + quantity;
+
+      if (newCartQuantity > product.quantity) {
+        throw new Error(
+          `Cannot add ${quantity} item(s). Only ${product.quantity - existing.quantity} more item(s) available`,
+        );
+      }
+
+      existing.quantity = newCartQuantity;
+      await existing.save();
+
+      // Decrease product stock accordingly
+      product.quantity -= quantity;
+      await product.save();
+
+      return existing;
     }
 
     const newItem = new this.cartModel({
@@ -31,6 +55,9 @@ export class CartService {
       product: product._id,
       quantity,
     });
+
+    product.quantity -= quantity;
+    await product.save();
 
     return newItem.save();
   }
@@ -40,7 +67,16 @@ export class CartService {
   }
 
   async removeFromCart(id: string) {
-    return this.cartModel.findByIdAndDelete(id);
+    const item = await this.cartModel.findById(id);
+    if (!item) throw new NotFoundException('Cart item not found');
+
+    const product = await this.productModel.findById(item.product);
+    if (product) {
+      product.quantity = (product.quantity ?? 0) + item.quantity;
+      await product.save();
+    }
+
+    return item.deleteOne();
   }
 
   async updateQuantity(id: string, quantity: number) {
