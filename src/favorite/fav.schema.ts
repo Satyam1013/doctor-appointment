@@ -9,9 +9,6 @@ export class FavItem extends Document {
   product!: Types.ObjectId | Product;
 
   @Prop({ required: true })
-  quantity!: number;
-
-  @Prop({ required: true })
   userId!: string;
 }
 

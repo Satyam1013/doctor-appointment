@@ -11,39 +11,35 @@ export class FavService {
     @InjectModel('Product') private readonly productModel: Model<Product>,
   ) {}
 
-  async addToFavorite(userId: string, productId: string, quantity: number) {
+  async addToFavorite(userId: string, productId: string) {
     const product = await this.productModel.findById(productId);
     if (!product) throw new NotFoundException('Product not found');
 
-    const existing = await this.favModel.findOne({
+    const favItem = await this.favModel.findOne({
       userId,
       product: product._id,
     });
 
-    if (existing) {
-      existing.quantity += quantity;
-      return existing.save();
+    if (favItem) {
+      return favItem;
     }
 
-    const newItem = new this.favModel({
+    const newFav = new this.favModel({
       userId,
       product: product._id,
-      quantity,
     });
 
-    return newItem.save();
+    return newFav.save();
   }
 
   async getFavorite(userId: string) {
     return this.favModel.find({ userId }).populate('product').exec();
   }
 
-  async removeFromFavorite(id: string) {
-    return this.favModel.findByIdAndDelete(id);
-  }
-
-  async updateQuantity(id: string, quantity: number) {
-    return this.favModel.findByIdAndUpdate(id, { quantity }, { new: true });
+  async removeFromFavorite(id: string, userId: string) {
+    const item = await this.favModel.findOne({ _id: id, userId });
+    if (!item) throw new NotFoundException('Favorite item not found');
+    return item.deleteOne();
   }
 
   async clearFavorite(userId: string) {

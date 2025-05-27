@@ -5,13 +5,13 @@ import {
   Get,
   Param,
   Delete,
-  Patch,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { FavService } from './fav.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Request as ExpressRequest } from 'express';
+import { AddFavoriteDto } from './fav.dto';
 
 export interface AuthenticatedRequest extends ExpressRequest {
   user: {
@@ -25,12 +25,8 @@ export class FavController {
   constructor(private readonly favService: FavService) {}
 
   @Post('add')
-  add(
-    @Req() req: AuthenticatedRequest,
-    @Body() body: { productId: string; quantity: number },
-  ) {
-    const userId = req.user._id;
-    return this.favService.addToFavorite(userId, body.productId, body.quantity);
+  add(@Req() req: AuthenticatedRequest, @Body() body: AddFavoriteDto) {
+    return this.favService.addToFavorite(req.user._id, body.productId);
   }
 
   @Get()
@@ -39,14 +35,10 @@ export class FavController {
     return this.favService.getFavorite(userId);
   }
 
-  @Patch('update/:id')
-  update(@Param('id') id: string, @Body() body: { quantity: number }) {
-    return this.favService.updateQuantity(id, body.quantity);
-  }
-
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.favService.removeFromFavorite(id);
+  remove(@Param('id') id: string, @Req() req: AuthenticatedRequest) {
+    const userId = req.user._id;
+    return this.favService.removeFromFavorite(id, userId);
   }
 
   @Delete('clear')
