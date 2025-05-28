@@ -4,7 +4,7 @@
     "slug": "mydent",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.jpeg",
+    "icon": "https://i.ibb.co/ZRHLLpxQ/logo.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

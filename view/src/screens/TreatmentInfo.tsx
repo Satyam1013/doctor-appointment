@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
@@ -7,7 +5,7 @@ export default function TreatmentInfoScreen() {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/images/logo.jpeg')}
+        source={{ uri: 'https://i.ibb.co/ZRHLLpxQ/logo.jpg' }}
         style={styles.image}
       />
       <Text style={styles.title}>Why is treatment important?</Text>

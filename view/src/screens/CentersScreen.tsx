@@ -5,7 +5,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -20,7 +19,7 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Carousel from '../components/Carousel';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useFocusEffect, useRoute } from '@react-navigation/native';
 import FeatureStats from '../components/FeatureStats';
 import { getCenters } from '../api/centers-api';
 import { getCarousels } from '../api/carousel-api';
@@ -38,13 +37,13 @@ const services = [
     title: 'Laser toning for pigmentation',
     description:
       'Reduce skin pigmentation with 4 sessions package at just ₹15000/-',
-    image: require('../../assets/images/features.png'),
+    image: 'https://i.ibb.co/zHHBvZ9Y/logoblue.jpg',
   },
   {
     id: 2,
     title: 'Hydrafacial',
     description: 'Get intense skin hydration and glow at ₹8000/-',
-    image: require('../../assets/images/features2.png'),
+    image: 'https://i.ibb.co/zHHBvZ9Y/logoblue.jpg',
   },
 ];
 
@@ -68,11 +67,14 @@ export default function Centers() {
       });
   }, []);
 
-  useEffect(() => {
-    if (route.params && route.params.selectedCity) {
-      setSelectedCity(route.params.selectedCity);
-    }
-  }, [route.params]);
+  useFocusEffect(
+    React.useCallback(() => {
+      const selected = route.params?.selectedCity;
+      if (selected) {
+        setSelectedCity(selected);
+      }
+    }, [route.params?.selectedCity]),
+  );
 
   useEffect(() => {
     const fetchCarousels = async () => {
@@ -220,7 +222,10 @@ export default function Centers() {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {services.map((service) => (
             <View key={service.id} style={styles.serviceCard}>
-              <Image source={service.image} style={styles.serviceImage} />
+              <Image
+                source={{ uri: service.image }}
+                style={styles.serviceImage}
+              />
               <View style={styles.serviceInfo}>
                 <Text style={styles.serviceTitle}>{service.title}</Text>
                 <Text style={styles.serviceDescription}>

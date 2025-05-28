@@ -35,7 +35,7 @@ export default function Blogs({ navigation }: any) {
             style={styles.card}
             onPress={() => handlePress(blog)}
           >
-            <Image source={blog.images[0]} style={styles.image} />
+            <Image source={{ uri: blog.images[0] }} style={styles.image} />
             <Text style={styles.title} numberOfLines={3}>
               {blog.title}
             </Text>

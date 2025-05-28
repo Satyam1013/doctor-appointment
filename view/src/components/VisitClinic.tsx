@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
-
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
@@ -14,7 +11,7 @@ export default function ClinicVisitCard({ onPress }: Props) {
       <TouchableOpacity style={styles.card} onPress={onPress}>
         <View style={styles.row}>
           <Image
-            source={require('../../assets/images/hospital.png')}
+            source={{ uri: 'https://i.ibb.co/d4yHd6Zt/hospital.png' }}
             style={styles.icon}
           />
           <Text style={styles.text}>Want to Visit Clinic?</Text>

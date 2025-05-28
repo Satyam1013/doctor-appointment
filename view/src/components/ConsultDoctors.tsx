@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import {
@@ -13,12 +12,12 @@ import {
 const doctors = [
   {
     id: '1',
-    image: require('../../assets/images/doc.png'),
+    image: 'https://i.ibb.co/3mXWYQK2/doc.png',
     name: 'Dr. Smita Shah',
   },
   {
     id: '2',
-    image: require('../../assets/images/doc.png'),
+    image: 'https://i.ibb.co/3mXWYQK2/doc.png',
     name: 'Dr. Ramesh Kumar',
   },
 ];
@@ -30,7 +29,11 @@ export default function DoctorCard() {
     item: { id: string; image: any; name: string };
   }) => (
     <TouchableOpacity style={styles.card}>
-      <Image source={item.image} style={styles.image} resizeMode="cover" />
+      <Image
+        source={{ uri: item.image }}
+        style={styles.image}
+        resizeMode="cover"
+      />
       <Text style={styles.name} numberOfLines={2}>
         {item.name}
       </Text>

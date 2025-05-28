@@ -48,7 +48,7 @@ export default function AlignersForTeensScreen() {
         </Text>
 
         <Image
-          source={require('../../assets/images/teen-girl.jpg')}
+          source={{ uri: 'https://i.ibb.co/R4gGMK35/teen-girl.jpg' }}
           style={styles.image}
         />
 
@@ -64,7 +64,7 @@ export default function AlignersForTeensScreen() {
         </Text>
 
         <Image
-          source={require('../../assets/images/aligner-model.png')}
+          source={{ uri: 'https://i.ibb.co/ZpsXMzyB/aligner-model.png' }}
           style={styles.image}
         />
 

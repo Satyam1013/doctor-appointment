@@ -117,7 +117,7 @@ export default function ContactUsScreen() {
         <View style={styles.leftSection}>
           <View style={styles.profileRow}>
             <Image
-              source={require('../../assets/images/consultant.jpg')}
+              source={{ uri: 'https://i.ibb.co/35mrrKZh/consultant.jpg' }}
               style={styles.profileImage}
             />
             <Text style={styles.helloText}>Hello, {user?.firstName}</Text>
@@ -177,7 +177,7 @@ export default function ContactUsScreen() {
         </Text>
         <View style={styles.doctorInfo}>
           <Image
-            source={require('../../assets/images/consultant.jpg')}
+            source={{ uri: 'https://i.ibb.co/35mrrKZh/consultant.jpg' }}
             style={styles.expertImage}
           />
           <View style={{ flex: 1, marginLeft: 10 }}>
@@ -231,7 +231,7 @@ export default function ContactUsScreen() {
           ].map((name, idx) => (
             <View key={idx} style={styles.expertBox}>
               <Image
-                source={require('../../assets/images/consultant.jpg')}
+                source={{ uri: 'https://i.ibb.co/35mrrKZh/consultant.jpg' }}
                 style={styles.expertImage}
               />
               <Text style={styles.expertName}>{name}</Text>
@@ -708,8 +708,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   todayAppointmentCard: {
-    backgroundColor: '#fff',
-    padding: 16,
+    backgroundColor: '#f2f2f2',
+    marginHorizontal: 16,
     borderRadius: 12,
     marginBottom: 16,
     shadowColor: '#000',

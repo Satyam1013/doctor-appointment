@@ -77,7 +77,7 @@ export default function SignupScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/images/logo.jpeg')}
+        source={{ uri: 'https://i.ibb.co/ZRHLLpxQ/logo.jpg' }}
         style={styles.logo}
       />
 

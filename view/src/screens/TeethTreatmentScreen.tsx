@@ -54,7 +54,7 @@ export default function TeethTreatmentScreen() {
       {/* Intro Illustration Image */}
       {data.images[0] && (
         <Image
-          source={data.images[0]}
+          source={{ uri: data.images[0] }}
           style={styles.illustration}
           resizeMode="contain"
         />
@@ -63,7 +63,7 @@ export default function TeethTreatmentScreen() {
       {/* Symptoms Image */}
       {data.images[1] && (
         <Image
-          source={data.images[1]}
+          source={{ uri: data.images[1] }}
           style={styles.fullWidthImage}
           resizeMode="cover"
         />
@@ -81,7 +81,7 @@ export default function TeethTreatmentScreen() {
       {/* Aligners Image */}
       {data.images[2] && (
         <Image
-          source={data.images[2]}
+          source={{ uri: data.images[2] }}
           style={styles.fullWidthImage}
           resizeMode="cover"
         />
@@ -99,7 +99,7 @@ export default function TeethTreatmentScreen() {
       {/* Aligner Demo Image */}
       {data.images[3] && (
         <Image
-          source={data.images[3]}
+          source={{ uri: data.images[3] }}
           style={styles.fullWidthImage}
           resizeMode="cover"
         />

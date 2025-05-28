@@ -61,7 +61,7 @@ export default function Carousel({ images }: CarouselProps) {
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: 180,
+    height: 200,
     marginBottom: 16,
     zIndex: 1,
   },
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: screenWidth,
-    height: 180,
+    height: 200,
     resizeMode: 'cover',
   },
 });

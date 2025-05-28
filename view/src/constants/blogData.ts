@@ -1,5 +1,4 @@
 /* eslint-disable no-irregular-whitespace */
-/* eslint-disable @typescript-eslint/no-require-imports */
 export const blogData = [
   {
     id: 1,
@@ -8,10 +7,11 @@ export const blogData = [
     author: 'Dr. Aastha Chaudhary',
     category: 'Orthodontics',
     images: [
-      require('../../assets/images/blogs/blog1/blog1.png'),
-      require('../../assets/images/blogs/blog1/blog2.png'),
-      require('../../assets/images/blogs/blog1/blog3.png'),
-      require('../../assets/images/blogs/blog1/blog4.png'),
+      'https://i.ibb.co/KxC2w6tW/blog1.png',
+      'https://i.ibb.co/Q7PwgQc3/blog2.png',
+      'https://i.ibb.co/jZj408fy/blog3.png',
+      'https://i.ibb.co/5W4mZYX4/blog4.png',
+      'https://i.ibb.co/XxDBX3YQ/blog5.png',
     ],
     description:
       'Straight teeth are more than just a cosmetic goal—they are a vital component of good oral health. Misaligned teeth can make brushing and flossing difficult, leading to plaque buildup, cavities, and gum disease. Furthermore, improper alignment can result in uneven wear on your teeth and strain on your jaw muscles, potentially causing discomfort and chronic pain. Straightening your teeth not only enhances your smile but also promotes long-term oral health and functionality.',
@@ -42,10 +42,11 @@ export const blogData = [
     author: 'Dr. Shaik Farhatulla, MDS (Orthodontist)',
     category: 'Cosmetic Dentistry',
     images: [
-      require('../../assets/images/blogs/blog2/blog1.png'),
-      require('../../assets/images/blogs/blog2/blog2.png'),
-      require('../../assets/images/blogs/blog2/blog3.png'),
-      require('../../assets/images/blogs/blog2/blog4.png'),
+      'https://i.ibb.co/zTDxntVM/blog1.png',
+      'https://i.ibb.co/PnF4hTK/blog2.png',
+      'https://i.ibb.co/s96nZ6sJ/blog3.png',
+      'https://i.ibb.co/RTgTgpmD/blog4.png',
+      'https://i.ibb.co/HkwKrYz/blog5.png',
     ],
     description:
       'Everyone dreams of a radiant, confident smile—one that is not only straight but also bright and beautiful. Can you whiten your teeth while using clear aligners? Yes, and here’s how!',
@@ -103,10 +104,10 @@ export const blogData = [
     author: 'Dr. Shaik Farhatulla, MDS (Orthodontist)',
     category: 'Lifestyle Tips',
     images: [
-      require('../../assets/images/blogs/blog3/blog1.png'),
-      require('../../assets/images/blogs/blog3/blog2.png'),
-      require('../../assets/images/blogs/blog3/blog3.png'),
-      require('../../assets/images/blogs/blog3/blog4.png'),
+      'https://i.ibb.co/whC06gBf/blog1.png',
+      'https://i.ibb.co/V0bLXDhF/blog2.png',
+      'https://i.ibb.co/knBBPJ2/blog3.png',
+      'https://i.ibb.co/sMBPgtr/blog4.png',
     ],
     description:
       'Clear aligners are nearly invisible and perfect for busy students or professionals. Here’s how to wear mydent Aligners comfortably and confidently all day long.',
@@ -156,10 +157,10 @@ export const blogData = [
     author: 'Dr. Farhatulla',
     category: 'Hygiene',
     images: [
-      require('../../assets/images/blogs/blog4/blog1.png'),
-      require('../../assets/images/blogs/blog4/blog2.png'),
-      require('../../assets/images/blogs/blog4/blog3.png'),
-      require('../../assets/images/blogs/blog4/blog4.png'),
+      'https://i.ibb.co/jZ30WsNS/blog1.png',
+      'https://i.ibb.co/jkPJsZ2H/blog2.png',
+      'https://i.ibb.co/r2RQz3rZ/blog3.png',
+      'https://i.ibb.co/mFYSrYhs/blog4.png',
     ],
     description:
       'Learn essential care tips for removing, storing, and cleaning your aligners—plus FAQs and best practices for oral health during treatment.',
@@ -238,10 +239,11 @@ export const blogData = [
     author: 'Dr. Md Farheen',
     category: 'Orthodontics',
     images: [
-      require('../../assets/images/blogs/blog5/blog1.png'),
-      require('../../assets/images/blogs/blog5/blog2.png'),
-      require('../../assets/images/blogs/blog5/blog3.png'),
-      require('../../assets/images/blogs/blog5/blog4.png'),
+      'https://i.ibb.co/dsyKhL1S/blog1.png',
+      'https://i.ibb.co/wNTwGHyk/blog2.png',
+      'https://i.ibb.co/LDyjZgVV/blog3.png',
+      'https://i.ibb.co/wFtPF02y/blog4.png',
+      'https://i.ibb.co/jv3h5ngQ/blog5.png',
     ],
     description:
       'Discover why your teeth may shift as you age, the risks involved, and what you can do to protect your smile with Mydent’s expert solutions.',
@@ -324,10 +326,10 @@ export const blogData = [
     author: 'Dr. Shaik Farhatulla',
     category: 'Aligners',
     images: [
-      require('../../assets/images/blogs/blog6/blog1.png'),
-      require('../../assets/images/blogs/blog6/blog2.png'),
-      require('../../assets/images/blogs/blog6/blog3.png'),
-      require('../../assets/images/blogs/blog6/blog4.png'),
+      'https://i.ibb.co/BKH4H60g/blog1.png',
+      'https://i.ibb.co/kr6h4YF/blog2.png',
+      'https://i.ibb.co/VcGgVwKR/blog3.png',
+      'https://i.ibb.co/sJJ7c4C7/blog4.png',
     ],
     description:
       'Learn how mydent Aligners can treat even the most severely crooked teeth using custom clear trays and hybrid techniques for effective smile correction.',
@@ -387,9 +389,10 @@ export const blogData = [
     author: 'Dr. Md Farheen',
     category: 'Gum Health',
     images: [
-      require('../../assets/images/blogs/blog7/blog1.png'),
-      require('../../assets/images/blogs/blog7/blog2.png'),
-      require('../../assets/images/blogs/blog7/blog3.png'),
+      'https://i.ibb.co/QvZY3C0k/blog1.png',
+      'https://i.ibb.co/YF4NmG1D/blog2.png',
+      'https://i.ibb.co/VWGVvHcx/blog3.png',
+      'https://i.ibb.co/zT4QZXY3/blog4.png',
     ],
     description:
       'Understand whether clear aligners can cause gum recession, the myths vs. facts, and how to maintain healthy gums during orthodontic treatment with MyDent Aligners.',
@@ -461,9 +464,11 @@ export const blogData = [
     author: 'Dr. Md Farheen',
     category: 'Teeth Grinding',
     images: [
-      require('../../assets/images/blogs/blog8/blog1.png'),
-      require('../../assets/images/blogs/blog8/blog2.png'),
-      require('../../assets/images/blogs/blog8/blog3.png'),
+      'https://i.ibb.co/4Z0qr0hy/blog1.png',
+      'https://i.ibb.co/C3RJrB2T/blog2.png',
+      'https://i.ibb.co/tTVKM2tD/blog3.png',
+      'https://i.ibb.co/XkFmkv2G/blog4.png',
+      'https://i.ibb.co/K8PMjCY/blog5.png',
     ],
     description:
       'Discover effective ways to manage bruxism (teeth grinding), how it affects aligner users, and the dental solutions Mydent experts recommend for lasting relief.',

@@ -30,13 +30,13 @@ export default function CustomDrawerContent(props: any) {
     >
       <View style={styles.logoContainer}>
         <Image
-          source={require('../../assets/images/logoblue.jpeg')}
+          source={{ uri: 'https://i.ibb.co/zHHBvZ9Y/logoblue.jpg' }}
           style={styles.logo}
         />
       </View>
       <View style={styles.profileContainer}>
         <Image
-          source={require('../../assets/images/consultant.jpg')}
+          source={{ uri: 'https://i.ibb.co/35mrrKZh/consultant.jpg' }}
           style={styles.avatar}
         />
         <View style={styles.profileTextContainer}>

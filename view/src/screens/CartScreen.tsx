@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-floating-promises */
@@ -54,8 +55,11 @@ export default function CartScreen() {
     try {
       await updateCartItem(id, quantity);
       fetchCart();
-    } catch {
-      Alert.alert('Error', 'Failed to update item');
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.message ||
+        'Failed to update item. Please try again.';
+      Alert.alert('Error', message);
     }
   };
 
@@ -75,9 +79,18 @@ export default function CartScreen() {
       <Text>₹{(item.product.price * item.quantity).toFixed(2)}</Text>
       <TouchableOpacity
         onPress={() => onUpdateQuantity(item.id, item.quantity + 1)}
+        disabled={item.quantity >= item.product.quantity}
       >
-        <Text style={styles.button}>+</Text>
+        <Text
+          style={[
+            styles.button,
+            item.quantity >= item.product.quantity && { opacity: 0.5 },
+          ]}
+        >
+          +
+        </Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() =>
           onUpdateQuantity(item.id, Math.max(1, item.quantity - 1))

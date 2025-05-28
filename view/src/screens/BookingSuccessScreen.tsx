@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: '#fdfdfd',
-    paddingBottom: 120,
+    // paddingBottom: 120,
   },
   header: {
     fontSize: 16,
@@ -192,5 +192,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textTransform: 'uppercase',
+    marginBottom: 120,
   },
 });

@@ -22,7 +22,7 @@ export default function CheckoutSummaryScreen({ navigation }: any) {
     <SafeAreaView style={styles.container}>
       <View style={styles.card}>
         <Image
-          source={require('../../assets/images/consultant.jpg')}
+          source={{ uri: 'https://i.ibb.co/35mrrKZh/consultant.jpg' }}
           style={styles.image}
         />
         <View style={styles.cardContent}>

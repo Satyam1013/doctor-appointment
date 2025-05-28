@@ -43,7 +43,7 @@ const treatmentItems = [
 
 export default function MydentCenters({ navigation }: any) {
   const [centers, setCenters] = useState<
-    { name: string; imageUrl: string; _id: string }[]
+    { cityName: string; imageUrl: string; _id: string }[]
   >([]);
   const [loading, setLoading] = useState(false);
 
@@ -82,7 +82,7 @@ export default function MydentCenters({ navigation }: any) {
               style={styles.item}
               onPress={() =>
                 navigation.navigate('CentersTab', {
-                  selectedCity: center.name,
+                  selectedCity: center.cityName,
                 })
               }
             >
@@ -91,13 +91,12 @@ export default function MydentCenters({ navigation }: any) {
                 style={styles.image}
                 resizeMode="cover"
               />
-              <Text style={{ marginTop: 4 }}>{center.name}</Text>
+              <Text style={{ marginTop: 4 }}>{center.cityName}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
       )}
 
-      {/* Rest of your treatmentItems section stays same */}
       <View style={styles.bgColor}>
         <Text style={styles.title}>Understanding teeth alignment problems</Text>
         <View style={styles.treatmentGrid}>
