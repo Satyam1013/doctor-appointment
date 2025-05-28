@@ -80,7 +80,20 @@ export class CartService {
   }
 
   async updateQuantity(id: string, quantity: number) {
-    return this.cartModel.findByIdAndUpdate(id, { quantity }, { new: true });
+    const cartItem = await this.cartModel.findById(id);
+    if (!cartItem) throw new NotFoundException('Cart item not found');
+
+    const product = await this.productModel.findById(cartItem.product);
+    if (!product) throw new NotFoundException('Product not found');
+
+    if (product.quantity === undefined || product.quantity < quantity) {
+      throw new Error(`Only ${product.quantity ?? 0} item(s) available`);
+    }
+
+    cartItem.quantity = quantity;
+    await cartItem.save();
+
+    return cartItem;
   }
 
   async clearCart(userId: string) {

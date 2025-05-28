@@ -81,7 +81,6 @@ export default function TeethIssueSelectionScreen({ navigation }: any) {
             {item.image ? (
               <>
                 <Image source={{ uri: item.image }} style={styles.image} />
-                <Text style={styles.cardText}>{item.label}</Text>
                 <Text style={styles.knowMore}>know more</Text>
               </>
             ) : (

@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 4,
+    margin: 'auto',
   },
   cardPrice: {
     fontSize: 14,
