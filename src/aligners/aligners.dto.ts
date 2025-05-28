@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { IsNotEmpty, IsString } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateAlignersDto {
   @IsNotEmpty()
@@ -16,4 +14,13 @@ export class CreateAlignersDto {
   qualityText!: string;
 }
 
-export class UpdateAlignersDto extends PartialType(CreateAlignersDto) {}
+export class UpdateAlignersDto {
+  @IsString()
+  photo?: string;
+
+  @IsString()
+  video?: string;
+
+  @IsString()
+  qualityText?: string;
+}

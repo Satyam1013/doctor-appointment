@@ -32,9 +32,7 @@ export class MydentAlignersService {
     return updated;
   }
 
-  async remove(id: string) {
-    const deleted = await this.alignerModel.findByIdAndDelete(id).exec();
-    if (!deleted) throw new NotFoundException('Aligner not found');
-    return deleted;
+  async delete(id: string): Promise<void> {
+    await this.alignerModel.findByIdAndDelete(id);
   }
 }
