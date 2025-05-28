@@ -160,22 +160,20 @@ export default function TeethTreatmentScreen() {
       </Section>
 
       {/* Gallery */}
-      <Section title="Before & After">
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{ marginVertical: 10 }}
-        >
-          {data.images.slice(4).map((img: any, idx) => (
-            <Image
-              key={idx}
-              source={img}
-              style={styles.galleryImage}
-              resizeMode="cover"
-            />
-          ))}
-        </ScrollView>
-      </Section>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{ marginVertical: 10 }}
+      >
+        {data.images.slice(4).map((img: any, idx) => (
+          <Image
+            key={idx}
+            source={img}
+            style={styles.galleryImage}
+            resizeMode="cover"
+          />
+        ))}
+      </ScrollView>
     </ScrollView>
   );
 }
@@ -238,8 +236,8 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   galleryImage: {
-    width: 250, // Increased width
-    height: 200, // Increased height
+    width: 350, // Increased width
+    height: 300, // Increased height
     marginRight: 10,
     borderRadius: 15, // Optional: make corners rounder
   },

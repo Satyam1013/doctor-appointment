@@ -44,14 +44,14 @@ export class CartController {
     return this.cartService.updateQuantity(id, body.quantity);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.removeFromCart(id);
-  }
-
   @Delete('clear')
   clear(@Req() req: AuthenticatedRequest) {
     const userId = req.user._id;
     return this.cartService.clearCart(userId);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.cartService.removeFromCart(id);
   }
 }
