@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
   Controller,
@@ -29,8 +30,8 @@ export class MydentAlignersController {
   @UseInterceptors(
     FileFieldsInterceptor(
       [
-        { name: 'photo', maxCount: 1 },
-        { name: 'video', maxCount: 1 },
+        { name: 'photo', maxCount: 10 },
+        { name: 'video', maxCount: 10 },
       ],
       { storage: memoryStorage() },
     ),
@@ -40,13 +41,17 @@ export class MydentAlignersController {
     files: { photo?: Express.Multer.File[]; video?: Express.Multer.File[] },
     @Body() body: CreateAlignersDto,
   ) {
-    const photoUrl = await this.uploadImage(files.photo?.[0]);
-    const videoUrl = await this.uploadImage(files.video?.[0]);
+    const photoUrls = await Promise.all(
+      (files.photo || []).map(this.uploadImage),
+    );
+    const videoUrls = await Promise.all(
+      (files.video || []).map(this.uploadImage),
+    );
 
     return this.service.create({
       ...body,
-      photo: photoUrl,
-      video: videoUrl,
+      photo: photoUrls,
+      video: videoUrls,
     });
   }
 
@@ -81,14 +86,14 @@ export class MydentAlignersController {
     const aligner = await this.service.findOne(id);
     if (!aligner) throw new NotFoundException('Aligner not found');
 
-    if (files.photo?.[0]) {
-      await deleteFromCloudinary(aligner.photo);
-      body.photo = await this.uploadImage(files.photo[0]);
+    if (files.photo?.length) {
+      for (const url of aligner.photo) await deleteFromCloudinary(url);
+      body.photo = await Promise.all(files.photo.map(this.uploadImage));
     }
 
-    if (files.video?.[0]) {
-      await deleteFromCloudinary(aligner.video);
-      body.video = await this.uploadImage(files.video[0]);
+    if (files.video?.length) {
+      for (const url of aligner.video) await deleteFromCloudinary(url);
+      body.video = await Promise.all(files.video.map(this.uploadImage));
     }
 
     return this.service.update(id, body);
@@ -99,8 +104,15 @@ export class MydentAlignersController {
     const aligner = await this.service.findOne(id);
     if (!aligner) throw new NotFoundException('Aligner not found');
 
-    await deleteFromCloudinary(aligner.photo);
-    await deleteFromCloudinary(aligner.video);
+    // Delete all photos
+    for (const url of aligner.photo) {
+      await deleteFromCloudinary(url);
+    }
+
+    // Delete all videos
+    for (const url of aligner.video) {
+      await deleteFromCloudinary(url);
+    }
 
     await this.service.delete(id);
 

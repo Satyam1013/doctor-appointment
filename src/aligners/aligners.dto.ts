@@ -1,26 +1,28 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsArray } from 'class-validator';
 
 export class CreateAlignersDto {
-  @IsNotEmpty()
-  @IsString()
-  photo!: string;
+  @IsArray()
+  @IsString({ each: true })
+  photo!: string[];
+
+  @IsArray()
+  @IsString({ each: true })
+  video!: string[];
 
   @IsNotEmpty()
   @IsString()
-  video!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  qualityText!: string;
+  price!: string;
 }
 
 export class UpdateAlignersDto {
-  @IsString()
-  photo?: string;
+  @IsArray()
+  @IsString({ each: true })
+  photo?: string[];
+
+  @IsArray()
+  @IsString({ each: true })
+  video?: string[];
 
   @IsString()
-  video?: string;
-
-  @IsString()
-  qualityText?: string;
+  price?: string;
 }
