@@ -14,13 +14,19 @@ cloudinary.config({
 
 // Upload Function
 export async function uploadToCloudinary(filePath: string) {
-  const result = await cloudinary.uploader.upload(filePath, {
-    folder: 'centers',
-  });
-  return {
-    secure_url: result.secure_url,
-    public_id: result.public_id,
-  };
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: 'centers',
+      resource_type: 'auto',
+    });
+    return {
+      secure_url: result.secure_url,
+      public_id: result.public_id,
+    };
+  } catch (error) {
+    console.error('Cloudinary upload failed:', error);
+    throw new Error('Cloudinary upload failed');
+  }
 }
 
 export const deleteFromCloudinary = async (imageUrl: string) => {
