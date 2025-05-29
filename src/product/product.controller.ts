@@ -90,10 +90,66 @@ export class ProductsController {
   }
 
   @Put(':id')
+  @UseInterceptors(
+    FilesInterceptor('images', 10, {
+      storage: memoryStorage(),
+    }),
+  )
   async updateProduct(
     @Param('id') id: string,
-    @Body() updates: Partial<Product>,
+    @UploadedFiles() files: Express.Multer.File[],
+    @Body() body: any,
   ): Promise<Product> {
+    const imageUrls: string[] = [];
+
+    if (files && files.length) {
+      for (const file of files) {
+        const result = await uploadBufferToCloudinary(
+          file.buffer,
+          file.originalname,
+        );
+        imageUrls.push(result.secure_url);
+      }
+    }
+
+    // Parse body and merge images with imageUrls or use imageUrls as new images array
+    const updates: Partial<Product> = {
+      title: body.title,
+      categoryKey: body.categoryKey,
+      description: body.description,
+      price: parseFloat(body.price),
+      originalPrice: body.originalPrice
+        ? parseFloat(body.originalPrice)
+        : undefined,
+      quantity: body.quantity ? parseInt(body.quantity) : undefined,
+      bestSeller: body.bestSeller === 'true',
+      recommended: body.recommended === 'true',
+      combos: body.combos === 'true',
+      tags: Array.isArray(body['tags[]'])
+        ? body['tags[]']
+        : body['tags[]']
+          ? [body['tags[]']]
+          : [],
+      productDetails: body.productDetails,
+      benefits: body.benefits,
+      howToUse: body.howToUse,
+      ingredients: body.ingredients,
+      caution: body.caution,
+      information: body.information,
+      contents: body.contents,
+    };
+
+    if (imageUrls.length) {
+      // Merge existing images from body (in case user didn't upload new ones)
+      const existingImages = Array.isArray(body.images)
+        ? body.images
+        : body.images
+          ? [body.images]
+          : [];
+
+      updates.images = [...existingImages, ...imageUrls];
+    }
+
     const updatedProduct = await this.productsService.update(id, updates);
     if (!updatedProduct) throw new NotFoundException('Product not found');
     return updatedProduct;
