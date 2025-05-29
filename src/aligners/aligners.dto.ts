@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString, IsArray } from 'class-validator';
 export class CreateAlignersDto {
   @IsArray()
   @IsString({ each: true })
-  photo!: string[];
+  image!: string[];
 
   @IsArray()
   @IsString({ each: true })
@@ -17,7 +17,7 @@ export class CreateAlignersDto {
 export class UpdateAlignersDto {
   @IsArray()
   @IsString({ each: true })
-  photo?: string[];
+  image?: string[];
 
   @IsArray()
   @IsString({ each: true })

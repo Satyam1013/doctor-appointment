@@ -6,7 +6,7 @@ export type AlignerDocument = Aligner & Document;
 @Schema({ timestamps: true })
 export class Aligner {
   @Prop({ type: [String], required: true })
-  photo!: string[];
+  image!: string[];
 
   @Prop({ type: [String], required: true })
   video!: string[];
