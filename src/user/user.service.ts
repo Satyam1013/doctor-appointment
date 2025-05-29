@@ -9,7 +9,7 @@ export class UserService {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  // 🆔 Find user by ID
+  // Find user by ID (excluding password)
   async findById(id: string) {
     try {
       const user = await this.userModel.findById(id).select('-password').exec();
@@ -18,20 +18,22 @@ export class UserService {
       }
       return user;
     } catch (err) {
-      console.log(err);
+      console.error(err);
       throw err;
     }
   }
 
-  // 🆕 Create a new user
+  // Create user
   create(data: Partial<User>): Promise<User> {
     return this.userModel.create(data);
   }
 
+  // Get all users
   findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+    return this.userModel.find().select('-password').exec();
   }
 
+  // Update user
   async updateUser(id: string, updates: Partial<User>): Promise<User> {
     try {
       const user = await this.userModel.findByIdAndUpdate(id, updates, {
@@ -50,7 +52,7 @@ export class UserService {
     }
   }
 
-  // ❌ Optional: Delete user
+  // Delete user
   async deleteUser(id: string): Promise<void> {
     const result = await this.userModel.findByIdAndDelete(id);
     if (!result) throw new NotFoundException('User not found');

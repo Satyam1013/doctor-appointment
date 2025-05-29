@@ -22,7 +22,12 @@ export class UserController {
   @Patch('/edit')
   async editUser(
     @Req() req: AuthRequest,
-    @Body() updates: { firstName?: string; email?: string },
+    @Body()
+    updates: {
+      firstName?: string;
+      email?: string;
+      mobile?: string;
+    },
   ) {
     const id = req.user._id;
     return this.userService.updateUser(id, updates);
