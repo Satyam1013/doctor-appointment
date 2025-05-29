@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
   Controller,
@@ -16,10 +18,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { ProductsService } from './product.service';
 import { Product } from './product.schema';
 import { memoryStorage } from 'multer';
-import * as fs from 'fs';
-import * as os from 'os';
-import * as path from 'path';
-import { uploadToCloudinary } from '../utils/cloudinary';
+import { uploadBufferToCloudinary } from '../utils/cloudinary';
 
 @Controller('products')
 export class ProductsController {
@@ -38,7 +37,7 @@ export class ProductsController {
   }
 
   // Upload multiple images along with product data
-  @Post('upload')
+  @Post()
   @UseInterceptors(
     FilesInterceptor('images', 10, {
       storage: memoryStorage(),
@@ -46,28 +45,48 @@ export class ProductsController {
   )
   async createProduct(
     @UploadedFiles() files: Express.Multer.File[],
-    @Body() productData: Partial<Product>,
+    @Body() body: any, // Ideally, use DTO here
   ): Promise<Product> {
-    // Upload each image file to Cloudinary and collect URLs
     const imageUrls: string[] = [];
 
     for (const file of files) {
-      const tempPath = path.join(os.tmpdir(), `product-${Date.now()}.jpg`);
-      try {
-        fs.writeFileSync(tempPath, file.buffer);
-        const result = await uploadToCloudinary(tempPath);
-        imageUrls.push(result.secure_url);
-      } finally {
-        if (fs.existsSync(tempPath)) {
-          fs.unlinkSync(tempPath);
-        }
-      }
+      // You can upload directly from buffer without saving a temp file
+      const result = await uploadBufferToCloudinary(
+        file.buffer,
+        file.originalname,
+      );
+      imageUrls.push(result.secure_url);
     }
 
-    // Assign uploaded URLs to product images array
-    productData.images = imageUrls;
+    // Parse fields carefully
+    const parsedProduct: Partial<Product> = {
+      title: body.title,
+      categoryKey: body.categoryKey,
+      description: body.description,
+      price: parseFloat(body.price),
+      originalPrice: body.originalPrice
+        ? parseFloat(body.originalPrice)
+        : undefined,
+      quantity: body.quantity ? parseInt(body.quantity) : undefined,
+      bestSeller: body.bestSeller === 'true',
+      recommended: body.recommended === 'true',
+      combos: body.combos === 'true',
+      tags: Array.isArray(body['tags[]'])
+        ? body['tags[]']
+        : body['tags[]']
+          ? [body['tags[]']]
+          : [],
+      images: imageUrls,
+      productDetails: body.productDetails,
+      benefits: body.benefits,
+      howToUse: body.howToUse,
+      ingredients: body.ingredients,
+      caution: body.caution,
+      information: body.information,
+      contents: body.contents,
+    };
 
-    return this.productsService.create(productData);
+    return this.productsService.create(parsedProduct);
   }
 
   @Put(':id')

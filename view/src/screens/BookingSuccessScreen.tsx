@@ -43,7 +43,7 @@ export default function BookingScreen({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>
-        please select date and time for your doctor’s consultation
+        Please select date and time for your doctor’s consultation
       </Text>
 
       <View style={styles.dateRow}>
@@ -186,12 +186,12 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 40,
     borderRadius: 30,
+    marginBottom: 120,
   },
   proceedButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    marginBottom: 120,
   },
 });

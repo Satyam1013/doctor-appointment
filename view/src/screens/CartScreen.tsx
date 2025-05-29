@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -32,7 +34,7 @@ type CartItem = {
   };
 };
 
-export default function CartScreen() {
+export default function CartScreen({ navigation }: any) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -158,7 +160,7 @@ export default function CartScreen() {
 
           <TouchableOpacity
             style={styles.checkoutButton}
-            onPress={() => Alert.alert('Proceeding to checkout...')}
+            onPress={() => navigation.navigate('PaymentScreen')}
           >
             <Text style={styles.checkoutText}>Checkout</Text>
           </TouchableOpacity>

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// src/payments/payments.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { RazorpayService } from './razorpay.service';
 import { UserService } from 'src/user/user.service';
