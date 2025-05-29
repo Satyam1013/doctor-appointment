@@ -1,12 +1,19 @@
-import { IsEmail, IsString, MinLength } from 'class-validator';
+// signup.dto.ts
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class SignupDto {
   @IsEmail()
   email!: string;
 
   @IsString()
+  @IsNotEmpty()
   firstName!: string;
 
-  @MinLength(6)
+  @IsString()
+  @IsNotEmpty()
   password!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  mobile!: string;
 }
