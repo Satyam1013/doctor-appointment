@@ -42,10 +42,10 @@ export class MydentAlignersController {
     @Body() body: CreateAlignersDto,
   ) {
     const imageUrls = await Promise.all(
-      (files.image || []).map(this.uploadImage),
+      (files.image || []).map(this.uploadFile),
     );
     const videoUrls = await Promise.all(
-      (files.video || []).map(this.uploadImage),
+      (files.video || []).map(this.uploadFile),
     );
 
     return this.service.create({
@@ -88,12 +88,12 @@ export class MydentAlignersController {
 
     if (files.image?.length) {
       for (const url of aligner.image) await deleteFromCloudinary(url);
-      body.image = await Promise.all(files.image.map(this.uploadImage));
+      body.image = await Promise.all(files.image.map(this.uploadFile));
     }
 
     if (files.video?.length) {
       for (const url of aligner.video) await deleteFromCloudinary(url);
-      body.video = await Promise.all(files.video.map(this.uploadImage));
+      body.video = await Promise.all(files.video.map(this.uploadFile));
     }
 
     return this.service.update(id, body);
@@ -119,7 +119,7 @@ export class MydentAlignersController {
     return { message: 'Aligner deleted successfully' };
   }
 
-  private async uploadImage(file?: Express.Multer.File): Promise<string> {
+  private async uploadFile(file?: Express.Multer.File): Promise<string> {
     if (!file) return '';
     const tempPath = path.join(
       os.tmpdir(),
