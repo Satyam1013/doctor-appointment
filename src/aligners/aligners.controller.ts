@@ -130,7 +130,7 @@ export class MydentAlignersController {
       const result = await uploadToCloudinary(tempPath);
       return result.secure_url;
     } catch (error) {
-      console.error('Image upload failed:', error);
+      console.error('File upload failed:', error);
       throw error;
     } finally {
       if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);

@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -20,6 +20,7 @@ import Carousel from '../components/Carousel';
 import FeatureStats from '../components/FeatureStats';
 import { Ionicons } from '@expo/vector-icons';
 import { getCarousels } from '../api/carousel-api';
+import { getAligners } from '../api/aligners-api';
 
 const faqs = [
   {
@@ -53,22 +54,36 @@ const MyDentAlignersScreen = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
   const [loading, setLoading] = useState(true);
+  const [images, setImages] = useState<{ uri: string }[]>([]);
+  const [videos, setVideos] = useState<{ uri: string }[]>([]);
+  const [price, setPrice] = useState('');
 
   useEffect(() => {
-    const fetchCarousels = async () => {
+    const fetchData = async () => {
       try {
-        const res = await getCarousels();
+        // Fetch carousels
+        const carouselRes = await getCarousels();
         setTopCarousel(
-          res.data.topCarousel.map((img: any) => ({ uri: img.imageUrl })),
+          carouselRes.data.topCarousel.map((img: any) => ({
+            uri: img.imageUrl,
+          })),
         );
-      } catch (error) {
-        console.error('Failed to load carousels:', error);
+
+        // Fetch aligner data
+        const alignerRes = await getAligners();
+        const aligner = alignerRes.data;
+
+        setImages(aligner[0].image.map((url: string) => ({ uri: url })));
+        setVideos(aligner[0].video.map((url: string) => ({ uri: url })));
+        setPrice(aligner[0].price);
+      } catch (err) {
+        console.error('Failed to fetch aligner or carousel data:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCarousels();
+    fetchData();
   }, []);
 
   if (loading) {
@@ -91,12 +106,7 @@ const MyDentAlignersScreen = () => {
         <Text style={styles.subtitle}>
           Achieve Your Dream Smile with mydent Clear Aligners
         </Text>
-        <Image
-          source={{
-            uri: 'https://i.ibb.co/S73S9Lks/mydentposter1.png',
-          }}
-          style={styles.image}
-        />
+        <Image source={images[0]} style={styles.image} />
         <Text style={styles.text}>
           mydent's transparent aligners are designed to gently shift your teeth
           into place over time. These removable, custom-fit trays are a modern
@@ -120,12 +130,7 @@ const MyDentAlignersScreen = () => {
 
       {/* Problems We Address */}
       <View style={styles.section}>
-        <Image
-          source={{
-            uri: 'https://i.ibb.co/M55kpWMh/mydentposter2.png',
-          }}
-          style={styles.image}
-        />
+        <Image source={images[1]} style={styles.image} />
         <Text style={styles.title}>Dental Problems We Can Address</Text>
         <Text style={styles.text}>
           Spacing, crowding, overbite, underbite, and more
@@ -196,12 +201,7 @@ const MyDentAlignersScreen = () => {
 
       {/* Technology */}
       <View style={styles.section}>
-        <Image
-          source={{
-            uri: 'https://i.ibb.co/8DNCLFKR/mydentposter3.png',
-          }}
-          style={styles.image}
-        />
+        <Image source={images[2]} style={styles.image} />
         <Text style={styles.title}>The Technology Behind mydent Aligners</Text>
         <Text style={styles.text}>• Precision 3D Printing</Text>
         <Text style={styles.text}>• Punching & Thermoforming</Text>
@@ -215,6 +215,7 @@ const MyDentAlignersScreen = () => {
         <Text style={styles.text}>• Practically invisible</Text>
         <Text style={styles.text}>• Safe, pain-free & comfortable</Text>
         <Text style={styles.text}>• Eat anything | Free consultation</Text>
+        <Image source={images[3]} style={styles.image} />
       </View>
 
       {/* 4 Steps */}
@@ -245,27 +246,27 @@ const MyDentAlignersScreen = () => {
             description:
               'Book a scan at home or visit our 25+ experience centres for a scan and orthodontist consult',
             step: '01',
-            video: require('../../assets/videos/mydentproducts3.mp4'),
+            video: videos[2],
           },
           {
             title: 'At - Home',
             description: 'Get your aligners delivered & start your treatment',
             step: '02',
-            video: require('../../assets/videos/mydentproducts4.mp4'),
+            video: videos[3],
           },
           {
             title: 'Wear & Track',
             description:
               'Wear your aligners and track progress via our app with expert support',
             step: '03',
-            video: require('../../assets/videos/mydentproducts2.mp4'),
+            video: videos[1],
           },
           {
             title: 'Enjoy Your Smile',
             description:
               'Complete your journey and maintain your perfect smile with retainers',
             step: '04',
-            video: require('../../assets/videos/mydentproducts1.mp4'),
+            video: videos[0],
           },
         ].map((item, index) => (
           <View key={index} style={styles.videoStepContainer}>
@@ -300,7 +301,7 @@ const MyDentAlignersScreen = () => {
           {/* Left side: Pricing info */}
           <View style={styles.priceInfo}>
             <Text style={styles.priceLabel}>Starting at</Text>
-            <Text style={styles.priceValue}>₹52,999</Text>
+            <Text style={styles.priceValue}>₹{price}</Text>
             <Text style={styles.emiNote}>
               Affordable EMI options{'\n'}available starting at just{'\n'}
               <Text style={styles.bold}>₹80 per day</Text>
@@ -308,12 +309,7 @@ const MyDentAlignersScreen = () => {
           </View>
 
           {/* Right side: Doctor image with badge */}
-          <Image
-            source={{
-              uri: 'https://i.ibb.co/CK9Ckdby/mydentposter4.png',
-            }}
-            style={styles.priceImage}
-          />
+          <Image source={images[3]} style={styles.priceImage} />
         </View>
 
         {/* Comparison Table */}
@@ -329,7 +325,7 @@ const MyDentAlignersScreen = () => {
                 styles.highlightRed,
               ]}
             >
-              mydent Aligners
+              Mydent Aligners
             </Text>
             <Text style={[styles.tableCell, styles.tableHeader]}>
               Other Brands
