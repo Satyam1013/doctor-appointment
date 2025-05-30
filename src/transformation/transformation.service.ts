@@ -31,4 +31,24 @@ export class BlogsService {
 
     return { deleted: true };
   }
+
+  async updateBlog(
+    id: string,
+    data: { title?: string; description?: string; imageUrl?: string },
+  ) {
+    const blog = await this.blogModel.findById(id);
+    if (!blog) {
+      throw new NotFoundException(`Blog with ID ${id} not found`);
+    }
+
+    if (data.imageUrl && blog.imageUrl !== data.imageUrl) {
+      await deleteFromCloudinary(blog.imageUrl); // remove old image
+      blog.imageUrl = data.imageUrl;
+    }
+
+    if (data.title) blog.title = data.title;
+    if (data.description) blog.description = data.description;
+
+    return blog.save();
+  }
 }

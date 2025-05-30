@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   Controller,
@@ -10,6 +8,7 @@ import {
   Body,
   Delete,
   Param,
+  Put,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BlogsService } from './transformation.service';
@@ -47,6 +46,35 @@ export class BlogsController {
     }
 
     return this.blogsService.createBlog({ title, description, imageUrl });
+  }
+
+  @Put(':id')
+  @UseInterceptors(FileInterceptor('image', { storage: memoryStorage() }))
+  async updateBlog(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+    @Body('title') title: string,
+    @Body('description') description: string,
+  ): Promise<any> {
+    let imageUrl: string | undefined;
+
+    if (file) {
+      const tempPath = path.join(os.tmpdir(), `blog-${Date.now()}.jpg`);
+      try {
+        fs.writeFileSync(tempPath, file.buffer);
+        const result = await uploadToCloudinary(tempPath);
+        imageUrl = result.secure_url;
+      } catch (error) {
+        console.error('Image upload failed:', error);
+        throw error;
+      } finally {
+        if (fs.existsSync(tempPath)) {
+          fs.unlinkSync(tempPath);
+        }
+      }
+    }
+
+    return this.blogsService.updateBlog(id, { title, description, imageUrl });
   }
 
   @Get()
