@@ -15,13 +15,13 @@ export class FavService {
     const product = await this.productModel.findById(productId);
     if (!product) throw new NotFoundException('Product not found');
 
-    const favItem = await this.favModel.findOne({
+    const existingFav = await this.favModel.findOne({
       userId,
       product: product._id,
     });
 
-    if (favItem) {
-      return favItem;
+    if (existingFav) {
+      return existingFav.populate('product'); // ✅ Ensure populated response
     }
 
     const newFav = new this.favModel({
@@ -29,15 +29,17 @@ export class FavService {
       product: product._id,
     });
 
-    return newFav.save();
+    await newFav.save();
+
+    return this.favModel.findById(newFav._id).populate('product'); // ✅ Fully populated favorite
   }
 
   async getFavorite(userId: string) {
     return this.favModel.find({ userId }).populate('product').exec();
   }
 
-  async removeFromFavorite(id: string, userId: string) {
-    const item = await this.favModel.findOne({ _id: id, userId });
+  async removeFromFavorite(productId: string, userId: string) {
+    const item = await this.favModel.findOne({ product: productId, userId });
     if (!item) throw new NotFoundException('Favorite item not found');
     return item.deleteOne();
   }

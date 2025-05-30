@@ -8,14 +8,12 @@ import { StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { useFavorites } from '../contexts/FavContext';
 
-const ProductCard = ({ item, onAddToCart }: any) => {
+const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
   const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const { favorites, toggleFavorite } = useFavorites();
-  console.log('✨ ~ favorites:', favorites);
 
-  const isFavorite = favorites.includes(item._id);
-  console.log('✨ ~ isFavorite:', isFavorite);
+  const isFavorite = favorites.some((fav: any) => fav.product._id === item._id);
 
   const discount =
     item.originalPrice && item.originalPrice > item.price
@@ -43,8 +41,10 @@ const ProductCard = ({ item, onAddToCart }: any) => {
 
   const handleFavoriteToggle = () => {
     toggleFavorite(item._id, !isFavorite);
+    if (onToggleFavorite) {
+      onToggleFavorite(item._id, !isFavorite); // Notify parent (FavProductScreen)
+    }
   };
-
   return (
     <View style={styles.card}>
       <TouchableOpacity style={styles.heartIcon} onPress={handleFavoriteToggle}>

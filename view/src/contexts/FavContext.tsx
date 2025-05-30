@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-floating-promises */
@@ -18,28 +17,32 @@ export const FavoriteProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<any[]>([]);
 
   const fetchFavorites = async () => {
     try {
       const res = await getFavorites();
-      const ids = res.data.map((item: any) => item.product._id);
-      setFavorites(ids);
+      setFavorites(res.data);
     } catch (err) {
       console.error('Failed to fetch favorites:', err);
     }
   };
 
   const toggleFavorite = async (productId: string) => {
-    const isFav = favorites.includes(productId);
+    const isFav = favorites.some((fav) => fav.product._id === productId);
 
     try {
       if (isFav) {
-        await removeFavoriteItem(productId);
-        setFavorites((prev) => prev.filter((id) => id !== productId));
+        const favorite = favorites.find((fav) => fav.product._id === productId);
+        if (!favorite) return;
+
+        await removeFavoriteItem(favorite._id);
+        setFavorites((prev) =>
+          prev.filter((fav) => fav.product._id !== productId),
+        );
       } else {
-        await addToFavorite(productId);
-        setFavorites((prev) => [...prev, productId]);
+        const res = await addToFavorite(productId);
+        setFavorites((prev) => [...prev, res.data]);
       }
     } catch (err) {
       console.error('Failed to toggle favorite:', err);
