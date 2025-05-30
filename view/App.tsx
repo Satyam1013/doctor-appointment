@@ -7,6 +7,7 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { FavoriteProvider } from './src/contexts/FavContext';
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,9 @@ export default function App() {
             <QueryClientProvider client={queryClient}>
               <AuthProvider>
                 <UserProvider>
-                  <AppNavigator />
+                  <FavoriteProvider>
+                    <AppNavigator />
+                  </FavoriteProvider>
                 </UserProvider>
               </AuthProvider>
             </QueryClientProvider>

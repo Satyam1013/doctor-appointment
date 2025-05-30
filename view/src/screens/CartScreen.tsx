@@ -160,7 +160,12 @@ export default function CartScreen({ navigation }: any) {
 
           <TouchableOpacity
             style={styles.checkoutButton}
-            onPress={() => navigation.navigate('PaymentScreen')}
+            onPress={() =>
+              navigation.navigate('PaymentScreen', {
+                from: 'cart',
+                amount: totalAmount,
+              })
+            }
           >
             <Text style={styles.checkoutText}>Checkout</Text>
           </TouchableOpacity>

@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -13,27 +11,29 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import ProductCard from '../components/ProductCard';
-import { getAllProducts } from '../api/product-api';
+import { getFavorites } from '../api/fav-api';
 
-type Product = {
+type FavoriteItem = {
   _id: string;
-  isFavorite: boolean;
-  // Add other product fields as needed
-  [key: string]: any;
+  userId: string;
+  product: {
+    _id: string;
+    name: string;
+    price: number;
+    image: string;
+    // Add other product fields you use
+  };
 };
 
 const FavProductScreen = () => {
-  const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
+  const [favoriteProducts, setFavoriteProducts] = useState<FavoriteItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const products = await getAllProducts();
-        const favorites = products.filter(
-          (product: any) => product.isFavorite === true,
-        );
-        setFavoriteProducts(favorites);
+        const favorites = await getFavorites();
+        setFavoriteProducts(favorites.data);
       } catch (err) {
         console.error('Failed to load favorite products:', err);
       } finally {
@@ -50,9 +50,12 @@ const FavProductScreen = () => {
 
   const handleToggleFavorite = (productId: string, newState: boolean) => {
     setFavoriteProducts((prev) =>
-      prev.map((p: any) =>
-        p._id === productId ? { ...p, isFavorite: newState } : p,
-      ),
+      prev.filter((favItem: any) => {
+        if (!newState) {
+          return favItem.product._id !== productId; // Remove if unfavorited
+        }
+        return true; // Keep all if still favorite
+      }),
     );
   };
 
@@ -77,12 +80,12 @@ const FavProductScreen = () => {
       <Text style={styles.header}>Your Favorites</Text>
       <FlatList
         data={favoriteProducts}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item.product._id}
         numColumns={2}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
           <ProductCard
-            item={item}
+            item={item.product}
             onAddToCart={handleAddToCart}
             onToggleFavorite={handleToggleFavorite}
           />
@@ -98,6 +101,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fafafa',
+    paddingBottom: 120,
     paddingHorizontal: 8,
   },
   header: {

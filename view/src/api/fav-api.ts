@@ -10,8 +10,8 @@ export const getFavorites = () => {
   return axiosClient.get('/favorite');
 };
 
-export const removeFavoriteItem = (id: string) => {
-  return axiosClient.delete(`/favorite/${id}`);
+export const removeFavoriteItem = (productId: string) => {
+  return axiosClient.delete(`/favorite/${productId}`);
 };
 
 export const clearFavorites = () => {

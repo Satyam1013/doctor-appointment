@@ -1,18 +1,21 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
-import { toggleFavoriteStatus } from '../api/product-api';
+import { useFavorites } from '../contexts/FavContext';
 
-const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
+const ProductCard = ({ item, onAddToCart }: any) => {
   const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { favorites, toggleFavorite } = useFavorites();
+  console.log('✨ ~ favorites:', favorites);
+
+  const isFavorite = favorites.includes(item._id);
+  console.log('✨ ~ isFavorite:', isFavorite);
 
   const discount =
     item.originalPrice && item.originalPrice > item.price
@@ -38,22 +41,20 @@ const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
     onAddToCart(item, newQty);
   };
 
-  const toggleFavorite = async () => {
-    const newState = !isFavorite;
-    setIsFavorite(newState); // Optimistic UI update
-
-    try {
-      await toggleFavoriteStatus(item._id, newState); // Sync with backend
-      onToggleFavorite?.(item._id, newState); // Optional callback
-    } catch (error) {
-      // Rollback UI change if API call fails
-      setIsFavorite(!newState);
-      console.error('Failed to toggle favorite:', error);
-    }
+  const handleFavoriteToggle = () => {
+    toggleFavorite(item._id, !isFavorite);
   };
 
   return (
     <View style={styles.card}>
+      <TouchableOpacity style={styles.heartIcon} onPress={handleFavoriteToggle}>
+        <IconButton
+          icon={isFavorite ? 'heart' : 'heart-outline'}
+          size={24}
+          iconColor={isFavorite ? '#e53935' : '#555'}
+        />
+      </TouchableOpacity>
+
       <View style={styles.imageContainer}>
         <Image
           source={{
@@ -61,9 +62,6 @@ const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
           }}
           style={styles.cardImage}
         />
-        <TouchableOpacity style={styles.heartIcon} onPress={toggleFavorite}>
-          <IconButton icon={isFavorite ? 'heart' : 'heart-outline'} size={28} />
-        </TouchableOpacity>
         {item.bestSeller && (
           <View style={styles.badge}>
             <Text style={styles.badgeText}>BEST SELLER</Text>
@@ -116,10 +114,12 @@ const styles = StyleSheet.create({
     width: 180,
     margin: 8,
     elevation: 2,
+    position: 'relative',
   },
   imageContainer: {
     position: 'relative',
     alignItems: 'center',
+    marginTop: 10,
   },
   cardImage: {
     width: 120,
@@ -128,8 +128,9 @@ const styles = StyleSheet.create({
   },
   heartIcon: {
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: -8,
+    right: -6,
+    zIndex: 2,
   },
   badge: {
     position: 'absolute',
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     left: 5,
     backgroundColor: '#FFD700',
     paddingHorizontal: 6,
-    paddingVertical: 2,
+    paddingVertical: 6,
     borderRadius: 4,
   },
   badgeText: {

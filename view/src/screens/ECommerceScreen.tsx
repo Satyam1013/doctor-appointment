@@ -106,18 +106,17 @@ export default function EComScreen({ navigation }: any) {
     );
   }
 
-  const handleToggleFavorite = async (productId: string) => {
+  const handleToggleFavorite = async (productId: string, newState: boolean) => {
     try {
-      if (favorites.includes(productId)) {
-        await removeFavoriteItem(productId);
-        setFavorites((prev) => prev.filter((id) => id !== productId));
-      } else {
+      if (newState) {
         await addToFavorite(productId);
         setFavorites((prev) => [...prev, productId]);
+      } else {
+        await removeFavoriteItem(productId);
+        setFavorites((prev) => prev.filter((id) => id !== productId));
       }
     } catch (error) {
-      console.error('Favorite toggle failed:', error);
-      Alert.alert('Error', 'Failed to update favorites');
+      console.error('Failed to update favorite:', error);
     }
   };
 
@@ -178,11 +177,12 @@ export default function EComScreen({ navigation }: any) {
             renderItem={({ item }) => (
               <ProductCard
                 item={item}
-                isFavorite={favorites.includes(item._id)}
                 onAddToCart={(product: any, quantity: number) =>
                   handleAddToCart(product, quantity)
                 }
-                onToggleFavorite={() => handleToggleFavorite(item._id)}
+                onToggleFavorite={() =>
+                  handleToggleFavorite(item._id, !favorites.includes(item._id))
+                }
               />
             )}
             contentContainerStyle={styles.horizontalList}

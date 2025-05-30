@@ -30,6 +30,7 @@ import ConsultationDetailsScreen from '../screens/ConsultationDetailsScreen';
 import ConsultationBookedScreen from '../screens/ConsultationBookedScreen';
 import FavProductScreen from '../screens/FavProductScreen';
 import PaymentScreen from '../screens/CheckoutScreen';
+import ShowAllBlogsScreen from '../screens/ShowAllBlogsScreen';
 // import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
@@ -41,6 +42,10 @@ export default function HomeStack() {
       <Stack.Screen
         name="BookingSuccessScreen"
         component={withAppShell(BookingSuccessScreen)}
+      />
+      <Stack.Screen
+        name="ShowAllBlogsScreen"
+        component={withAppShell(ShowAllBlogsScreen)}
       />
       <Stack.Screen
         name="PaymentScreen"

@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
-import { Button, TextInput, Card } from 'react-native-paper';
+import { View, StyleSheet, Alert, Text } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
 import RazorpayCheckout from 'react-native-razorpay';
 import { createOrder, verifyPayment } from '../api/payment-api';
+import { useRoute } from '@react-navigation/native';
 
 const PaymentScreen = () => {
-  const [amount, setAmount] = useState('0');
+  const route = useRoute();
+  const { amount } = route.params as { amount: number };
+  const [selectedUpiApp, setSelectedUpiApp] = useState<string | null>(null);
   const [upi, setUpi] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
-    const amountInPaise = parseInt(amount) * 100;
+    const amountInPaise = amount * 100;
 
     if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
       Alert.alert(
@@ -33,10 +34,9 @@ const PaymentScreen = () => {
 
     try {
       setLoading(true);
-
       const { id: order_id, amount } = await createOrder(amountInPaise, upi);
 
-      RazorpayCheckout.open({
+      const options: any = {
         name: 'Mydent',
         description: 'Dental Product Purchase',
         currency: 'INR',
@@ -48,7 +48,24 @@ const PaymentScreen = () => {
           contact: '9999999999',
         },
         theme: { color: '#F7D449' },
-      })
+      };
+
+      if (selectedUpiApp) {
+        options.config = {
+          display: {
+            blocks: {
+              upi: {
+                name: 'UPI Apps',
+                instruments: [{ method: 'upi', apps: [selectedUpiApp] }],
+              },
+            },
+            sequence: ['block.upi'],
+            preferences: { show_default_blocks: false },
+          },
+        };
+      }
+
+      RazorpayCheckout.open(options)
         .then(async (paymentData: any) => {
           const verifyRes = await verifyPayment({
             order_id: paymentData.razorpay_order_id,
@@ -56,7 +73,6 @@ const PaymentScreen = () => {
             signature: paymentData.razorpay_signature,
           });
           console.log('✨ ~ verifyRes:', verifyRes);
-
           Alert.alert(
             '✅ Payment Successful',
             'Transaction verified successfully.',
@@ -75,35 +91,50 @@ const PaymentScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Card style={styles.card}>
-        <Card.Title title="Payment Summary" />
-        <Card.Content>
-          <TextInput
-            label="Amount (₹)"
-            value={amount}
-            keyboardType="numeric"
-            onChangeText={setAmount}
-            style={styles.input}
-          />
-          <TextInput
-            label="UPI ID"
-            value={upi}
-            keyboardType="email-address"
-            onChangeText={setUpi}
-            autoCapitalize="none"
-            style={styles.input}
-          />
-          <Button
-            mode="contained"
-            onPress={handlePayment}
-            loading={loading}
-            disabled={loading}
-            style={styles.button}
-          >
-            Pay Now
-          </Button>
-        </Card.Content>
-      </Card>
+      <View style={styles.section}>
+        <Text style={styles.sectionHeader}>Order Summary</Text>
+        <Text style={styles.amountText}>₹{amount}</Text>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionHeader}>UPI</Text>
+        <TextInput
+          label="UPI ID"
+          value={upi}
+          keyboardType="email-address"
+          onChangeText={setUpi}
+          autoCapitalize="none"
+          style={styles.input}
+        />
+
+        <View style={styles.upiAppRow}>
+          {[
+            { id: 'google_pay', label: 'GPay' },
+            { id: 'phonepe', label: 'PhonePe' },
+            { id: 'paytm', label: 'Paytm' },
+            { id: 'cred', label: 'CRED UPI' },
+          ].map((app) => (
+            <Button
+              key={app.id}
+              mode={selectedUpiApp === app.id ? 'contained' : 'outlined'}
+              onPress={() => setSelectedUpiApp(app.id)}
+              style={styles.upiAppButton}
+            >
+              {app.label}
+            </Button>
+          ))}
+        </View>
+      </View>
+
+      <Button
+        mode="contained"
+        onPress={handlePayment}
+        loading={loading}
+        disabled={loading}
+        style={styles.payButton}
+      >
+        Pay Now
+      </Button>
     </View>
   );
 };
@@ -113,20 +144,43 @@ export default PaymentScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
+    backgroundColor: '#F8F8F8',
     padding: 16,
   },
-  card: {
-    padding: 10,
-    elevation: 4,
+  section: {
+    backgroundColor: '#fff',
     borderRadius: 10,
+    padding: 16,
+    marginBottom: 16,
+    elevation: 2,
+  },
+  sectionHeader: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 12,
+  },
+  amountText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
   },
   input: {
-    marginVertical: 12,
+    marginBottom: 16,
+    backgroundColor: '#fff',
   },
-  button: {
-    marginTop: 10,
+  upiAppRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  upiAppButton: {
+    width: '48%',
+    marginBottom: 10,
+  },
+  payButton: {
     backgroundColor: '#F7D449',
+    paddingVertical: 8,
+    borderRadius: 10,
+    elevation: 2,
   },
 });

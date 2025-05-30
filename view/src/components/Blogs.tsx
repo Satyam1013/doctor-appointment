@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -19,7 +20,15 @@ export default function Blogs({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Latest Blogs</Text>
+      <View style={styles.headerRow}>
+        <Text style={styles.sectionTitle}>Latest Blogs</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ShowAllBlogsScreen')}
+        >
+          <Text style={styles.viewAll}>View All</Text>
+        </TouchableOpacity>
+      </View>
+
       <Text style={styles.sectionSubtitle}>
         Tips & info about your smile journey
       </Text>
@@ -88,5 +97,16 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#444',
     fontWeight: '500',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  viewAll: {
+    fontSize: 13,
+    color: '#1e90ff',
+    fontWeight: 'bold',
   },
 });

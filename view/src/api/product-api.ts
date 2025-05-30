@@ -20,15 +20,3 @@ export const getProductById = async (id: any) => {
     throw error;
   }
 };
-
-export const toggleFavoriteStatus = async (id: string, isFavorite: boolean) => {
-  try {
-    const response = await axiosClient.patch(`/products/${id}/favorite`, {
-      isFavorite,
-    });
-    return response.data;
-  } catch (error) {
-    console.error(`Failed to update favorite status for product ${id}:`, error);
-    throw error;
-  }
-};

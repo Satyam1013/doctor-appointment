@@ -24,8 +24,7 @@ export default function ConsultationDetailsScreen({ navigation }: any) {
         </View>
 
         <Text style={styles.concern}>
-          Concern:{' '}
-          <Text style={{ fontWeight: 'bold' }}>laser hair removal</Text>
+          Concern: <Text style={{ fontWeight: 'bold' }}>teeth gaps</Text>
         </Text>
 
         <View style={styles.detailsBox}>
@@ -85,7 +84,12 @@ export default function ConsultationDetailsScreen({ navigation }: any) {
           </Text>
           <TouchableOpacity
             style={styles.ctaButton}
-            onPress={() => navigation.navigate('PaymentScreen')}
+            onPress={() =>
+              navigation.navigate('PaymentScreen', {
+                from: 'consultation',
+                amount: 500, // Replace with actual fee
+              })
+            }
           >
             <Text style={styles.ctaButtonText}>complete now</Text>
           </TouchableOpacity>

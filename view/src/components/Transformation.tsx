@@ -38,16 +38,17 @@ export default function Transformation({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Transformations</Text>
-      <Text style={styles.sectionSubtitle}>Before vs After Treatment</Text>
-
-      <View style={styles.headerRight}>
+      <View style={styles.headerRow}>
+        <Text style={styles.sectionTitle}>Transformations</Text>
         <TouchableOpacity
           onPress={() => navigation.navigate('TransformationScreen')}
         >
           <Text style={styles.viewAll}>View All</Text>
         </TouchableOpacity>
       </View>
+      <Text style={styles.sectionSubtitle}>
+        Tips & info about your smile journey
+      </Text>
 
       {loading ? (
         <ActivityIndicator size="large" color="#e53935" />
@@ -134,5 +135,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#444',
     fontWeight: '500',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
   },
 });

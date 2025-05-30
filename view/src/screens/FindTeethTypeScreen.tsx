@@ -5,12 +5,11 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
 
 const categories = [
-  { title: 'Under bite', icon: 'https: //i.ibb.co/Y70w2CK3/video.png' },
+  { title: 'Under bite', icon: 'https://i.ibb.co/Y70w2CK3/video.png' },
   { title: 'Open bite', icon: 'https://i.ibb.co/pGJyFZL/video2.png' },
   { title: 'Crooked teeth', icon: 'https://i.ibb.co/RTLKPd3q/video3.png' },
   { title: 'Gap teeth', icon: 'https://i.ibb.co/5gNP6fPv/video4.png' },
@@ -36,17 +35,6 @@ const categories = [
 export default function FindTeethTypeScreen() {
   return (
     <ScrollView style={styles.container}>
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <TextInput
-          placeholder="Search for medicines and doctors"
-          style={styles.searchInput}
-        />
-        <TouchableOpacity style={styles.cartButton}>
-          <Text style={styles.cartText}>🛒</Text>
-        </TouchableOpacity>
-      </View>
-
       {/* Banner Image (Carousel dummy) */}
       <Image
         source={{ uri: 'https://i.ibb.co/x88xsysH/banner.png' }}
