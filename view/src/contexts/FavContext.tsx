@@ -18,6 +18,7 @@ export const FavoriteProvider = ({
   children: React.ReactNode;
 }) => {
   const [favorites, setFavorites] = useState<any[]>([]);
+  console.log('✨ ~ favorites:', favorites);
 
   const fetchFavorites = async () => {
     try {
@@ -33,10 +34,7 @@ export const FavoriteProvider = ({
 
     try {
       if (isFav) {
-        const favorite = favorites.find((fav) => fav.product._id === productId);
-        if (!favorite) return;
-
-        await removeFavoriteItem(favorite._id);
+        await removeFavoriteItem(productId); // ✅ use this directly
         setFavorites((prev) =>
           prev.filter((fav) => fav.product._id !== productId),
         );

@@ -35,10 +35,13 @@ export class FavController {
     return this.favService.getFavorite(userId);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string, @Req() req: AuthenticatedRequest) {
+  @Delete(':productId')
+  remove(
+    @Param('productId') productId: string,
+    @Req() req: AuthenticatedRequest,
+  ) {
     const userId = req.user._id;
-    return this.favService.removeFromFavorite(id, userId);
+    return this.favService.removeFromFavorite(productId, userId); // still called "productId"
   }
 
   @Delete('clear')
