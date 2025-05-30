@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { FavItem } from './fav.schema';
 import { Product } from '../product/product.schema';
 
@@ -39,8 +39,13 @@ export class FavService {
   }
 
   async removeFromFavorite(productId: string, userId: string) {
-    const item = await this.favModel.findOne({ product: productId, userId });
+    const item = await this.favModel.findOne({
+      product: new Types.ObjectId(productId),
+      userId,
+    });
+
     if (!item) throw new NotFoundException('Favorite item not found');
+
     return item.deleteOne();
   }
 
