@@ -12,6 +12,7 @@ import CartScreen from '../screens/CartScreen';
 import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import FavProductScreen from '../screens/FavProductScreen';
 import TransformationScreen from '../screens/TransformationScreen';
+import { CommonActions } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,6 +44,20 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="HomeTab"
         component={HomeStack}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            e.preventDefault();
+
+            navigation.dispatch(
+              CommonActions.navigate({
+                name: 'HomeTab',
+                params: {
+                  screen: 'Home',
+                },
+              }),
+            );
+          },
+        })}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (

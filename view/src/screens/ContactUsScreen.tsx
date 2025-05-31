@@ -137,7 +137,6 @@ export default function ContactUsScreen() {
           <Ionicons name="notifications-outline" size={24} color="#00788D" />
         </TouchableOpacity>
       </View>
-
       {/* 2. Program Structure Section */}
       <View style={styles.sectionCard}>
         <Text style={styles.sectionTitle}>Program Structure</Text>
@@ -166,7 +165,6 @@ export default function ContactUsScreen() {
           ))}
         </View>
       </View>
-
       {/* 3. Schedule */}
       <View style={styles.todayAppointmentCard}>
         <Text style={styles.todayTitle}>Today Appointment</Text>
@@ -209,7 +207,6 @@ export default function ContactUsScreen() {
           </TouchableOpacity>
         </View>
       </View>
-
       {/* 4. Team of Experts*/}
       <View style={styles.sectionCard}>
         <Text style={styles.sectionTitle}>
@@ -278,9 +275,7 @@ export default function ContactUsScreen() {
           </View>
         ))}
       </View>
-
       {/* 5. Video Section */}
-
       {/* 6. Product Section & FAQs */}
       <View style={styles.sectionCard}>
         <View style={styles.sectionHeader}>
@@ -342,34 +337,58 @@ export default function ContactUsScreen() {
           ))}
         </View>
       </View>
-
       <FeatureStats />
       <View style={styles.footerContainer}>
         {/* Quick Links */}
         <Text style={styles.footerHeading}>Quick Links</Text>
         <View style={styles.linkColumns}>
           <View style={styles.linkColumn}>
-            <Text style={styles.linkText}>About Us</Text>
-            <Text style={styles.linkText}>Clinic Consultation</Text>
-            <Text style={styles.linkText}>Video Consultation</Text>
-            <Text style={styles.linkText}>Order Medicines</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('HomeTab')}>
+              <Text style={styles.linkText}>Home</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ProductsTab')}
+            >
+              <Text style={styles.linkText}>Order Products</Text>
+            </TouchableOpacity>
+
             <Text style={styles.linkText}>Cancellation & Refund</Text>
-            <Text style={styles.linkText}>Policies</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('FavProductScreen')}
+            >
+              <Text style={styles.linkText}>Favorite Page</Text>
+            </TouchableOpacity>
             <Text style={styles.linkText}>Terms of Use</Text>
             <Text style={styles.linkText}>Shipping Policy</Text>
-            <Text style={styles.linkText}>Become consultant</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('CartScreen')}>
+              <Text style={styles.linkText}>Cart Page</Text>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.linkColumn}>
-            <Text style={styles.linkText}>Success Stories</Text>
-            <Text style={styles.linkText}>Blogs</Text>
-            <Text style={styles.linkText}>Doctor Login</Text>
-            <Text style={styles.linkText}>Contact Detail</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('TransformationScreen')}
+            >
+              <Text style={styles.linkText}>Success Stories</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('Mydent')}>
+              <Text style={styles.linkText}>Mydent Aligners</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('CentersTab')}>
+              <Text style={styles.linkText}>Mydent Centers</Text>
+            </TouchableOpacity>
+
             <Text style={styles.linkText}>care@sushainclinic.com</Text>
 
             <Text style={[styles.linkText, { marginTop: 10 }]}>Mobile:</Text>
             <Text style={styles.linkText}>+91 6390905453</Text>
-            <Text style={styles.linkText}>Post Health Concern</Text>
+
+            <TouchableOpacity onPress={() => navigation.navigate('ContactUs')}>
+              <Text style={styles.linkText}>Post Health Concern</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -384,6 +403,7 @@ export default function ContactUsScreen() {
         {/* Footer Note */}
         <Text style={styles.footerNote}>@2025, Mydent</Text>
       </View>
+      );
     </ScrollView>
   );
 }

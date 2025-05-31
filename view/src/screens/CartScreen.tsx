@@ -140,7 +140,9 @@ export default function CartScreen({ navigation }: any) {
       <ScrollView contentContainerStyle={{ paddingBottom: 200 }}>
         <Text style={styles.heading}>🛒 Cart</Text>
 
-        {cartItems.map((item) => renderItem({ item }))}
+        {cartItems.map((item) => (
+          <React.Fragment key={item._id}>{renderItem({ item })}</React.Fragment>
+        ))}
 
         <View style={styles.summaryContainer}>
           <View style={styles.summaryRow}>

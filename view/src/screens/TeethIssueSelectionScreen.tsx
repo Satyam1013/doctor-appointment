@@ -29,22 +29,22 @@ const TEETH_ISSUES = [
     image: 'https://i.ibb.co/1tzJZR1n/crossbite.png',
   },
   {
-    id: 'other1',
+    id: 'underbite',
     label: 'Other 1',
     image: 'https://i.ibb.co/fGPvzr8D/underbite.png',
   },
   {
-    id: 'other2',
+    id: 'openbite',
     label: 'Other 2',
     image: 'https://i.ibb.co/fV6zw10L/openbite.png',
   },
   {
-    id: 'other3',
+    id: 'crookedteeth',
     label: 'Other 3',
     image: 'https://i.ibb.co/1yPk7J8/crookedteeth.png',
   },
   {
-    id: 'other_custom',
+    id: 'other',
     label: 'Other',
   },
 ];

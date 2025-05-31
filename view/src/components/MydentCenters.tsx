@@ -14,33 +14,6 @@ import {
 } from 'react-native';
 import { getCenters } from '../api/centers-api';
 
-const treatmentItems = [
-  {
-    img: 'https://i.ibb.co/WW0YY1sj/teethgaps.png',
-    route: 'teethgaps',
-  },
-  {
-    img: 'https://i.ibb.co/1yPk7J8/crookedteeth.png',
-    route: 'crookedteeth',
-  },
-  {
-    img: 'https://i.ibb.co/1tzJZR1n/crossbite.png',
-    route: 'crossbite',
-  },
-  {
-    img: 'https://i.ibb.co/fV6zw10L/openbite.png',
-    route: 'openbite',
-  },
-  {
-    img: 'https://i.ibb.co/MkcZ04hZ/overbite.png',
-    route: 'overbite',
-  },
-  {
-    img: 'https://i.ibb.co/fGPvzr8D/underbite.png',
-    route: 'underbite',
-  },
-];
-
 export default function MydentCenters({ navigation }: any) {
   const [centers, setCenters] = useState<
     { cityName: string; imageUrl: string; _id: string }[]
@@ -96,29 +69,6 @@ export default function MydentCenters({ navigation }: any) {
           ))}
         </ScrollView>
       )}
-
-      <View style={styles.bgColor}>
-        <Text style={styles.title}>Understanding teeth alignment problems</Text>
-        <View style={styles.treatmentGrid}>
-          {treatmentItems.map((item, idx) => (
-            <TouchableOpacity
-              key={idx}
-              style={styles.treatmentItem}
-              onPress={() =>
-                navigation.navigate('TeethTreatmentScreen', {
-                  routeKey: item.route,
-                })
-              }
-            >
-              <Image
-                source={{ uri: item.img }}
-                style={styles.treatmentImage}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
     </ScrollView>
   );
 }
@@ -127,11 +77,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 12,
     backgroundColor: '#fff',
-  },
-  bgColor: {
-    backgroundColor: '#E7FAFC',
-    marginHorizontal: -12,
-    padding: 12,
   },
   header: {
     flexDirection: 'row',
@@ -157,24 +102,6 @@ const styles = StyleSheet.create({
     height: 70,
     borderRadius: 35,
     backgroundColor: '#f0f0f0',
-  },
-  treatmentGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
-  treatmentItem: {
-    width: '30%',
-    marginBottom: 16,
-    alignItems: 'center',
-  },
-  treatmentImage: {
-    width: '100%',
-    height: 130,
-    aspectRatio: 0.75,
-    borderRadius: 8,
-    backgroundColor: '#eee',
   },
   viewAll: {
     fontSize: 14,

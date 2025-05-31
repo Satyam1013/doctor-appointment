@@ -1,31 +1,43 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState } from 'react';
-import { View, StyleSheet, Alert, Text } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Alert,
+} from 'react-native';
 import RazorpayCheckout from 'react-native-razorpay';
-import { createOrder, verifyPayment } from '../api/payment-api';
 import { useRoute } from '@react-navigation/native';
+import { createOrder, verifyPayment } from '../api/payment-api';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import type { ComponentProps } from 'react';
+
+// ✅ Grab the correct type for icon names
+type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 const PaymentScreen = () => {
   const route = useRoute();
   const { amount } = route.params as { amount: number };
-  const [selectedUpiApp, setSelectedUpiApp] = useState<string | null>(null);
   const [upi, setUpi] = useState('');
+  const [selectedUpiApp, setSelectedUpiApp] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const upiApps = [
+    { id: 'google_pay', label: 'Google Pay' },
+    { id: 'phonepe', label: 'PhonePe' },
+    { id: 'paytm', label: 'PayTM' },
+    { id: 'cred', label: 'CRED UPI' },
+  ];
 
   const handlePayment = async () => {
     const amountInPaise = amount * 100;
-
-    if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
-      Alert.alert(
-        'Invalid Amount',
-        'Please enter a valid amount greater than 0.',
-      );
-      return;
-    }
 
     if (!upi || !upi.includes('@')) {
       Alert.alert('Invalid UPI ID', 'Please enter a valid UPI ID.');
@@ -72,7 +84,6 @@ const PaymentScreen = () => {
             payment_id: paymentData.razorpay_payment_id,
             signature: paymentData.razorpay_signature,
           });
-          console.log('✨ ~ verifyRes:', verifyRes);
           Alert.alert(
             '✅ Payment Successful',
             'Transaction verified successfully.',
@@ -89,52 +100,87 @@ const PaymentScreen = () => {
     }
   };
 
+  const PaymentMethodCard = ({
+    label,
+    offer,
+    iconName,
+  }: {
+    label: string;
+    offer?: string;
+    iconName: IconName; // ✅ Use the correct type
+  }) => (
+    <View style={styles.methodCard}>
+      <View style={styles.methodIconPlaceholder}>
+        <MaterialCommunityIcons name={iconName} size={24} color="#555" />
+      </View>
+      <View style={styles.methodTextContainer}>
+        <Text style={styles.methodLabel}>{label}</Text>
+        {offer && <Text style={styles.methodOffer}>{offer}</Text>}
+      </View>
+      <MaterialCommunityIcons name="chevron-right" size={22} color="#999" />
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      <View style={styles.section}>
-        <Text style={styles.sectionHeader}>Order Summary</Text>
-        <Text style={styles.amountText}>₹{amount}</Text>
-      </View>
+      <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
+        <Text style={styles.header}>Select Payment Method</Text>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionHeader}>UPI</Text>
-        <TextInput
-          label="UPI ID"
-          value={upi}
-          keyboardType="email-address"
-          onChangeText={setUpi}
-          autoCapitalize="none"
-          style={styles.input}
-        />
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>UPI ID</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your UPI ID"
+            value={upi}
+            onChangeText={setUpi}
+            keyboardType="email-address"
+          />
 
-        <View style={styles.upiAppRow}>
-          {[
-            { id: 'google_pay', label: 'GPay' },
-            { id: 'phonepe', label: 'PhonePe' },
-            { id: 'paytm', label: 'Paytm' },
-            { id: 'cred', label: 'CRED UPI' },
-          ].map((app) => (
-            <Button
-              key={app.id}
-              mode={selectedUpiApp === app.id ? 'contained' : 'outlined'}
-              onPress={() => setSelectedUpiApp(app.id)}
-              style={styles.upiAppButton}
-            >
-              {app.label}
-            </Button>
-          ))}
+          <View style={styles.upiRow}>
+            {upiApps.map((app) => (
+              <TouchableOpacity
+                key={app.id}
+                style={[
+                  styles.upiAppButton,
+                  selectedUpiApp === app.id && styles.selectedUpiApp,
+                ]}
+                onPress={() => setSelectedUpiApp(app.id)}
+              >
+                <Text style={styles.upiAppText}>{app.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
-      </View>
 
-      <Button
-        mode="contained"
-        onPress={handlePayment}
-        loading={loading}
-        disabled={loading}
-        style={styles.payButton}
-      >
-        Pay Now
-      </Button>
+        <View style={styles.section}>
+          <PaymentMethodCard
+            label="Credit / Debit / ATM Card"
+            offer="Save up to 1.5%"
+            iconName="credit-card-outline"
+          />
+          <PaymentMethodCard
+            label="EMI"
+            offer="3–6 months EMI"
+            iconName="calendar-clock"
+          />
+          <PaymentMethodCard label="Net Banking" iconName="bank-outline" />
+          <PaymentMethodCard label="Wallet" iconName="wallet-outline" />
+          <PaymentMethodCard label="Pay Later" iconName="clock-outline" />
+        </View>
+      </ScrollView>
+
+      <View style={styles.footer}>
+        <Text style={styles.total}>₹{amount}</Text>
+        <TouchableOpacity
+          style={styles.payButton}
+          onPress={handlePayment}
+          disabled={loading}
+        >
+          <Text style={styles.payButtonText}>
+            {loading ? 'Processing...' : 'Pay'}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -144,43 +190,121 @@ export default PaymentScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F8F8',
-    padding: 16,
+    backgroundColor: '#F5F5F5',
+  },
+  header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 20,
+    paddingHorizontal: 16,
+    color: '#000',
+  },
+  methodCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  methodIconPlaceholder: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    backgroundColor: '#f5f5f5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  methodTextContainer: {
+    flex: 1,
+  },
+  methodLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  methodOffer: {
+    fontSize: 12,
+    color: '#888',
+    marginTop: 2,
   },
   section: {
     backgroundColor: '#fff',
-    borderRadius: 10,
+    margin: 16,
+    borderRadius: 12,
     padding: 16,
-    marginBottom: 16,
     elevation: 2,
   },
-  sectionHeader: {
+  sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 12,
   },
-  amountText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-  },
   input: {
-    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     backgroundColor: '#fff',
+    marginBottom: 16,
   },
-  upiAppRow: {
+  upiRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    gap: 10,
     justifyContent: 'space-between',
   },
   upiAppButton: {
-    width: '48%',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    backgroundColor: '#F0F0F0',
     marginBottom: 10,
+    width: '48%',
+  },
+  selectedUpiApp: {
+    backgroundColor: '#F7D449',
+  },
+  upiAppText: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  arrow: {
+    fontSize: 20,
+    color: '#aaa',
+  },
+  footer: {
+    // position: 'absolute',
+    bottom: 0,
+    padding: 16,
+    backgroundColor: '#fff',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderTopColor: '#eee',
+    borderTopWidth: 1,
+    paddingBottom: 140,
+  },
+  total: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   payButton: {
     backgroundColor: '#F7D449',
-    paddingVertical: 8,
-    borderRadius: 10,
-    elevation: 2,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  payButtonText: {
+    fontWeight: 'bold',
+    color: '#000',
   },
 });

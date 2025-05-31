@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+
 import React, { useState } from 'react';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import {
@@ -30,7 +30,7 @@ export default function CustomDrawerContent(props: any) {
     >
       <View style={styles.logoContainer}>
         <Image
-          source={{ uri: 'https://i.ibb.co/zHHBvZ9Y/logoblue.jpg' }}
+          source={{ uri: 'https://i.ibb.co/ycLp6sDq/mydent.jpg' }}
           style={styles.logo}
         />
       </View>

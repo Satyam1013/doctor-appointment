@@ -21,6 +21,9 @@ import FeatureStats from '../components/FeatureStats';
 import { Ionicons } from '@expo/vector-icons';
 import { getCarousels } from '../api/carousel-api';
 import { getAligners } from '../api/aligners-api';
+import TeethAlignmentProblems from '../components/TeethAlignmentProblems';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const faqs = [
   {
@@ -57,6 +60,7 @@ const MyDentAlignersScreen = () => {
   const [images, setImages] = useState<{ uri: string }[]>([]);
   const [videos, setVideos] = useState<{ uri: string }[]>([]);
   const [price, setPrice] = useState('');
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,7 +105,7 @@ const MyDentAlignersScreen = () => {
   return (
     <ScrollView style={styles.container}>
       {/* Hero Section */}
-      <View style={styles.section}>
+      <View style={styles.landing}>
         <Text style={styles.title}>Discover Clear Aligners by mydent</Text>
         <Text style={styles.subtitle}>
           Achieve Your Dream Smile with mydent Clear Aligners
@@ -114,7 +118,7 @@ const MyDentAlignersScreen = () => {
           effective.
         </Text>
       </View>
-
+      <TeethAlignmentProblems navigation={navigation} />
       {/* How it Works */}
       <View style={styles.section}>
         <Text style={styles.title}>How Do mydent Aligners Work?</Text>
@@ -127,7 +131,6 @@ const MyDentAlignersScreen = () => {
         </Text>
       </View>
       <Carousel images={topCarousel} />
-
       {/* Problems We Address */}
       <View style={styles.section}>
         <Image source={images[1]} style={styles.image} />
@@ -136,7 +139,6 @@ const MyDentAlignersScreen = () => {
           Spacing, crowding, overbite, underbite, and more
         </Text>
       </View>
-
       {/* Braces vs mydent Aligners */}
       <View style={styles.card}>
         <Text style={styles.title}>Why should you go for clear aligners?</Text>
@@ -188,7 +190,6 @@ const MyDentAlignersScreen = () => {
           ))}
         </View>
       </View>
-
       {/* Why Choose mydent */}
       <View style={styles.section}>
         <Text style={styles.title}>Why Choose mydent?</Text>
@@ -198,9 +199,8 @@ const MyDentAlignersScreen = () => {
         </Text>
         <Text style={styles.text}>• App-based monitoring & home visits</Text>
       </View>
-
       {/* Technology */}
-      <View style={styles.section}>
+      <View style={styles.technology}>
         <Image source={images[2]} style={styles.image} />
         <Text style={styles.title}>The Technology Behind mydent Aligners</Text>
         <Text style={styles.text}>• Precision 3D Printing</Text>
@@ -208,7 +208,6 @@ const MyDentAlignersScreen = () => {
         <Text style={styles.text}>• Robotic Automation</Text>
         <Text style={styles.text}>• Mobile App Integration</Text>
       </View>
-
       {/* Benefits */}
       <View style={styles.section}>
         <Text style={styles.title}>Key Benefits of mydent Aligners</Text>
@@ -217,7 +216,6 @@ const MyDentAlignersScreen = () => {
         <Text style={styles.text}>• Eat anything | Free consultation</Text>
         <Image source={images[3]} style={styles.image} />
       </View>
-
       {/* 4 Steps */}
       <View style={styles.section}>
         <Text style={styles.title}>Start Your Smile Makeover in 4 Steps</Text>
@@ -286,7 +284,6 @@ const MyDentAlignersScreen = () => {
           </View>
         ))}
       </View>
-
       {/* Pricing */}
       <View style={styles.videoSection}>
         <Text style={styles.title}>Superior quality, affordable prices</Text>
@@ -370,7 +367,6 @@ const MyDentAlignersScreen = () => {
           </View>
         ))}
       </View>
-
       {/* CTA */}
       <Text style={styles.ctaText}>Ready to Start Your Smile Journey?</Text>
       <TouchableOpacity style={styles.button}>
@@ -382,12 +378,91 @@ const MyDentAlignersScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#ffffff' },
-  section: { padding: 20 },
-  videoSection: { padding: 20, backgroundColor: '#E6F0F8' },
-  title: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
-  subtitle: { fontSize: 16, fontWeight: '600', marginBottom: 10 },
-  text: { fontSize: 14, marginBottom: 6 },
+  container: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+    paddingBottom: 120,
+  },
+  section: {
+    padding: 16,
+    backgroundColor: '#ffffff',
+    marginVertical: 8,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  technology: {
+    padding: 16,
+    backgroundColor: '#ffe6eb',
+    marginVertical: 8,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  landing: {
+    padding: 16,
+    backgroundColor: '#fff7ed',
+    marginVertical: 8,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  card: {
+    padding: 16,
+    backgroundColor: '#e3f2fd', // light blue for contrast
+    marginVertical: 8,
+    borderRadius: 10,
+  },
+  videoSection: {
+    padding: 16,
+    backgroundColor: '#f1f8e9', // soft green
+    marginVertical: 8,
+    borderRadius: 10,
+  },
+  priceCard: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff3e0', // light orange
+    padding: 16,
+    borderRadius: 10,
+    marginTop: 12,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  comparisonTable: {
+    marginTop: 16,
+    backgroundColor: '#ede7f6', // soft purple
+    borderRadius: 8,
+    padding: 12,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 12,
+  },
+  text: {
+    fontSize: 14,
+    color: '#444',
+    marginBottom: 6,
+  },
   ctaText: {
     fontSize: 16,
     fontWeight: '600',
@@ -405,6 +480,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#F4F6F8',
   },
   faq: {
     padding: 20,
@@ -521,18 +597,6 @@ const styles = StyleSheet.create({
   headerRow: {
     backgroundColor: '#f9f9ff',
   },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 3,
-    margin: 16,
-  },
-
   cell: {
     flex: 1,
     paddingVertical: 12,
@@ -552,29 +616,16 @@ const styles = StyleSheet.create({
     color: '#3BC3FF',
     fontWeight: 'bold',
   },
-  priceCard: {
-    flexDirection: 'row',
-    backgroundColor: '#FDEDED',
-    padding: 16,
-    borderRadius: 12,
-    marginVertical: 16,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
 
   priceInfo: {
     flex: 1,
-    marginRight: 12,
   },
-
   priceLabel: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#666',
-    marginBottom: 4,
   },
-
   priceValue: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#FF3D00',
   },
@@ -585,35 +636,26 @@ const styles = StyleSheet.create({
     marginTop: 6,
     lineHeight: 18,
   },
-
   bold: {
     fontWeight: 'bold',
   },
-
   priceImage: {
     width: 100,
     height: 100,
-    resizeMode: 'contain',
-  },
-
-  comparisonTable: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    overflow: 'hidden',
-    marginTop: 12,
+    borderRadius: 50,
+    marginLeft: 12,
   },
 
   tableRow: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 8,
     backgroundColor: '#fff',
   },
-
   tableCell: {
     flex: 1,
-    padding: 10,
-    fontSize: 13,
     textAlign: 'center',
+    fontSize: 13,
     color: '#333',
   },
   tableHeader: {
@@ -626,7 +668,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   highlightRed: {
-    color: '#FF3D00',
+    color: '#D32F2F',
   },
 });
 

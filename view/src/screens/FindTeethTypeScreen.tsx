@@ -44,7 +44,7 @@ export default function FindTeethTypeScreen() {
 
       {/* Section Title */}
       <Text style={styles.sectionTitle}>
-        Ayurvedic Doctors By Health Issues
+        Discover your bite type and See the transformation
       </Text>
 
       {/* Grid */}

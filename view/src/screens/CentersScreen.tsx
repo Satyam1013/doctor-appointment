@@ -123,7 +123,7 @@ export default function Centers() {
       >
         {centers.map((city) => (
           <TouchableOpacity
-            key={city._id}
+            key={city._id || city.cityName}
             onPress={() => setSelectedCity(city.cityName)}
             style={[
               styles.cityButton,
@@ -145,7 +145,7 @@ export default function Centers() {
       <View style={{ padding: 16 }}>
         {filteredClinics.length > 0 ? (
           filteredClinics.map((clinic) => (
-            <View key={clinic.id} style={styles.card}>
+            <View key={clinic._id || clinic.clinicName} style={styles.card}>
               <Image
                 source={{ uri: clinic.clinicImage }}
                 style={styles.image}

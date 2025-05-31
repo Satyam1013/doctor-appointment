@@ -18,7 +18,6 @@ export const FavoriteProvider = ({
   children: React.ReactNode;
 }) => {
   const [favorites, setFavorites] = useState<any[]>([]);
-  console.log('✨ ~ favorites:', favorites);
 
   const fetchFavorites = async () => {
     try {

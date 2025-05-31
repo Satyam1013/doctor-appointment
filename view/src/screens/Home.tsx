@@ -19,6 +19,7 @@ import FeatureStats from '../components/FeatureStats';
 import DoctorCard from '../components/ConsultDoctors';
 import Blogs from '../components/Blogs';
 import { getCarousels } from '../api/carousel-api';
+import TeethAlignmentProblems from '../components/TeethAlignmentProblems';
 
 export default function HomeScreen({ navigation }: any) {
   const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
@@ -61,6 +62,7 @@ export default function HomeScreen({ navigation }: any) {
         <FindTeethType navigation={navigation} />
         <TopProducts navigation={navigation} />
         <MydentCenters navigation={navigation} />
+        <TeethAlignmentProblems navigation={navigation} />
         <Transformation navigation={navigation} />
         <BeforeAfterTreatment />
         <ClinicVisitCard onPress={() => navigation.navigate('CentersTab')} />

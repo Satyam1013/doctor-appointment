@@ -2,6 +2,7 @@ import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthRequest } from 'src/common/auth-req';
 import { AuthGuard } from '@nestjs/passport';
+import { UpdateUserDto } from './user.dto';
 
 @Controller('users')
 @UseGuards(AuthGuard('jwt'))
@@ -20,15 +21,7 @@ export class UserController {
   }
 
   @Patch('/edit')
-  async editUser(
-    @Req() req: AuthRequest,
-    @Body()
-    updates: {
-      firstName?: string;
-      email?: string;
-      mobile?: string;
-    },
-  ) {
+  async editUser(@Req() req: AuthRequest, @Body() updates: UpdateUserDto) {
     const id = req.user._id;
     return this.userService.updateUser(id, updates);
   }
