@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-// screens/GenderSelectionScreen.tsx
 
 import React, { useState } from 'react';
 import {
@@ -9,15 +9,29 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Alert,
 } from 'react-native';
+import { updateUser } from '../api/user-api';
 
 const genderOptions = ['Male', 'Female'];
 
 export default function GenderSelectionScreen({ navigation }: any) {
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleNext = () => {
-    navigation.navigate('SmokingStatus');
+  const handleNext = async () => {
+    if (!selectedGender) return;
+
+    try {
+      setLoading(true);
+      await updateUser({ gender: selectedGender });
+      navigation.navigate('SmokingStatus');
+    } catch (error) {
+      console.error('Failed to update gender:', error);
+      Alert.alert('Error', 'Something went wrong while saving your selection.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,11 +61,16 @@ export default function GenderSelectionScreen({ navigation }: any) {
         <Text style={styles.stepCounter}>5 / 8 steps</Text>
 
         <TouchableOpacity
-          style={[styles.nextButton, !selectedGender && { opacity: 0.5 }]}
-          disabled={!selectedGender}
+          style={[
+            styles.nextButton,
+            (!selectedGender || loading) && { opacity: 0.5 },
+          ]}
+          disabled={!selectedGender || loading}
           onPress={handleNext}
         >
-          <Text style={styles.nextButtonText}>Next</Text>
+          <Text style={styles.nextButtonText}>
+            {loading ? 'Saving...' : 'Next'}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

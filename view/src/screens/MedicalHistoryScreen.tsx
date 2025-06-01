@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useState } from 'react';
@@ -8,7 +9,9 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  Alert,
 } from 'react-native';
+import { updateUser } from '../api/user-api';
 
 const options = [
   'Allergy',
@@ -23,6 +26,7 @@ const options = [
 
 export default function MedicalHistoryScreen({ navigation }: any) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const toggleOption = (option: string) => {
     if (selectedOptions.includes(option)) {
@@ -32,8 +36,19 @@ export default function MedicalHistoryScreen({ navigation }: any) {
     }
   };
 
-  const handleNext = () => {
-    navigation.navigate('GenderSelection');
+  const handleNext = async () => {
+    if (selectedOptions.length === 0) return;
+
+    try {
+      setLoading(true);
+      await updateUser({ medicalHistory: selectedOptions });
+      navigation.navigate('GenderSelection');
+    } catch (error) {
+      console.error('Failed to update medical history:', error);
+      Alert.alert('Error', 'Something went wrong while saving your selection.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -67,12 +82,14 @@ export default function MedicalHistoryScreen({ navigation }: any) {
         <TouchableOpacity
           style={[
             styles.nextButton,
-            selectedOptions.length === 0 && { opacity: 0.5 },
+            (selectedOptions.length === 0 || loading) && { opacity: 0.5 },
           ]}
-          disabled={selectedOptions.length === 0}
+          disabled={selectedOptions.length === 0 || loading}
           onPress={handleNext}
         >
-          <Text style={styles.nextButtonText}>Next</Text>
+          <Text style={styles.nextButtonText}>
+            {loading ? 'Saving...' : 'Next'}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

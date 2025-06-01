@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
@@ -8,7 +9,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from 'react-native';
+import { updateUser } from '../api/user-api'; // adjust the path if needed
 
 const AGE_OPTIONS = [
   'below 10 yrs',
@@ -23,9 +26,21 @@ const AGE_OPTIONS = [
 
 export default function AgeSelectionScreen({ navigation }: any) {
   const [selectedAge, setSelectedAge] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleNext = () => {
-    navigation.navigate('TeethIssueSelection');
+  const handleNext = async () => {
+    if (!selectedAge) return;
+
+    try {
+      setLoading(true);
+      await updateUser({ ageGroup: selectedAge });
+      navigation.navigate('TeethIssueSelection');
+    } catch (error) {
+      console.error('Failed to update age group:', error);
+      Alert.alert('Error', 'Something went wrong while saving your selection.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -75,12 +90,14 @@ export default function AgeSelectionScreen({ navigation }: any) {
           <TouchableOpacity
             style={[
               styles.nextButtonAlt,
-              !selectedAge && styles.nextButtonDisabled,
+              (!selectedAge || loading) && styles.nextButtonDisabled,
             ]}
-            disabled={!selectedAge}
+            disabled={!selectedAge || loading}
             onPress={handleNext}
           >
-            <Text style={styles.nextButtonTextAlt}>Next</Text>
+            <Text style={styles.nextButtonTextAlt}>
+              {loading ? 'Saving...' : 'Next'}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
@@ -8,15 +9,29 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Alert,
 } from 'react-native';
+import { updateUser } from '../api/user-api';
 
 const options = ['Yes', 'No'];
 
 export default function SmokingStatusScreen({ navigation }: any) {
   const [selected, setSelected] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleNext = () => {
-    navigation.navigate('Availability');
+  const handleNext = async () => {
+    if (!selected) return;
+
+    try {
+      setLoading(true);
+      await updateUser({ smoker: selected });
+      navigation.navigate('Availability');
+    } catch (error) {
+      console.error('Failed to update smoking status:', error);
+      Alert.alert('Error', 'Something went wrong while saving your selection.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -46,11 +61,16 @@ export default function SmokingStatusScreen({ navigation }: any) {
         <Text style={styles.stepCounter}>6 / 8 steps</Text>
 
         <TouchableOpacity
-          style={[styles.nextButton, !selected && { opacity: 0.5 }]}
-          disabled={!selected}
+          style={[
+            styles.nextButton,
+            (!selected || loading) && { opacity: 0.5 },
+          ]}
+          disabled={!selected || loading}
           onPress={handleNext}
         >
-          <Text style={styles.nextButtonText}>Next</Text>
+          <Text style={styles.nextButtonText}>
+            {loading ? 'Saving...' : 'Next'}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

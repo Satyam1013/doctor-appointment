@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useState } from 'react';
@@ -8,13 +9,27 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Alert,
 } from 'react-native';
+import { updateUser } from '../api/user-api';
 
 export default function ProblemDetailScreen({ navigation }: any) {
   const [problemText, setProblemText] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleNext = () => {
-    navigation.navigate('MedicalHistory');
+  const handleNext = async () => {
+    if (!problemText) return;
+
+    try {
+      setLoading(true);
+      await updateUser({ problemText });
+      navigation.navigate('MedicalHistory');
+    } catch (error) {
+      console.error('Failed to update problem text:', error);
+      Alert.alert('Error', 'Something went wrong while saving your input.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,11 +55,16 @@ export default function ProblemDetailScreen({ navigation }: any) {
         <Text style={styles.stepCounter}>3 / 8 steps</Text>
 
         <TouchableOpacity
-          style={[styles.nextButton, !problemText && { opacity: 0.5 }]}
-          disabled={!problemText}
+          style={[
+            styles.nextButton,
+            (!problemText || loading) && { opacity: 0.5 },
+          ]}
+          disabled={!problemText || loading}
           onPress={handleNext}
         >
-          <Text style={styles.nextButtonText}>Next</Text>
+          <Text style={styles.nextButtonText}>
+            {loading ? 'Saving...' : 'Next'}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
@@ -10,7 +12,9 @@ import {
   FlatList,
   Image,
   TextInput,
+  Alert,
 } from 'react-native';
+import { updateUser } from '../api/user-api';
 
 const TEETH_ISSUES = [
   {
@@ -52,9 +56,31 @@ const TEETH_ISSUES = [
 export default function TeethIssueSelectionScreen({ navigation }: any) {
   const [selectedIssue, setSelectedIssue] = useState<string | null>(null);
   const [customIssue, setCustomIssue] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleNext = () => {
-    navigation.navigate('ProblemDetail');
+  const handleNext = async () => {
+    if (!selectedIssue) return;
+
+    try {
+      setLoading(true);
+
+      const payload: any = {
+        teethIssue: selectedIssue,
+      };
+
+      if (selectedIssue === 'other_custom' && customIssue) {
+        payload.problemText = customIssue;
+      }
+
+      await updateUser(payload);
+
+      navigation.navigate('ProblemDetail');
+    } catch (error) {
+      console.error('Failed to update teeth issue:', error);
+      Alert.alert('Error', 'Something went wrong while saving your selection.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -118,12 +144,15 @@ export default function TeethIssueSelectionScreen({ navigation }: any) {
           <TouchableOpacity
             style={[
               styles.nextButtonAlt,
-              !selectedIssue && styles.nextButtonDisabled,
+              (!selectedIssue || loading) && styles.nextButtonDisabled,
             ]}
-            disabled={!selectedIssue}
+            disabled={!selectedIssue || loading}
             onPress={handleNext}
           >
-            <Text style={styles.nextButtonTextAlt}>Next</Text>
+            <Text style={styles.nextButtonTextAlt}>
+              {' '}
+              {loading ? 'Saving...' : 'Next'}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

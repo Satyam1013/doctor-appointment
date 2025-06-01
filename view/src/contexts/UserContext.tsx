@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { AuthContext } from './AuthContext';
+import { getUserDetails } from '../api/user-api';
 
 export interface User {
   _id: string;
@@ -34,12 +34,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
       }
 
       try {
-        const res = await axios.get(
-          'https://doctor-appointment-5j6e.onrender.com/users/details',
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
+        const res = await getUserDetails();
         setUser(res.data);
       } catch (err) {
         console.error('Error fetching current user', err);
