@@ -22,11 +22,15 @@ export default function OverlayFloatingButtons() {
   };
 
   const handleBookPress = () => {
-    navigation.navigate('ConsultationOption');
+    navigation.navigate('HomeTab', {
+      screen: 'ConsultationOption',
+    });
   };
 
   const handleConsultPress = () => {
-    navigation.navigate('ConsultationOption');
+    navigation.navigate('HomeTab', {
+      screen: 'ConsultationOption',
+    });
   };
   return (
     <View style={styles.container}>

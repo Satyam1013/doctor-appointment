@@ -44,7 +44,8 @@ export default function DoctorCard() {
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Our Experts</Text>
       <Text style={styles.sectionSubtitle}>
-        Meet the chief experts behind your care and safety
+        Behind every smile is a team of trusted specialists - meet our
+        superstars.
       </Text>
 
       <FlatList

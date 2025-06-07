@@ -110,7 +110,7 @@ export default function Navbar() {
             style={styles.searchIcon}
           />
           <TextInput
-            placeholder="Search for medicines and..."
+            placeholder="Search for products and services"
             style={styles.input}
             placeholderTextColor="#777"
           />

@@ -10,11 +10,15 @@ import {
   Alert,
 } from 'react-native';
 import { useUser } from '../contexts/UserContext';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  useFocusEffect,
+  useNavigation,
+} from '@react-navigation/native';
 import { addToCart } from '../api/cart-api';
 import FeatureStats from '../components/FeatureStats';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Transformation from '../components/Transformation';
 import ProductCard from '../components/ProductCard';
 
@@ -89,6 +93,15 @@ export default function ContactUsScreen() {
   const navigation = useNavigation<NavigationProp<any>>();
   const { user } = useUser();
 
+  const scrollRef = useRef<ScrollView>(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // 👇 Scroll to top on tab focus
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    }, []),
+  );
+
   const toggleAlignerFAQ = (index: number) => {
     setActiveAlignerIndex(activeAlignerIndex === index ? null : index);
   };
@@ -108,7 +121,7 @@ export default function ContactUsScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} ref={scrollRef}>
       {/* 1. Welcome Section */}
       <View style={styles.welcomeContainer}>
         {/* Left Section */}
@@ -352,15 +365,38 @@ export default function ContactUsScreen() {
             >
               <Text style={styles.linkText}>Order Products</Text>
             </TouchableOpacity>
-
-            <Text style={styles.linkText}>Cancellation & Refund</Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Home', {
+                  screen: 'TermsAndConditionsScreen',
+                })
+              }
+            >
+              <Text style={styles.linkText}>Cancellation & Refund</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('FavProductScreen')}
             >
               <Text style={styles.linkText}>Favorite Page</Text>
             </TouchableOpacity>
-            <Text style={styles.linkText}>Terms of Use</Text>
-            <Text style={styles.linkText}>Shipping Policy</Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Home', {
+                  screen: 'TermsAndConditionsScreen',
+                })
+              }
+            >
+              <Text style={styles.linkText}>Terms and Conditions | mydent</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Home', {
+                  screen: 'TermsAndConditionsScreen',
+                })
+              }
+            >
+              <Text style={styles.linkText}>Shipping Policy</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('CartScreen')}>
               <Text style={styles.linkText}>Cart Page</Text>
             </TouchableOpacity>
@@ -381,14 +417,10 @@ export default function ContactUsScreen() {
               <Text style={styles.linkText}>Mydent Centers</Text>
             </TouchableOpacity>
 
-            <Text style={styles.linkText}>care@sushainclinic.com</Text>
+            <Text style={styles.linkText}>support@mydent.com</Text>
 
             <Text style={[styles.linkText, { marginTop: 10 }]}>Mobile:</Text>
-            <Text style={styles.linkText}>+91 6390905453</Text>
-
-            <TouchableOpacity onPress={() => navigation.navigate('ContactUs')}>
-              <Text style={styles.linkText}>Post Health Concern</Text>
-            </TouchableOpacity>
+            <Text style={styles.linkText}>+91 9849492909</Text>
           </View>
         </View>
 

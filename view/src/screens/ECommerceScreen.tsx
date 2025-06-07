@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -28,6 +28,7 @@ import {
   getFavorites,
   removeFavoriteItem,
 } from '../api/fav-api';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ad1 = 'https://i.ibb.co/x88xsysH/banner.png';
 const ad2 = 'https://i.ibb.co/JWgXbwRD/ad.png';
@@ -42,6 +43,15 @@ export default function EComScreen({ navigation }: any) {
   const bestSellers = categories.filter((p) => p.bestSeller);
   const combos = categories.filter((p) => p.combos);
   const recommended = categories.filter((p) => p.recommended);
+
+  const scrollRef = useRef<ScrollView>(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // 👇 Scroll to top on tab focus
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    }, []),
+  );
 
   const sections = [
     {
@@ -135,7 +145,7 @@ export default function EComScreen({ navigation }: any) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} ref={scrollRef}>
       <Text style={styles.header}>Oral Care Categories</Text>
       <FlatList
         data={categories}

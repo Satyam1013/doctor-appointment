@@ -5,11 +5,14 @@ import { SignupDto } from './dto/signup.dto';
 import { User } from '../user/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { DoctorSignupDto } from 'src/doctor/doc.dto';
+import { DoctorService } from 'src/doctor/doc.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
+    private readonly doctorService: DoctorService,
     private jwtService: JwtService,
   ) {}
 
@@ -47,6 +50,41 @@ export class AuthService {
       access_token: await this.jwtService.signAsync({
         sub: user._id,
         email: user.email,
+      }),
+    };
+  }
+
+  async signupDoctor(dto: DoctorSignupDto) {
+    const existing = await this.doctorService.findByEmail(dto.email);
+    if (existing) throw new ConflictException('Email already registered');
+
+    const hashed = await bcrypt.hash(dto.password, 10);
+    const doctor = await this.doctorService.create({
+      ...dto,
+      password: hashed,
+    });
+
+    return {
+      access_token: await this.jwtService.signAsync({
+        sub: doctor._id,
+        email: doctor.email,
+        role: 'doctor',
+      }),
+    };
+  }
+
+  async loginDoctor(email: string, password: string) {
+    const doctor = await this.doctorService.findByEmail(email);
+    if (!doctor) throw new ConflictException('Invalid credentials');
+
+    const isMatch = await bcrypt.compare(password, doctor.password);
+    if (!isMatch) throw new ConflictException('Invalid credentials');
+
+    return {
+      access_token: await this.jwtService.signAsync({
+        sub: doctor._id,
+        email: doctor.email,
+        role: 'doctor',
       }),
     };
   }

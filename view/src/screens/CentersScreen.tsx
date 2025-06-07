@@ -6,7 +6,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -54,6 +54,7 @@ export default function Centers() {
     { cityName: string; imageUrl: string; clinic: any[]; _id: string }[]
   >([]);
   const [bottomCarousel, setBottomCarousel] = useState<{ uri: string }[]>([]);
+  const scrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
     getCenters()
@@ -66,6 +67,13 @@ export default function Centers() {
         console.error('Failed to fetch centers:', err);
       });
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // 👇 Scroll to top on tab focus
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    }, []),
+  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -99,6 +107,7 @@ export default function Centers() {
 
   return (
     <ScrollView
+      ref={scrollRef}
       style={{
         flex: 1,
         backgroundColor: '#f9f9f9',

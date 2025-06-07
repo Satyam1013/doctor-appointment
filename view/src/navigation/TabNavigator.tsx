@@ -13,10 +13,13 @@ import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import FavProductScreen from '../screens/FavProductScreen';
 import TransformationScreen from '../screens/TransformationScreen';
 import { CommonActions } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -27,7 +30,8 @@ export default function BottomTabNavigator() {
           backgroundColor: 'transparent',
           borderTopWidth: 0,
           elevation: 0,
-          height: 60,
+          height: 60 + insets.bottom, // <-- add safe area inset
+          paddingBottom: insets.bottom, // <-- respect bottom inset
           bottom: 0,
         },
         headerShown: false,
@@ -103,6 +107,18 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="Mydent"
         component={withAppShell(MyDentAlignersScreen)}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            e.preventDefault(); // Prevent default tab behavior
+
+            navigation.dispatch(
+              CommonActions.navigate({
+                name: 'Mydent',
+                params: {}, // Clear params to reset
+              }),
+            );
+          },
+        })}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
@@ -136,6 +152,7 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
+
       <Tab.Screen
         name="TransformationBlogDetailsScreen"
         component={withAppShell(TransformationBlogDetailsScreen)}

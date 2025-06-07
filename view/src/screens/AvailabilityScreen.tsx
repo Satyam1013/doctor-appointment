@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 // screens/AvailabilityScreen.tsx
@@ -9,21 +10,35 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Alert,
 } from 'react-native';
+import { updateUser } from '../api/user-api';
 
 const options = ['Yes', 'No'];
 
 export default function AvailabilityScreen({ navigation }: any) {
   const [selected, setSelected] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleNext = () => {
-    navigation.navigate('CheckoutSummary');
+  const handleNext = async () => {
+    if (!selected) return;
+
+    try {
+      setLoading(true);
+      await updateUser({ availability: selected });
+      navigation.navigate('CheckoutSummary');
+    } catch (error) {
+      console.error('Error updating availability:', error);
+      Alert.alert('Error', 'Failed to save your selection. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>
-        Would you be available in india or your current location for entire
+        Would you be available in India or your current location for entire
         treatment duration?
       </Text>
 
@@ -50,11 +65,16 @@ export default function AvailabilityScreen({ navigation }: any) {
         <Text style={styles.stepCounter}>7 / 8 steps</Text>
 
         <TouchableOpacity
-          style={[styles.nextButton, !selected && { opacity: 0.5 }]}
-          disabled={!selected}
+          style={[
+            styles.nextButton,
+            (!selected || loading) && { opacity: 0.5 },
+          ]}
+          disabled={!selected || loading}
           onPress={handleNext}
         >
-          <Text style={styles.nextButtonText}>Next</Text>
+          <Text style={styles.nextButtonText}>
+            {loading ? 'Saving...' : 'Next'}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

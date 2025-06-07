@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -22,7 +22,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { getCarousels } from '../api/carousel-api';
 import { getAligners } from '../api/aligners-api';
 import TeethAlignmentProblems from '../components/TeethAlignmentProblems';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const faqs = [
@@ -61,6 +61,15 @@ const MyDentAlignersScreen = () => {
   const [videos, setVideos] = useState<{ uri: string }[]>([]);
   const [price, setPrice] = useState('');
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
+  const scrollRef = useRef<ScrollView>(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // 👇 Scroll to top on tab focus
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    }, []),
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -103,7 +112,7 @@ const MyDentAlignersScreen = () => {
     setActiveIndex(index === activeIndex ? null : index);
   };
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} ref={scrollRef}>
       {/* Hero Section */}
       <View style={styles.landing}>
         <Text style={styles.title}>Discover Clear Aligners by mydent</Text>
@@ -193,11 +202,9 @@ const MyDentAlignersScreen = () => {
       {/* Why Choose mydent */}
       <View style={styles.section}>
         <Text style={styles.title}>Why Choose mydent?</Text>
-        <Text style={styles.text}>• Certified Quality & FDA approved</Text>
-        <Text style={styles.text}>
-          • In-house manufacturing & 100+ orthodontists
-        </Text>
-        <Text style={styles.text}>• App-based monitoring & home visits</Text>
+        <Text style={styles.text}>• Customized and Comfortable Fit</Text>
+        <Text style={styles.text}>• Affordable and Transparent Pricing</Text>
+        <Text style={styles.text}>• Expert-Supervised Treatment</Text>
       </View>
       {/* Technology */}
       <View style={styles.technology}>
@@ -211,19 +218,26 @@ const MyDentAlignersScreen = () => {
       {/* Benefits */}
       <View style={styles.section}>
         <Text style={styles.title}>Key Benefits of mydent Aligners</Text>
-        <Text style={styles.text}>• Practically invisible</Text>
-        <Text style={styles.text}>• Safe, pain-free & comfortable</Text>
-        <Text style={styles.text}>• Eat anything | Free consultation</Text>
+        <Text style={styles.text}>• Virtually Invisible and Dicreet</Text>
+        <Text style={styles.text}>
+          • Removable for Convenience and Flexibility
+        </Text>
+        <Text style={styles.text}>• Custom-Fit for Comfort and Precision</Text>
+        <Text style={styles.text}>• Affordable and Transparent Pricing</Text>
+        <Text style={styles.text}>• Faster Treatment Times for Many Cases</Text>
+
         <Image source={images[3]} style={styles.image} />
       </View>
       {/* 4 Steps */}
       <View style={styles.section}>
-        <Text style={styles.title}>Start Your Smile Makeover in 4 Steps</Text>
+        <Text style={styles.title}>
+          Transform Your Smile Seamlessly in Just 4 Stages
+        </Text>
         {[
-          'Book a 3D Scan at Home',
-          'Get Your Custom Smile Plan',
-          'Aligners Delivered to You',
-          'Monitor Progress with Our Experts',
+          'Book Your Digital Consultation',
+          'Get Your 3D Smile Scan',
+          'Receive Your Custom Aligners',
+          'Track Progress with Professional Guidance',
         ].map((step, idx) => (
           <View key={idx} style={styles.stepContainer}>
             <View style={styles.stepCircle}>
@@ -236,33 +250,34 @@ const MyDentAlignersScreen = () => {
       {/* Aligner Journey Section */}
       <View style={styles.section}>
         <Text style={styles.title}>
-          Your smile makeOver journey with clear aligners
+          Your path to a stunning smile using clear aligners
         </Text>
         {[
           {
-            title: 'At - Experience Centre',
+            title: 'At - mydent Centre',
             description:
-              'Book a scan at home or visit our 25+ experience centres for a scan and orthodontist consult',
+              'Schedule a convenient at-homescan or visit one of our 100+ expert centers for a scan and consultation with an orthodontis',
             step: '01',
             video: videos[2],
           },
           {
-            title: 'At - Home',
-            description: 'Get your aligners delivered & start your treatment',
+            title: 'At - your residence',
+            description:
+              'Start your treatment as soon as your aligners arrive.',
             step: '02',
             video: videos[3],
           },
           {
-            title: 'Wear & Track',
+            title: 'Insert and access',
             description:
-              'Wear your aligners and track progress via our app with expert support',
+              'Put on your aligners and track your treatment via our app with professional support every step of the way',
             step: '03',
             video: videos[1],
           },
           {
-            title: 'Enjoy Your Smile',
+            title: 'Celebrate your smile',
             description:
-              'Complete your journey and maintain your perfect smile with retainers',
+              'Complete your smile journey and preserve your perfect results with retainer',
             step: '04',
             video: videos[0],
           },
@@ -286,11 +301,14 @@ const MyDentAlignersScreen = () => {
       </View>
       {/* Pricing */}
       <View style={styles.videoSection}>
-        <Text style={styles.title}>Superior quality, affordable prices</Text>
+        <Text style={styles.title}>
+          Top-Notch Quality, Pocket-Friendly Prices
+        </Text>
         <Text style={styles.text}>
-          mydent aligners, proudly #MadeInIndia, are 3D-printed in our own
-          state-of-the-art labs, enabling us to provide best quality US FDA
-          510(k) cleared aligners at prices similar to braces
+          Say hello to Mydent Aligners – proudly #MadeInIndia and crafted with
+          love in our high-tech labs! We use super-precise 3D printing to create
+          smiletransforming aligners that are US FDA 510(k) cleared sheets – so,
+          they’re as safe and effective as they are sleek
         </Text>
 
         {/* Card with image and price info */}
@@ -369,7 +387,14 @@ const MyDentAlignersScreen = () => {
       </View>
       {/* CTA */}
       <Text style={styles.ctaText}>Ready to Start Your Smile Journey?</Text>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          navigation.navigate('Home', {
+            screen: 'ConsultationOption',
+          })
+        }
+      >
         <Text style={styles.buttonText}>Book Your Free Scan</Text>
       </TouchableOpacity>
       <FeatureStats />

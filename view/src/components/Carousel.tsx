@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     height: 200,
     marginBottom: 16,
     zIndex: 1,
+    marginHorizontal: 10,
   },
   container: {
     flex: 1,

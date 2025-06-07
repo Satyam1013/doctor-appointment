@@ -32,6 +32,7 @@ import FavProductScreen from '../screens/FavProductScreen';
 import PaymentScreen from '../screens/CheckoutScreen';
 import ShowAllBlogsScreen from '../screens/ShowAllBlogsScreen';
 import TeethAlignmentProblems from '../components/TeethAlignmentProblems';
+import TermsAndConditionsScreen from '../screens/TermsAndConditionsScreen';
 // import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
@@ -43,6 +44,10 @@ export default function HomeStack() {
       <Stack.Screen
         name="BookingSuccessScreen"
         component={withAppShell(BookingSuccessScreen)}
+      />
+      <Stack.Screen
+        name="TermsAndConditionsScreen"
+        component={withAppShell(TermsAndConditionsScreen)}
       />
       <Stack.Screen
         name="TeethAlignmentProblems"
