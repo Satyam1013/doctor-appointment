@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { User } from '../user/user.schema'; // Update path as needed
+import { User, UserDocument } from 'src/user/user.schema';
 import { Doctor } from 'src/doctor/doc.schema';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class AdminService {
   constructor(
-    @InjectModel('User') private readonly userModel: Model<User>,
-    @InjectModel('Doctor') private readonly doctorModel: Model<Doctor>,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Doctor.name) private doctorModel: Model<Doctor>,
   ) {}
 
   async getAllUsers() {
@@ -21,23 +21,23 @@ export class AdminService {
 
   async assignDoctorToUser(userId: string, doctorId: string, step: number) {
     const user = await this.userModel.findById(userId);
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
 
     const doctor = await this.doctorModel.findById(doctorId);
-    if (!doctor) throw new NotFoundException('Doctor not found');
+    if (!doctor) {
+      throw new NotFoundException('Doctor not found');
+    }
 
-    // Assign embedded object with doctorId, step, and assignedAt (current date)
+    // Assign the doctor
     user.assignedDoctor = {
-      doctorId: doctor._id,
+      doctorId: new Types.ObjectId(doctorId),
       step,
       assignedAt: new Date(),
     };
 
     await user.save();
-
-    return {
-      message: 'Doctor assigned successfully',
-      user,
-    };
+    return { message: 'Doctor assigned successfully', user };
   }
 }
