@@ -1,44 +1,38 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Carousel, CarouselDocument } from '../carousel/carousel.schema';
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { deleteFromCloudinary } from 'src/utils/cloudinary';
+import { User } from '../user/user.schema'; // Update path as needed
+import { Doctor } from 'src/doctor/doc.schema';
 
 @Injectable()
 export class AdminService {
   constructor(
-    @InjectModel(Carousel.name)
-    private readonly carouselModel: Model<CarouselDocument>,
+    @InjectModel('User') private readonly userModel: Model<User>,
+    @InjectModel('Doctor') private readonly doctorModel: Model<Doctor>,
   ) {}
 
-  async getCarousels() {
-    const top = await this.carouselModel.find({ type: 'top' }).exec();
-    const bottom = await this.carouselModel.find({ type: 'bottom' }).exec();
+  async getAllUsers() {
+    return this.userModel.find();
+  }
+
+  async getAllDoctors() {
+    return this.doctorModel.find();
+  }
+
+  async assignDoctorToUser(userId: string, doctorId: string, step: number) {
+    const user = await this.userModel.findById(userId);
+    if (!user) throw new NotFoundException('User not found');
+
+    const doctor = await this.doctorModel.findById(doctorId);
+    if (!doctor) throw new NotFoundException('Doctor not found');
+
+    user.assignedDoctor = doctor._id;
+    user.currentStep = step;
+    await user.save();
 
     return {
-      topCarousel: top,
-      bottomCarousel: bottom,
+      message: 'Doctor assigned successfully',
+      user,
     };
-  }
-
-  async addCarouselImage(type: 'top' | 'bottom', imageUrl: string) {
-    const image = new this.carouselModel({ type, imageUrl });
-    return await image.save();
-  }
-
-  async deleteCarousel(id: string) {
-    const result = await this.carouselModel.findByIdAndDelete(id);
-    if (!result) {
-      throw new NotFoundException('Carousel not found');
-    }
-
-    await deleteFromCloudinary(result.imageUrl);
-
-    return { message: 'Carousel deleted successfully' };
-  }
-
-  async addMultipleCarouselImages(type: 'top' | 'bottom', imageUrls: string[]) {
-    const documents = imageUrls.map((url) => ({ type, imageUrl: url }));
-    return await this.carouselModel.insertMany(documents);
   }
 }

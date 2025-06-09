@@ -12,6 +12,7 @@ import { FavModule } from './favorite/fav.module';
 import { MydentAlignersModule } from './aligners/aligners.module';
 import { PaymentsModule } from './payment/payment.module';
 import { ContactUsModule } from './contacts/contacts.module';
+import { CarouselModule } from './carousel/carousel.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ContactUsModule } from './contacts/contacts.module';
     AuthModule,
     UserModule,
     ProductsModule,
+    CarouselModule,
     CartModule,
     AdminModule,
     CentersModule,

@@ -14,4 +14,4 @@ import { CarouselController } from './carousel.controller';
   providers: [CarouselService],
   exports: [CarouselService, MongooseModule],
 })
-export class AdminModule {}
+export class CarouselModule {}

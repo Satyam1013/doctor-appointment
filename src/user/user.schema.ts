@@ -1,8 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
+
+export type UserDocument = HydratedDocument<User>;
 
 @Schema()
-export class User extends Document {
+export class User {
   @Prop({ required: true, unique: true })
   email!: string;
 
@@ -18,28 +20,27 @@ export class User extends Document {
   @Prop({ type: Number, default: 0 })
   balance!: number;
 
-  @Prop({ type: String, required: false })
+  @Prop()
   ageGroup?: string;
 
-  @Prop({ type: String, required: false })
+  @Prop()
   teethIssue?: string;
 
-  @Prop({ type: String, required: false })
+  @Prop()
   problemText?: string;
 
   @Prop({ type: [String], default: [] })
   medicalHistory?: string[];
 
-  @Prop({ type: String, required: false })
+  @Prop()
   gender?: string;
 
-  @Prop({ type: String, required: false })
+  @Prop()
   smoker?: string;
 
-  @Prop({ type: String, required: false })
+  @Prop()
   availability?: string;
 
-  // ✅ Assigned doctor and step number
   @Prop({ type: Types.ObjectId, ref: 'Doctor' })
   assignedDoctor?: Types.ObjectId;
 
