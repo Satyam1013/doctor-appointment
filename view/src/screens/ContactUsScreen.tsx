@@ -24,6 +24,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Transformation from '../components/Transformation';
 import ProductCard from '../components/ProductCard';
 import { getContactUs } from '../api/contact-us-api';
+import { AVPlaybackSource, ResizeMode, Video } from 'expo-av';
 
 const products = [
   {
@@ -92,8 +93,8 @@ export default function ContactUsScreen() {
   const [activeAlignerIndex, setActiveAlignerIndex] = useState<number | null>(
     null,
   );
-  const [video, setVideo] = useState('');
-  console.log('✨ ~ video:', video)
+  const [video, setVideo] = useState<AVPlaybackSource | undefined>(undefined);
+  console.log('✨ ~ video:', video);
 
   const navigation = useNavigation<NavigationProp<any>>();
   const { user } = useUser();
@@ -110,10 +111,10 @@ export default function ContactUsScreen() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const video = await getContactUs();
-        const x = video.data;
+        const res = await getContactUs();
+        const video = res.data[0];
 
-        setVideo(x);
+        setVideo({ uri: video.video });
       } catch (err) {
         console.error('Failed to fetch aligner or carousel data:', err);
       }
@@ -309,6 +310,16 @@ export default function ContactUsScreen() {
         ))}
       </View>
       {/* 5. Video Section */}
+      <View style={styles.videoStepContainer}>
+        <Video
+          source={video}
+          style={styles.videoFull}
+          resizeMode={ResizeMode.CONTAIN}
+          isLooping
+          isMuted
+          shouldPlay
+        />
+      </View>
       {/* 6. Product Section & FAQs */}
       <View style={styles.sectionCard}>
         <View style={styles.sectionHeader}>
@@ -485,6 +496,15 @@ const styles = StyleSheet.create({
   },
   item: {
     marginBottom: 12,
+  },
+  videoStepContainer: {
+    margin: 16,
+  },
+  videoFull: {
+    width: '100%',
+    aspectRatio: 16 / 9, // Maintain full visibility
+    borderRadius: 12,
+    backgroundColor: '#000',
   },
   questionRow: {
     flexDirection: 'row',
