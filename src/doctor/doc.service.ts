@@ -1,17 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Doctor } from './doc.schema';
+import { Doctor, DoctorDocument } from './doc.schema'; // ✅ use DoctorDocument
 
 @Injectable()
 export class DoctorService {
-  constructor(@InjectModel(Doctor.name) private doctorModel: Model<Doctor>) {}
+  constructor(
+    @InjectModel(Doctor.name) private doctorModel: Model<DoctorDocument>,
+  ) {} // ✅ use DoctorDocument
 
-  async findByEmail(email: string): Promise<Doctor | null> {
-    return this.doctorModel.findOne({ email });
+  async findByEmail(email: string): Promise<DoctorDocument | null> {
+    return this.doctorModel.findOne({ email }).exec(); // ✅ ensure Promise resolves
   }
 
-  async create(data: Partial<Doctor>): Promise<Doctor> {
-    return this.doctorModel.create(data);
+  async create(data: Partial<Doctor>): Promise<DoctorDocument> {
+    const doc = new this.doctorModel(data);
+    return doc.save(); // ✅ returns a hydrated document
   }
 }
