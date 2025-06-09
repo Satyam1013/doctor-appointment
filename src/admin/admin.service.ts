@@ -1,4 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from 'src/user/user.schema';
 import { Doctor } from 'src/doctor/doc.schema';
@@ -37,7 +43,12 @@ export class AdminService {
       assignedAt: new Date(),
     };
 
-    await user.save();
-    return { message: 'Doctor assigned successfully', user };
+    try {
+      await user.save(); // This will now validate properly if mobile is present
+      return { message: 'Doctor assigned successfully', user };
+    } catch (err) {
+      // Optional: log error if needed
+      throw new InternalServerErrorException('Failed to assign doctor');
+    }
   }
 }

@@ -1,20 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
-
-class AssignedDoctor {
-  @Prop({ type: Types.ObjectId, ref: 'Doctor', required: true })
-  doctorId!: Types.ObjectId;
-
-  @Prop({ type: Number, enum: [1, 2, 3, 4], required: true })
-  step!: number;
-
-  @Prop({ type: Date, default: Date.now })
-  assignedAt!: Date;
-}
-
-const AssignedDoctorSchema = SchemaFactory.createForClass(AssignedDoctor);
 
 @Schema()
 export class User {
@@ -54,9 +41,22 @@ export class User {
   @Prop()
   availability?: string;
 
-  // Embedded object for doctor assignment
-  @Prop({ type: AssignedDoctorSchema, required: false })
-  assignedDoctor?: AssignedDoctor;
+  @Prop({
+    type: {
+      doctorId: {
+        type: MongooseSchema.Types.ObjectId,
+        ref: 'Doctor',
+        required: true,
+      },
+      step: { type: Number, enum: [1, 2, 3, 4], required: true },
+      assignedAt: { type: Date, required: true },
+    },
+  })
+  assignedDoctor?: {
+    doctorId: Types.ObjectId;
+    step: number;
+    assignedAt: Date;
+  };
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
