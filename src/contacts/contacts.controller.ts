@@ -1,6 +1,7 @@
 import {
   Controller,
   Post,
+  Get,
   Body,
   UploadedFile,
   UseInterceptors,
@@ -21,7 +22,7 @@ export class ContactUsController {
       storage: memoryStorage(),
     }),
   )
-  async submitContactForm(
+  async testimonialVideo(
     @UploadedFile() file: Express.Multer.File,
     @Body() body: CreateContactUsDto,
   ) {
@@ -39,5 +40,10 @@ export class ContactUsController {
       ...body,
       video: videoUrl ?? '',
     });
+  }
+
+  @Get()
+  async getAllTestimonials() {
+    return this.service.findAll();
   }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
@@ -18,9 +20,10 @@ import {
 import { addToCart } from '../api/cart-api';
 import FeatureStats from '../components/FeatureStats';
 import { Ionicons } from '@expo/vector-icons';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Transformation from '../components/Transformation';
 import ProductCard from '../components/ProductCard';
+import { getContactUs } from '../api/contact-us-api';
 
 const products = [
   {
@@ -89,6 +92,8 @@ export default function ContactUsScreen() {
   const [activeAlignerIndex, setActiveAlignerIndex] = useState<number | null>(
     null,
   );
+  const [video, setVideo] = useState('');
+  console.log('✨ ~ video:', video)
 
   const navigation = useNavigation<NavigationProp<any>>();
   const { user } = useUser();
@@ -101,6 +106,21 @@ export default function ContactUsScreen() {
       scrollRef.current?.scrollTo({ y: 0, animated: false });
     }, []),
   );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const video = await getContactUs();
+        const x = video.data;
+
+        setVideo(x);
+      } catch (err) {
+        console.error('Failed to fetch aligner or carousel data:', err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const toggleAlignerFAQ = (index: number) => {
     setActiveAlignerIndex(activeAlignerIndex === index ? null : index);
