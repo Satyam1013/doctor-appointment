@@ -26,8 +26,13 @@ export class AdminService {
     const doctor = await this.doctorModel.findById(doctorId);
     if (!doctor) throw new NotFoundException('Doctor not found');
 
-    user.assignedDoctor = doctor._id;
-    user.currentStep = step;
+    // Assign embedded object with doctorId, step, and assignedAt (current date)
+    user.assignedDoctor = {
+      doctorId: doctor._id,
+      step,
+      assignedAt: new Date(),
+    };
+
     await user.save();
 
     return {

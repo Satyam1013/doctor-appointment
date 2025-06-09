@@ -3,6 +3,19 @@ import { HydratedDocument, Types } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
+class AssignedDoctor {
+  @Prop({ type: Types.ObjectId, ref: 'Doctor', required: true })
+  doctorId!: Types.ObjectId;
+
+  @Prop({ type: Number, enum: [1, 2, 3, 4], required: true })
+  step!: number;
+
+  @Prop({ type: Date, default: Date.now })
+  assignedAt!: Date;
+}
+
+const AssignedDoctorSchema = SchemaFactory.createForClass(AssignedDoctor);
+
 @Schema()
 export class User {
   @Prop({ required: true, unique: true })
@@ -41,11 +54,9 @@ export class User {
   @Prop()
   availability?: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'Doctor' })
-  assignedDoctor?: Types.ObjectId;
-
-  @Prop({ type: Number, enum: [1, 2, 3, 4], default: 1 })
-  currentStep?: number;
+  // Embedded object for doctor assignment
+  @Prop({ type: AssignedDoctorSchema, required: false })
+  assignedDoctor?: AssignedDoctor;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
