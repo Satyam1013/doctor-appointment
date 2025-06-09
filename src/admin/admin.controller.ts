@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Delete,
+  Param,
+} from '@nestjs/common';
 import { AdminService } from './admin.service';
 
 @Controller('admin')
@@ -24,5 +33,29 @@ export class AdminController {
       body.doctorId,
       body.step,
     );
+  }
+
+  // Update User
+  @Patch('user/:id')
+  updateUser(@Param('id') id: string, @Body() body: any) {
+    return this.adminService.updateUser(id, body);
+  }
+
+  // Delete User
+  @Delete('user/:id')
+  deleteUser(@Param('id') id: string) {
+    return this.adminService.deleteUser(id);
+  }
+
+  // Update Doctor
+  @Patch('doctor/:id')
+  updateDoctor(@Param('id') id: string, @Body() body: any) {
+    return this.adminService.updateDoctor(id, body);
+  }
+
+  // Delete Doctor
+  @Delete('doctor/:id')
+  deleteDoctor(@Param('id') id: string) {
+    return this.adminService.deleteDoctor(id);
   }
 }
