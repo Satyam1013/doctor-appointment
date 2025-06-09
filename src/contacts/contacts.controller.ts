@@ -37,7 +37,7 @@ export class ContactUsController {
 
     return this.service.create({
       ...body,
-      video: videoUrl,
+      video: videoUrl ?? '',
     });
   }
 }
