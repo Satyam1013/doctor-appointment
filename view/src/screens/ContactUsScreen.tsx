@@ -758,6 +758,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   todayAppointmentCard: {
+    padding: 20,
     backgroundColor: '#f2f2f2',
     marginHorizontal: 16,
     borderRadius: 12,

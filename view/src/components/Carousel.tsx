@@ -16,11 +16,13 @@ interface CarouselProps {
 }
 
 const { width: screenWidth } = Dimensions.get('window');
+const horizontalMargin = 10;
+const imageWidth = screenWidth - horizontalMargin * 2;
 
 export default function Carousel({ images }: CarouselProps) {
   const scrollRef = useRef<ScrollView>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const navigation = useNavigation<NativeStackNavigationProp<any>>(); // Or define your stack type
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,9 +52,11 @@ export default function Carousel({ images }: CarouselProps) {
         scrollEnabled={true}
       >
         {images.map((img, idx) => (
-          <Pressable key={idx} onPress={handlePress}>
-            <Image source={img} style={styles.image} />
-          </Pressable>
+          <View key={idx} style={styles.imageWrapper}>
+            <Pressable onPress={handlePress}>
+              <Image source={img} style={styles.image} />
+            </Pressable>
+          </View>
         ))}
       </ScrollView>
     </View>
@@ -62,16 +66,21 @@ export default function Carousel({ images }: CarouselProps) {
 const styles = StyleSheet.create({
   wrapper: {
     height: 200,
-    marginBottom: 16,
-    zIndex: 1,
-    marginHorizontal: 10,
+    marginBottom: 20,
   },
   container: {
     flex: 1,
   },
-  image: {
+  imageWrapper: {
     width: screenWidth,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: imageWidth,
     height: 200,
+    borderRadius: 10,
     resizeMode: 'cover',
+    overflow: 'hidden',
   },
 });

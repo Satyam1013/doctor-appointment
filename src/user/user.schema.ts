@@ -38,6 +38,9 @@ export class User extends Document {
 
   @Prop({ type: String, required: false })
   availability?: string;
+
+  @Prop({ type: String, required: false })
+  step?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

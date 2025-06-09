@@ -11,6 +11,7 @@ import { BlogsModule } from './transformation/transformation.module';
 import { FavModule } from './favorite/fav.module';
 import { MydentAlignersModule } from './aligners/aligners.module';
 import { PaymentsModule } from './payment/payment.module';
+import { ContactUsModule } from './contacts/contacts.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { PaymentsModule } from './payment/payment.module';
     FavModule,
     MydentAlignersModule,
     PaymentsModule,
+    ContactUsModule,
   ],
 })
 export class AppModule {}
