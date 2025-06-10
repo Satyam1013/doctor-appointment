@@ -17,8 +17,6 @@ export default function App() {
   return (
     <GestureHandlerRootView style={styles.root}>
       <PaperProvider>
-        {' '}
-        {/* ✅ WRAP EVERYTHING IN THIS */}
         <SafeAreaProvider>
           <SafeAreaView style={styles.root} edges={['top', 'left', 'right']}>
             <QueryClientProvider client={queryClient}>

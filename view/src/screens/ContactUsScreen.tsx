@@ -91,10 +91,32 @@ const alignerFAQs = [
 ];
 
 interface DoctorAssignment {
-  doctorId: string;
+  doctor: {
+    _id: string;
+    name: string;
+    specialization?: string;
+    email?: string;
+    place?: string;
+  };
   step: number;
   assignedAt: Date;
 }
+
+const formatAppointmentDateTime = (date: Date | null) => {
+  if (!date) return { dateString: '', timeString: '' };
+
+  return {
+    dateString: date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+    }),
+    timeString: date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    }),
+  };
+};
 
 export default function ContactUsScreen() {
   const [activeAlignerIndex, setActiveAlignerIndex] = useState<number | null>(
@@ -121,7 +143,11 @@ export default function ContactUsScreen() {
     const fetchDoctorData = async () => {
       try {
         const res = await getDoctorAssignment();
-        setDoctorAssignment(res.data);
+        const assignment = {
+          ...res.data,
+          assignedAt: new Date(res.data.assignedAt),
+        };
+        setDoctorAssignment(assignment);
       } catch (err) {
         console.error('Failed to fetch doctor assignment:', err);
       }
@@ -193,71 +219,124 @@ export default function ContactUsScreen() {
       <View style={styles.sectionCard}>
         <Text style={styles.sectionTitle}>Program Structure</Text>
         <View style={styles.timelineContainer}>
-          {programSteps.map((item, index) => (
-            <View key={index} style={styles.stepContainer}>
-              {/* Circle marker */}
-              <View
-                style={[
-                  styles.circle,
-                  index === 0 ? styles.filledCircle : styles.hollowCircle,
-                ]}
-              />
+          {programSteps.map((item, index) => {
+            // Get current step from doctorAssignment (default to 0 if not available)
+            const currentStep = doctorAssignment?.step || 0;
+            // Step numbers start at 1, so we compare with index+1
+            const isCompleted = index + 1 < currentStep;
+            const isCurrent = index + 1 === currentStep;
 
-              {/* Vertical connector line */}
-              {index !== programSteps.length - 1 && (
-                <View style={styles.verticalLine} />
-              )}
+            return (
+              <View key={index} style={styles.stepContainer}>
+                {/* Circle marker - filled if completed or current */}
+                <View
+                  style={[
+                    styles.circle,
+                    isCompleted || isCurrent
+                      ? styles.filledCircle
+                      : styles.hollowCircle,
+                    isCurrent && styles.currentCircle, // Add special style for current step
+                  ]}
+                />
 
-              {/* Text container */}
-              <View style={styles.stepTextWrapper}>
-                <Text style={styles.stepTitle}>{item.title}</Text>
-                <Text style={styles.stepSession}>{item.sessions}</Text>
+                {/* Vertical connector line - filled if next step is completed */}
+                {index !== programSteps.length - 1 && (
+                  <View
+                    style={[
+                      styles.verticalLine,
+                      isCompleted && styles.completedLine,
+                    ]}
+                  />
+                )}
+
+                {/* Text container */}
+                <View style={styles.stepTextWrapper}>
+                  <Text
+                    style={[
+                      styles.stepTitle,
+                      (isCompleted || isCurrent) && styles.completedText,
+                    ]}
+                  >
+                    {item.title}
+                  </Text>
+                  <Text style={styles.stepSession}>{item.sessions}</Text>
+                </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
         </View>
       </View>
       {/* 3. Schedule */}
       <View style={styles.todayAppointmentCard}>
-        <Text style={styles.todayTitle}>Today Appointment</Text>
-        <Text style={styles.appointmentId}>
-          Appointment ID: 345567872782889
-        </Text>
-        <View style={styles.doctorInfo}>
-          <Image
-            source={{ uri: 'https://i.ibb.co/35mrrKZh/consultant.jpg' }}
-            style={styles.expertImage}
-          />
-          <View style={{ flex: 1, marginLeft: 10 }}>
-            <Text style={styles.doctorName}>Dr. Preeti Chhabra</Text>
-            <Text style={styles.doctorSpeciality}>
-              Orthodontist (Aligner Specialist)
+        <Text style={styles.todayTitle}>Today's Appointment</Text>
+
+        {doctorAssignment ? (
+          <>
+            <Text style={styles.appointmentId}>
+              Appointment ID: {doctorAssignment.doctor._id}
             </Text>
-            <Text style={styles.ratingStars}>★★★★★</Text>
-            <View style={styles.timeRow}>
-              <Text style={styles.scheduleTime}>🕒 1:30PM</Text>
-              <Text style={[styles.scheduleDate, { marginLeft: 10 }]}>
-                📅 10 Aug
-              </Text>
+            <View style={styles.doctorInfo}>
+              <Image
+                source={{ uri: 'https://i.ibb.co/35mrrKZh/consultant.jpg' }}
+                style={styles.expertImage}
+              />
+              <View style={{ flex: 1, marginLeft: 10 }}>
+                <Text style={styles.doctorName}>
+                  {doctorAssignment.doctor.name}
+                </Text>
+                <Text style={styles.doctorSpeciality}>
+                  {doctorAssignment.doctor.specialization}
+                </Text>
+                <Text style={styles.ratingStars}>★★★★★</Text>
+                <View style={styles.timeRow}>
+                  <Text style={styles.scheduleTime}>
+                    🕒{' '}
+                    {
+                      formatAppointmentDateTime(doctorAssignment.assignedAt)
+                        .timeString
+                    }
+                  </Text>
+                  <Text style={[styles.scheduleDate, { marginLeft: 10 }]}>
+                    📅{' '}
+                    {
+                      formatAppointmentDateTime(doctorAssignment.assignedAt)
+                        .dateString
+                    }
+                  </Text>
+                </View>
+              </View>
             </View>
+
+            <View style={styles.buttonRow}>
+              <TouchableOpacity style={styles.joinButton}>
+                <Text style={styles.joinButtonText}>Join video call</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.rescheduleButton}>
+                <Text style={styles.rescheduleText}>Reschedule</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.uploadRow}>
+              <Text style={styles.uploadText}>📎 Upload Reports</Text>
+              <TouchableOpacity>
+                <Text style={styles.viewText}>View</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        ) : (
+          <View style={styles.noAppointmentContainer}>
+            <Image
+              source={{ uri: 'https://i.ibb.co/35mrrKZh/consultant.jpg' }}
+              style={styles.noAppointmentImage}
+            />
+            <Text style={styles.noAppointmentText}>
+              No appointment scheduled
+            </Text>
+            <TouchableOpacity style={styles.bookButton}>
+              <Text style={styles.bookButtonText}>Book an Appointment</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-
-        <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.joinButton}>
-            <Text style={styles.joinButtonText}>Join video call</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rescheduleButton}>
-            <Text style={styles.rescheduleText}>Reschedule</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.uploadRow}>
-          <Text style={styles.uploadText}>📎 Upload Reports</Text>
-          <TouchableOpacity>
-            <Text style={styles.viewText}>View</Text>
-          </TouchableOpacity>
-        </View>
+        )}
       </View>
       {/* 4. Team of Experts*/}
       <View style={styles.sectionCard}>
@@ -494,6 +573,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f9fb',
     flex: 1,
     paddingBottom: 120,
+  },
+  currentCircle: {
+    backgroundColor: '#FFC107', // Yellow for current step
+    borderColor: '#FFC107',
   },
   title: {
     fontSize: 20,
@@ -856,6 +939,12 @@ const styles = StyleSheet.create({
     color: '#4CAF50',
     marginTop: 2,
   },
+  completedLine: {
+    backgroundColor: '#4CAF50', // Green for completed connectors
+  },
+  completedText: {
+    fontWeight: 'bold',
+  },
   timeRow: {
     flexDirection: 'row',
     marginTop: 6,
@@ -945,5 +1034,30 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
+  },
+  noAppointmentContainer: {
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+  noAppointmentImage: {
+    width: 120,
+    height: 120,
+    marginBottom: 16,
+  },
+  noAppointmentText: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  bookButton: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  bookButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
