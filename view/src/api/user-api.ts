@@ -4,10 +4,6 @@ export const getUserDetails = () => {
   return axiosClient.get('/users/details');
 };
 
-export const getAllUsers = () => {
-  return axiosClient.get('/users');
-};
-
 export const updateUser = (
   updates: Partial<{
     firstName: string;
@@ -23,4 +19,8 @@ export const updateUser = (
   }>,
 ) => {
   return axiosClient.patch('/users/edit', updates);
+};
+
+export const getDoctorAssignment = () => {
+  return axiosClient.get('/users/doctor-assignment');
 };

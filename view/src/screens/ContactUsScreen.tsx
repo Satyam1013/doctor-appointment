@@ -25,6 +25,7 @@ import Transformation from '../components/Transformation';
 import ProductCard from '../components/ProductCard';
 import { getContactUs } from '../api/contact-us-api';
 import { AVPlaybackSource, ResizeMode, Video } from 'expo-av';
+import { getDoctorAssignment } from '../api/user-api';
 
 const products = [
   {
@@ -89,12 +90,20 @@ const alignerFAQs = [
   },
 ];
 
+interface DoctorAssignment {
+  doctorId: string;
+  step: number;
+  assignedAt: Date;
+}
+
 export default function ContactUsScreen() {
   const [activeAlignerIndex, setActiveAlignerIndex] = useState<number | null>(
     null,
   );
   const [video, setVideo] = useState<AVPlaybackSource | undefined>(undefined);
-  console.log('✨ ~ video:', video);
+
+  const [doctorAssignment, setDoctorAssignment] =
+    useState<DoctorAssignment | null>(null);
 
   const navigation = useNavigation<NavigationProp<any>>();
   const { user } = useUser();
@@ -109,18 +118,27 @@ export default function ContactUsScreen() {
   );
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchDoctorData = async () => {
       try {
-        const res = await getContactUs();
-        const video = res.data[0];
-
-        setVideo({ uri: video.video });
+        const res = await getDoctorAssignment();
+        setDoctorAssignment(res.data);
       } catch (err) {
-        console.error('Failed to fetch aligner or carousel data:', err);
+        console.error('Failed to fetch doctor assignment:', err);
       }
     };
 
-    fetchData();
+    const fetchContactData = async () => {
+      try {
+        const res = await getContactUs();
+        const video = res.data[0];
+        setVideo({ uri: video.video });
+      } catch (err) {
+        console.error('Failed to fetch contact data:', err);
+      }
+    };
+
+    fetchDoctorData();
+    fetchContactData();
   }, []);
 
   const toggleAlignerFAQ = (index: number) => {

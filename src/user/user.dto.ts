@@ -1,5 +1,4 @@
 import { IsEmail, IsOptional, IsString, IsArray } from 'class-validator';
-import { Types } from 'mongoose';
 
 export class UpdateUserDto {
   @IsOptional()
@@ -45,7 +44,13 @@ export class UpdateUserDto {
 }
 
 export class DoctorAssignmentDto {
-  doctorId!: Types.ObjectId;
+  doctor!: {
+    _id: string;
+    name: string;
+    specialization?: string;
+    email?: string;
+    place?: string;
+  };
   step!: number;
   assignedAt!: Date;
 }

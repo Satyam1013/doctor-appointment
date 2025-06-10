@@ -49,11 +49,16 @@ export class UserService {
     if (!result) throw new NotFoundException('User not found');
   }
 
-  async getDoctorAssignment(id: string): Promise<DoctorAssignmentDto> {
+  async getDoctorAssignment(id: string): Promise<any> {
     try {
       const user = await this.userModel
         .findById(id)
         .select('assignedDoctor')
+        .populate({
+          path: 'assignedDoctor.doctorId',
+          select: 'name specialty email specialization place',
+          model: 'Doctor',
+        })
         .exec();
 
       if (!user) {
@@ -67,7 +72,7 @@ export class UserService {
       }
 
       return {
-        doctorId: user.assignedDoctor.doctorId,
+        doctor: user.assignedDoctor.doctorId,
         step: user.assignedDoctor.step,
         assignedAt: user.assignedDoctor.assignedAt,
       };
