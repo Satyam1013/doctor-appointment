@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
+import { DoctorAssignmentDto } from './user.dto';
 
 @Injectable()
 export class UserService {
@@ -21,16 +22,6 @@ export class UserService {
       console.error(err);
       throw err;
     }
-  }
-
-  // Create user
-  create(data: Partial<User>): Promise<User> {
-    return this.userModel.create(data);
-  }
-
-  // Get all users
-  findAll(): Promise<User[]> {
-    return this.userModel.find().select('-password').exec();
   }
 
   // Update user
@@ -56,5 +47,36 @@ export class UserService {
   async deleteUser(id: string): Promise<void> {
     const result = await this.userModel.findByIdAndDelete(id);
     if (!result) throw new NotFoundException('User not found');
+  }
+
+  async getDoctorAssignment(id: string): Promise<DoctorAssignmentDto> {
+    try {
+      const user = await this.userModel
+        .findById(id)
+        .select('assignedDoctor')
+        .exec();
+
+      if (!user) {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+
+      if (!user.assignedDoctor) {
+        throw new NotFoundException(
+          `No doctor assigned for user with ID ${id}`,
+        );
+      }
+
+      return {
+        doctorId: user.assignedDoctor.doctorId,
+        step: user.assignedDoctor.step,
+        assignedAt: user.assignedDoctor.assignedAt,
+      };
+    } catch (error) {
+      console.error(
+        `Failed to get doctor assignment for user with ID ${id}:`,
+        error,
+      );
+      throw error;
+    }
   }
 }
