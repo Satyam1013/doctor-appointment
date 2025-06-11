@@ -210,103 +210,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 16,
+    paddingBottom: 20,
     backgroundColor: '#ffffff',
   },
-  imageContainer: {
-    position: 'relative',
-    width: '100%',
-    height: 120,
-    borderRadius: 8,
-    overflow: 'hidden',
-    backgroundColor: '#f9f9f9',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 
-  badge: {
-    position: 'absolute',
-    top: 6,
-    left: 6,
-    backgroundColor: '#ff5252',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
-    zIndex: 2,
-  },
-
-  badgeText: {
-    color: '#fff',
-    fontSize: 10,
-    fontWeight: 'bold',
-  },
-
-  card: {
-    width: 160,
-    height: 260,
-    padding: 10,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    marginHorizontal: 8,
-    marginBottom: 16,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    justifyContent: 'space-between',
-  },
-
-  cardImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
-
-  cardName: {
-    fontSize: 13,
-    fontWeight: '500',
-    marginTop: 8,
-    color: '#333',
-  },
-
-  priceRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 4,
-    gap: 6,
-  },
-
-  cardPrice: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-
-  originalPrice: {
-    fontSize: 12,
-    color: '#888',
-    textDecorationLine: 'line-through',
-  },
-
-  discount: {
-    fontSize: 12,
-    color: '#ff5252',
-    fontWeight: '600',
-  },
-
-  addButton: {
-    marginTop: 10,
-    backgroundColor: '#007bff',
-    paddingVertical: 6,
-    borderRadius: 6,
-  },
-
-  addText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: '600',
-    fontSize: 12,
-  },
   header: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -367,13 +274,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-
-  adImage: {
-    width: '100%',
-    height: 100,
-    resizeMode: 'cover',
-    borderRadius: 10,
-    marginTop: 12,
   },
 });

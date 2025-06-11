@@ -408,6 +408,15 @@ export default function ContactUsScreen() {
       </View>
       {/* 5. Video Section */}
       <View style={styles.videoStepContainer}>
+        {/* Heading and View All button */}
+        <View style={styles.headerRow}>
+          <Text style={styles.heading}>Testimonials</Text>
+          <TouchableOpacity onPress={() => {}}>
+            <Text style={styles.viewAll}>View All</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Video component */}
         <Video
           source={video}
           style={styles.videoFull}
@@ -584,12 +593,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#00A67E',
   },
-  addToCartButton: {
-    marginTop: 8,
-    backgroundColor: '#00AEEF',
-    borderRadius: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  viewAll: {
+    fontSize: 14,
+    color: '#007BFF', // Or any accent color
   },
   faq: {
     padding: 20,
@@ -628,13 +644,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     lineHeight: 20,
-  },
-
-  addToCartText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
   },
   welcomeContainer: {
     flexDirection: 'row',

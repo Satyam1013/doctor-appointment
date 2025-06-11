@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   scrollContent: {
-    paddingBottom: 100,
+    paddingBottom: 30,
   },
   loader: {
     flex: 1,

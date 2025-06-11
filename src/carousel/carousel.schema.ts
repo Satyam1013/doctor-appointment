@@ -5,8 +5,17 @@ export type CarouselDocument = Carousel & Document;
 
 @Schema({ timestamps: true })
 export class Carousel {
-  @Prop({ required: true, enum: ['top', 'bottom'] })
-  type!: 'top' | 'bottom';
+  @Prop({
+    required: true,
+    enum: ['top', 'bottom', 'mydent', 'shop-top', 'shop-middle', 'shop-bottom'],
+  })
+  type!:
+    | 'top'
+    | 'bottom'
+    | 'mydent'
+    | 'shop-top'
+    | 'shop-middle'
+    | 'shop-bottom';
 
   @Prop({ required: true })
   imageUrl!: string;

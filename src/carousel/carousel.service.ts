@@ -12,18 +12,28 @@ export class CarouselService {
   ) {}
 
   async getCarousels() {
-    const top = await this.carouselModel.find({ type: 'top' }).exec();
-    const bottom = await this.carouselModel.find({ type: 'bottom' }).exec();
+    const [top, bottom, mydent, shopTop, shopMiddle, shopBottom] =
+      await Promise.all([
+        this.carouselModel.find({ type: 'top' }).exec(),
+        this.carouselModel.find({ type: 'bottom' }).exec(),
+        this.carouselModel.find({ type: 'mydent' }).exec(),
+        this.carouselModel.find({ type: 'shop-top' }).exec(),
+        this.carouselModel.find({ type: 'shop-middle' }).exec(),
+        this.carouselModel.find({ type: 'shop-bottom' }).exec(),
+      ]);
 
     return {
-      topCarousel: top,
-      bottomCarousel: bottom,
+      home: {
+        topCarousel: top,
+        bottomCarousel: bottom,
+        mydentCarousel: mydent,
+      },
+      shop: {
+        topCarousel: shopTop,
+        middleCarousel: shopMiddle,
+        bottomCarousel: shopBottom,
+      },
     };
-  }
-
-  async addCarouselImage(type: 'top' | 'bottom', imageUrl: string) {
-    const image = new this.carouselModel({ type, imageUrl });
-    return await image.save();
   }
 
   async deleteCarousel(id: string) {
@@ -37,7 +47,16 @@ export class CarouselService {
     return { message: 'Carousel deleted successfully' };
   }
 
-  async addMultipleCarouselImages(type: 'top' | 'bottom', imageUrls: string[]) {
+  async addMultipleCarouselImages(
+    type:
+      | 'top'
+      | 'bottom'
+      | 'mydent'
+      | 'shop-top'
+      | 'shop-middle'
+      | 'shop-bottom',
+    imageUrls: string[],
+  ) {
     const documents = imageUrls.map((url) => ({ type, imageUrl: url }));
     return await this.carouselModel.insertMany(documents);
   }

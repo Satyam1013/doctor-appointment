@@ -35,7 +35,14 @@ export class CarouselController {
   )
   async uploadMultipleImages(
     @UploadedFiles() files: Express.Multer.File[],
-    @Body('type') type: 'top' | 'bottom',
+    @Body('type')
+    type:
+      | 'top'
+      | 'bottom'
+      | 'mydent'
+      | 'shop-top'
+      | 'shop-middle'
+      | 'shop-bottom',
   ) {
     const uploadResults = await Promise.all(
       files.map(async (file) => {
