@@ -29,6 +29,10 @@ export class DoctorService {
 
   // 1. Get all assigned users to this doctor
   async getAssignedUsers(doctorId: string): Promise<UserDocument[]> {
+    const dd = this.userModel
+      .find({ 'assignedDoctor.doctorId': doctorId })
+      .exec();
+    console.log('dd', dd);
     return this.userModel.find({ 'assignedDoctor.doctorId': doctorId }).exec();
   }
 

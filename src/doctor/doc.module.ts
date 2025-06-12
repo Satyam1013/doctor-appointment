@@ -5,6 +5,7 @@ import { DoctorService } from './doc.service';
 import { UserModule } from 'src/user/user.module';
 import { AppointmentModule } from 'src/appointments/app.module';
 import { ReviewModule } from 'src/review/doc.module';
+import { DoctorController } from './doc.controller';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ReviewModule } from 'src/review/doc.module';
     AppointmentModule,
   ],
   providers: [DoctorService],
+  controllers: [DoctorController],
   exports: [DoctorService],
 })
 export class DoctorModule {}
