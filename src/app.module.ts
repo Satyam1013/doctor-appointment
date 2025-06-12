@@ -13,6 +13,7 @@ import { MydentAlignersModule } from './aligners/aligners.module';
 import { PaymentsModule } from './payment/payment.module';
 import { ContactUsModule } from './contacts/contacts.module';
 import { CarouselModule } from './carousel/carousel.module';
+import { DoctorModule } from './doctor/doc.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CarouselModule } from './carousel/carousel.module';
     ProductsModule,
     CarouselModule,
     CartModule,
+    DoctorModule,
     AdminModule,
     CentersModule,
     BlogsModule,
