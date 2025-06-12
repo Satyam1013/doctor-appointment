@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Controller, Get, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 import { DoctorService } from './doc.service';
-import { AuthGuard } from '@nestjs/passport';
 import { AuthRequest } from 'src/common/auth-req';
 
 @Controller('doctor')
-@UseGuards(AuthGuard('jwt'))
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
