@@ -31,10 +31,12 @@ export default function HomeScreen({ navigation }: any) {
       try {
         const res = await getCarousels();
         setTopCarousel(
-          res.data.topCarousel.map((img: any) => ({ uri: img.imageUrl })),
+          res.data.home.topCarousel.map((img: any) => ({ uri: img.imageUrl })),
         );
         setBottomCarousel(
-          res.data.bottomCarousel.map((img: any) => ({ uri: img.imageUrl })),
+          res.data.home.bottomCarousel.map((img: any) => ({
+            uri: img.imageUrl,
+          })),
         );
       } catch (error) {
         console.error('Failed to load carousels:', error);

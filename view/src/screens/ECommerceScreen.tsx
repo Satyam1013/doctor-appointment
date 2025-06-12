@@ -36,6 +36,9 @@ const ad3 = 'https://i.ibb.co/1f0q1t54/banner3.png';
 
 export default function EComScreen({ navigation }: any) {
   const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
+  const [middleCarousel, setMiddleCarousel] = useState<{ uri: string }[]>([]);
+  const [bottomCarousel, setBottomCarousel] = useState<{ uri: string }[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<any[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -76,7 +79,17 @@ export default function EComScreen({ navigation }: any) {
       try {
         const res = await getCarousels();
         setTopCarousel(
-          res.data.topCarousel.map((img: any) => ({ uri: img.imageUrl })),
+          res.data.shop.topCarousel.map((img: any) => ({ uri: img.imageUrl })),
+        );
+        setMiddleCarousel(
+          res.data.shop.middleCarousel.map((img: any) => ({
+            uri: img.imageUrl,
+          })),
+        );
+        setBottomCarousel(
+          res.data.shop.bottomCarousel.map((img: any) => ({
+            uri: img.imageUrl,
+          })),
         );
       } catch (error) {
         console.error('Failed to load carousels:', error);
@@ -146,7 +159,12 @@ export default function EComScreen({ navigation }: any) {
 
   return (
     <ScrollView style={styles.container} ref={scrollRef}>
+      {/* TOP CAROUSEL */}
+      {topCarousel.length > 0 && <Carousel images={topCarousel} />}
+
       <Text style={styles.header}>Oral Care Categories</Text>
+
+      {/* CATEGORIES GRID */}
       <FlatList
         data={categories}
         numColumns={4}
@@ -169,7 +187,10 @@ export default function EComScreen({ navigation }: any) {
         contentContainerStyle={styles.grid}
       />
 
-      {/* Sections with Ads */}
+      {/* MIDDLE CAROUSEL */}
+      {middleCarousel.length > 0 && <Carousel images={middleCarousel} />}
+
+      {/* SECTIONS */}
       {sections.map((section) => (
         <View key={section.title} style={styles.sectionWrapper}>
           <View style={styles.sectionHeader}>
@@ -198,9 +219,14 @@ export default function EComScreen({ navigation }: any) {
             contentContainerStyle={styles.horizontalList}
           />
 
-          <Carousel images={topCarousel} />
+          {/* Optional: Bottom Carousel inside each section (if different) */}
+          {/* Otherwise, move this outside to the end of the page */}
         </View>
       ))}
+
+      {/* BOTTOM CAROUSEL at end */}
+      {bottomCarousel.length > 0 && <Carousel images={bottomCarousel} />}
+
       <FeatureStats />
     </ScrollView>
   );

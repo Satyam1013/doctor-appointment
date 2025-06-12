@@ -14,20 +14,11 @@ export class Doctor {
   @Prop({ required: true })
   name!: string;
 
-  @Prop()
-  mobile!: string;
-
-  @Prop()
-  place!: string;
-
-  @Prop()
-  specialization!: string;
-
-  @Prop()
-  languages!: string[];
-
-  @Prop({ required: true })
-  dciRegistrationNumber!: string;
+  @Prop() mobile!: string;
+  @Prop() place!: string;
+  @Prop() specialization!: string;
+  @Prop() languages!: string[];
+  @Prop({ required: true }) dciRegistrationNumber!: string;
 }
 
 export const DoctorSchema = SchemaFactory.createForClass(Doctor);

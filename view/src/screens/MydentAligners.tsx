@@ -55,7 +55,7 @@ const faqs = [
 
 const MyDentAlignersScreen = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
+  const [mydentCarousel, setMydentCarousel] = useState<{ uri: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [images, setImages] = useState<{ uri: string }[]>([]);
   const [videos, setVideos] = useState<{ uri: string }[]>([]);
@@ -76,8 +76,8 @@ const MyDentAlignersScreen = () => {
       try {
         // Fetch carousels
         const carouselRes = await getCarousels();
-        setTopCarousel(
-          carouselRes.data.topCarousel.map((img: any) => ({
+        setMydentCarousel(
+          carouselRes.data.home.mydentCarousel.map((img: any) => ({
             uri: img.imageUrl,
           })),
         );
@@ -139,7 +139,7 @@ const MyDentAlignersScreen = () => {
           • Monitoring: Regular virtual or in-person check-ins
         </Text>
       </View>
-      <Carousel images={topCarousel} />
+      <Carousel images={mydentCarousel} />
       {/* Problems We Address */}
       <View style={styles.section}>
         <Image source={images[1]} style={styles.image} />
