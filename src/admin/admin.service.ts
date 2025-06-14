@@ -21,6 +21,10 @@ export class AdminService {
     return this.userModel.find();
   }
 
+  async getUserById(id: string) {
+    return this.userModel.findById(id);
+  }
+
   async getAllDoctors() {
     return this.doctorModel.find();
   }

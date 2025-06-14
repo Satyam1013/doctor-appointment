@@ -30,8 +30,8 @@ export default function BottomTabNavigator() {
           backgroundColor: 'transparent',
           borderTopWidth: 0,
           elevation: 0,
-          height: 60 + insets.bottom, // <-- add safe area inset
-          paddingBottom: insets.bottom, // <-- respect bottom inset
+          height: 60 + insets.bottom,
+          paddingBottom: insets.bottom,
           bottom: 0,
         },
         headerShown: false,

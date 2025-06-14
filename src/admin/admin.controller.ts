@@ -7,6 +7,7 @@ import {
   Patch,
   Delete,
   Param,
+  HttpCode,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 
@@ -17,6 +18,12 @@ export class AdminController {
   @Get('users')
   getAllUsers() {
     return this.adminService.getAllUsers();
+  }
+
+  @Post('get-user-by-id')
+  @HttpCode(200)
+  getUserById(@Body() body: { userId: string }) {
+    return this.adminService.getUserById(body.userId);
   }
 
   @Get('doctors')
