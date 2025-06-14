@@ -7,10 +7,6 @@ import { Doctor, DoctorDocument } from './doc.schema';
 import { User, UserDocument } from '../user/user.schema';
 import { Appointment, AppointmentDocument } from 'src/appointments/app.schema';
 import { Review, ReviewDocument } from 'src/review/review.schema';
-import { uploadToCloudinary } from 'src/utils/cloudinary';
-import * as os from 'os';
-import * as path from 'path';
-import * as fs from 'fs';
 
 @Injectable()
 export class DoctorService {
@@ -21,44 +17,6 @@ export class DoctorService {
     private appointmentModel: Model<AppointmentDocument>,
     @InjectModel(Review.name) private reviewModel: Model<ReviewDocument>,
   ) {}
-
-  async updateDoctorProfile(
-    doctorId: string,
-    file: Express.Multer.File,
-    title: string,
-  ): Promise<DoctorDocument> {
-    const tempPath = path.join(os.tmpdir(), `doctor-${Date.now()}.jpg`);
-    fs.writeFileSync(tempPath, file.buffer);
-
-    const result = await uploadToCloudinary(tempPath);
-    fs.unlinkSync(tempPath);
-
-    const updated = await this.doctorModel.findByIdAndUpdate(
-      doctorId,
-      { image: result.secure_url, title },
-      { new: true },
-    );
-
-    if (!updated) {
-      throw new Error('Doctor not found');
-    }
-
-    return updated;
-  }
-
-  async deleteDoctorImage(doctorId: string): Promise<DoctorDocument> {
-    const updated = await this.doctorModel.findByIdAndUpdate(
-      doctorId,
-      { image: null },
-      { new: true },
-    );
-
-    if (!updated) {
-      throw new Error('Doctor not found');
-    }
-
-    return updated;
-  }
 
   async findByEmail(email: string): Promise<DoctorDocument | null> {
     return this.doctorModel.findOne({ email }).exec();

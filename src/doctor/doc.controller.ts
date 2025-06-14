@@ -1,46 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import {
-  Controller,
-  Get,
-  UseGuards,
-  Req,
-  Post,
-  UseInterceptors,
-  UploadedFile,
-  Body,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, UseGuards, Req } from '@nestjs/common';
 import { DoctorService } from './doc.service';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthRequest } from 'src/common/auth-req';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { memoryStorage } from 'multer';
 
 @Controller('doctor')
 @UseGuards(AuthGuard('jwt'))
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
-
-  @Post('upload-profile')
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: memoryStorage(),
-    }),
-  )
-  async uploadProfileImage(
-    @UploadedFile() file: Express.Multer.File,
-    @Body('title') title: string,
-    @Req() req: AuthRequest,
-  ) {
-    const doctorId = req.user._id;
-    return this.doctorService.updateDoctorProfile(doctorId, file, title);
-  }
-
-  @Delete('image')
-  async deleteProfileImage(@Req() req: AuthRequest) {
-    const doctorId = req.user._id;
-    return this.doctorService.deleteDoctorImage(doctorId);
-  }
 
   // Get assigned users for logged-in doctor
   @Get('assigned-users')

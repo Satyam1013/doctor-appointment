@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -26,23 +27,37 @@ export class AdminService {
 
   async assignDoctorToUser(userId: string, doctorId: string, step: number) {
     const user = await this.userModel.findById(userId);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+    if (!user) throw new NotFoundException('User not found');
 
     const doctor = await this.doctorModel.findById(doctorId);
-    if (!doctor) {
-      throw new NotFoundException('Doctor not found');
+    if (!doctor) throw new NotFoundException('Doctor not found');
+
+    // Check if the user is already assigned to a doctor
+    if (user.assignedDoctor) {
+      throw new BadRequestException('User already has a doctor assigned');
     }
 
+    // Check if the doctor is already assigned to a user
+    if (doctor.assignedUser) {
+      throw new BadRequestException('Doctor already assigned to a user');
+    }
+
+    // 1. Set doctor info on user
     user.assignedDoctor = {
       doctorId: new Types.ObjectId(doctorId),
       step,
       assignedAt: new Date(),
     };
 
+    // 2. Set user info on doctor
+    doctor.assignedUser = {
+      userId: new Types.ObjectId(userId),
+      passInfo: false, // default or derived value
+      assignedAt: new Date(),
+    };
+
     try {
-      await user.save();
+      await Promise.all([user.save(), doctor.save()]);
       return { message: 'Doctor assigned successfully', user };
     } catch (err) {
       throw new InternalServerErrorException('Failed to assign doctor');

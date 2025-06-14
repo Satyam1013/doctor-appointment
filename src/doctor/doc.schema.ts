@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
 
 export type DoctorDocument = HydratedDocument<Doctor>;
 
@@ -19,10 +19,22 @@ export class Doctor {
   @Prop() specialization!: string;
   @Prop() languages!: string[];
   @Prop({ required: true }) dciRegistrationNumber!: string;
-
-  @Prop() image?: string;
-
-  @Prop() title?: string;
+  @Prop({
+    type: {
+      userId: {
+        type: MongooseSchema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
+      passInfo: { type: Boolean, required: true },
+      assignedAt: { type: Date, required: true },
+    },
+  })
+  assignedUser?: {
+    userId: Types.ObjectId;
+    passInfo: boolean;
+    assignedAt: Date;
+  };
 }
 
 export const DoctorSchema = SchemaFactory.createForClass(Doctor);

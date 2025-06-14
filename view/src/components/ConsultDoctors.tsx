@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,35 +9,40 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
+import { getExperts } from '../api/expert-api';
 
-const doctors = [
-  {
-    id: '1',
-    image: 'https://i.ibb.co/3mXWYQK2/doc.png',
-    name: 'Dr. Smita Shah',
-  },
-  {
-    id: '2',
-    image: 'https://i.ibb.co/3mXWYQK2/doc.png',
-    name: 'Dr. Ramesh Kumar',
-  },
-];
+interface Expert {
+  _id: string;
+  imageUrl: string;
+  title: string;
+}
 
 export default function DoctorCard() {
-  const renderItem = ({
-    item,
-  }: {
-    item: { id: string; image: any; name: string };
-  }) => (
+  const [experts, setExperts] = useState<Expert[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchExperts = async () => {
+      try {
+        const { data } = await getExperts();
+        setExperts(data);
+      } catch (error) {
+        console.error('Failed to fetch experts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExperts();
+  }, []);
+
+  const renderItem = ({ item }: { item: Expert }) => (
     <TouchableOpacity style={styles.card}>
-      <Image
-        source={{ uri: item.image }}
-        style={styles.image}
-        resizeMode="cover"
-      />
+      <Image source={{ uri: item.imageUrl }} style={styles.image} />
       <Text style={styles.name} numberOfLines={2}>
-        {item.name}
+        {item.title}
       </Text>
     </TouchableOpacity>
   );
@@ -48,14 +55,18 @@ export default function DoctorCard() {
         superstars.
       </Text>
 
-      <FlatList
-        data={doctors}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
-      />
+      {loading ? (
+        <ActivityIndicator size="large" color="#e53935" />
+      ) : (
+        <FlatList
+          data={experts}
+          renderItem={renderItem}
+          keyExtractor={(item) => item._id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContainer}
+        />
+      )}
     </View>
   );
 }
