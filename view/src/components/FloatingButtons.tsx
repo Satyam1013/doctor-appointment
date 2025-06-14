@@ -10,11 +10,13 @@ import {
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 
 export default function OverlayFloatingButtons() {
   const navigation = useNavigation<NavigationProp<any>>();
+  const insets = useSafeAreaInsets();
   const [buttonWidth, setButtonWidth] = useState(0);
 
   const handleWhatsAppPress = () => {
@@ -32,19 +34,18 @@ export default function OverlayFloatingButtons() {
       screen: 'ConsultationOption',
     });
   };
+
   return (
-    <View style={styles.container}>
-      {/* Left: Book a Scan */}
+    <View style={[styles.container, { bottom: 65 + insets.bottom }]}>
+      {/* Book Scan Button */}
       <TouchableOpacity style={styles.imageWrapper} onPress={handleBookPress}>
         <Image
-          source={{
-            uri: 'https://i.ibb.co/xKbs3w6D/book.jpg',
-          }}
+          source={{ uri: 'https://i.ibb.co/xKbs3w6D/book.jpg' }}
           style={styles.iconImage}
         />
       </TouchableOpacity>
 
-      {/* Center: Consult Doctor (reusing same Book image here) */}
+      {/* Center Consult Button */}
       <TouchableOpacity
         style={[styles.centerWrapper, { left: width / 2 - buttonWidth / 2 }]}
         onLayout={(event) => {
@@ -54,19 +55,15 @@ export default function OverlayFloatingButtons() {
         onPress={handleConsultPress}
       >
         <Image
-          source={{
-            uri: 'https://i.ibb.co/zhYjTxWq/consult.jpg',
-          }}
+          source={{ uri: 'https://i.ibb.co/zhYjTxWq/consult.jpg' }}
           style={styles.centerIconImage}
         />
       </TouchableOpacity>
 
-      {/* Right: WhatsApp */}
+      {/* WhatsApp */}
       <TouchableOpacity onPress={handleWhatsAppPress}>
         <Image
-          source={{
-            uri: 'https://i.ibb.co/DfpFd5JW/wa.jpg',
-          }}
+          source={{ uri: 'https://i.ibb.co/DfpFd5JW/wa.jpg' }}
           style={styles.whatsappIcon}
         />
       </TouchableOpacity>

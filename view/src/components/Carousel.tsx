@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     width: imageWidth,
     height: 200,
     borderRadius: 10,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
     overflow: 'hidden',
   },
 });

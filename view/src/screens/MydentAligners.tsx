@@ -114,30 +114,32 @@ const MyDentAlignersScreen = () => {
   return (
     <ScrollView style={styles.container} ref={scrollRef}>
       {/* Hero Section */}
-      <View style={styles.landing}>
-        <Text style={styles.title}>Discover Clear Aligners by mydent</Text>
-        <Text style={styles.subtitle}>
-          Achieve Your Dream Smile with mydent Clear Aligners
-        </Text>
-        <Image source={images[0]} style={styles.image} />
-        <Text style={styles.text}>
-          mydent's transparent aligners are designed to gently shift your teeth
-          into place over time. These removable, custom-fit trays are a modern
-          alternative to traditional braces—discreet, comfortable, and
-          effective.
-        </Text>
-      </View>
-      <TeethAlignmentProblems navigation={navigation} />
-      {/* How it Works */}
-      <View style={styles.section}>
-        <Text style={styles.title}>How Do mydent Aligners Work?</Text>
-        <Text style={styles.text}>• Wear time: 16–18 hours per day</Text>
-        <Text style={styles.text}>
-          • Tray change: Every 2 weeks (based on your orthodontist's plan)
-        </Text>
-        <Text style={styles.text}>
-          • Monitoring: Regular virtual or in-person check-ins
-        </Text>
+      <View style={styles.color_one}>
+        <View style={styles.landing}>
+          <Text style={styles.title}>Discover Clear Aligners by mydent</Text>
+          <Text style={styles.subtitle}>
+            Achieve Your Dream Smile with mydent Clear Aligners
+          </Text>
+          <Image source={images[0]} style={styles.image} />
+          <Text style={styles.text}>
+            mydent's transparent aligners are designed to gently shift your
+            teeth into place over time. These removable, custom-fit trays are a
+            modern alternative to traditional braces—discreet, comfortable, and
+            effective.
+          </Text>
+        </View>
+        <TeethAlignmentProblems navigation={navigation} />
+        {/* How it Works */}
+        <View style={styles.section}>
+          <Text style={styles.title}>How Do mydent Aligners Work?</Text>
+          <Text style={styles.text}>• Wear time: 16–18 hours per day</Text>
+          <Text style={styles.text}>
+            • Tray change: Every 2 weeks (based on your orthodontist's plan)
+          </Text>
+          <Text style={styles.text}>
+            • Monitoring: Regular virtual or in-person check-ins
+          </Text>
+        </View>
       </View>
       <Carousel images={mydentCarousel} />
       {/* Problems We Address */}
@@ -200,33 +202,41 @@ const MyDentAlignersScreen = () => {
         </View>
       </View>
       {/* Why Choose mydent */}
-      <View style={styles.section}>
-        <Text style={styles.title}>Why Choose mydent?</Text>
-        <Text style={styles.text}>• Customized and Comfortable Fit</Text>
-        <Text style={styles.text}>• Affordable and Transparent Pricing</Text>
-        <Text style={styles.text}>• Expert-Supervised Treatment</Text>
-      </View>
-      {/* Technology */}
-      <View style={styles.technology}>
-        <Image source={images[2]} style={styles.image} />
-        <Text style={styles.title}>The Technology Behind mydent Aligners</Text>
-        <Text style={styles.text}>• Precision 3D Printing</Text>
-        <Text style={styles.text}>• Punching & Thermoforming</Text>
-        <Text style={styles.text}>• Robotic Automation</Text>
-        <Text style={styles.text}>• Mobile App Integration</Text>
-      </View>
-      {/* Benefits */}
-      <View style={styles.section}>
-        <Text style={styles.title}>Key Benefits of mydent Aligners</Text>
-        <Text style={styles.text}>• Virtually Invisible and Dicreet</Text>
-        <Text style={styles.text}>
-          • Removable for Convenience and Flexibility
-        </Text>
-        <Text style={styles.text}>• Custom-Fit for Comfort and Precision</Text>
-        <Text style={styles.text}>• Affordable and Transparent Pricing</Text>
-        <Text style={styles.text}>• Faster Treatment Times for Many Cases</Text>
+      <View style={styles.color_one}>
+        <View style={styles.section}>
+          <Text style={styles.title}>Why Choose mydent?</Text>
+          <Text style={styles.text}>• Customized and Comfortable Fit</Text>
+          <Text style={styles.text}>• Affordable and Transparent Pricing</Text>
+          <Text style={styles.text}>• Expert-Supervised Treatment</Text>
+        </View>
+        {/* Technology */}
+        <View style={styles.technology}>
+          <Image source={images[2]} style={styles.image} />
+          <Text style={styles.title}>
+            The Technology Behind mydent Aligners
+          </Text>
+          <Text style={styles.text}>• Precision 3D Printing</Text>
+          <Text style={styles.text}>• Punching & Thermoforming</Text>
+          <Text style={styles.text}>• Robotic Automation</Text>
+          <Text style={styles.text}>• Mobile App Integration</Text>
+        </View>
+        {/* Benefits */}
+        <View style={styles.section}>
+          <Text style={styles.title}>Key Benefits of mydent Aligners</Text>
+          <Text style={styles.text}>• Virtually Invisible and Dicreet</Text>
+          <Text style={styles.text}>
+            • Removable for Convenience and Flexibility
+          </Text>
+          <Text style={styles.text}>
+            • Custom-Fit for Comfort and Precision
+          </Text>
+          <Text style={styles.text}>• Affordable and Transparent Pricing</Text>
+          <Text style={styles.text}>
+            • Faster Treatment Times for Many Cases
+          </Text>
 
-        <Image source={images[3]} style={styles.image} />
+          <Image source={images[3]} style={styles.image} />
+        </View>
       </View>
       {/* 4 Steps */}
       <View style={styles.section}>
@@ -300,103 +310,107 @@ const MyDentAlignersScreen = () => {
         ))}
       </View>
       {/* Pricing */}
-      <View style={styles.videoSection}>
-        <Text style={styles.title}>
-          Top-Notch Quality, Pocket-Friendly Prices
-        </Text>
-        <Text style={styles.text}>
-          Say hello to Mydent Aligners – proudly #MadeInIndia and crafted with
-          love in our high-tech labs! We use super-precise 3D printing to create
-          smiletransforming aligners that are US FDA 510(k) cleared sheets – so,
-          they’re as safe and effective as they are sleek
-        </Text>
+      <View style={styles.color_one}>
+        <View style={styles.videoSection}>
+          <Text style={styles.title}>
+            Top-Notch Quality, Pocket-Friendly Prices
+          </Text>
+          <Text style={styles.text}>
+            Say hello to Mydent Aligners – proudly #MadeInIndia and crafted with
+            love in our high-tech labs! We use super-precise 3D printing to
+            create smiletransforming aligners that are US FDA 510(k) cleared
+            sheets – so, they’re as safe and effective as they are sleek
+          </Text>
 
-        {/* Card with image and price info */}
-        <View style={styles.priceCard}>
-          {/* Left side: Pricing info */}
-          <View style={styles.priceInfo}>
-            <Text style={styles.priceLabel}>Starting at</Text>
-            <Text style={styles.priceValue}>₹{price}</Text>
-            <Text style={styles.emiNote}>
-              Affordable EMI options{'\n'}available starting at just{'\n'}
-              <Text style={styles.bold}>₹80 per day</Text>
-            </Text>
+          {/* Card with image and price info */}
+          <View style={styles.priceCard}>
+            {/* Left side: Pricing info */}
+            <View style={styles.priceInfo}>
+              <Text style={styles.priceLabel}>Starting at</Text>
+              <Text style={styles.priceValue}>₹{price}</Text>
+              <Text style={styles.emiNote}>
+                Affordable EMI options{'\n'}available starting at just{'\n'}
+                <Text style={styles.bold}>₹80 per day</Text>
+              </Text>
+            </View>
+
+            {/* Right side: Doctor image with badge */}
+            <Image source={images[3]} style={styles.priceImage} />
           </View>
 
-          {/* Right side: Doctor image with badge */}
-          <Image source={images[3]} style={styles.priceImage} />
+          {/* Comparison Table */}
+          <View style={styles.comparisonTable}>
+            <View style={styles.tableRow}>
+              <Text style={[styles.tableCell, styles.tableHeader]}>
+                Traditional Braces
+              </Text>
+              <Text
+                style={[
+                  styles.tableCell,
+                  styles.tableHeader,
+                  styles.highlightRed,
+                ]}
+              >
+                Mydent Aligners
+              </Text>
+              <Text style={[styles.tableCell, styles.tableHeader]}>
+                Other Brands
+              </Text>
+            </View>
+            <View style={styles.tableRow}>
+              <Text style={styles.tableCell}>₹35,000 to ₹90,000</Text>
+              <Text style={[styles.tableCell, styles.highlightRed]}>
+                ₹52,999 to ₹1,30,000
+              </Text>
+              <Text style={styles.tableCell}>₹1,50,000 to ₹4,00,000</Text>
+            </View>
+          </View>
         </View>
-
-        {/* Comparison Table */}
-        <View style={styles.comparisonTable}>
-          <View style={styles.tableRow}>
-            <Text style={[styles.tableCell, styles.tableHeader]}>
-              Traditional Braces
-            </Text>
-            <Text
-              style={[
-                styles.tableCell,
-                styles.tableHeader,
-                styles.highlightRed,
-              ]}
-            >
-              Mydent Aligners
-            </Text>
-            <Text style={[styles.tableCell, styles.tableHeader]}>
-              Other Brands
-            </Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableCell}>₹35,000 to ₹90,000</Text>
-            <Text style={[styles.tableCell, styles.highlightRed]}>
-              ₹52,999 to ₹1,30,000
-            </Text>
-            <Text style={styles.tableCell}>₹1,50,000 to ₹4,00,000</Text>
-          </View>
+        <View style={styles.faq}>
+          <Text style={styles.title}>FAQs</Text>
+          <View style={[styles.separator, { marginTop: 16 }]} />
+          {faqs.map((faq, index) => (
+            <View key={index} style={styles.item}>
+              <TouchableOpacity
+                onPress={() => toggleFAQ(index)}
+                activeOpacity={0.8}
+              >
+                <View style={styles.questionRow}>
+                  <Text style={styles.question}>{faq.question}</Text>
+                  <Ionicons
+                    name={
+                      activeIndex === index
+                        ? 'chevron-up-outline'
+                        : 'chevron-down-outline'
+                    }
+                    size={20}
+                    color="#888"
+                  />
+                </View>
+              </TouchableOpacity>
+              {activeIndex === index && (
+                <Text style={styles.answer}>{faq.answer}</Text>
+              )}
+              {/* Horizontal line after each FAQ */}
+              <View style={styles.separator} />
+            </View>
+          ))}
         </View>
-      </View>
-      <View style={styles.faq}>
-        <Text style={styles.title}>FAQs</Text>
-        <View style={[styles.separator, { marginTop: 16 }]} />
-        {faqs.map((faq, index) => (
-          <View key={index} style={styles.item}>
-            <TouchableOpacity
-              onPress={() => toggleFAQ(index)}
-              activeOpacity={0.8}
-            >
-              <View style={styles.questionRow}>
-                <Text style={styles.question}>{faq.question}</Text>
-                <Ionicons
-                  name={
-                    activeIndex === index
-                      ? 'chevron-up-outline'
-                      : 'chevron-down-outline'
-                  }
-                  size={20}
-                  color="#888"
-                />
-              </View>
-            </TouchableOpacity>
-            {activeIndex === index && (
-              <Text style={styles.answer}>{faq.answer}</Text>
-            )}
-            {/* Horizontal line after each FAQ */}
-            <View style={styles.separator} />
-          </View>
-        ))}
       </View>
       {/* CTA */}
-      <Text style={styles.ctaText}>Ready to Start Your Smile Journey?</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() =>
-          navigation.navigate('Home', {
-            screen: 'ConsultationOption',
-          })
-        }
-      >
-        <Text style={styles.buttonText}>Book Your Free Scan</Text>
-      </TouchableOpacity>
+      <View style={styles.color_one}>
+        <Text style={styles.ctaText}>Ready to Start Your Smile Journey?</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            navigation.navigate('Home', {
+              screen: 'ConsultationOption',
+            })
+          }
+        >
+          <Text style={styles.buttonText}>Book Your Free Scan</Text>
+        </TouchableOpacity>
+      </View>
       <FeatureStats />
     </ScrollView>
   );
@@ -408,55 +422,40 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f9fa',
     paddingBottom: 120,
   },
+  color_one: {
+    backgroundColor: '#e7fafc',
+  },
   section: {
     padding: 16,
-    backgroundColor: '#ffffff',
     marginVertical: 8,
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    elevation: 3,
   },
   technology: {
-    padding: 16,
-    backgroundColor: '#ffe6eb',
+    padding: 22,
     marginVertical: 8,
     borderRadius: 10,
     shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    elevation: 3,
+    shadowOpacity: 0.01,
+    shadowRadius: 2,
   },
   landing: {
     padding: 16,
-    backgroundColor: '#fff7ed',
     marginVertical: 8,
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    elevation: 3,
   },
   card: {
     padding: 16,
-    backgroundColor: '#e3f2fd', // light blue for contrast
     marginVertical: 8,
     borderRadius: 10,
   },
   videoSection: {
     padding: 16,
-    backgroundColor: '#f1f8e9', // soft green
     marginVertical: 8,
     borderRadius: 10,
   },
   priceCard: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#fff3e0', // light orange
     padding: 16,
     borderRadius: 10,
     marginTop: 12,
@@ -468,7 +467,6 @@ const styles = StyleSheet.create({
   },
   comparisonTable: {
     marginTop: 16,
-    backgroundColor: '#ede7f6', // soft purple
     borderRadius: 8,
     padding: 12,
   },
@@ -493,7 +491,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     marginBottom: 12,
-    color: '#333', // you can adjust color if you want
+    color: '#333',
   },
   image: {
     width: '100%',
@@ -577,34 +575,22 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: '#3BC3FF',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
   },
   stepNumber: { color: '#fff', fontWeight: 'bold' },
   button: {
-    backgroundColor: '#3BC3FF',
     padding: 15,
     borderRadius: 8,
     margin: 20,
     alignItems: 'center',
+    backgroundColor: '#00bcd4',
   },
   buttonText: { color: '#fff', fontWeight: 'bold' },
   videoRow: {
     flexDirection: 'column',
     gap: 16,
-  },
-  videoWrapper: {
-    width: '100%',
-    aspectRatio: 16 / 9, // maintain standard video shape
-    borderRadius: 8, // optional: keep it slightly rounded
-    overflow: 'hidden',
-  },
-
-  circularVideo: {
-    width: '100%',
-    height: '100%',
   },
   table: {
     borderWidth: 1,
@@ -675,7 +661,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 8,
-    backgroundColor: '#fff',
   },
   tableCell: {
     flex: 1,
@@ -684,12 +669,10 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   tableHeader: {
-    backgroundColor: '#F2F2F2',
     fontWeight: 'bold',
   },
   separator: {
     height: 1,
-    backgroundColor: '#E0E0E0',
     marginVertical: 8,
   },
   highlightRed: {
