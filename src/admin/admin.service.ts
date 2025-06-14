@@ -103,4 +103,26 @@ export class AdminService {
     }
     return { message: 'Doctor deleted successfully' };
   }
+
+  async updateAssignedStep(userId: string, step: number) {
+    const user = await this.userModel.findById(userId);
+    if (!user || !user.assignedDoctor) {
+      throw new NotFoundException('User or assigned doctor not found');
+    }
+
+    user.assignedDoctor.step = step;
+    await user.save();
+    return { message: 'Assigned step updated successfully' };
+  }
+
+  async updatePassInfo(doctorId: string, passInfo: boolean) {
+    const doctor = await this.doctorModel.findById(doctorId);
+    if (!doctor || !doctor.assignedUser) {
+      throw new NotFoundException('Doctor or assigned user not found');
+    }
+
+    doctor.assignedUser.passInfo = passInfo;
+    await doctor.save();
+    return { message: 'Pass info updated successfully' };
+  }
 }

@@ -65,4 +65,15 @@ export class AdminController {
   deleteDoctor(@Param('id') id: string) {
     return this.adminService.deleteDoctor(id);
   }
+
+  @Patch('user/step/:id')
+  updateAssignedStep(@Param('id') id: string, @Body() body: { step: number }) {
+    return this.adminService.updateAssignedStep(id, body.step);
+  }
+
+  // Update passInfo inside assignedUser
+  @Patch('doctor/passinfo/:id')
+  updatePassInfo(@Param('id') id: string, @Body() body: { passInfo: boolean }) {
+    return this.adminService.updatePassInfo(id, body.passInfo);
+  }
 }
