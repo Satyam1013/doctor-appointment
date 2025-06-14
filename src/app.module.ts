@@ -14,6 +14,7 @@ import { PaymentsModule } from './payment/payment.module';
 import { ContactUsModule } from './contacts/contacts.module';
 import { CarouselModule } from './carousel/carousel.module';
 import { DoctorModule } from './doctor/doc.module';
+import { ExpertModule } from './experts/experts.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { DoctorModule } from './doctor/doc.module';
     MydentAlignersModule,
     PaymentsModule,
     ContactUsModule,
+    ExpertModule,
   ],
 })
 export class AppModule {}
