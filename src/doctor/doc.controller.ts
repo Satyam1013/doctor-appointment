@@ -8,6 +8,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Body,
+  Delete,
 } from '@nestjs/common';
 import { DoctorService } from './doc.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -33,6 +34,12 @@ export class DoctorController {
   ) {
     const doctorId = req.user._id;
     return this.doctorService.updateDoctorProfile(doctorId, file, title);
+  }
+
+  @Delete('image')
+  async deleteProfileImage(@Req() req: AuthRequest) {
+    const doctorId = req.user._id;
+    return this.doctorService.deleteDoctorImage(doctorId);
   }
 
   // Get assigned users for logged-in doctor

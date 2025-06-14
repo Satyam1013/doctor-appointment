@@ -46,6 +46,20 @@ export class DoctorService {
     return updated;
   }
 
+  async deleteDoctorImage(doctorId: string): Promise<DoctorDocument> {
+    const updated = await this.doctorModel.findByIdAndUpdate(
+      doctorId,
+      { image: null },
+      { new: true },
+    );
+
+    if (!updated) {
+      throw new Error('Doctor not found');
+    }
+
+    return updated;
+  }
+
   async findByEmail(email: string): Promise<DoctorDocument | null> {
     return this.doctorModel.findOne({ email }).exec();
   }
