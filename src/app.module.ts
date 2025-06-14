@@ -15,6 +15,7 @@ import { ContactUsModule } from './contacts/contacts.module';
 import { CarouselModule } from './carousel/carousel.module';
 import { DoctorModule } from './doctor/doc.module';
 import { ExpertModule } from './experts/experts.module';
+import { MeetModule } from './meet/meet.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { ExpertModule } from './experts/experts.module';
     PaymentsModule,
     ContactUsModule,
     ExpertModule,
+    MeetModule,
   ],
 })
 export class AppModule {}
