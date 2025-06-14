@@ -1,12 +1,13 @@
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-export type ExpertDocument = HydratedDocument<Expert>;
+@Schema({ timestamps: true })
+export class Expert extends Document {
+  @Prop({ required: true })
+  title!: string;
 
-export class Expert {
-  @Prop() image!: string;
-
-  @Prop() title!: string;
+  @Prop({ required: true })
+  imageUrl!: string;
 }
 
 export const ExpertSchema = SchemaFactory.createForClass(Expert);
