@@ -185,7 +185,7 @@ export default function ContactUsScreen() {
 
   const handleUpload = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ['images'] as const,
       allowsEditing: true,
       quality: 1,
     });
@@ -366,19 +366,17 @@ export default function ContactUsScreen() {
 
             <View>
               <View style={styles.uploadRow}>
-                <Text style={styles.uploadText}>📎 Upload Reports</Text>
+                <TouchableOpacity
+                  style={styles.uploadButton}
+                  onPress={handleUpload}
+                >
+                  <Text style={styles.uploadText}>📎 Upload Reports</Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity onPress={fetchReports}>
                   <Text style={styles.viewText}>View</Text>
                 </TouchableOpacity>
               </View>
-
-              <TouchableOpacity
-                style={styles.uploadButton}
-                onPress={handleUpload}
-              >
-                <Text style={styles.uploadButtonText}>Select & Upload</Text>
-              </TouchableOpacity>
-
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {reports.map((url, index) => (
                   <Image
@@ -1060,7 +1058,7 @@ const styles = StyleSheet.create({
   },
   uploadText: {
     fontSize: 14,
-    color: '#666',
+    color: 'blue',
   },
   viewText: {
     fontSize: 14,
@@ -1140,7 +1138,6 @@ const styles = StyleSheet.create({
 
   uploadButton: {
     marginTop: 12,
-    backgroundColor: '#007AFF',
     padding: 10,
     borderRadius: 8,
     alignItems: 'center',

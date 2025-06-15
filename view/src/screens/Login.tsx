@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -36,7 +34,7 @@ export default function LoginScreen({ navigation }: any) {
       setToken(res.data.access_token);
       setLoginError(''); // Clear any previous error if login successful
     } catch (err) {
-      setLoginError('Invalid email or password'); // Generic error message
+      setLoginError('Invalid email or password');
     }
   };
 

@@ -1,7 +1,10 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { MeetService } from './meet.service';
+import { AuthGuard } from '@nestjs/passport';
+import { AuthRequest } from 'src/common/auth-req';
 
 @Controller('meet')
+@UseGuards(AuthGuard('jwt'))
 export class MeetController {
   constructor(private meetService: MeetService) {}
 
@@ -20,12 +23,14 @@ export class MeetController {
   }
 
   @Get('user/:id')
-  getUserMeets(@Param('id') userId: string) {
-    return this.meetService.getMeetsForUser(userId);
+  getUserMeets(@Req() req: AuthRequest) {
+    const id = req.user._id;
+    return this.meetService.getMeetsForUser(id);
   }
 
   @Get('doctor/:id')
-  getDoctorMeets(@Param('id') doctorId: string) {
-    return this.meetService.getMeetsForDoctor(doctorId);
+  getDoctorMeets(@Req() req: AuthRequest) {
+    const id = req.user._id;
+    return this.meetService.getMeetsForDoctor(id);
   }
 }
