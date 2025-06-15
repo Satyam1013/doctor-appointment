@@ -20,7 +20,7 @@ export default function OverlayFloatingButtons() {
   const [buttonWidth, setButtonWidth] = useState(0);
 
   const handleWhatsAppPress = () => {
-    Linking.openURL('https://wa.me/+919999999999');
+    Linking.openURL('https://wa.me/+919849492909');
   };
 
   const handleBookPress = () => {

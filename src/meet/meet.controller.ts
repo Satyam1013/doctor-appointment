@@ -22,13 +22,13 @@ export class MeetController {
     return this.meetService.createMeet(body);
   }
 
-  @Get('user/:id')
+  @Get('user')
   getUserMeets(@Req() req: AuthRequest) {
     const id = req.user._id;
     return this.meetService.getMeetsForUser(id);
   }
 
-  @Get('doctor/:id')
+  @Get('doctor')
   getDoctorMeets(@Req() req: AuthRequest) {
     const id = req.user._id;
     return this.meetService.getMeetsForDoctor(id);

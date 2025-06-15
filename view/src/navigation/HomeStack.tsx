@@ -34,6 +34,10 @@ import ShowAllBlogsScreen from '../screens/ShowAllBlogsScreen';
 import TeethAlignmentProblems from '../components/TeethAlignmentProblems';
 import TermsAndConditionsScreen from '../screens/TermsAndConditionsScreen';
 import SmilePreview from '../screens/SmilePreview';
+import MyDentCoinsScreen from '../screens/MydentCoins';
+import NewTicketScreen from '../screens/NewTicket';
+import CancelTicketScreen from '../screens/CancelTicket';
+import LoginScreen from '../screens/Login';
 // import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
@@ -52,6 +56,8 @@ export default function HomeStack() {
         name="TermsAndConditionsScreen"
         component={withAppShell(TermsAndConditionsScreen)}
       />
+
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen
         name="TeethAlignmentProblems"
         component={withAppShell(TeethAlignmentProblems)}
@@ -63,6 +69,18 @@ export default function HomeStack() {
       <Stack.Screen
         name="PaymentScreen"
         component={withAppShell(PaymentScreen)}
+      />
+      <Stack.Screen
+        name="MyDentCoinsScreen"
+        component={withAppShell(MyDentCoinsScreen)}
+      />
+      <Stack.Screen
+        name="NewTicketScreen"
+        component={withAppShell(NewTicketScreen)}
+      />
+      <Stack.Screen
+        name="CancelTicketScreen"
+        component={withAppShell(CancelTicketScreen)}
       />
       <Stack.Screen
         name="ConsultationDetailsScreen"

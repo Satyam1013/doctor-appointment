@@ -72,12 +72,13 @@ export default function SignupScreen({ navigation }: any) {
     validateEmail(email);
     validateFirstName(firstName);
     validatePassword(password);
+    validateMobile(mobile);
 
-    if (emailError || firstNameError || passwordError) return;
+    if (emailError || firstNameError || passwordError || mobileError) return;
 
     try {
       setSignupError('');
-      const res = await signup({ email, firstName, password });
+      const res = await signup({ email, firstName, password, mobile });
       login(res.data.access_token);
     } catch (err) {
       setSignupError('Signup failed. Please try again.');

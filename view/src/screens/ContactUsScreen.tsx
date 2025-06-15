@@ -31,6 +31,8 @@ import { AVPlaybackSource, ResizeMode, Video } from 'expo-av';
 import { getDoctorAssignment } from '../api/user-api';
 import { getMyReports, uploadReportImage } from '../api/report-api';
 import * as ImagePicker from 'expo-image-picker';
+import MeetModal from '../components/Meet';
+import { getUserMeets } from '../api/meet-api';
 
 const products = [
   {
@@ -135,7 +137,24 @@ export default function ContactUsScreen() {
     useState<DoctorAssignment | null>(null);
 
   const navigation = useNavigation<NavigationProp<any>>();
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [meetLink, setMeetLink] = useState('');
   const { user } = useUser();
+
+  const handleJoinClick = async () => {
+    try {
+      const res = await getUserMeets();
+      if (res.data?.length > 0) {
+        setMeetLink(res.data[0].meetLink);
+        setModalVisible(true);
+      } else {
+        alert('No meeting found.');
+      }
+    } catch (err) {
+      console.error('Failed to fetch meet:', err);
+    }
+  };
 
   const scrollRef = useRef<ScrollView>(null);
 
@@ -355,7 +374,10 @@ export default function ContactUsScreen() {
 
             {user?.paid === 'PAID' && (
               <View style={styles.buttonRow}>
-                <TouchableOpacity style={styles.joinButton}>
+                <TouchableOpacity
+                  style={styles.joinButton}
+                  onPress={handleJoinClick}
+                >
                   <Text style={styles.joinButtonText}>Join video call</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.rescheduleButton}>
@@ -363,6 +385,12 @@ export default function ContactUsScreen() {
                 </TouchableOpacity>
               </View>
             )}
+
+            <MeetModal
+              visible={modalVisible}
+              onClose={() => setModalVisible(false)}
+              meetLink={meetLink}
+            />
 
             <View>
               <View style={styles.uploadRow}>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -16,9 +17,10 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useUser } from '../contexts/UserContext';
 import EditProfileForm from './EditUserDetails';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CustomDrawerContent(props: any) {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const [isEditVisible, setEditVisible] = useState(false);
 
   const iconColor = '#4CAF50';
@@ -72,7 +74,12 @@ export default function CustomDrawerContent(props: any) {
             icon: 'location-outline',
             screen: 'CentersTab',
           },
-          { label: 'Mydent coins', icon: 'cash-outline', screen: 'CentersTab' },
+          {
+            label: 'Mydent coins',
+            icon: 'cash-outline',
+            screen: 'MyDentCoinsScreen',
+            parentTab: 'Home',
+          },
           {
             label: 'Refer a friend',
             icon: 'body-outline',
@@ -101,7 +108,12 @@ export default function CustomDrawerContent(props: any) {
       <View style={styles.bottomSection}>
         <DrawerItem
           label="New Ticket"
-          onPress={() => props.navigation.navigate('NewTicket')}
+          onPress={() =>
+            props.navigation.navigate('HomeTabs', {
+              screen: 'Home', // this must match your tab screen name
+              params: { screen: 'NewTicketScreen' }, // this must match your stack screen name
+            })
+          }
           icon={({ size }) => (
             <Ionicons
               name="document-text-outline"
@@ -110,21 +122,37 @@ export default function CustomDrawerContent(props: any) {
             />
           )}
         />
+
         <DrawerItem
           label="View Ticket"
-          onPress={() => props.navigation.navigate('ViewTicket')}
+          onPress={() =>
+            props.navigation.navigate('HomeTabs', {
+              screen: 'Home', // this must match your tab screen name
+              params: { screen: 'CancelTicketScreen' }, // this must match your stack screen name
+            })
+          }
           icon={({ size }) => (
             <Ionicons name="clipboard-outline" size={size} color={iconColor} />
           )}
         />
         <DrawerItem
           label="Logout"
-          onPress={() => {
-            // handle logout
-            props.navigation.reset({
-              index: 0,
-              routes: [{ name: 'Login' }],
-            });
+          onPress={async () => {
+            try {
+              // 1. Clear auth token and any other stored data
+              await AsyncStorage.clear(); // or use your clearToken() if more selective
+
+              // 2. Optionally reset user state if using context
+              setUser(null);
+
+              // 3. Navigate and reset navigation stack
+              props.navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+              });
+            } catch (err) {
+              console.error('Logout error:', err);
+            }
           }}
           icon={({ size }) => (
             <Ionicons name="log-out-outline" size={size} color={iconColor} />

@@ -51,7 +51,6 @@ export default function BottomTabNavigator() {
         listeners={({ navigation }) => ({
           tabPress: (e) => {
             e.preventDefault();
-
             navigation.dispatch(
               CommonActions.navigate({
                 name: 'HomeTab',
@@ -168,7 +167,7 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ focused }) => (
             <Image
               source={{
-                uri: 'https: //i.ibb.co/qFgcN9ns/centers.jpg',
+                uri: 'https://i.ibb.co/8D84zd57/centers.png',
               }}
               style={{
                 width: 28,
@@ -178,7 +177,7 @@ export default function BottomTabNavigator() {
                 borderColor: focused ? '#0077b6' : '#ccc',
                 borderRadius: 8,
                 padding: 4,
-                marginTop: 40,
+                marginTop: 42,
               }}
               resizeMode="contain"
             />
