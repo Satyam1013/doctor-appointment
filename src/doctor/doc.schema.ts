@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
+import { AssignedUserStatus } from 'src/common/auth-req';
 
 export type DoctorDocument = HydratedDocument<Doctor>;
 
@@ -28,12 +29,19 @@ export class Doctor {
       },
       passInfo: { type: Boolean, required: true },
       assignedAt: { type: Date, required: true },
+      status: {
+        type: String,
+        enum: Object.values(AssignedUserStatus),
+        required: true,
+        default: AssignedUserStatus.PENDING,
+      },
     },
   })
   assignedUser?: {
     userId: Types.ObjectId;
     passInfo: boolean;
     assignedAt: Date;
+    status: AssignedUserStatus;
   };
 }
 

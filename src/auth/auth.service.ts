@@ -68,9 +68,8 @@ export class AuthService {
 
     return {
       access_token: await this.jwtService.signAsync({
-        sub: doctor._id.toString(), // ✅ ._id now works!
+        sub: doctor._id.toString(),
         email: doctor.email,
-        role: 'doctor',
       }),
     };
   }
@@ -90,7 +89,6 @@ export class AuthService {
       access_token: await this.jwtService.signAsync({
         sub: doctor._id.toString(),
         email: doctor.email,
-        role: 'doctor',
       }),
     };
   }

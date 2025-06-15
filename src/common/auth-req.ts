@@ -4,3 +4,10 @@ export interface AuthRequest extends Request {
     email: string;
   };
 }
+
+export enum AssignedUserStatus {
+  COMPLETED = 'completed',
+  SCHEDULED = 'scheduled',
+  CANCELLED = 'cancelled',
+  PENDING = 'pending',
+}

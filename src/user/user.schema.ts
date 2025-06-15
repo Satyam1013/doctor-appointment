@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
+import { AssignedUserStatus } from 'src/common/auth-req';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -50,12 +51,19 @@ export class User {
       },
       step: { type: Number, enum: [1, 2, 3, 4], required: true },
       assignedAt: { type: Date, required: true },
+      status: {
+        type: String,
+        enum: Object.values(AssignedUserStatus),
+        required: true,
+        default: AssignedUserStatus.PENDING,
+      },
     },
   })
   assignedDoctor?: {
     doctorId: Types.ObjectId;
     step: number;
     assignedAt: Date;
+    status: AssignedUserStatus;
   };
 }
 
