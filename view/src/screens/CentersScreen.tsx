@@ -120,8 +120,8 @@ export default function Centers() {
           Discover your nearest mydent experience centre
         </Text>
         <Text style={styles.headerSubtitle}>
-          Transform your smile, skin & hair with our expert orthodontists and
-          dermats
+          Transform your smile with precision and passion guided by our trusted
+          orthodontic experts
         </Text>
       </View>
 

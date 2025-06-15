@@ -366,51 +366,50 @@ const MyDentAlignersScreen = () => {
             </View>
           </View>
         </View>
-        <View style={styles.faq}>
-          <Text style={styles.title}>FAQs</Text>
-          <View style={[styles.separator, { marginTop: 16 }]} />
-          {faqs.map((faq, index) => (
-            <View key={index} style={styles.item}>
-              <TouchableOpacity
-                onPress={() => toggleFAQ(index)}
-                activeOpacity={0.8}
-              >
-                <View style={styles.questionRow}>
-                  <Text style={styles.question}>{faq.question}</Text>
-                  <Ionicons
-                    name={
-                      activeIndex === index
-                        ? 'chevron-up-outline'
-                        : 'chevron-down-outline'
-                    }
-                    size={20}
-                    color="#888"
-                  />
-                </View>
-              </TouchableOpacity>
-              {activeIndex === index && (
-                <Text style={styles.answer}>{faq.answer}</Text>
-              )}
-              {/* Horizontal line after each FAQ */}
-              <View style={styles.separator} />
-            </View>
-          ))}
-        </View>
+      </View>
+
+      <View style={styles.faq}>
+        <Text style={styles.title}>FAQs</Text>
+        <View style={[styles.separator, { marginTop: 16 }]} />
+        {faqs.map((faq, index) => (
+          <View key={index} style={styles.item}>
+            <TouchableOpacity
+              onPress={() => toggleFAQ(index)}
+              activeOpacity={0.8}
+            >
+              <View style={styles.questionRow}>
+                <Text style={styles.question}>{faq.question}</Text>
+                <Ionicons
+                  name={
+                    activeIndex === index
+                      ? 'chevron-up-outline'
+                      : 'chevron-down-outline'
+                  }
+                  size={20}
+                  color="#888"
+                />
+              </View>
+            </TouchableOpacity>
+            {activeIndex === index && (
+              <Text style={styles.answer}>{faq.answer}</Text>
+            )}
+            {/* Horizontal line after each FAQ */}
+            <View style={styles.separator} />
+          </View>
+        ))}
       </View>
       {/* CTA */}
-      <View style={styles.color_one}>
-        <Text style={styles.ctaText}>Ready to Start Your Smile Journey?</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            navigation.navigate('Home', {
-              screen: 'ConsultationOption',
-            })
-          }
-        >
-          <Text style={styles.buttonText}>Book Your Free Scan</Text>
-        </TouchableOpacity>
-      </View>
+      <Text style={styles.ctaText}>Ready to Start Your Smile Journey?</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          navigation.navigate('Home', {
+            screen: 'ConsultationOption',
+          })
+        }
+      >
+        <Text style={styles.buttonText}>Book Your Free Scan</Text>
+      </TouchableOpacity>
       <FeatureStats />
     </ScrollView>
   );
@@ -509,6 +508,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     margin: 16,
+    backgroundColor: '#fff',
   },
   item: {
     marginBottom: 12,

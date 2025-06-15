@@ -16,6 +16,7 @@ import { CarouselModule } from './carousel/carousel.module';
 import { DoctorModule } from './doctor/doc.module';
 import { ExpertModule } from './experts/experts.module';
 import { MeetModule } from './meet/meet.module';
+import { ReportModule } from './report/rep.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { MeetModule } from './meet/meet.module';
     ContactUsModule,
     ExpertModule,
     MeetModule,
+    ReportModule,
   ],
 })
 export class AppModule {}

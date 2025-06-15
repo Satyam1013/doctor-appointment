@@ -159,9 +159,6 @@ export default function EComScreen({ navigation }: any) {
 
   return (
     <ScrollView style={styles.container} ref={scrollRef}>
-      {/* TOP CAROUSEL */}
-      {topCarousel.length > 0 && <Carousel images={topCarousel} />}
-
       <Text style={styles.header}>Oral Care Categories</Text>
 
       {/* CATEGORIES GRID */}
@@ -187,8 +184,8 @@ export default function EComScreen({ navigation }: any) {
         contentContainerStyle={styles.grid}
       />
 
-      {/* MIDDLE CAROUSEL */}
-      {middleCarousel.length > 0 && <Carousel images={middleCarousel} />}
+      {/* TOP CAROUSEL */}
+      {topCarousel.length > 0 && <Carousel images={topCarousel} />}
 
       {/* SECTIONS */}
       {sections.map((section) => (
@@ -218,16 +215,15 @@ export default function EComScreen({ navigation }: any) {
             )}
             contentContainerStyle={styles.horizontalList}
           />
-
-          {/* Optional: Bottom Carousel inside each section (if different) */}
-          {/* Otherwise, move this outside to the end of the page */}
         </View>
       ))}
 
-      {/* BOTTOM CAROUSEL at end */}
-      {bottomCarousel.length > 0 && <Carousel images={bottomCarousel} />}
+      {/* MIDDLE CAROUSEL */}
+      {middleCarousel.length > 0 && <Carousel images={middleCarousel} />}
 
+      {bottomCarousel.length > 0 && <Carousel images={bottomCarousel} />}
       <FeatureStats />
+      {/* BOTTOM CAROUSEL at end */}
     </ScrollView>
   );
 }

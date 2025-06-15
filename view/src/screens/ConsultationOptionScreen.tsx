@@ -14,7 +14,9 @@ export default function ConsultationOptionScreen({ navigation }: any) {
       <Text style={styles.header}>Please select</Text>
       <View style={styles.card}>
         <Image
-          source={{ uri: 'https://i.ibb.co/LzcYw7rR/doctor.png' }}
+          source={{
+            uri: 'https://i.ibb.co/ymT3s03K/Whats-App-Image-2025-06-13-at-1-49-35-AM.jpg',
+          }}
           style={styles.image}
         />
         <Text style={styles.title}>Consult with our Doctor</Text>

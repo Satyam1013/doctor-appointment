@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -24,6 +22,8 @@ export default function SignupScreen({ navigation }: any) {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [password, setPassword] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [mobileError, setMobileError] = useState('');
 
   const [emailError, setEmailError] = useState('');
   const [firstNameError, setFirstNameError] = useState('');
@@ -37,6 +37,16 @@ export default function SignupScreen({ navigation }: any) {
       setEmailError('Please enter a valid email');
     } else {
       setEmailError('');
+    }
+  };
+
+  const validateMobile = (value: string) => {
+    if (!value.trim()) {
+      setMobileError('Mobile number is required');
+    } else if (!/^\d{10}$/.test(value)) {
+      setMobileError('Mobile number must be 10 digits');
+    } else {
+      setMobileError('');
     }
   };
 
@@ -119,6 +129,19 @@ export default function SignupScreen({ navigation }: any) {
         }}
         style={styles.input}
       />
+
+      <TextInput
+        placeholder="Mobile"
+        value={mobile}
+        onChangeText={(value) => {
+          setMobile(value);
+          validateMobile(value);
+        }}
+        style={styles.input}
+        keyboardType="phone-pad"
+      />
+      {mobileError ? <Text style={styles.errorText}>{mobileError}</Text> : null}
+
       {passwordError ? (
         <Text style={styles.errorText}>{passwordError}</Text>
       ) : null}

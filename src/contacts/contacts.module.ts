@@ -12,5 +12,6 @@ import { ContactUsService } from './contacts.service';
   ],
   controllers: [ContactUsController],
   providers: [ContactUsService],
+  exports: [ContactUsService, MongooseModule],
 })
 export class ContactUsModule {}
