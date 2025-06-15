@@ -32,6 +32,11 @@ export class ReportController {
     @UploadedFile() file: Express.Multer.File,
     @Req() req: AuthRequest,
   ) {
+    console.log('Uploading file for user:', req.user._id);
+    console.log('Received file:', file?.originalname);
+
+    if (!file) throw new Error('No file uploaded');
+
     const tempPath = path.join(os.tmpdir(), `report-${Date.now()}.jpg`);
     let imageUrl = '';
 
@@ -42,6 +47,7 @@ export class ReportController {
         file.originalname,
       );
       imageUrl = result.secure_url;
+      console.log('Upload successful:', imageUrl);
     } catch (error) {
       console.error('Image upload failed:', error);
       throw error;

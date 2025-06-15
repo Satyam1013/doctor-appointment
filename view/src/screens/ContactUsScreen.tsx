@@ -177,7 +177,7 @@ export default function ContactUsScreen() {
   const fetchReports = async () => {
     try {
       const { data } = await getMyReports();
-      setReports(data.map((r: any) => r.imageUrl)); // assuming backend returns { imageUrl, ... }
+      setReports(data.map((r: any) => r.imageUrl));
     } catch (err) {
       console.error('Error fetching reports:', err);
     }
