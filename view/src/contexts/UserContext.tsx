@@ -8,6 +8,7 @@ export interface User {
   _id: string;
   firstName: string;
   email: string;
+  paid: 'PAID' | 'UNPAID';
 }
 
 interface UserContextType {

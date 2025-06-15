@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -26,6 +29,8 @@ import ProductCard from '../components/ProductCard';
 import { getContactUs } from '../api/contact-us-api';
 import { AVPlaybackSource, ResizeMode, Video } from 'expo-av';
 import { getDoctorAssignment } from '../api/user-api';
+import { getMyReports, uploadReportImage } from '../api/report-api';
+import * as ImagePicker from 'expo-image-picker';
 
 const products = [
   {
@@ -124,6 +129,8 @@ export default function ContactUsScreen() {
   );
   const [video, setVideo] = useState<AVPlaybackSource | undefined>(undefined);
 
+  const [reports, setReports] = useState<string[]>([]);
+
   const [doctorAssignment, setDoctorAssignment] =
     useState<DoctorAssignment | null>(null);
 
@@ -165,6 +172,45 @@ export default function ContactUsScreen() {
 
     fetchDoctorData();
     fetchContactData();
+  }, []);
+
+  const fetchReports = async () => {
+    try {
+      const { data } = await getMyReports();
+      setReports(data.map((r: any) => r.imageUrl)); // assuming backend returns { imageUrl, ... }
+    } catch (err) {
+      console.error('Error fetching reports:', err);
+    }
+  };
+
+  const handleUpload = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      const image = result.assets[0];
+      const formData = new FormData();
+
+      formData.append('image', {
+        uri: image.uri,
+        type: 'image/jpeg',
+        name: 'report.jpg',
+      } as any);
+
+      try {
+        await uploadReportImage(formData);
+        await fetchReports(); // refresh after upload
+      } catch (err) {
+        console.error('Upload failed:', err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchReports();
   }, []);
 
   const toggleAlignerFAQ = (index: number) => {
@@ -307,20 +353,42 @@ export default function ContactUsScreen() {
               </View>
             </View>
 
-            <View style={styles.buttonRow}>
-              <TouchableOpacity style={styles.joinButton}>
-                <Text style={styles.joinButtonText}>Join video call</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.rescheduleButton}>
-                <Text style={styles.rescheduleText}>Reschedule</Text>
-              </TouchableOpacity>
-            </View>
+            {user?.paid === 'PAID' && (
+              <View style={styles.buttonRow}>
+                <TouchableOpacity style={styles.joinButton}>
+                  <Text style={styles.joinButtonText}>Join video call</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.rescheduleButton}>
+                  <Text style={styles.rescheduleText}>Reschedule</Text>
+                </TouchableOpacity>
+              </View>
+            )}
 
-            <View style={styles.uploadRow}>
-              <Text style={styles.uploadText}>📎 Upload Reports</Text>
-              <TouchableOpacity>
-                <Text style={styles.viewText}>View</Text>
+            <View>
+              <View style={styles.uploadRow}>
+                <Text style={styles.uploadText}>📎 Upload Reports</Text>
+                <TouchableOpacity onPress={fetchReports}>
+                  <Text style={styles.viewText}>View</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity
+                style={styles.uploadButton}
+                onPress={handleUpload}
+              >
+                <Text style={styles.uploadButtonText}>Select & Upload</Text>
               </TouchableOpacity>
+
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {reports.map((url, index) => (
+                  <Image
+                    key={index}
+                    source={{ uri: url }}
+                    style={styles.reportImage}
+                    resizeMode="cover"
+                  />
+                ))}
+              </ScrollView>
             </View>
           </>
         ) : (
@@ -1068,5 +1136,24 @@ const styles = StyleSheet.create({
   bookButtonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+
+  uploadButton: {
+    marginTop: 12,
+    backgroundColor: '#007AFF',
+    padding: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  uploadButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  reportImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 10,
+    marginRight: 10,
+    marginTop: 16,
   },
 });

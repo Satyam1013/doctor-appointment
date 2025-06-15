@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
-import { AssignedUserStatus } from 'src/common/auth-req';
+import { AssignedUserStatus, PaymentStatus } from 'src/common/auth-req';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -41,6 +41,13 @@ export class User {
 
   @Prop()
   availability?: string;
+
+  @Prop({
+    type: String,
+    enum: PaymentStatus,
+    default: PaymentStatus.UNPAID,
+  })
+  paid?: PaymentStatus;
 
   @Prop({
     type: {

@@ -11,3 +11,8 @@ export enum AssignedUserStatus {
   CANCELLED = 'cancelled',
   PENDING = 'pending',
 }
+
+export enum PaymentStatus {
+  PAID = 'paid',
+  UNPAID = 'unpaid',
+}

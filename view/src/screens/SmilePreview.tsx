@@ -141,14 +141,14 @@ export default function SmilePreview() {
         >
           <Image
             source={{
-              uri: 'https://i.ibb.co/DgwFvtKw/Screenshot-2025-06-15-183523.png',
+              uri: 'https://i.ibb.co/KcBcwK4g/Whats-App-Image-2025-06-15-at-9-45-30-PM-1.jpg',
             }}
             style={styles.sliderImage}
             resizeMode="contain"
           />
           <Image
             source={{
-              uri: 'https://i.ibb.co/67cj1tb2/Screenshot-2025-06-15-183538.png',
+              uri: 'https://i.ibb.co/SXQN2d3R/Whats-App-Image-2025-06-15-at-9-45-30-PM.jpg',
             }}
             style={styles.sliderImage}
             resizeMode="contain"
