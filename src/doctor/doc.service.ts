@@ -28,12 +28,17 @@ export class DoctorService {
   }
 
   // 1. Get all assigned users to this doctor
-  async getAssignedUsers(doctorId: string): Promise<UserDocument[]> {
-    const dd = this.userModel
-      .find({ 'assignedDoctor.doctorId': doctorId })
+  async getAssignedUsers(doctorId: string): Promise<UserDocument[] | []> {
+    const doctor = await this.doctorModel.findById(doctorId).exec();
+
+    if (!doctor?.assignedUser || !doctor.assignedUser.passInfo) {
+      return []; // no assigned user or not allowed to access
+    }
+
+    const user = await this.userModel
+      .findById(doctor.assignedUser.userId)
       .exec();
-    console.log('dd', dd);
-    return this.userModel.find({ 'assignedDoctor.doctorId': doctorId }).exec();
+    return user ? [user] : [];
   }
 
   // 2. Get all appointments conducted by this doctor

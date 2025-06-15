@@ -30,10 +30,10 @@ const PaymentScreen = () => {
   const [loading, setLoading] = useState(false);
 
   const upiApps = [
-    { id: 'google_pay', label: 'Google Pay' },
-    { id: 'phonepe', label: 'PhonePe' },
-    { id: 'paytm', label: 'PayTM' },
-    { id: 'cred', label: 'CRED UPI' },
+    { id: 'com.google.android.apps.nbu.paisa.user', label: 'Google Pay' },
+    { id: 'com.phonepe.app', label: 'PhonePe' },
+    { id: 'net.one97.paytm', label: 'PayTM' },
+    { id: 'in.amazon.mShop.android.shopping', label: 'Amazon Pay' },
   ];
 
   const handlePayment = async () => {

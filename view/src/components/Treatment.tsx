@@ -1,26 +1,22 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Linking,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 export default function BeforeAfterTreatment() {
-  const handleOpenLink = () => {
-    Linking.openURL(
-      'https://smile-view.invisalign.in/?campaign_name=SmileView-Consumer_IN_India-Consumer',
-    );
-  };
+  const navigation = useNavigation<NavigationProp<any>>();
 
+  // const handleOpenLink = () => {
+  //   Linking.openURL(
+  //     'https://smile-view.invisalign.in/?campaign_name=SmileView-Consumer_IN_India-Consumer',
+  //   );
+  // };
+  const handlePress = () => {
+    navigation.navigate('SmilePreview');
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Our Exclusive Therapy Services</Text>
-      <TouchableOpacity style={styles.card} onPress={handleOpenLink}>
+      <TouchableOpacity style={styles.card} onPress={handlePress}>
         <Image
           source={{ uri: 'https://i.ibb.co/JWgXbwRD/ad.png' }}
           style={styles.image}
