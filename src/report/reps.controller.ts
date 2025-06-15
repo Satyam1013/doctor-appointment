@@ -26,14 +26,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class ReportController {
   constructor(private readonly service: ReportService) {}
 
-  // Upload testimonial with video
   @Post()
-  @UseInterceptors(
-    FileInterceptor('video', {
-      storage: memoryStorage(),
-    }),
-  )
-  @Post('report')
   @UseInterceptors(FileInterceptor('image', { storage: memoryStorage() }))
   async uploadReportImage(
     @UploadedFile() file: Express.Multer.File,
@@ -62,10 +55,9 @@ export class ReportController {
     });
   }
 
-  // 🧾 Get all reports
-  @Get('report')
-  async getAllReports() {
-    return this.service.getReports();
+  @Get('user-report')
+  getMyReports(@Req() req: AuthRequest) {
+    return this.service.findReportsByUser(req.user._id);
   }
 
   // ❌ Delete a report by ID

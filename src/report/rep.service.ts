@@ -18,8 +18,8 @@ export class ReportService {
     return report.save();
   }
 
-  async getReports() {
-    return this.reportModel.find().sort({ createdAt: -1 });
+  async findReportsByUser(userId: string) {
+    return this.reportModel.find({ user: userId }).sort({ createdAt: -1 });
   }
 
   async deleteReport(id: string) {
