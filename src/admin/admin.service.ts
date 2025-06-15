@@ -9,6 +9,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from 'src/user/user.schema';
 import { Doctor, DoctorDocument } from 'src/doctor/doc.schema';
 import { Model, Types } from 'mongoose';
+import { AssignedUserStatus } from 'src/common/auth-req';
 
 @Injectable()
 export class AdminService {
@@ -51,6 +52,7 @@ export class AdminService {
       doctorId: new Types.ObjectId(doctorId),
       step,
       assignedAt: new Date(),
+      status: AssignedUserStatus.PENDING,
     };
 
     // 2. Set user info on doctor
@@ -58,6 +60,7 @@ export class AdminService {
       userId: new Types.ObjectId(userId),
       passInfo: false, // default or derived value
       assignedAt: new Date(),
+      status: AssignedUserStatus.PENDING,
     };
 
     try {
