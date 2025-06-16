@@ -133,10 +133,11 @@ export class CentersController {
     }),
   )
   async addService(
+    @Param('cityName') cityName: string,
     @UploadedFiles() files: { serviceImage?: Express.Multer.File[] },
     @Body() addServiceDto: AddServiceDto,
   ) {
-    const { cityName, title, description } = addServiceDto;
+    const { title, description } = addServiceDto;
 
     if (!cityName || !title || !description) {
       throw new Error('cityName, title, and description are required');
