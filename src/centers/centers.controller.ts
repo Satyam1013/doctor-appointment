@@ -152,7 +152,6 @@ export class CentersController {
     return this.centersService.addServiceByCity({
       cityName,
       service: {
-        id: Date.now(), // Or UUID
         title,
         description,
         image: serviceImageUrl,
