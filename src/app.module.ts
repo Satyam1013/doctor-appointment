@@ -7,7 +7,7 @@ import { CartModule } from './cart/cart.module';
 import { ProductsModule } from './product/product.module';
 import { AdminModule } from './admin/admin.module';
 import { CentersModule } from './centers/centers.module';
-import { BlogsModule } from './transformation/transformation.module';
+import { TransformationModule } from './transformation/transformation.module';
 import { FavModule } from './favorite/fav.module';
 import { MydentAlignersModule } from './aligners/aligners.module';
 import { PaymentsModule } from './payment/payment.module';
@@ -18,6 +18,7 @@ import { ExpertModule } from './experts/experts.module';
 import { MeetModule } from './meet/meet.module';
 import { ReportModule } from './report/rep.module';
 import { BiteTypeModule } from './bite-type/bite-type.module';
+import { BlogsModule } from './blogs/blogs.module';
 
 @Module({
   imports: [
@@ -39,7 +40,7 @@ import { BiteTypeModule } from './bite-type/bite-type.module';
     DoctorModule,
     AdminModule,
     CentersModule,
-    BlogsModule,
+    TransformationModule,
     FavModule,
     MydentAlignersModule,
     PaymentsModule,
@@ -48,6 +49,7 @@ import { BiteTypeModule } from './bite-type/bite-type.module';
     MeetModule,
     ReportModule,
     BiteTypeModule,
+    BlogsModule,
   ],
 })
 export class AppModule {}

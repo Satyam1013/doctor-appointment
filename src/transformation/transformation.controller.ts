@@ -11,7 +11,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { BlogsService } from './transformation.service';
+import { TransformationService } from './transformation.service';
 import { memoryStorage } from 'multer';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -19,8 +19,8 @@ import * as path from 'path';
 import { uploadToCloudinary } from '../utils/cloudinary';
 
 @Controller('admin/blogs')
-export class BlogsController {
-  constructor(private readonly blogsService: BlogsService) {}
+export class TransformationController {
+  constructor(private readonly transformationService: TransformationService) {}
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('image', { storage: memoryStorage() }))
@@ -45,7 +45,11 @@ export class BlogsController {
       }
     }
 
-    return this.blogsService.createBlog({ title, description, imageUrl });
+    return this.transformationService.createTransformation({
+      title,
+      description,
+      imageUrl,
+    });
   }
 
   @Put(':id')
@@ -74,16 +78,20 @@ export class BlogsController {
       }
     }
 
-    return this.blogsService.updateBlog(id, { title, description, imageUrl });
+    return this.transformationService.updateTransformation(id, {
+      title,
+      description,
+      imageUrl,
+    });
   }
 
   @Get()
-  async getAllBlogs(): Promise<any> {
-    return this.blogsService.getAllBlogs();
+  async getAllTransformations(): Promise<any> {
+    return this.transformationService.getAllTransformations();
   }
 
   @Delete(':id')
-  async deleteBlog(@Param('id') id: string): Promise<any> {
-    return this.blogsService.deleteBlog(id);
+  async deleteTransformation(@Param('id') id: string): Promise<any> {
+    return this.transformationService.deleteTransformation(id);
   }
 }

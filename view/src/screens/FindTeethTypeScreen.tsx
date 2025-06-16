@@ -1,4 +1,9 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +12,10 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import { getCarousels } from '../api/carousel-api';
+import Carousel from '../components/Carousel';
+import { getBiteTypeVideos } from '../api/bite-type';
+import { Video } from 'expo-av';
 
 const categories = [
   { title: 'Under bite', icon: 'https://i.ibb.co/Y70w2CK3/video.png' },
@@ -32,15 +41,43 @@ const categories = [
   { title: 'Jaw correction', icon: 'https://i.ibb.co/1YW48x0v/video9.png' },
 ];
 
+type BiteType = {
+  title: string;
+  videos: string[];
+};
+
 export default function FindTeethTypeScreen() {
+  const [carousel, setCarousel] = useState<{ uri: string }[]>([]);
+  const [biteVideos, setBiteVideos] = useState<BiteType[]>([]);
+
+  useEffect(() => {
+    const fetchCarousels = async () => {
+      try {
+        const res = await getCarousels();
+        setCarousel(
+          res.data.biteTypeCarousel.map((img: any) => ({ uri: img.imageUrl })),
+        );
+      } catch (error) {
+        console.error('Failed to load carousels:', error);
+      }
+    };
+
+    const fetchBiteVideos = async () => {
+      try {
+        const res = await getBiteTypeVideos();
+        setBiteVideos(res.data);
+      } catch (err) {
+        console.error('Failed to load bite videos:', err);
+      }
+    };
+
+    fetchCarousels();
+    fetchBiteVideos();
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
-      {/* Banner Image (Carousel dummy) */}
-      <Image
-        source={{ uri: 'https://i.ibb.co/x88xsysH/banner.png' }}
-        style={styles.banner}
-        resizeMode="cover"
-      />
+      <Carousel images={carousel} />
 
       {/* Section Title */}
       <Text style={styles.sectionTitle}>
@@ -56,12 +93,40 @@ export default function FindTeethTypeScreen() {
           </TouchableOpacity>
         ))}
       </View>
+
+      {/* Video Section */}
+      <Text style={styles.videoSectionTitle}>
+        See Bite Type Transformations
+      </Text>
+
+      {biteVideos.map((item, idx) => (
+        <View key={idx} style={styles.videoBlock}>
+          <Text style={styles.biteTitle}>{item.title}</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {item.videos.map((videoUrl, i) => (
+              <Video
+                key={i}
+                source={{ uri: videoUrl }}
+                style={styles.biteVideo}
+                isLooping
+                isMuted
+                shouldPlay
+              />
+            ))}
+          </ScrollView>
+        </View>
+      ))}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', paddingHorizontal: 12 },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 12,
+    paddingBottom: 120,
+  },
   searchContainer: {
     flexDirection: 'row',
     marginVertical: 12,
@@ -108,6 +173,30 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     marginBottom: 6,
+  },
+  videoSectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginTop: 24,
+    marginBottom: 12,
+  },
+
+  videoBlock: {
+    marginBottom: 20,
+  },
+
+  biteTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 8,
+  },
+
+  biteVideo: {
+    width: 280,
+    height: 180,
+    borderRadius: 12,
+    backgroundColor: '#000',
+    marginRight: 12,
   },
   label: {
     textAlign: 'center',

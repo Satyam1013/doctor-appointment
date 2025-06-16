@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
-export class Blog extends Document {
+export class Transformation extends Document {
   @Prop({ required: true })
   title!: string;
 
@@ -13,4 +13,5 @@ export class Blog extends Document {
   description!: string;
 }
 
-export const BlogSchema = SchemaFactory.createForClass(Blog);
+export const TransformationSchema =
+  SchemaFactory.createForClass(Transformation);

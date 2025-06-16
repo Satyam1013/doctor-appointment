@@ -1,30 +1,33 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Blog } from './transformation.schema';
+import { Transformation } from './transformation.schema';
 import { deleteFromCloudinary } from 'src/utils/cloudinary';
 
 @Injectable()
-export class BlogsService {
-  constructor(@InjectModel(Blog.name) private blogModel: Model<Blog>) {}
+export class TransformationService {
+  constructor(
+    @InjectModel(Transformation.name)
+    private transformationModel: Model<Transformation>,
+  ) {}
 
-  async createBlog(data: {
+  async createTransformation(data: {
     title: string;
     imageUrl: string;
     description: string;
   }) {
-    const blog = new this.blogModel(data);
+    const blog = new this.transformationModel(data);
     return blog.save();
   }
 
-  async getAllBlogs() {
-    return this.blogModel.find().sort({ createdAt: -1 });
+  async getAllTransformations() {
+    return this.transformationModel.find().sort({ createdAt: -1 });
   }
 
-  async deleteBlog(id: string): Promise<{ deleted: boolean }> {
-    const result = await this.blogModel.findByIdAndDelete(id);
+  async deleteTransformation(id: string): Promise<{ deleted: boolean }> {
+    const result = await this.transformationModel.findByIdAndDelete(id);
     if (!result) {
-      throw new NotFoundException(`Blog with ID ${id} not found`);
+      throw new NotFoundException(`Transformation with ID ${id} not found`);
     }
 
     await deleteFromCloudinary(result.imageUrl);
@@ -32,13 +35,13 @@ export class BlogsService {
     return { deleted: true };
   }
 
-  async updateBlog(
+  async updateTransformation(
     id: string,
     data: { title?: string; description?: string; imageUrl?: string },
   ) {
-    const blog = await this.blogModel.findById(id);
+    const blog = await this.transformationModel.findById(id);
     if (!blog) {
-      throw new NotFoundException(`Blog with ID ${id} not found`);
+      throw new NotFoundException(`Transformation with ID ${id} not found`);
     }
 
     if (data.imageUrl && blog.imageUrl !== data.imageUrl) {

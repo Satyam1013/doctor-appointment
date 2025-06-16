@@ -28,6 +28,7 @@ import Transformation from '../components/Transformation';
 import ProductCard from '../components/ProductCard';
 import { getContactUs } from '../api/contact-us-api';
 import { AVPlaybackSource, ResizeMode, Video } from 'expo-av';
+import { FlatList } from 'react-native';
 import { getDoctorAssignment } from '../api/user-api';
 import { getMyReports, uploadReportImage } from '../api/report-api';
 import * as ImagePicker from 'expo-image-picker';
@@ -129,7 +130,7 @@ export default function ContactUsScreen() {
   const [activeAlignerIndex, setActiveAlignerIndex] = useState<number | null>(
     null,
   );
-  const [video, setVideo] = useState<AVPlaybackSource | undefined>(undefined);
+  const [videos, setVideos] = useState<AVPlaybackSource[]>([]);
 
   const [reports, setReports] = useState<string[]>([]);
 
@@ -182,8 +183,11 @@ export default function ContactUsScreen() {
     const fetchContactData = async () => {
       try {
         const res = await getContactUs();
-        const video = res.data[0];
-        setVideo({ uri: video.video });
+        const videoData = res.data[0];
+        if (videoData?.videos?.length > 0) {
+          const sources = videoData.videos.map((url: string) => ({ uri: url }));
+          setVideos(sources);
+        }
       } catch (err) {
         console.error('Failed to fetch contact data:', err);
       }
@@ -510,14 +514,23 @@ export default function ContactUsScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Video component */}
-        <Video
-          source={video}
-          style={styles.videoFull}
-          resizeMode={ResizeMode.CONTAIN}
-          isLooping
-          isMuted
-          shouldPlay
+        {/* Scrollable Videos */}
+        <FlatList
+          data={videos}
+          keyExtractor={(_, index) => index.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ gap: 12, paddingHorizontal: 12 }}
+          renderItem={({ item }) => (
+            <Video
+              source={item}
+              style={styles.videoItem}
+              resizeMode={ResizeMode.CONTAIN}
+              isLooping
+              isMuted
+              shouldPlay
+            />
+          )}
         />
       </View>
       {/* 6. Product Section & FAQs */}
@@ -722,6 +735,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  videoItem: {
+    width: 350,
+    height: 200,
+    borderRadius: 12,
+    backgroundColor: '#000',
+  },
+
   question: {
     fontWeight: '600',
     fontSize: 15,
