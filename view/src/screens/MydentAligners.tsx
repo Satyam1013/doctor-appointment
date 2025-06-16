@@ -468,6 +468,14 @@ const styles = StyleSheet.create({
     marginTop: 16,
     borderRadius: 8,
     padding: 12,
+    borderWidth: 1,
+    borderColor: '#ccc', // light gray border
+    backgroundColor: '#fff', // white background
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3, // for Android shadow
   },
   title: {
     fontSize: 20,

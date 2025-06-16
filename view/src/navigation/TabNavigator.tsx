@@ -167,7 +167,7 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ focused }) => (
             <Image
               source={{
-                uri: 'https://i.ibb.co/8D84zd57/centers.png',
+                uri: 'https://i.ibb.co/7JfL4TjN/Whats-App-Image-2025-06-16-at-11-36-57-AM.jpg',
               }}
               style={{
                 width: 28,
