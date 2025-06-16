@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,9 +13,24 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { blogData } from '../constants/blogData';
+import { getLatestBlogs } from '../api/blogs-api';
 
 export default function Blogs({ navigation }: any) {
+  const [blogs, setBlogs] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await getLatestBlogs();
+        setBlogs(response.data);
+      } catch (error) {
+        console.error('Failed to fetch blogs:', error);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
   const handlePress = (blog: any) => {
     navigation.navigate('BlogScreen', { blog });
   };
@@ -38,9 +55,9 @@ export default function Blogs({ navigation }: any) {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}
       >
-        {blogData.map((blog) => (
+        {blogs.map((blog) => (
           <TouchableOpacity
-            key={blog.id}
+            key={blog._id}
             style={styles.card}
             onPress={() => handlePress(blog)}
           >

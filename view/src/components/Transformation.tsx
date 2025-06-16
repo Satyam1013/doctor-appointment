@@ -15,7 +15,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import { getAllBlogs } from '../api/blogs-api';
+import { getAllBlogs } from '../api/transformation-api';
 
 export default function Transformation({ navigation }: any) {
   const [blogs, setBlogs] = useState<any[]>([]);

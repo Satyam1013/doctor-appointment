@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   Image,
@@ -9,15 +12,29 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { blogData } from '../constants/blogData';
+import { getLatestBlogs } from '../api/blogs-api';
 
 export default function ShowAllBlogsScreen({ navigation }: any) {
+  const [blogs, setBlogs] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await getLatestBlogs();
+        setBlogs(response.data);
+      } catch (error) {
+        console.error('Failed to fetch blogs:', error);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>All Blogs</Text>
-      {blogData.map((blog) => (
+      {blogs.map((blog) => (
         <TouchableOpacity
-          key={blog.id}
+          key={blog._id}
           style={styles.card}
           onPress={() => navigation.navigate('BlogScreen', { blog })}
         >

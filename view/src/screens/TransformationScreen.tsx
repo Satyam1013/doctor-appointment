@@ -14,7 +14,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import { getAllBlogs } from '../api/blogs-api';
+import { getAllBlogs } from '../api/transformation-api';
 
 export default function TransformationScreen({ navigation }: any) {
   const [blogs, setBlogs] = useState<any[]>([]);

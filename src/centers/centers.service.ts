@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Injectable } from '@nestjs/common';
@@ -107,6 +106,50 @@ export class CentersService {
     const result = await this.centersModel.updateOne(
       { _id: centerId },
       { $pull: { clinic: { _id: clinicId } } },
+    );
+    return result.modifiedCount > 0;
+  }
+
+  // Add a new service to a center
+  async addService(centerId: string, serviceData: any) {
+    return this.centersModel.updateOne(
+      { _id: centerId },
+      { $push: { services: serviceData } },
+    );
+  }
+
+  // Get all services of a center
+  async getServices(centerId: string) {
+    const center = await this.centersModel.findById(centerId).lean();
+    if (!center) throw new Error('Center not found');
+    return center.services || [];
+  }
+
+  // Update a specific service by centerId and serviceId
+  async updateService(centerId: string, serviceId: number, updateData: any) {
+    const center = await this.centersModel.findById(centerId).exec();
+    if (!center) throw new Error('Center not found');
+
+    const index = center.services?.findIndex((s: any) => s.id === serviceId);
+    if (index === -1 || index === undefined)
+      throw new Error('Service not found');
+
+    const keyMap = Object.entries(updateData).reduce(
+      (acc: Record<string, any>, [key, value]) => {
+        acc[`services.${index}.${key}`] = value;
+        return acc;
+      },
+      {},
+    );
+
+    return this.centersModel.updateOne({ _id: centerId }, { $set: keyMap });
+  }
+
+  // Delete a service by centerId and serviceId
+  async deleteService(centerId: string, serviceId: number) {
+    const result = await this.centersModel.updateOne(
+      { _id: centerId },
+      { $pull: { services: { id: serviceId } } },
     );
     return result.modifiedCount > 0;
   }

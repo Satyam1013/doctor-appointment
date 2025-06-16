@@ -1,5 +1,5 @@
 import axiosClient from './axios-client';
 
-export const getAllBlogs = () => {
-  return axiosClient.get('/admin/blogs');
+export const getLatestBlogs = () => {
+  return axiosClient.get('/blogs');
 };

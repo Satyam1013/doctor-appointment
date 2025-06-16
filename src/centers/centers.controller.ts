@@ -139,4 +139,58 @@ export class CentersController {
       if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
     }
   }
+
+  // 7. Add a service to a center
+  @Post(':centerId/services')
+  async addService(
+    @Param('centerId') centerId: string,
+    @Body()
+    body: {
+      id: number;
+      title: string;
+      description: string;
+      image: string;
+    },
+  ) {
+    return this.centersService.addService(centerId, body);
+  }
+
+  // 8. Get all services of a center
+  @Get(':centerId/services')
+  async getServices(@Param('centerId') centerId: string) {
+    return this.centersService.getServices(centerId);
+  }
+
+  // 9. Update a service
+  @Patch(':centerId/services/:serviceId')
+  async updateService(
+    @Param('centerId') centerId: string,
+    @Param('serviceId') serviceId: string,
+    @Body()
+    body: {
+      title?: string;
+      description?: string;
+      image?: string;
+    },
+  ) {
+    const numericId = parseInt(serviceId, 10);
+    if (isNaN(numericId)) throw new Error('Invalid service ID');
+    return this.centersService.updateService(centerId, numericId, body);
+  }
+
+  // 10. Delete a service
+  @Delete(':centerId/services/:serviceId')
+  async deleteService(
+    @Param('centerId') centerId: string,
+    @Param('serviceId') serviceId: string,
+  ) {
+    const numericId = parseInt(serviceId, 10);
+    if (isNaN(numericId)) throw new Error('Invalid service ID');
+    const deleted = await this.centersService.deleteService(
+      centerId,
+      numericId,
+    );
+    if (!deleted) throw new NotFoundException('Service not found');
+    return { message: 'Service deleted successfully' };
+  }
 }

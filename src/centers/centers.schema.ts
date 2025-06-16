@@ -29,6 +29,23 @@ class Clinic {
 
 export const ClinicSchema = SchemaFactory.createForClass(Clinic);
 
+@Schema({ _id: false })
+class Service {
+  @Prop({ required: true })
+  id!: number;
+
+  @Prop({ required: true })
+  title!: string;
+
+  @Prop({ required: true })
+  description!: string;
+
+  @Prop({ required: true })
+  image!: string;
+}
+
+export const ServiceSchema = SchemaFactory.createForClass(Service);
+
 @Schema()
 export class Centers extends Document {
   @Prop({ required: true })
@@ -39,6 +56,9 @@ export class Centers extends Document {
 
   @Prop({ type: [ClinicSchema], default: [] })
   clinic?: Clinic[];
+
+  @Prop({ type: [ServiceSchema], default: [] })
+  services?: Service[];
 }
 
 export const CentersSchema = SchemaFactory.createForClass(Centers);
