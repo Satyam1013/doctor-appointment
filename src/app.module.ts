@@ -17,6 +17,7 @@ import { DoctorModule } from './doctor/doc.module';
 import { ExpertModule } from './experts/experts.module';
 import { MeetModule } from './meet/meet.module';
 import { ReportModule } from './report/rep.module';
+import { BiteTypeModule } from './bite-type/bite-type.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { ReportModule } from './report/rep.module';
     ExpertModule,
     MeetModule,
     ReportModule,
+    BiteTypeModule,
   ],
 })
 export class AppModule {}

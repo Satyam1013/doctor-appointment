@@ -5,16 +5,19 @@ import {
   Body,
   UseInterceptors,
   UploadedFiles,
+  Patch,
+  Param,
+  Delete,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
-import { ContactUsService } from './contacts.service';
 import { uploadBufferToCloudinary } from '../utils/cloudinary';
-import { CreateContactUsDto } from './contacts.dto';
+import { BiteTypeService } from './bite-type.service';
+import { BiteTypeDto, UpdateBiteTypeDto } from './bite-type.dto';
 
-@Controller('contact-us')
-export class ContactUsController {
-  constructor(private readonly service: ContactUsService) {}
+@Controller('bite')
+export class BiteTypeController {
+  constructor(private readonly service: BiteTypeService) {}
 
   // Upload testimonial with video
   @Post()
@@ -25,7 +28,7 @@ export class ContactUsController {
   )
   async uploadMultipleVideos(
     @UploadedFiles() files: Express.Multer.File[],
-    @Body() body: CreateContactUsDto,
+    @Body() body: BiteTypeDto,
   ) {
     const uploadedVideos = await Promise.all(
       files.map((file) =>
@@ -44,5 +47,18 @@ export class ContactUsController {
   @Get()
   async getAllTestimonials() {
     return this.service.findAll();
+  }
+
+  @Patch(':id')
+  async updateBiteType(
+    @Param('id') id: string,
+    @Body() updateDto: UpdateBiteTypeDto,
+  ) {
+    return this.service.update(id, updateDto);
+  }
+
+  @Delete(':id')
+  async deleteBiteType(@Param('id') id: string) {
+    return this.service.delete(id);
   }
 }

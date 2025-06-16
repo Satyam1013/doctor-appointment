@@ -1,6 +1,7 @@
-import { IsString } from 'class-validator';
+import { IsArray, IsString } from 'class-validator';
 
 export class CreateContactUsDto {
-  @IsString()
-  video!: string;
+  @IsArray()
+  @IsString({ each: true })
+  videos!: string[];
 }

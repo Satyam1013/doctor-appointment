@@ -480,7 +480,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#1A1A1A',
+    color: '#FF6666',
     marginBottom: 8,
   },
   subtitle: {
