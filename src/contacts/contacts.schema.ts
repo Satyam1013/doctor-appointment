@@ -3,8 +3,8 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class ContactUs {
-  @Prop({ type: String, required: true })
-  video!: string;
+  @Prop({ type: [String], required: true })
+  videos!: string[];
 }
 
 export type ContactUsDocument = ContactUs & Document;
