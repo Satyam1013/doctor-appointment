@@ -147,7 +147,7 @@ export class CentersController {
       throw new Error('Service image is required');
     }
 
-    const serviceImageUrl = await this.uploadImage(serviceImage); // Assume this returns a URL
+    const serviceImageUrl = await this.uploadImage(serviceImage);
 
     return this.centersService.addServiceByCity({
       cityName,

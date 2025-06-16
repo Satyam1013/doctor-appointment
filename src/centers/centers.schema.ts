@@ -32,9 +32,6 @@ export const ClinicSchema = SchemaFactory.createForClass(Clinic);
 @Schema({ _id: true })
 class Service {
   @Prop({ required: true })
-  id!: number;
-
-  @Prop({ required: true })
   title!: string;
 
   @Prop({ required: true })
