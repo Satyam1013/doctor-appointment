@@ -22,3 +22,14 @@ export class EditClinicDto {
   centerNumber?: string;
   directions?: string;
 }
+
+export class AddServiceDto {
+  @IsNotEmpty()
+  cityName!: string;
+
+  @IsNotEmpty()
+  title!: string;
+
+  @IsNotEmpty()
+  description!: string;
+}

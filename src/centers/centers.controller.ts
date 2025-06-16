@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
   Controller,
@@ -19,7 +18,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import { uploadToCloudinary } from '../utils/cloudinary';
-import { AddCenterDto, AddClinicDto } from './centers.dto';
+import { AddCenterDto, AddClinicDto, AddServiceDto } from './centers.dto';
 
 @Controller('admin/centers')
 export class CentersController {
@@ -126,34 +125,39 @@ export class CentersController {
     return { message: 'Center deleted successfully' };
   }
 
-  private async uploadImage(file?: Express.Multer.File): Promise<string> {
-    if (!file) return '';
-    const tempPath = path.join(os.tmpdir(), `upload-${Date.now()}.jpg`);
-    try {
-      fs.writeFileSync(tempPath, file.buffer);
-      const result = await uploadToCloudinary(tempPath);
-      return result.secure_url;
-    } catch (error) {
-      console.error('Image upload failed:', error);
-      throw error;
-    } finally {
-      if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
-    }
-  }
-
   // Controller
   @Post(':cityName/services')
+  @UseInterceptors(
+    FileFieldsInterceptor([{ name: 'serviceImage', maxCount: 1 }], {
+      storage: memoryStorage(),
+    }),
+  )
   async addService(
-    @Param('cityName') cityName: string,
-    @Body()
-    body: {
-      id: number;
-      title: string;
-      description: string;
-      image: string;
-    },
+    @UploadedFiles() files: { serviceImage?: Express.Multer.File[] },
+    @Body() addServiceDto: AddServiceDto,
   ) {
-    return this.centersService.addServiceByCity(cityName, body);
+    const { cityName, title, description } = addServiceDto;
+
+    if (!cityName || !title || !description) {
+      throw new Error('cityName, title, and description are required');
+    }
+
+    const serviceImage = files.serviceImage?.[0];
+    if (!serviceImage) {
+      throw new Error('Service image is required');
+    }
+
+    const serviceImageUrl = await this.uploadImage(serviceImage); // Assume this returns a URL
+
+    return this.centersService.addServiceByCity({
+      cityName,
+      service: {
+        id: Date.now(), // Or UUID
+        title,
+        description,
+        image: serviceImageUrl,
+      },
+    });
   }
 
   // 8. Get all services of a center
@@ -193,5 +197,20 @@ export class CentersController {
     );
     if (!deleted) throw new NotFoundException('Service not found');
     return { message: 'Service deleted successfully' };
+  }
+
+  private async uploadImage(file?: Express.Multer.File): Promise<string> {
+    if (!file) return '';
+    const tempPath = path.join(os.tmpdir(), `upload-${Date.now()}.jpg`);
+    try {
+      fs.writeFileSync(tempPath, file.buffer);
+      const result = await uploadToCloudinary(tempPath);
+      return result.secure_url;
+    } catch (error) {
+      console.error('Image upload failed:', error);
+      throw error;
+    } finally {
+      if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
+    }
   }
 }

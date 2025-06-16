@@ -29,7 +29,7 @@ class Clinic {
 
 export const ClinicSchema = SchemaFactory.createForClass(Clinic);
 
-@Schema({ _id: false })
+@Schema({ _id: true })
 class Service {
   @Prop({ required: true })
   id!: number;
