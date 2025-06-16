@@ -42,7 +42,8 @@ export class CarouselController {
       | 'mydent'
       | 'shop-top'
       | 'shop-middle'
-      | 'shop-bottom',
+      | 'shop-bottom'
+      | 'bite-type',
   ) {
     const uploadResults = await Promise.all(
       files.map(async (file) => {

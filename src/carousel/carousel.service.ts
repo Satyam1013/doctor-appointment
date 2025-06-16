@@ -12,7 +12,7 @@ export class CarouselService {
   ) {}
 
   async getCarousels() {
-    const [top, bottom, mydent, shopTop, shopMiddle, shopBottom] =
+    const [top, bottom, mydent, shopTop, shopMiddle, shopBottom, biteType] =
       await Promise.all([
         this.carouselModel.find({ type: 'top' }).exec(),
         this.carouselModel.find({ type: 'bottom' }).exec(),
@@ -20,6 +20,7 @@ export class CarouselService {
         this.carouselModel.find({ type: 'shop-top' }).exec(),
         this.carouselModel.find({ type: 'shop-middle' }).exec(),
         this.carouselModel.find({ type: 'shop-bottom' }).exec(),
+        this.carouselModel.find({ type: 'bite-type' }).exec(),
       ]);
 
     return {
@@ -33,6 +34,7 @@ export class CarouselService {
         middleCarousel: shopMiddle,
         bottomCarousel: shopBottom,
       },
+      biteTypeCarousel: biteType,
     };
   }
 
@@ -54,7 +56,8 @@ export class CarouselService {
       | 'mydent'
       | 'shop-top'
       | 'shop-middle'
-      | 'shop-bottom',
+      | 'shop-bottom'
+      | 'bite-type',
     imageUrls: string[],
   ) {
     const documents = imageUrls.map((url) => ({ type, imageUrl: url }));

@@ -7,7 +7,15 @@ export type CarouselDocument = Carousel & Document;
 export class Carousel {
   @Prop({
     required: true,
-    enum: ['top', 'bottom', 'mydent', 'shop-top', 'shop-middle', 'shop-bottom'],
+    enum: [
+      'top',
+      'bottom',
+      'mydent',
+      'shop-top',
+      'shop-middle',
+      'shop-bottom',
+      'bite-type',
+    ],
   })
   type!:
     | 'top'
@@ -15,7 +23,8 @@ export class Carousel {
     | 'mydent'
     | 'shop-top'
     | 'shop-middle'
-    | 'shop-bottom';
+    | 'shop-bottom'
+    | 'bite-type';
 
   @Prop({ required: true })
   imageUrl!: string;
