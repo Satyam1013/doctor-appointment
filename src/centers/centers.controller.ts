@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
   Controller,
@@ -140,10 +141,10 @@ export class CentersController {
     }
   }
 
-  // 7. Add a service to a center
-  @Post(':centerId/services')
+  // Controller
+  @Post(':cityName/services')
   async addService(
-    @Param('centerId') centerId: string,
+    @Param('cityName') cityName: string,
     @Body()
     body: {
       id: number;
@@ -152,7 +153,7 @@ export class CentersController {
       image: string;
     },
   ) {
-    return this.centersService.addService(centerId, body);
+    return this.centersService.addServiceByCity(cityName, body);
   }
 
   // 8. Get all services of a center

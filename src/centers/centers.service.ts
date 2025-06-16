@@ -111,9 +111,9 @@ export class CentersService {
   }
 
   // Add a new service to a center
-  async addService(centerId: string, serviceData: any) {
+  async addServiceByCity(cityName: string, serviceData: any) {
     return this.centersModel.updateOne(
-      { _id: centerId },
+      { cityName }, // ✅ find by cityName instead of _id
       { $push: { services: serviceData } },
     );
   }
