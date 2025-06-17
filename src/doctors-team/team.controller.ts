@@ -1,5 +1,3 @@
-// controllers/team.controller.ts
-
 import {
   Controller,
   Get,
@@ -8,16 +6,31 @@ import {
   Param,
   Delete,
   Put,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { DoctorsTeamService } from './team.service';
 import { CreateDoctorsTeamDto, UpdateDoctorsTeamDto } from './team.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { uploadBufferToCloudinary } from 'src/utils/cloudinary';
 
 @Controller('team')
 export class DoctorsTeamController {
   constructor(private readonly doctorsTeamService: DoctorsTeamService) {}
 
   @Post()
-  create(@Body() dto: CreateDoctorsTeamDto) {
+  @UseInterceptors(FileInterceptor('image'))
+  async create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() dto: CreateDoctorsTeamDto,
+  ) {
+    if (file) {
+      const result = await uploadBufferToCloudinary(
+        file.buffer,
+        file.originalname,
+      );
+      dto.image = result.secure_url;
+    }
     return this.doctorsTeamService.create(dto);
   }
 

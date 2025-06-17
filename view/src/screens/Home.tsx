@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View, ActivityIndicator } from 'react-native';
 import Carousel from '../components/Carousel';
 import ServiceCards from '../components/ServiceCards';
@@ -20,13 +20,20 @@ import DoctorCard from '../components/ConsultDoctors';
 import Blogs from '../components/Blogs';
 import { getCarousels } from '../api/carousel-api';
 import TeethAlignmentProblems from '../components/TeethAlignmentProblems';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function HomeScreen({ navigation }: any) {
+  const { token } = useContext(AuthContext);
   const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
   const [bottomCarousel, setBottomCarousel] = useState<{ uri: string }[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!token) {
+      navigation.navigate('Login'); // ✅ redirect to Login
+      return;
+    }
+
     const fetchCarousels = async () => {
       try {
         const res = await getCarousels();
@@ -46,7 +53,9 @@ export default function HomeScreen({ navigation }: any) {
     };
 
     fetchCarousels();
-  }, []);
+  }, [token]);
+
+  if (!token) return null;
 
   if (loading) {
     return (
