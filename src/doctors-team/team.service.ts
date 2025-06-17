@@ -26,6 +26,7 @@ export class DoctorsTeamService {
     {
       name: string;
       image: string;
+      type: string;
       date: string;
       time: string;
     }[]
@@ -52,6 +53,7 @@ export class DoctorsTeamService {
       return {
         name: team?.name || 'Unknown',
         image: team?.image || '',
+        type: team?.type || '',
         date: entry.date,
         time: entry.time,
       };

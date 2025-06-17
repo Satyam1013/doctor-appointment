@@ -114,6 +114,9 @@ interface DoctorAssignment {
 interface DoctorTeams {
   name: string;
   image: string;
+  time: string;
+  date: string;
+  type: string;
 }
 
 const formatAppointmentDateTime = (date: Date | null) => {
@@ -482,32 +485,7 @@ export default function ContactUsScreen() {
         <Text style={[styles.sectionTitle, { marginTop: 16 }]}>
           Schedule Appointments
         </Text>
-        {[
-          {
-            name: 'Dr. Preeti Chhabra',
-            type: 'Gynaecologist',
-            time: '1:30PM',
-            date: '15 Aug',
-          },
-          {
-            name: 'Dr. Anshu Sharma',
-            type: 'Nutritionist',
-            time: '5:00PM',
-            date: '20 Aug',
-          },
-          {
-            name: 'Dr. Pallvi Rathee',
-            type: 'Yoga & Meditation',
-            time: '10:00AM',
-            date: '25 Aug',
-          },
-          {
-            name: 'Dr. Jyoti Kumar',
-            type: 'Counselling & Monitoring',
-            time: '10:00AM',
-            date: '30 Aug',
-          },
-        ].map((item, index) => (
+        {doctorTeams.map((item, index) => (
           <View key={index} style={styles.scheduleItem}>
             <View style={{ flex: 1 }}>
               <Text style={styles.scheduleDoctor}>{item.name}</Text>

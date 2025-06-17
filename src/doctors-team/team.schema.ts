@@ -9,6 +9,9 @@ export class DoctorsTeam {
   name!: string;
 
   @Prop({ required: true })
+  type!: string;
+
+  @Prop({ required: true })
   image!: string;
 }
 
