@@ -1,4 +1,3 @@
-// appointments/appointment.module.ts
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Appointment, AppointmentSchema } from './app.schema';

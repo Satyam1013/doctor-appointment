@@ -31,28 +31,23 @@ type RootStackParamList = {
 
 type CentersRouteProp = RouteProp<RootStackParamList, 'Centers'>;
 
-const services = [
-  {
-    id: 1,
-    title: 'Laser toning for pigmentation',
-    description:
-      'Reduce skin pigmentation with 4 sessions package at just ₹15000/-',
-    image: 'https://i.ibb.co/zHHBvZ9Y/logoblue.jpg',
-  },
-  {
-    id: 2,
-    title: 'Hydrafacial',
-    description: 'Get intense skin hydration and glow at ₹8000/-',
-    image: 'https://i.ibb.co/zHHBvZ9Y/logoblue.jpg',
-  },
-];
-
 export default function Centers() {
   const route = useRoute<CentersRouteProp>();
   const [selectedCity, setSelectedCity] = useState('All');
   const [centers, setCenters] = useState<
     { cityName: string; imageUrl: string; clinic: any[]; _id: string }[]
   >([]);
+  const [servicesMap, setServicesMap] = useState<
+    Record<
+      string,
+      {
+        _id: string;
+        title: string;
+        description: string;
+        image: string;
+      }[]
+    >
+  >({});
   const [bottomCarousel, setBottomCarousel] = useState<{ uri: string }[]>([]);
   const scrollRef = useRef<ScrollView>(null);
 
@@ -60,8 +55,18 @@ export default function Centers() {
     getCenters()
       .then((res) => {
         const fetchedCenters = res.data;
+
+        // Create a map of cityName -> services[]
+        const newServiceMap: typeof servicesMap = {};
+        fetchedCenters.forEach((center: any) => {
+          if (center.cityName && center.services) {
+            newServiceMap[center.cityName] = center.services;
+          }
+        });
+
         const allOption = { cityName: 'All', imageUrl: '', clinic: [] };
         setCenters([allOption, ...fetchedCenters]);
+        setServicesMap(newServiceMap);
       })
       .catch((err) => {
         console.error('Failed to fetch centers:', err);
@@ -229,20 +234,25 @@ export default function Centers() {
         <Text style={styles.servicesSubtitle}>Exclusive discounts</Text>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {services.map((service) => (
-            <View key={service.id} style={styles.serviceCard}>
-              <Image
-                source={{ uri: service.image }}
-                style={styles.serviceImage}
-              />
-              <View style={styles.serviceInfo}>
-                <Text style={styles.serviceTitle}>{service.title}</Text>
-                <Text style={styles.serviceDescription}>
-                  {service.description}
-                </Text>
+          {selectedCity !== 'All' && servicesMap[selectedCity]?.length > 0 ? (
+            servicesMap[selectedCity].map((service) => (
+              <View key={service._id} style={styles.serviceCard}>
+                <Image source={{ uri: service.image }} style={styles.image} />
+                <View style={styles.serviceInfo}>
+                  <Text style={styles.serviceTitle}>{service.title}</Text>
+                  <Text style={styles.serviceDescription}>
+                    {service.description}
+                  </Text>
+                </View>
               </View>
-            </View>
-          ))}
+            ))
+          ) : (
+            <Text style={{ padding: 8, color: '#999' }}>
+              {selectedCity === 'All'
+                ? 'Select a city to view services.'
+                : 'No services available for this city.'}
+            </Text>
+          )}
         </ScrollView>
       </View>
       <FeatureStats />
@@ -372,11 +382,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
-  },
-  serviceImage: {
-    width: '100%',
-    height: 120,
-    resizeMode: 'cover',
   },
   serviceInfo: {
     padding: 8,

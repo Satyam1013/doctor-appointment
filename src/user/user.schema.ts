@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { AssignedUserStatus, PaymentStatus } from 'src/common/auth-req';
 
 export type UserDocument = HydratedDocument<User>;
@@ -52,7 +52,7 @@ export class User {
   @Prop({
     type: {
       doctorId: {
-        type: MongooseSchema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Doctor',
         required: true,
       },
@@ -72,6 +72,9 @@ export class User {
     assignedAt: Date;
     status: AssignedUserStatus;
   };
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'DoctorsTeam' }], default: [] })
+  doctorsTeam?: Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

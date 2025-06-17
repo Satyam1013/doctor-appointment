@@ -128,13 +128,13 @@ export class CentersController {
   // Controller
   @Post(':cityName/services')
   @UseInterceptors(
-    FileFieldsInterceptor([{ name: 'serviceImage', maxCount: 1 }], {
+    FileFieldsInterceptor([{ name: 'image', maxCount: 1 }], {
       storage: memoryStorage(),
     }),
   )
   async addService(
     @Param('cityName') cityName: string,
-    @UploadedFiles() files: { serviceImage?: Express.Multer.File[] },
+    @UploadedFiles() files: { image?: Express.Multer.File[] },
     @Body() addServiceDto: AddServiceDto,
   ) {
     const { title, description } = addServiceDto;
@@ -143,19 +143,19 @@ export class CentersController {
       throw new Error('cityName, title, and description are required');
     }
 
-    const serviceImage = files.serviceImage?.[0];
-    if (!serviceImage) {
+    const image = files.image?.[0];
+    if (!image) {
       throw new Error('Service image is required');
     }
 
-    const serviceImageUrl = await this.uploadImage(serviceImage);
+    const imageUrl = await this.uploadImage(image);
 
     return this.centersService.addServiceByCity({
       cityName,
       service: {
         title,
         description,
-        image: serviceImageUrl,
+        image: imageUrl,
       },
     });
   }

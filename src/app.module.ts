@@ -19,6 +19,7 @@ import { MeetModule } from './meet/meet.module';
 import { ReportModule } from './report/rep.module';
 import { BiteTypeModule } from './bite-type/bite-type.module';
 import { BlogsModule } from './blogs/blogs.module';
+import { DoctorsTeamModule } from './doctors-team/team.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { BlogsModule } from './blogs/blogs.module';
     ReportModule,
     BiteTypeModule,
     BlogsModule,
+    DoctorsTeamModule,
   ],
 })
 export class AppModule {}
