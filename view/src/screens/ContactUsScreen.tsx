@@ -189,8 +189,9 @@ export default function ContactUsScreen() {
     };
 
     const fetchTeams = async () => {
+      if (!user?._id) return;
       try {
-        const res = await getDoctorTeams();
+        const res = await getDoctorTeams(user?._id);
         setDoctorTeams(res.data);
       } catch (error) {
         console.error('Failed to fetch doctor teams', error);
@@ -470,6 +471,12 @@ export default function ContactUsScreen() {
               <Text style={styles.expertName}>{item.name}</Text>
             </View>
           ))}
+
+          {doctorTeams.length === 0 && (
+            <View style={styles.noAppointmentText}>
+              No Doctors Team Assigned
+            </View>
+          )}
         </ScrollView>
 
         <Text style={[styles.sectionTitle, { marginTop: 16 }]}>
@@ -1177,7 +1184,7 @@ const styles = StyleSheet.create({
   },
   noAppointmentText: {
     fontSize: 16,
-    color: '#666',
+    color: '#FF0000',
     marginBottom: 20,
     textAlign: 'center',
   },

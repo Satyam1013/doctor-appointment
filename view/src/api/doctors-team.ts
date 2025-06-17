@@ -1,5 +1,5 @@
 import axiosClient from './axios-client';
 
-export const getDoctorTeams = () => {
-  return axiosClient.get('/team');
+export const getDoctorTeams = (userId: string) => {
+  return axiosClient.get(`/team/user/${userId}`);
 };

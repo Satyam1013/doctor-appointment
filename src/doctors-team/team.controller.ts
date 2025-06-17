@@ -8,9 +8,14 @@ import {
   Put,
   UseInterceptors,
   UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
 import { DoctorsTeamService } from './team.service';
-import { CreateDoctorsTeamDto, UpdateDoctorsTeamDto } from './team.dto';
+import {
+  AssignDoctorTeamsDto,
+  CreateDoctorsTeamDto,
+  UpdateDoctorsTeamDto,
+} from './team.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { uploadBufferToCloudinary } from 'src/utils/cloudinary';
 
@@ -58,11 +63,12 @@ export class DoctorsTeamController {
   @Post('assign/:userId')
   assignToUser(
     @Param('userId') userId: string,
-    @Body()
-    dto: {
-      teams: { id: string; date: string; time: string }[];
-    },
+    @Body() dto: AssignDoctorTeamsDto,
   ) {
+    if (!dto.teams || dto.teams.length !== 5) {
+      throw new BadRequestException('Exactly 5 doctor teams must be provided');
+    }
+
     return this.doctorsTeamService.assignToUser(userId, dto.teams);
   }
 }

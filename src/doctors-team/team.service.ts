@@ -76,7 +76,7 @@ export class DoctorsTeamService {
     userId: string,
     teams: { id: string; date: string; time: string }[],
   ): Promise<UserDocument> {
-    if (teams.length !== 5) {
+    if (!teams || teams.length !== 5) {
       throw new Error('Exactly 5 doctors team entries must be provided');
     }
 
@@ -90,7 +90,7 @@ export class DoctorsTeamService {
     }
 
     const formattedDoctorsTeam = teams.map((t) => ({
-      team: t.id,
+      team: new Types.ObjectId(t.id),
       date: t.date,
       time: t.time,
     }));
