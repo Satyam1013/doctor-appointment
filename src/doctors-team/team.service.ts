@@ -22,10 +22,40 @@ export class DoctorsTeamService {
     return this.doctorsTeamModel.find().exec();
   }
 
-  async findOne(id: string): Promise<DoctorsTeam> {
-    const doctor = await this.doctorsTeamModel.findById(id).exec();
-    if (!doctor) throw new NotFoundException('Doctor not found');
-    return doctor;
+  async getDoctorsTeamByUserId(userId: string): Promise<
+    {
+      name: string;
+      image: string;
+      date: string;
+      time: string;
+    }[]
+  > {
+    const user = await this.userModel.findById(userId).lean();
+
+    if (!user || !user.doctorsTeam) {
+      throw new NotFoundException('User or assigned doctor teams not found');
+    }
+
+    const teamIds = user.doctorsTeam.map(
+      (entry) => new Types.ObjectId(entry.team),
+    );
+    const teams = await this.doctorsTeamModel
+      .find({
+        _id: { $in: teamIds },
+      })
+      .lean();
+
+    const teamMap = new Map(teams.map((team) => [team._id.toString(), team]));
+
+    return user.doctorsTeam.map((entry) => {
+      const team = teamMap.get(entry.team.toString());
+      return {
+        name: team?.name || 'Unknown',
+        image: team?.image || '',
+        date: entry.date,
+        time: entry.time,
+      };
+    });
   }
 
   async update(id: string, dto: UpdateDoctorsTeamDto): Promise<DoctorsTeam> {

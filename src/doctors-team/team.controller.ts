@@ -39,9 +39,9 @@ export class DoctorsTeamController {
     return this.doctorsTeamService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.doctorsTeamService.findOne(id);
+  @Get('user/:id')
+  getByUser(@Param('id') userId: string) {
+    return this.doctorsTeamService.getDoctorsTeamByUserId(userId);
   }
 
   @Put(':id')
