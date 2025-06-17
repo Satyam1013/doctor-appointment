@@ -42,23 +42,32 @@ export class DoctorsTeamService {
   }
 
   // ✅ Assign 5 doctors team to user
-  async assignToUser(userId: string, teamIds: string[]): Promise<UserDocument> {
-    if (teamIds.length !== 5) {
-      throw new Error('Exactly 5 doctors team IDs must be provided');
+  async assignToUser(
+    userId: string,
+    teams: { id: string; date: string; time: string }[],
+  ): Promise<UserDocument> {
+    if (teams.length !== 5) {
+      throw new Error('Exactly 5 doctors team entries must be provided');
     }
 
-    // Optional: Check if all teamIds exist
-    const teams = await this.doctorsTeamModel.find({
-      _id: { $in: teamIds.map((id) => new Types.ObjectId(id)) },
+    const teamIds = teams.map((t) => new Types.ObjectId(t.id));
+    const foundTeams = await this.doctorsTeamModel.find({
+      _id: { $in: teamIds },
     });
 
-    if (teams.length !== 5) {
+    if (foundTeams.length !== 5) {
       throw new NotFoundException('Some DoctorsTeam entries not found');
     }
 
+    const formattedDoctorsTeam = teams.map((t) => ({
+      team: t.id,
+      date: t.date,
+      time: t.time,
+    }));
+
     const updatedUser = await this.userModel.findByIdAndUpdate(
       userId,
-      { doctorsTeam: teamIds },
+      { doctorsTeam: formattedDoctorsTeam },
       { new: true },
     );
 

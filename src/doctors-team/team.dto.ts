@@ -1,10 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import {
-  IsNotEmpty,
-  IsString,
-  IsDateString,
-  IsOptional,
-} from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateDoctorsTeamDto {
   @IsNotEmpty()
@@ -14,10 +9,6 @@ export class CreateDoctorsTeamDto {
   @IsNotEmpty()
   @IsString()
   image!: string;
-
-  @IsOptional()
-  @IsDateString()
-  availableDate?: string;
 }
 
 export class UpdateDoctorsTeamDto extends PartialType(CreateDoctorsTeamDto) {}

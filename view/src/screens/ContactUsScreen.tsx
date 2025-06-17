@@ -34,6 +34,7 @@ import { getMyReports, uploadReportImage } from '../api/report-api';
 import * as ImagePicker from 'expo-image-picker';
 import MeetModal from '../components/Meet';
 import { getUserMeets } from '../api/meet-api';
+import { getDoctorTeams } from '../api/doctors-team';
 
 const products = [
   {
@@ -110,6 +111,11 @@ interface DoctorAssignment {
   assignedAt: Date;
 }
 
+interface DoctorTeams {
+  name: string;
+  image: string;
+}
+
 const formatAppointmentDateTime = (date: Date | null) => {
   if (!date) return { dateString: '', timeString: '' };
 
@@ -133,6 +139,8 @@ export default function ContactUsScreen() {
   const [videos, setVideos] = useState<AVPlaybackSource[]>([]);
 
   const [reports, setReports] = useState<string[]>([]);
+
+  const [doctorTeams, setDoctorTeams] = useState<DoctorTeams[] | []>([]);
 
   const [doctorAssignment, setDoctorAssignment] =
     useState<DoctorAssignment | null>(null);
@@ -180,6 +188,15 @@ export default function ContactUsScreen() {
       }
     };
 
+    const fetchTeams = async () => {
+      try {
+        const res = await getDoctorTeams();
+        setDoctorTeams(res.data);
+      } catch (error) {
+        console.error('Failed to fetch doctor teams', error);
+      }
+    };
+
     const fetchContactData = async () => {
       try {
         const res = await getContactUs();
@@ -195,6 +212,7 @@ export default function ContactUsScreen() {
 
     fetchDoctorData();
     fetchContactData();
+    fetchTeams();
   }, []);
 
   const fetchReports = async () => {
@@ -446,19 +464,10 @@ export default function ContactUsScreen() {
           showsHorizontalScrollIndicator={false}
           style={styles.expertsContainer}
         >
-          {[
-            'Dr. Nandini',
-            'Dr. Preeti',
-            'Dr. Anshu',
-            'Dr. Pallvi',
-            'Dr. Jyoti',
-          ].map((name, idx) => (
+          {doctorTeams.map((item, idx) => (
             <View key={idx} style={styles.expertBox}>
-              <Image
-                source={{ uri: 'https://i.ibb.co/35mrrKZh/consultant.jpg' }}
-                style={styles.expertImage}
-              />
-              <Text style={styles.expertName}>{name}</Text>
+              <Image source={{ uri: item.image }} style={styles.expertImage} />
+              <Text style={styles.expertName}>{item.name}</Text>
             </View>
           ))}
         </ScrollView>
@@ -679,7 +688,6 @@ export default function ContactUsScreen() {
         {/* Footer Note */}
         <Text style={styles.footerNote}>@2025, Mydent</Text>
       </View>
-      );
     </ScrollView>
   );
 }

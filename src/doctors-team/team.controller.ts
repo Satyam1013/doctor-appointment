@@ -58,8 +58,11 @@ export class DoctorsTeamController {
   @Post('assign/:userId')
   assignToUser(
     @Param('userId') userId: string,
-    @Body() dto: { teamIds: string[] }, // Expecting 5 team IDs
+    @Body()
+    dto: {
+      teams: { id: string; date: string; time: string }[];
+    },
   ) {
-    return this.doctorsTeamService.assignToUser(userId, dto.teamIds);
+    return this.doctorsTeamService.assignToUser(userId, dto.teams);
   }
 }

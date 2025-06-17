@@ -73,8 +73,21 @@ export class User {
     status: AssignedUserStatus;
   };
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'DoctorsTeam' }], default: [] })
-  doctorsTeam?: Types.ObjectId[];
+  @Prop({
+    type: [
+      {
+        team: { type: Types.ObjectId, ref: 'DoctorsTeam', required: true },
+        date: { type: String, required: true },
+        time: { type: String, required: true },
+      },
+    ],
+    default: [],
+  })
+  doctorsTeam!: {
+    team: Types.ObjectId;
+    date: string;
+    time: string;
+  }[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
