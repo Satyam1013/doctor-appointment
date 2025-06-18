@@ -15,7 +15,7 @@ import EComScreen from '../screens/ECommerceScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import TeethTreatmentScreen from '../screens/TeethTreatmentScreen';
 import TreatmentInfoScreen from '../screens/TreatmentInfo';
-import FindTeethTypeScreen from '../screens/FindTeethTypeScreen';
+import FindBiteTypeScreen from '../screens/FindBiteTypeScreen';
 import TransformationScreen from '../screens/TransformationScreen';
 import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import { withAppShell } from '../utils/AppShellWrapper';
@@ -37,6 +37,7 @@ import MyDentCoinsScreen from '../screens/MydentCoins';
 import NewTicketScreen from '../screens/NewTicket';
 import CancelTicketScreen from '../screens/CancelTicket';
 import LoginScreen from '../screens/Login';
+import BiteTypeVideosScreen from '../screens/BiteTypesVideoScreen';
 // import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
@@ -50,6 +51,10 @@ export default function HomeStack() {
         component={withAppShell(BookingSuccessScreen)}
       />
       <Stack.Screen name="SmilePreview" component={SmilePreview} />
+      <Stack.Screen
+        name="BiteTypeVideosScreen"
+        component={withAppShell(BiteTypeVideosScreen)}
+      />
 
       <Stack.Screen
         name="TermsAndConditionsScreen"
@@ -167,8 +172,8 @@ export default function HomeStack() {
         component={withAppShell(TreatmentInfoScreen)}
       />
       <Stack.Screen
-        name="FindTeethTypeScreen"
-        component={withAppShell(FindTeethTypeScreen)}
+        name="FindBiteTypeScreen"
+        component={withAppShell(FindBiteTypeScreen)}
       />
       <Stack.Screen
         name="FavProductScreen"

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-floating-promises */
@@ -14,8 +15,6 @@ import {
 } from 'react-native';
 import { getCarousels } from '../api/carousel-api';
 import Carousel from '../components/Carousel';
-import { getBiteTypeVideos } from '../api/bite-type';
-import { Video } from 'expo-av';
 
 const categories = [
   { title: 'Under bite', icon: 'https://i.ibb.co/Y70w2CK3/video.png' },
@@ -41,14 +40,8 @@ const categories = [
   { title: 'Jaw correction', icon: 'https://i.ibb.co/1YW48x0v/video9.png' },
 ];
 
-type BiteType = {
-  title: string;
-  videos: string[];
-};
-
-export default function FindTeethTypeScreen() {
+export default function FindBiteTypeScreen({ navigation }: any) {
   const [carousel, setCarousel] = useState<{ uri: string }[]>([]);
-  const [biteVideos, setBiteVideos] = useState<BiteType[]>([]);
 
   useEffect(() => {
     const fetchCarousels = async () => {
@@ -62,17 +55,7 @@ export default function FindTeethTypeScreen() {
       }
     };
 
-    const fetchBiteVideos = async () => {
-      try {
-        const res = await getBiteTypeVideos();
-        setBiteVideos(res.data);
-      } catch (err) {
-        console.error('Failed to load bite videos:', err);
-      }
-    };
-
     fetchCarousels();
-    fetchBiteVideos();
   }, []);
 
   return (
@@ -87,35 +70,18 @@ export default function FindTeethTypeScreen() {
       {/* Grid */}
       <View style={styles.grid}>
         {categories.map((item, idx) => (
-          <TouchableOpacity key={idx} style={styles.card}>
+          <TouchableOpacity
+            key={idx}
+            style={styles.card}
+            onPress={() =>
+              navigation.navigate('BiteTypeVideosScreen', { title: item.title })
+            }
+          >
             <Image source={{ uri: item.icon }} style={styles.icon} />
             <Text style={styles.label}>{item.title}</Text>
           </TouchableOpacity>
         ))}
       </View>
-
-      {/* Video Section */}
-      <Text style={styles.videoSectionTitle}>
-        See Bite Type Transformations
-      </Text>
-
-      {biteVideos.map((item, idx) => (
-        <View key={idx} style={styles.videoBlock}>
-          <Text style={styles.biteTitle}>{item.title}</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {item.videos.map((videoUrl, i) => (
-              <Video
-                key={i}
-                source={{ uri: videoUrl }}
-                style={styles.biteVideo}
-                isLooping
-                isMuted
-                shouldPlay
-              />
-            ))}
-          </ScrollView>
-        </View>
-      ))}
     </ScrollView>
   );
 }
@@ -126,33 +92,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 12,
     paddingBottom: 120,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    marginVertical: 12,
-    alignItems: 'center',
-  },
-  searchInput: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    backgroundColor: '#fff',
-  },
-  cartButton: {
-    marginLeft: 8,
-    backgroundColor: '#eee',
-    padding: 10,
-    borderRadius: 8,
-  },
-  cartText: { fontSize: 18 },
-  banner: {
-    width: '100%',
-    height: 180,
-    borderRadius: 10,
-    marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 16,
@@ -174,30 +113,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 6,
   },
-  videoSectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginTop: 24,
-    marginBottom: 12,
-  },
 
-  videoBlock: {
-    marginBottom: 20,
-  },
-
-  biteTitle: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 8,
-  },
-
-  biteVideo: {
-    width: 280,
-    height: 180,
-    borderRadius: 12,
-    backgroundColor: '#000',
-    marginRight: 12,
-  },
   label: {
     textAlign: 'center',
     fontSize: 12,

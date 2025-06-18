@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useEffect, useState } from 'react';
@@ -11,27 +12,46 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { getCoins } from '../api/coins-api';
 
-const coinHistory = [
-  {
-    id: '1',
-    title: 'Completed Consultation',
-    amount: '+50',
-    date: '12 Jun 2025',
-  },
-  { id: '2', title: 'Purchased Aligners', amount: '-200', date: '10 Jun 2025' },
-  { id: '3', title: 'Referral Bonus', amount: '+100', date: '05 Jun 2025' },
-];
-
 interface CoinsProps {
   coins: number;
   bonus: number;
   purchased: number;
   consultation: number;
+  createdAt: Date;
   userId: any;
 }
 
 const MyDentCoinsScreen = () => {
-  const [coins, setCoins] = useState<CoinsProps | []>([]);
+  const [coins, setCoins] = useState<CoinsProps | null>(null);
+
+  const formattedDate = coins?.createdAt
+    ? new Date(coins.createdAt).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      })
+    : '';
+
+  const coinDetails = [
+    {
+      id: '1',
+      title: 'Referral Bonus',
+      amount: `+${coins?.bonus ?? 0}`,
+      createdAt: coins?.createdAt,
+    },
+    {
+      id: '2',
+      title: 'Purchased Coins',
+      amount: `-${coins?.purchased ?? 0}`,
+      createdAt: coins?.createdAt,
+    },
+    {
+      id: '3',
+      title: 'Consultation Coins',
+      amount: `+${coins?.consultation ?? 0}`,
+      createdAt: coins?.createdAt,
+    },
+  ];
 
   useEffect(() => {
     fetchCoins();
@@ -41,8 +61,6 @@ const MyDentCoinsScreen = () => {
     try {
       const res = await getCoins();
       const data = res.data;
-      console.log('✨ ~ data:', data);
-
       setCoins(data);
     } catch (err) {
       console.error('Failed to fetch aligner or carousel data:', err);
@@ -56,7 +74,7 @@ const MyDentCoinsScreen = () => {
       {/* Coin Balance Card */}
       <View style={styles.balanceCard}>
         <Ionicons name="wallet" size={32} color="#fff" />
-        <Text style={styles.coinAmount}>350 Coins</Text>
+        <Text style={styles.coinAmount}>{coins?.coins ?? 0} Coins</Text>
         <Text style={styles.coinLabel}>Available Balance</Text>
       </View>
 
@@ -68,13 +86,13 @@ const MyDentCoinsScreen = () => {
       {/* Coin History */}
       <Text style={styles.sectionTitle}>Coin History</Text>
       <FlatList
-        data={coinHistory}
+        data={coinDetails}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.historyItem}>
             <View>
               <Text style={styles.historyTitle}>{item.title}</Text>
-              <Text style={styles.historyDate}>{item.date}</Text>
+              <Text style={styles.historyDate}>{formattedDate}</Text>
             </View>
             <Text
               style={[

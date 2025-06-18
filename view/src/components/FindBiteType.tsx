@@ -25,13 +25,13 @@ const categories = [
   },
 ];
 
-export default function FindTeethType({ navigation }: any) {
+export default function FindBiteType({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Find your bite type</Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate('FindTeethTypeScreen')}
+          onPress={() => navigation.navigate('FindBiteTypeScreen')}
         >
           <Text style={styles.viewAll}>View All</Text>
         </TouchableOpacity>
@@ -42,7 +42,9 @@ export default function FindTeethType({ navigation }: any) {
           <TouchableOpacity
             key={idx}
             style={styles.item}
-            onPress={() => navigation.navigate('FindTeethTypeScreen')}
+            onPress={() =>
+              navigation.navigate('BiteTypeVideosScreen', { title: item.title })
+            }
           >
             <Image source={{ uri: item.img }} style={styles.image} />
             <Text style={styles.itemText}>{item.title}</Text>

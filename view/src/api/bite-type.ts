@@ -1,5 +1,5 @@
 import axiosClient from './axios-client';
 
-export const getBiteTypeVideos = () => {
+export const getBiteType = () => {
   return axiosClient.get('bite');
 };

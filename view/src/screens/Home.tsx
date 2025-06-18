@@ -8,7 +8,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View, ActivityIndicator } from 'react-native';
 import Carousel from '../components/Carousel';
 import ServiceCards from '../components/ServiceCards';
-import FindTeethType from '../components/FindTeethType';
+import FindBiteType from '../components/FindBiteType';
 import TopProducts from '../components/TopProducts';
 import MydentCenters from '../components/MydentCenters';
 import Transformation from '../components/Transformation';
@@ -70,7 +70,7 @@ export default function HomeScreen({ navigation }: any) {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Carousel images={topCarousel} />
         <ServiceCards navigation={navigation} />
-        <FindTeethType navigation={navigation} />
+        <FindBiteType navigation={navigation} />
         <TopProducts navigation={navigation} />
         <MydentCenters navigation={navigation} />
         <TeethAlignmentProblems navigation={navigation} />
