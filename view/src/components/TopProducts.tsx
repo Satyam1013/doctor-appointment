@@ -28,8 +28,8 @@ export default function TopProducts({ navigation }: any) {
                 navigation.navigate('AlignersForTeensScreen');
               } else if (idx === 0) {
                 navigation.navigate('Mydent');
-              } else {
-                navigation.navigate('DoctorDetailsScreen', { doctor: doc });
+              } else if (idx === 3) {
+                navigation.navigate('SmilePreview');
               }
             }}
           >

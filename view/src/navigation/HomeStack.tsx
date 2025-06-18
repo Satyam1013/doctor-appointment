@@ -16,7 +16,6 @@ import ProductDetailScreen from '../screens/ProductDetailScreen';
 import TeethTreatmentScreen from '../screens/TeethTreatmentScreen';
 import TreatmentInfoScreen from '../screens/TreatmentInfo';
 import FindTeethTypeScreen from '../screens/FindTeethTypeScreen';
-import DoctorDetailsScreen from '../screens/TopDoctorsScreen';
 import TransformationScreen from '../screens/TransformationScreen';
 import TransformationBlogDetailsScreen from '../screens/TransformationBlogs';
 import { withAppShell } from '../utils/AppShellWrapper';
@@ -170,10 +169,6 @@ export default function HomeStack() {
       <Stack.Screen
         name="FindTeethTypeScreen"
         component={withAppShell(FindTeethTypeScreen)}
-      />
-      <Stack.Screen
-        name="DoctorDetailsScreen"
-        component={withAppShell(DoctorDetailsScreen)}
       />
       <Stack.Screen
         name="FavProductScreen"
