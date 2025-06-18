@@ -1,4 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from 'react';
+import * as DocumentPicker from 'expo-document-picker';
 import {
   View,
   Text,
@@ -8,11 +14,36 @@ import {
   Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { uploadReportImage } from '../api/report-api';
 
 const NewTicketScreen = () => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('General');
   const [message, setMessage] = useState('');
+
+  const handleUpload = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*', // Accept all file types
+        copyToCacheDirectory: true,
+      });
+
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        const file = result.assets[0];
+        const formData = new FormData();
+
+        formData.append('file', {
+          uri: file.uri,
+          name: file.name,
+          type: file.mimeType || 'application/octet-stream', // fallback MIME type
+        } as any);
+
+        await uploadReportImage(formData);
+      }
+    } catch (err) {
+      console.error('File upload failed:', err);
+    }
+  };
 
   const handleSubmit = () => {
     if (!title || !message) {
@@ -55,7 +86,7 @@ const NewTicketScreen = () => {
         numberOfLines={5}
       />
 
-      <TouchableOpacity style={styles.attachment}>
+      <TouchableOpacity style={styles.attachment} onPress={handleUpload}>
         <Ionicons name="attach" size={20} color="#007bff" />
         <Text style={styles.attachText}>Attach File (optional)</Text>
       </TouchableOpacity>

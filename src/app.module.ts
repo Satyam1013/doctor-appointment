@@ -21,6 +21,7 @@ import { BiteTypeModule } from './bite-type/bite-type.module';
 import { BlogsModule } from './blogs/blogs.module';
 import { DoctorsTeamModule } from './doctors-team/team.module';
 import { CoinsModule } from './coins/coins.module';
+import { TicketModule } from './ticket/ticket.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { CoinsModule } from './coins/coins.module';
     BlogsModule,
     DoctorsTeamModule,
     CoinsModule,
+    TicketModule,
   ],
 })
 export class AppModule {}
