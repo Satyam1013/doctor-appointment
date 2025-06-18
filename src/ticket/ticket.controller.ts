@@ -7,22 +7,23 @@ import {
   UploadedFile,
   Req,
   UseGuards,
+  Patch,
+  Param,
 } from '@nestjs/common';
 import { TicketsService } from './ticket.service';
-import { CreateTicketDto } from './ticket.dto';
+import { CreateTicketDto, UpdateTicketStatusDto } from './ticket.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { extname } from 'path';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { Request } from 'express';
 import { AuthRequest } from 'src/common/auth-req';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('tickets')
+@UseGuards(AuthGuard('jwt'))
 export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(
     FileInterceptor('file', {
@@ -47,16 +48,22 @@ export class TicketsController {
     return this.ticketsService.createTicket({ ...body, userId, fileUrl });
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('my')
   async getUserTickets(@Req() req: AuthRequest) {
     const userId = req.user._id;
     return this.ticketsService.getTicketsByUser(userId);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   async getAllTickets() {
     return this.ticketsService.getAllTickets();
+  }
+
+  @Patch(':id/status')
+  async updateTicketStatus(
+    @Param('id') id: string,
+    @Body() body: UpdateTicketStatusDto,
+  ) {
+    return this.ticketsService.updateStatus(id, body.status);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Ticket, TicketDocument } from './ticket.schema';
+import { Ticket, TicketDocument, TicketStatus } from './ticket.schema';
 import { Model } from 'mongoose';
 import { CreateTicketDto } from './ticket.dto';
 
@@ -23,5 +23,16 @@ export class TicketsService {
 
   async getAllTickets(): Promise<Ticket[]> {
     return this.ticketModel.find().sort({ createdAt: -1 }).exec();
+  }
+
+  async updateStatus(
+    ticketId: string,
+    status: TicketStatus,
+  ): Promise<Ticket | null> {
+    return this.ticketModel.findByIdAndUpdate(
+      ticketId,
+      { status },
+      { new: true },
+    );
   }
 }
