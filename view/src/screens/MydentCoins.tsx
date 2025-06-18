@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useEffect, useState } from 'react';
 import {
@@ -21,9 +22,32 @@ const coinHistory = [
   { id: '3', title: 'Referral Bonus', amount: '+100', date: '05 Jun 2025' },
 ];
 
+interface CoinsProps {
+  coins: number;
+  bonus: number;
+  purchased: number;
+  consultation: number;
+  userId: any;
+}
+
 const MyDentCoinsScreen = () => {
-  const [coinHistory, setCoinHistory] = useState([]);
-  const [balance, setBalance] = useState(0);
+  const [coins, setCoins] = useState<CoinsProps | []>([]);
+
+  useEffect(() => {
+    fetchCoins();
+  }, []);
+
+  const fetchCoins = async () => {
+    try {
+      const res = await getCoins();
+      const data = res.data;
+      console.log('✨ ~ data:', data);
+
+      setCoins(data);
+    } catch (err) {
+      console.error('Failed to fetch aligner or carousel data:', err);
+    }
+  };
 
   return (
     <View style={styles.container}>

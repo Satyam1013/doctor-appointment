@@ -20,6 +20,7 @@ export class CoinsService {
 
   async findOne(id: string) {
     const coin = await this.coinsModel.findById(id);
+    console.log('✨ ~ coin:', coin);
     if (!coin) throw new NotFoundException('Coins not found');
     return coin;
   }

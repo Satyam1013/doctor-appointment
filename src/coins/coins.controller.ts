@@ -29,7 +29,7 @@ export class CoinsController {
     return this.coinsService.findAll();
   }
 
-  @Get('/user')
+  @Get('user')
   findOne(@Req() req: AuthRequest) {
     return this.coinsService.findOne(req.user._id);
   }
