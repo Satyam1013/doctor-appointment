@@ -77,8 +77,8 @@ const FavProductScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Your Favorites</Text>
       <FlatList
+        ListHeaderComponent={<Text style={styles.header}>Your Favorites</Text>}
         data={favoriteProducts}
         keyExtractor={(item) => item.product._id}
         numColumns={2}
@@ -90,6 +90,7 @@ const FavProductScreen = () => {
             onToggleFavorite={handleToggleFavorite}
           />
         )}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
@@ -101,7 +102,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fafafa',
-    paddingBottom: 120,
     paddingHorizontal: 8,
   },
   header: {
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   list: {
-    paddingBottom: 60,
+    paddingBottom: 120,
     paddingHorizontal: 4,
   },
   loader: {

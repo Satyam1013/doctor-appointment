@@ -18,11 +18,15 @@ export class CoinsService {
     return this.coinsModel.find().exec();
   }
 
-  async findOne(id: string) {
-    const coin = await this.coinsModel.findById({ userId: id });
-    console.log('✨ ~ coin:', coin);
-    if (!coin) throw new NotFoundException('Coins not found');
-    return coin;
+  async findOne(userId: string) {
+    try {
+      const coin = await this.coinsModel.findById({ userId });
+      console.log('✨ ~ coin:', coin);
+      if (!coin) throw new NotFoundException('Coins not found');
+      return coin;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async update(id: string, updateCoinsDto: UpdateCoinsDto): Promise<Coins> {
