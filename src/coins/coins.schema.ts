@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 
 export type CoinsDocument = HydratedDocument<Coins>;
 
@@ -9,6 +9,9 @@ export class Coins {
   @Prop() bonus?: number;
   @Prop() purchased?: number;
   @Prop() consultation?: number;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, required: true, ref: 'User' })
+  userId!: string;
 }
 
 export const CoinsSchema = SchemaFactory.createForClass(Coins);
