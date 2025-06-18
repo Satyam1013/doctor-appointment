@@ -20,6 +20,7 @@ import { ReportModule } from './report/rep.module';
 import { BiteTypeModule } from './bite-type/bite-type.module';
 import { BlogsModule } from './blogs/blogs.module';
 import { DoctorsTeamModule } from './doctors-team/team.module';
+import { CoinsModule } from './coins/coins.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { DoctorsTeamModule } from './doctors-team/team.module';
     BiteTypeModule,
     BlogsModule,
     DoctorsTeamModule,
+    CoinsModule,
   ],
 })
 export class AppModule {}

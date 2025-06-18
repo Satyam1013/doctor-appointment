@@ -4,7 +4,7 @@ import { Doctor, DoctorSchema } from './doc.schema';
 import { DoctorService } from './doc.service';
 import { UserModule } from 'src/user/user.module';
 import { AppointmentModule } from 'src/appointments/app.module';
-import { ReviewModule } from 'src/review/doc.module';
+import { ReviewModule } from 'src/review/review.module';
 import { DoctorController } from './doc.controller';
 
 @Module({

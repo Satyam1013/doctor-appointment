@@ -23,6 +23,7 @@ import {
   removeCartItem,
   updateCartItem,
 } from '../api/cart-api';
+import { useCart } from '../contexts/CartContext';
 
 type CartItem = {
   _id: string;
@@ -37,6 +38,7 @@ type CartItem = {
 export default function CartScreen({ navigation }: any) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const { totalAmount, setTotalAmount } = useCart();
 
   const fetchCart = async () => {
     setLoading(true);
@@ -75,10 +77,13 @@ export default function CartScreen({ navigation }: any) {
     }
   };
 
-  const totalAmount = cartItems.reduce(
-    (acc, item) => acc + item.quantity * item.product.price,
-    0,
-  );
+  useEffect(() => {
+    const total = cartItems.reduce(
+      (acc, item) => acc + item.quantity * item.product.price,
+      0,
+    );
+    setTotalAmount(total);
+  }, [cartItems]);
 
   const renderItem = ({ item }: { item: CartItem }) => (
     <View style={styles.itemContainer}>

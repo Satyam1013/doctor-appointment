@@ -1,310 +1,170 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
+import React from 'react';
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   StyleSheet,
-  ScrollView,
-  Alert,
+  TouchableOpacity,
+  Image,
+  SafeAreaView,
 } from 'react-native';
-import RazorpayCheckout from 'react-native-razorpay';
-import { useRoute } from '@react-navigation/native';
-import { createOrder, verifyPayment } from '../api/payment-api';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import type { ComponentProps } from 'react';
 
-// ✅ Grab the correct type for icon names
-type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
-
-const PaymentScreen = () => {
-  const route = useRoute();
-  const { amount } = route.params as { amount: number };
-  const [upi, setUpi] = useState('');
-  const [selectedUpiApp, setSelectedUpiApp] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  const upiApps = [
-    { id: 'com.google.android.apps.nbu.paisa.user', label: 'Google Pay' },
-    { id: 'com.phonepe.app', label: 'PhonePe' },
-    { id: 'net.one97.paytm', label: 'PayTM' },
-    { id: 'in.amazon.mShop.android.shopping', label: 'Amazon Pay' },
-  ];
-
-  const handlePayment = async () => {
-    const amountInPaise = amount * 100;
-
-    if (!upi || !upi.includes('@')) {
-      Alert.alert('Invalid UPI ID', 'Please enter a valid UPI ID.');
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const { id: order_id, amount } = await createOrder(amountInPaise, upi);
-
-      const options: any = {
-        name: 'Mydent',
-        description: 'Dental Product Purchase',
-        currency: 'INR',
-        amount,
-        order_id,
-        key: 'yfUqsbfAGKQkXC4w6agUSs66',
-        prefill: {
-          email: 'user@example.com',
-          contact: '9999999999',
-        },
-        theme: { color: '#F7D449' },
-      };
-
-      if (selectedUpiApp) {
-        options.config = {
-          display: {
-            blocks: {
-              upi: {
-                name: 'UPI Apps',
-                instruments: [{ method: 'upi', apps: [selectedUpiApp] }],
-              },
-            },
-            sequence: ['block.upi'],
-            preferences: { show_default_blocks: false },
-          },
-        };
-      }
-
-      RazorpayCheckout.open(options)
-        .then(async (paymentData: any) => {
-          const verifyRes = await verifyPayment({
-            order_id: paymentData.razorpay_order_id,
-            payment_id: paymentData.razorpay_payment_id,
-            signature: paymentData.razorpay_signature,
-          });
-          Alert.alert(
-            '✅ Payment Successful',
-            'Transaction verified successfully.',
-          );
-        })
-        .catch((error: any) => {
-          Alert.alert('❌ Payment Failed', error?.description || 'Cancelled');
-        });
-    } catch (err) {
-      console.error(err);
-      Alert.alert('Error', 'Something went wrong. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+export default function CheckoutSummaryScreen({ navigation }: any) {
+  const handlePayment = () => {
+    navigation.navigate('PaymentScreen', {
+      from: 'checkout-summary',
+      amount: 199,
+    });
   };
 
-  const PaymentMethodCard = ({
-    label,
-    offer,
-    iconName,
-  }: {
-    label: string;
-    offer?: string;
-    iconName: IconName; // ✅ Use the correct type
-  }) => (
-    <View style={styles.methodCard}>
-      <View style={styles.methodIconPlaceholder}>
-        <MaterialCommunityIcons name={iconName} size={24} color="#555" />
-      </View>
-      <View style={styles.methodTextContainer}>
-        <Text style={styles.methodLabel}>{label}</Text>
-        {offer && <Text style={styles.methodOffer}>{offer}</Text>}
-      </View>
-      <MaterialCommunityIcons name="chevron-right" size={22} color="#999" />
-    </View>
-  );
-
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
-        <Text style={styles.header}>Select Payment Method</Text>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>UPI ID</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your UPI ID"
-            value={upi}
-            onChangeText={setUpi}
-            keyboardType="email-address"
-          />
-
-          <View style={styles.upiRow}>
-            {upiApps.map((app) => (
-              <TouchableOpacity
-                key={app.id}
-                style={[
-                  styles.upiAppButton,
-                  selectedUpiApp === app.id && styles.selectedUpiApp,
-                ]}
-                onPress={() => setSelectedUpiApp(app.id)}
-              >
-                <Text style={styles.upiAppText}>{app.label}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.card}>
+        <Image
+          source={{ uri: 'https://i.ibb.co/35mrrKZh/consultant.jpg' }}
+          style={styles.image}
+        />
+        <View style={styles.cardContent}>
+          <Text style={styles.title}>video consultation</Text>
+          <Text style={styles.subtitle}>teeth alignment</Text>
+          <Text style={styles.price}>₹199</Text>
         </View>
-
-        <View style={styles.section}>
-          <PaymentMethodCard
-            label="Credit / Debit / ATM Card"
-            offer="Save up to 1.5%"
-            iconName="credit-card-outline"
-          />
-          <PaymentMethodCard
-            label="EMI"
-            offer="3–6 months EMI"
-            iconName="calendar-clock"
-          />
-          <PaymentMethodCard label="Net Banking" iconName="bank-outline" />
-          <PaymentMethodCard label="Wallet" iconName="wallet-outline" />
-          <PaymentMethodCard label="Pay Later" iconName="clock-outline" />
-        </View>
-      </ScrollView>
-
-      <View style={styles.footer}>
-        <Text style={styles.total}>₹{amount}</Text>
-        <TouchableOpacity
-          style={styles.payButton}
-          onPress={handlePayment}
-          disabled={loading}
-        >
-          <Text style={styles.payButtonText}>
-            {loading ? 'Processing...' : 'Pay'}
-          </Text>
-        </TouchableOpacity>
       </View>
-    </View>
-  );
-};
 
-export default PaymentScreen;
+      <TouchableOpacity style={styles.promoBox}>
+        <Text style={styles.promoText}>Promotions</Text>
+        <Text style={styles.arrow}>›</Text>
+      </TouchableOpacity>
+
+      <View style={styles.priceBox}>
+        <View style={styles.priceRow}>
+          <Text style={styles.label}>Total (with tax)</Text>
+          <Text style={styles.value}>₹ 399</Text>
+        </View>
+        <View style={styles.priceRow}>
+          <Text style={styles.label}>Discount on MRP</Text>
+          <Text style={[styles.value, { color: 'green' }]}>–₹ 200</Text>
+        </View>
+        <View style={[styles.priceRow, styles.totalRow]}>
+          <Text style={styles.totalLabel}>Payable Amount</Text>
+          <Text style={styles.totalValue}>₹ 199</Text>
+        </View>
+      </View>
+
+      <Text style={styles.savings}>
+        You’ll save ₹ 200 on this order/purchase
+      </Text>
+
+      <TouchableOpacity style={styles.payButton} onPress={handlePayment}>
+        <Text style={styles.payButtonText}>Make Payment</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#e6f7ff',
+    padding: 20,
+    paddingBottom: 120,
   },
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 20,
-    paddingHorizontal: 16,
-    color: '#000',
-  },
-  methodCard: {
+  card: {
     flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 12,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  methodIconPlaceholder: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
-    backgroundColor: '#f5f5f5',
-    justifyContent: 'center',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 20,
     alignItems: 'center',
-    marginRight: 12,
   },
-  methodTextContainer: {
+  image: {
+    width: 60,
+    height: 80,
+    resizeMode: 'cover',
+    borderRadius: 8,
+    marginRight: 16,
+  },
+  cardContent: {
     flex: 1,
   },
-  methodLabel: {
+  title: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
   },
-  methodOffer: {
-    fontSize: 12,
-    color: '#888',
-    marginTop: 2,
+  subtitle: {
+    color: '#6c757d',
+    marginVertical: 4,
   },
-  section: {
+  price: {
+    fontWeight: 'bold',
+    marginTop: 4,
+  },
+  promoBox: {
     backgroundColor: '#fff',
-    margin: 16,
+    padding: 16,
     borderRadius: 12,
-    padding: 16,
-    elevation: 2,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 12,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    backgroundColor: '#fff',
-    marginBottom: 16,
-  },
-  upiRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-    justifyContent: 'space-between',
-  },
-  upiAppButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 10,
-    backgroundColor: '#F0F0F0',
-    marginBottom: 10,
-    width: '48%',
-  },
-  selectedUpiApp: {
-    backgroundColor: '#F7D449',
-  },
-  upiAppText: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  arrow: {
-    fontSize: 20,
-    color: '#aaa',
-  },
-  footer: {
-    // position: 'absolute',
-    bottom: 0,
-    padding: 16,
-    backgroundColor: '#fff',
-    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderTopColor: '#eee',
-    borderTopWidth: 1,
-    paddingBottom: 140,
+    marginBottom: 20,
   },
-  total: {
-    fontSize: 20,
+  promoText: {
+    fontWeight: '500',
+    fontSize: 16,
+  },
+  arrow: {
+    fontSize: 24,
+    color: '#d43f3f',
+  },
+  priceBox: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+  },
+  priceRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 4,
+  },
+  label: {
+    fontSize: 15,
+    color: '#333',
+  },
+  value: {
+    fontSize: 15,
+    color: '#333',
+  },
+  totalRow: {
+    marginTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+    paddingTop: 8,
+  },
+  totalLabel: {
     fontWeight: 'bold',
+    fontSize: 16,
+  },
+  totalValue: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  savings: {
+    textAlign: 'center',
+    color: 'green',
+    marginVertical: 16,
+    fontSize: 14,
   },
   payButton: {
-    backgroundColor: '#F7D449',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 12,
+    backgroundColor: '#d43f3f',
+    borderRadius: 24,
+    paddingVertical: 16,
+    alignItems: 'center',
   },
   payButtonText: {
+    color: '#fff',
     fontWeight: 'bold',
-    color: '#000',
+    fontSize: 16,
   },
 });

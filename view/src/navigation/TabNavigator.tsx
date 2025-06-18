@@ -165,22 +165,36 @@ export default function BottomTabNavigator() {
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={{
-                uri: 'https://i.ibb.co/7JfL4TjN/Whats-App-Image-2025-06-16-at-11-36-57-AM.jpg',
-              }}
+            <View
               style={{
-                width: 28,
-                height: 28,
-                resizeMode: 'contain',
-                borderWidth: focused ? 2 : 1,
-                borderColor: focused ? '#0077b6' : '#ccc',
-                borderRadius: 8,
-                padding: 4,
-                marginTop: 42,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 38,
               }}
-              resizeMode="contain"
-            />
+            >
+              <Image
+                source={{
+                  uri: 'https://i.ibb.co/7JfL4TjN/Whats-App-Image-2025-06-16-at-11-36-57-AM.jpg',
+                }}
+                style={{
+                  width: 22,
+                  height: 22,
+                  resizeMode: 'contain',
+                  borderWidth: focused ? 2 : 0,
+                  borderColor: focused ? '#0077b6' : 'transparent',
+                  borderRadius: 8,
+                }}
+                resizeMode="contain"
+              />
+              <Text
+                style={{
+                  fontSize: 8,
+                  color: focused ? '#0077b6' : '#444',
+                }}
+              >
+                Centers
+              </Text>
+            </View>
           ),
         }}
       />

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React from 'react';
@@ -20,7 +19,7 @@ const services = [
     image: 'https://i.ibb.co/xqKvY2zV/book2.png',
   },
   {
-    title: 'Buy Products',
+    title: 'Visit mydent experience center',
     image: 'https://i.ibb.co/yBRPkhPz/book4.png',
   },
   {
@@ -43,7 +42,7 @@ export default function ServiceCards({ navigation }: any) {
     ) {
       navigation.navigate('ConsultationOption');
     } else {
-      navigation.navigate('ProductsTab', { title: item.title });
+      navigation.navigate('CentersTab');
     }
   };
 

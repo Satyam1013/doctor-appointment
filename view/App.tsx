@@ -8,6 +8,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { FavoriteProvider } from './src/contexts/FavContext';
+import { CartProvider } from './src/contexts/CartContext';
 
 const queryClient = new QueryClient();
 
@@ -22,9 +23,11 @@ export default function App() {
             <QueryClientProvider client={queryClient}>
               <AuthProvider>
                 <UserProvider>
-                  <FavoriteProvider>
-                    <AppNavigator />
-                  </FavoriteProvider>
+                  <CartProvider>
+                    <FavoriteProvider>
+                      <AppNavigator />
+                    </FavoriteProvider>
+                  </CartProvider>
                 </UserProvider>
               </AuthProvider>
             </QueryClientProvider>
