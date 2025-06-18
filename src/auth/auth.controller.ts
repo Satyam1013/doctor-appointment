@@ -30,4 +30,9 @@ export class AuthController {
   loginDoctor(@Body() dto: { email: string; password: string }) {
     return this.authService.loginDoctor(dto.email, dto.password);
   }
+
+  @Post('login/admin')
+  loginAdmin(@Body() dto: { email: string; password: string }) {
+    return this.authService.loginAdmin(dto.email, dto.password);
+  }
 }

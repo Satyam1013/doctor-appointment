@@ -40,6 +40,9 @@ export class User {
   smoker?: string;
 
   @Prop()
+  role?: string;
+
+  @Prop()
   availability?: string;
 
   @Prop({

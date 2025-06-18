@@ -1,4 +1,8 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { SignupDto } from './dto/signup.dto';
@@ -90,6 +94,35 @@ export class AuthService {
         sub: doctor._id.toString(),
         email: doctor.email,
       }),
+    };
+  }
+
+  async loginAdmin(email: string, password: string) {
+    const user = await this.userModel.findOne({ email });
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    if (user.role !== 'admin') {
+      throw new UnauthorizedException('Access denied');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const payload = { sub: user._id, email: user.email, role: user.role };
+
+    const token = await this.jwtService.signAsync(payload);
+
+    return {
+      access_token: token,
+      user: {
+        _id: user._id,
+        email: user.email,
+      },
     };
   }
 }
