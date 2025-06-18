@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { getCoins } from '../api/coins-api';
 
 const coinHistory = [
   {
@@ -20,6 +22,9 @@ const coinHistory = [
 ];
 
 const MyDentCoinsScreen = () => {
+  const [coinHistory, setCoinHistory] = useState([]);
+  const [balance, setBalance] = useState(0);
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>MyDent Coins</Text>

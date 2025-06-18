@@ -6,11 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { CoinsService } from './coins.service';
 import { CreateCoinsDto, UpdateCoinsDto } from './coins.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { AuthRequest } from 'src/common/auth-req';
 
 @Controller('coins')
+@UseGuards(AuthGuard('jwt'))
 export class CoinsController {
   constructor(private readonly coinsService: CoinsService) {}
 
@@ -24,9 +29,9 @@ export class CoinsController {
     return this.coinsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.coinsService.findOne(id);
+  @Get('/user')
+  findOne(@Req() req: AuthRequest) {
+    return this.coinsService.findOne(req.user._id);
   }
 
   @Patch(':id')
