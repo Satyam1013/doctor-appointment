@@ -13,9 +13,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { uploadReportImage } from '../api/report-api';
+import { uploadTicketImage } from '../api/tickets-api';
 
 const NewTicketScreen = () => {
   const [title, setTitle] = useState('');
@@ -24,7 +25,19 @@ const NewTicketScreen = () => {
   const [selectedFile, setSelectedFile] = useState<any>(null);
 
   const handleUpload = async () => {
-    try {
+    if (Platform.OS === 'web') {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '*/*';
+      input.onchange = () => {
+        if (input.files && input.files.length > 0) {
+          const file = input.files[0];
+          setSelectedFile(file);
+          alert(`File Selected: ${file.name}`);
+        }
+      };
+      input.click();
+    } else {
       const result = await DocumentPicker.getDocumentAsync({
         type: '*/*',
         copyToCacheDirectory: true,
@@ -34,8 +47,6 @@ const NewTicketScreen = () => {
         setSelectedFile(result.assets[0]);
         Alert.alert('File Selected', result.assets[0].name);
       }
-    } catch (err) {
-      console.error('File selection failed:', err);
     }
   };
 
@@ -51,7 +62,9 @@ const NewTicketScreen = () => {
       formData.append('message', message);
       formData.append('category', category);
 
-      if (selectedFile) {
+      if (Platform.OS === 'web' && selectedFile instanceof File) {
+        formData.append('file', selectedFile);
+      } else if (selectedFile) {
         formData.append('file', {
           uri: selectedFile.uri,
           name: selectedFile.name,
@@ -59,7 +72,7 @@ const NewTicketScreen = () => {
         } as any);
       }
 
-      await uploadReportImage(formData);
+      await uploadTicketImage(formData);
 
       Alert.alert('Success', 'Your ticket has been submitted.');
       setTitle('');

@@ -1,7 +1,7 @@
 import axiosClient from './axios-client';
 
 export const uploadReportImage = (formData: FormData) => {
-  return axiosClient.post('/report', formData); // <- remove custom headers
+  return axiosClient.post('/report', formData);
 };
 
 export const getMyReports = () => {
