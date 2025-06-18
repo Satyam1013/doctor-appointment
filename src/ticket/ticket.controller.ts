@@ -13,11 +13,10 @@ import {
 import { TicketsService } from './ticket.service';
 import { CreateTicketDto, UpdateTicketStatusDto } from './ticket.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { v4 as uuidv4 } from 'uuid';
-import { extname } from 'path';
+import * as multer from 'multer';
 import { AuthRequest } from 'src/common/auth-req';
 import { AuthGuard } from '@nestjs/passport';
+import { uploadBufferToCloudinary } from 'src/utils/cloudinary'; // adjust path
 
 @Controller('tickets')
 @UseGuards(AuthGuard('jwt'))
@@ -27,13 +26,7 @@ export class TicketsController {
   @Post()
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './uploads/reports',
-        filename: (req, file, cb) => {
-          const uniqueName = `${uuidv4()}${extname(file.originalname)}`;
-          cb(null, uniqueName);
-        },
-      }),
+      storage: multer.memoryStorage(),
     }),
   )
   async createTicket(
@@ -43,7 +36,15 @@ export class TicketsController {
   ) {
     const userId = req.user._id;
 
-    const fileUrl = file ? `/uploads/reports/${file.filename}` : undefined;
+    let fileUrl: string | undefined;
+
+    if (file) {
+      const result = await uploadBufferToCloudinary(
+        file.buffer,
+        file.originalname,
+      );
+      fileUrl = result.secure_url;
+    }
 
     return this.ticketsService.createTicket({ ...body, userId, fileUrl });
   }

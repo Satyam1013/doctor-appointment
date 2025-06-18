@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from 'react';
 import * as DocumentPicker from 'expo-document-picker';
 import {
@@ -20,42 +21,54 @@ const NewTicketScreen = () => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('General');
   const [message, setMessage] = useState('');
+  const [selectedFile, setSelectedFile] = useState<any>(null);
 
   const handleUpload = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: '*/*', // Accept all file types
+        type: '*/*',
         copyToCacheDirectory: true,
       });
 
-      if (!result.canceled && result.assets && result.assets.length > 0) {
-        const file = result.assets[0];
-        const formData = new FormData();
-
-        formData.append('file', {
-          uri: file.uri,
-          name: file.name,
-          type: file.mimeType || 'application/octet-stream', // fallback MIME type
-        } as any);
-
-        await uploadReportImage(formData);
+      if (!result.canceled && result.assets?.length > 0) {
+        setSelectedFile(result.assets[0]);
+        Alert.alert('File Selected', result.assets[0].name);
       }
     } catch (err) {
-      console.error('File upload failed:', err);
+      console.error('File selection failed:', err);
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title || !message) {
       Alert.alert('Error', 'Please fill out all required fields.');
       return;
     }
-    setCategory('Class');
-    // Replace this with your backend call
-    console.log({ title, category, message });
-    Alert.alert('Ticket Submitted', 'Your request has been sent.');
-    setTitle('');
-    setMessage('');
+
+    try {
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('message', message);
+      formData.append('category', category);
+
+      if (selectedFile) {
+        formData.append('file', {
+          uri: selectedFile.uri,
+          name: selectedFile.name,
+          type: selectedFile.mimeType || 'application/octet-stream',
+        } as any);
+      }
+
+      await uploadReportImage(formData);
+
+      Alert.alert('Success', 'Your ticket has been submitted.');
+      setTitle('');
+      setMessage('');
+      setSelectedFile(null);
+    } catch (error) {
+      console.error('Ticket submission failed:', error);
+      Alert.alert('Error', 'Something went wrong while submitting the ticket.');
+    }
   };
 
   return (
@@ -88,7 +101,9 @@ const NewTicketScreen = () => {
 
       <TouchableOpacity style={styles.attachment} onPress={handleUpload}>
         <Ionicons name="attach" size={20} color="#007bff" />
-        <Text style={styles.attachText}>Attach File (optional)</Text>
+        <Text style={styles.attachText}>
+          {selectedFile ? selectedFile.name : 'Attach File (optional)'}
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
