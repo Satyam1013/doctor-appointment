@@ -30,6 +30,8 @@ export default function TopProducts({ navigation }: any) {
                 navigation.navigate('Mydent');
               } else if (idx === 3) {
                 navigation.navigate('SmilePreview');
+              } else {
+                navigation.navigate('TeethWhiteningScreen');
               }
             }}
           >

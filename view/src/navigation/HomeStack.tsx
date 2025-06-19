@@ -38,6 +38,7 @@ import NewTicketScreen from '../screens/NewTicket';
 import CancelTicketScreen from '../screens/CancelTicket';
 import LoginScreen from '../screens/Login';
 import BiteTypeVideosScreen from '../screens/BiteTypesVideoScreen';
+import TeethWhiteningScreen from '../screens/TeethWhiteningScreen';
 // import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
@@ -55,12 +56,14 @@ export default function HomeStack() {
         name="BiteTypeVideosScreen"
         component={withAppShell(BiteTypeVideosScreen)}
       />
-
+      <Stack.Screen
+        name="TeethWhiteningScreen"
+        component={withAppShell(TeethWhiteningScreen)}
+      />
       <Stack.Screen
         name="TermsAndConditionsScreen"
         component={withAppShell(TermsAndConditionsScreen)}
       />
-
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen
         name="TeethAlignmentProblems"
