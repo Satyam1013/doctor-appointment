@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -9,6 +8,7 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import ProductCard from '../components/ProductCard';
 import { getFavorites } from '../api/fav-api';
@@ -19,11 +19,16 @@ type FavoriteItem = {
   product: {
     _id: string;
     name: string;
+    title: string;
     price: number;
-    image: string;
-    // Add other product fields you use
+    originalPrice?: number;
+    images: string[] | string;
+    bestSeller?: boolean;
   };
 };
+
+const screenWidth = Dimensions.get('window').width;
+const itemWidth = screenWidth / 2 - 20; // adjusts for margin/padding
 
 const FavProductScreen = () => {
   const [favoriteProducts, setFavoriteProducts] = useState<FavoriteItem[]>([]);
@@ -50,11 +55,11 @@ const FavProductScreen = () => {
 
   const handleToggleFavorite = (productId: string, newState: boolean) => {
     setFavoriteProducts((prev) =>
-      prev.filter((favItem: any) => {
+      prev.filter((favItem) => {
         if (!newState) {
-          return favItem.product._id !== productId; // Remove if unfavorited
+          return favItem.product._id !== productId;
         }
-        return true; // Keep all if still favorite
+        return true;
       }),
     );
   };
@@ -83,9 +88,11 @@ const FavProductScreen = () => {
         keyExtractor={(item) => item.product._id}
         numColumns={2}
         contentContainerStyle={styles.list}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
         renderItem={({ item }) => (
           <ProductCard
             item={item.product}
+            style={{ width: itemWidth }}
             onAddToCart={handleAddToCart}
             onToggleFavorite={handleToggleFavorite}
           />
@@ -112,7 +119,6 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingBottom: 120,
-    paddingHorizontal: 4,
   },
   loader: {
     flex: 1,

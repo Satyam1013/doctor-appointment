@@ -3,12 +3,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { useFavorites } from '../contexts/FavContext';
 
-const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
+const ProductCard = ({ item, onAddToCart, onToggleFavorite, style }: any) => {
   const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const { favorites, toggleFavorite } = useFavorites();
@@ -42,11 +41,12 @@ const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
   const handleFavoriteToggle = () => {
     toggleFavorite(item._id, !isFavorite);
     if (onToggleFavorite) {
-      onToggleFavorite(item._id, !isFavorite); // Notify parent (FavProductScreen)
+      onToggleFavorite(item._id, !isFavorite);
     }
   };
+
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { margin: 4 }, style]}>
       <TouchableOpacity style={styles.heartIcon} onPress={handleFavoriteToggle}>
         <IconButton
           icon={isFavorite ? 'heart' : 'heart-outline'}
@@ -69,7 +69,7 @@ const ProductCard = ({ item, onAddToCart, onToggleFavorite }: any) => {
         )}
       </View>
 
-      <Text style={styles.cardName} numberOfLines={1}>
+      <Text style={styles.cardName} numberOfLines={1} ellipsizeMode="tail">
         {item.title}
       </Text>
 
@@ -111,8 +111,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     backgroundColor: '#fff',
-    width: 180,
-    margin: 8,
     elevation: 2,
     position: 'relative',
   },
@@ -150,13 +148,18 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontWeight: '600',
     fontSize: 14,
-    margin: 'auto',
+    height: 20, // Fix height to 1 line
+    overflow: 'hidden',
+    textAlign: 'center',
+    alignSelf: 'center',
+    width: 140, // 👈 FIXED WIDTH to trigger trimming
   },
+
   priceRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 4,
-    margin: 'auto',
   },
   cardPrice: {
     fontSize: 14,

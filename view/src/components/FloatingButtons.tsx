@@ -63,7 +63,7 @@ export default function OverlayFloatingButtons() {
       {/* WhatsApp */}
       <TouchableOpacity onPress={handleWhatsAppPress}>
         <Image
-          source={{ uri: 'https://i.ibb.co/DfpFd5JW/wa.jpg' }}
+          source={{ uri: 'https://i.ibb.co/MDXK5xsF/wa.png' }}
           style={styles.whatsappIcon}
         />
       </TouchableOpacity>
