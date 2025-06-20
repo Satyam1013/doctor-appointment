@@ -16,7 +16,7 @@ export class MailerService {
   });
 
   async sendResetPasswordEmail(email: string, token: string): Promise<void> {
-    const resetLink = `http://localhost:8081/reset-password?token=${token}`;
+    const resetLink = `https://mawosfs-anonymous-8081.exp.direct/reset-password?token=${token}`;
     const mailOptions = {
       from: `"Mydent" <shaikfarhat79@gmail.com>`,
       to: email,

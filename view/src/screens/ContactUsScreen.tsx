@@ -398,7 +398,7 @@ export default function ContactUsScreen() {
               </View>
             </View>
 
-            {user?.paid === 'PAID' && (
+            {user?.paid === 'paid' && (
               <View style={styles.buttonRow}>
                 <TouchableOpacity
                   style={styles.joinButton}
