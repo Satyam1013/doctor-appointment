@@ -6,6 +6,7 @@ import { AuthController } from './auth.controller';
 import { UserModule } from '../user/user.module';
 import { JwtStrategy } from './jwt-strategy';
 import { DoctorModule } from 'src/doctor/doc.module';
+import { MailerService } from 'src/mailer/mail.service';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { DoctorModule } from 'src/doctor/doc.module';
       signOptions: { expiresIn: '7d' },
     }),
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, MailerService, JwtStrategy],
   controllers: [AuthController],
   exports: [AuthService],
 })

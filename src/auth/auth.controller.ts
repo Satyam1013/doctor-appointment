@@ -7,25 +7,21 @@ import { DoctorSignupDto } from 'src/doctor/doc.dto';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  // 🔐 Signup route
   @Post('signup/user')
   signup(@Body() dto: SignupDto) {
     return this.authService.signup(dto);
   }
 
-  // 🔓 Login route
   @Post('login/user')
   login(@Body() dto: { email: string; password: string }) {
     return this.authService.login(dto.email, dto.password);
   }
 
-  // Doctor Signup
   @Post('signup/doctor')
   signupDoctor(@Body() dto: DoctorSignupDto) {
     return this.authService.signupDoctor(dto);
   }
 
-  // Doctor Login
   @Post('login/doctor')
   loginDoctor(@Body() dto: { email: string; password: string }) {
     return this.authService.loginDoctor(dto.email, dto.password);
@@ -34,5 +30,15 @@ export class AuthController {
   @Post('login/admin')
   loginAdmin(@Body() dto: { email: string; password: string }) {
     return this.authService.loginAdmin(dto.email, dto.password);
+  }
+
+  @Post('forgot-password')
+  forgotPassword(@Body() dto: { email: string }) {
+    return this.authService.requestPasswordReset(dto.email);
+  }
+
+  @Post('reset-password')
+  resetPassword(@Body() dto: { token: string; newPassword: string }) {
+    return this.authService.resetPassword(dto.token, dto.newPassword);
   }
 }

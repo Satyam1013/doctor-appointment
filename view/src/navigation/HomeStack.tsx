@@ -39,6 +39,7 @@ import CancelTicketScreen from '../screens/CancelTicket';
 import LoginScreen from '../screens/Login';
 import BiteTypeVideosScreen from '../screens/BiteTypesVideoScreen';
 import TeethWhiteningScreen from '../screens/TeethWhiteningScreen';
+import ForgotPasswordScreen from '../screens/ForgotPassword';
 // import ClinicMapScreen from '../screens/ClinicMapScreen';
 
 const Stack = createNativeStackNavigator();
@@ -145,6 +146,10 @@ export default function HomeStack() {
       <Stack.Screen
         name="AlignersForTeensScreen"
         component={withAppShell(AlignersForTeensScreen)}
+      />
+      <Stack.Screen
+        name="ForgotPasswordScreen"
+        component={ForgotPasswordScreen}
       />
       <Stack.Screen
         name="MyDentAlignersScreen"

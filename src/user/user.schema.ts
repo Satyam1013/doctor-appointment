@@ -9,41 +9,24 @@ export class User {
   @Prop({ required: true, unique: true })
   email!: string;
 
-  @Prop()
-  firstName!: string;
+  @Prop({ required: false })
+  resetPasswordToken?: string;
 
-  @Prop()
-  password!: string;
+  @Prop({ required: false })
+  resetPasswordExpires?: Date;
 
-  @Prop({ required: true })
-  mobile!: string;
-
-  @Prop({ type: Number, default: 0 })
-  balance!: number;
-
-  @Prop()
-  ageGroup?: string;
-
-  @Prop()
-  teethIssue?: string;
-
-  @Prop()
-  problemText?: string;
-
-  @Prop({ type: [String], default: [] })
-  medicalHistory?: string[];
-
-  @Prop()
-  gender?: string;
-
-  @Prop()
-  smoker?: string;
-
-  @Prop()
-  role?: string;
-
-  @Prop()
-  availability?: string;
+  @Prop() firstName!: string;
+  @Prop() password!: string;
+  @Prop({ required: true }) mobile!: string;
+  @Prop({ type: Number, default: 0 }) balance!: number;
+  @Prop() ageGroup?: string;
+  @Prop() teethIssue?: string;
+  @Prop() problemText?: string;
+  @Prop({ type: [String], default: [] }) medicalHistory?: string[];
+  @Prop() gender?: string;
+  @Prop() smoker?: string;
+  @Prop() role?: string;
+  @Prop() availability?: string;
 
   @Prop({
     type: String,
@@ -54,11 +37,7 @@ export class User {
 
   @Prop({
     type: {
-      doctorId: {
-        type: Types.ObjectId,
-        ref: 'Doctor',
-        required: true,
-      },
+      doctorId: { type: Types.ObjectId, ref: 'Doctor', required: true },
       step: { type: Number, enum: [1, 2, 3, 4], required: true },
       assignedAt: { type: Date, required: true },
       status: {
