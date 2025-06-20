@@ -46,34 +46,21 @@ export default function HomeScreen({ navigation }: any) {
       try {
         const res = await getCarousels();
 
-        // You can define navigation target per image here
         setTopCarousel(
-          res.data.home.topCarousel.map((img: any, index: number) => ({
+          res.data.home.topCarousel.map((img: any) => ({
             uri: img.imageUrl,
             type: img.type,
             group: 'home',
-            navigateTo:
-              index === 0
-                ? 'ConsultationOption'
-                : index === 1
-                  ? 'MydentCenters'
-                  : index === 2
-                    ? 'FindBiteType'
-                    : 'DefaultScreen',
+            navigateTo: img.screenName || 'DefaultScreen',
           })),
         );
 
         setBottomCarousel(
-          res.data.home.bottomCarousel.map((img: any, index: number) => ({
+          res.data.home.bottomCarousel.map((img: any) => ({
             uri: img.imageUrl,
             type: img.type,
             group: 'home',
-            navigateTo:
-              index === 0
-                ? 'Blogs'
-                : index === 1
-                  ? 'DoctorProfile'
-                  : 'DefaultScreen',
+            navigateTo: img.screenName || 'DefaultScreen',
           })),
         );
       } catch (error) {
