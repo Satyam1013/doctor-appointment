@@ -20,7 +20,7 @@ export default function OverlayFloatingButtons() {
   const [buttonWidth, setButtonWidth] = useState(0);
 
   const handleWhatsAppPress = () => {
-    Linking.openURL('https://wa.me/+919849492909');
+    Linking.openURL('https://wa.me/+919381590963');
   };
 
   const handleBookPress = () => {
@@ -63,7 +63,7 @@ export default function OverlayFloatingButtons() {
       {/* WhatsApp */}
       <TouchableOpacity onPress={handleWhatsAppPress}>
         <Image
-          source={{ uri: 'https://i.ibb.co/MDXK5xsF/wa.png' }}
+          source={{ uri: 'https://i.ibb.co/DfpFd5JW/wa.jpg' }}
           style={styles.whatsappIcon}
         />
       </TouchableOpacity>

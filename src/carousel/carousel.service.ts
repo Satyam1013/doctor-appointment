@@ -59,8 +59,14 @@ export class CarouselService {
       | 'shop-bottom'
       | 'bite-type',
     imageUrls: string[],
+    screenNames: string[],
   ) {
-    const documents = imageUrls.map((url) => ({ type, imageUrl: url }));
+    const documents = imageUrls.map((url, i) => ({
+      type,
+      imageUrl: url,
+      screenName: screenNames[i],
+    }));
+
     return await this.carouselModel.insertMany(documents);
   }
 }

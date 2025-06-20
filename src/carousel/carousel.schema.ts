@@ -28,6 +28,9 @@ export class Carousel {
 
   @Prop({ required: true })
   imageUrl!: string;
+
+  @Prop({ required: true })
+  screenName!: string;
 }
 
 export const CarouselSchema = SchemaFactory.createForClass(Carousel);

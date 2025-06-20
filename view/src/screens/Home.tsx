@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import React, { useContext, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View, ActivityIndicator } from 'react-native';
 import Carousel from '../components/Carousel';
@@ -22,27 +23,57 @@ import { getCarousels } from '../api/carousel-api';
 import TeethAlignmentProblems from '../components/TeethAlignmentProblems';
 import { AuthContext } from '../contexts/AuthContext';
 
+type CarouselItem = {
+  uri: string;
+  type: string;
+  group: string;
+  navigateTo: string;
+};
+
 export default function HomeScreen({ navigation }: any) {
   const { token } = useContext(AuthContext);
-  const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
-  const [bottomCarousel, setBottomCarousel] = useState<{ uri: string }[]>([]);
+  const [topCarousel, setTopCarousel] = useState<CarouselItem[]>([]);
+  const [bottomCarousel, setBottomCarousel] = useState<CarouselItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!token) {
-      navigation.navigate('Login'); // ✅ redirect to Login
+      navigation.navigate('Login');
       return;
     }
 
     const fetchCarousels = async () => {
       try {
         const res = await getCarousels();
+
+        // You can define navigation target per image here
         setTopCarousel(
-          res.data.home.topCarousel.map((img: any) => ({ uri: img.imageUrl })),
-        );
-        setBottomCarousel(
-          res.data.home.bottomCarousel.map((img: any) => ({
+          res.data.home.topCarousel.map((img: any, index: number) => ({
             uri: img.imageUrl,
+            type: img.type,
+            group: 'home',
+            navigateTo:
+              index === 0
+                ? 'ConsultationOption'
+                : index === 1
+                  ? 'MydentCenters'
+                  : index === 2
+                    ? 'FindBiteType'
+                    : 'DefaultScreen',
+          })),
+        );
+
+        setBottomCarousel(
+          res.data.home.bottomCarousel.map((img: any, index: number) => ({
+            uri: img.imageUrl,
+            type: img.type,
+            group: 'home',
+            navigateTo:
+              index === 0
+                ? 'Blogs'
+                : index === 1
+                  ? 'DoctorProfile'
+                  : 'DefaultScreen',
           })),
         );
       } catch (error) {

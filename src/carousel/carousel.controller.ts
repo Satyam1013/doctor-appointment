@@ -9,6 +9,7 @@ import {
   Get,
   Delete,
   Param,
+  BadRequestException,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
@@ -44,7 +45,18 @@ export class CarouselController {
       | 'shop-middle'
       | 'shop-bottom'
       | 'bite-type',
+    @Body('screenNames') screenNamesRaw: string | string[],
   ) {
+    const screenNames = Array.isArray(screenNamesRaw)
+      ? screenNamesRaw
+      : [screenNamesRaw];
+
+    if (files.length !== screenNames.length) {
+      throw new BadRequestException(
+        'Each image must have a corresponding screenName.',
+      );
+    }
+
     const uploadResults = await Promise.all(
       files.map(async (file) => {
         const tempPath = path.join(os.tmpdir(), `upload-${Date.now()}.jpg`);
@@ -57,7 +69,11 @@ export class CarouselController {
       }),
     );
 
-    return this.carouselService.addMultipleCarouselImages(type, uploadResults);
+    return this.carouselService.addMultipleCarouselImages(
+      type,
+      uploadResults,
+      screenNames,
+    );
   }
 
   @Delete(':id')

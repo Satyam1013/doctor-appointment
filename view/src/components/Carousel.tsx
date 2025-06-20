@@ -1,9 +1,10 @@
+// Carousel.tsx
+
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   StyleSheet,
   ScrollView,
-  ImageSourcePropType,
   Dimensions,
   View,
   Pressable,
@@ -12,7 +13,12 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface CarouselProps {
-  images: ImageSourcePropType[];
+  images: {
+    uri: string;
+    type: string;
+    group: string;
+    navigateTo: string;
+  }[];
 }
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -37,8 +43,10 @@ export default function Carousel({ images }: CarouselProps) {
     return () => clearInterval(interval);
   }, [currentIndex, images.length]);
 
-  const handlePress = () => {
-    navigation.navigate('ConsultationOption');
+  const handlePress = (screen: string) => {
+    if (screen) {
+      navigation.navigate(screen);
+    }
   };
 
   return (
@@ -49,12 +57,12 @@ export default function Carousel({ images }: CarouselProps) {
         ref={scrollRef}
         showsHorizontalScrollIndicator={false}
         style={styles.container}
-        scrollEnabled={true}
+        scrollEnabled
       >
         {images.map((img, idx) => (
           <View key={idx} style={styles.imageWrapper}>
-            <Pressable onPress={handlePress}>
-              <Image source={img} style={styles.image} />
+            <Pressable onPress={() => handlePress(img.navigateTo)}>
+              <Image source={{ uri: img.uri }} style={styles.image} />
             </Pressable>
           </View>
         ))}
