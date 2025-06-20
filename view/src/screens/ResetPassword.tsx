@@ -22,7 +22,9 @@ const ResetPasswordScreen = ({ route, navigation }: any) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const token = route?.params?.token;
+  const token =
+    route?.params?.token ??
+    new URL(window.location.href).searchParams.get('token');
 
   const handleReset = async () => {
     if (!newPassword || !confirmPassword) {
