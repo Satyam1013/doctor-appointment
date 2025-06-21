@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -14,6 +16,7 @@ import {
   TouchableOpacity,
   LayoutAnimation,
   ActivityIndicator,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { ResizeMode, Video } from 'expo-av';
 import Carousel from '../components/Carousel';
@@ -24,6 +27,7 @@ import { getAligners } from '../api/aligners-api';
 import TeethAlignmentProblems from '../components/TeethAlignmentProblems';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { CarouselItem } from './Home';
 
 const faqs = [
   {
@@ -55,12 +59,14 @@ const faqs = [
 
 const MyDentAlignersScreen = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [mydentCarousel, setMydentCarousel] = useState<{ uri: string }[]>([]);
+  const [mydentCarousel, setMydentCarousel] = useState<CarouselItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [images, setImages] = useState<{ uri: string }[]>([]);
   const [videos, setVideos] = useState<{ uri: string }[]>([]);
   const [price, setPrice] = useState('');
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+  const videoRefs = useRef<(Video | null)[]>([]);
 
   const scrollRef = useRef<ScrollView>(null);
 
@@ -76,9 +82,13 @@ const MyDentAlignersScreen = () => {
       try {
         // Fetch carousels
         const carouselRes = await getCarousels();
+
         setMydentCarousel(
           carouselRes.data.home.mydentCarousel.map((img: any) => ({
             uri: img.imageUrl,
+            type: img.type,
+            group: 'home',
+            navigateTo: img.screenName || 'DefaultScreen',
           })),
         );
 
@@ -98,6 +108,35 @@ const MyDentAlignersScreen = () => {
 
     fetchData();
   }, []);
+
+  const handlePlayPause = async (index: number) => {
+    const currentRef = videoRefs.current[index];
+    if (!currentRef) return;
+
+    const status = await currentRef.getStatusAsync();
+
+    if ('isLoaded' in status && status.isLoaded) {
+      if (status.isPlaying) {
+        await currentRef.pauseAsync();
+        setPlayingIndex(null);
+      } else {
+        // Pause others
+        await Promise.all(
+          videoRefs.current.map(async (ref, i) => {
+            if (ref && i !== index) {
+              const s = await ref.getStatusAsync();
+              if ('isLoaded' in s && s.isLoaded && s.isPlaying) {
+                await ref.pauseAsync();
+              }
+            }
+          }),
+        );
+
+        await currentRef.playAsync();
+        setPlayingIndex(index);
+      }
+    }
+  };
 
   if (loading) {
     return (
@@ -293,14 +332,20 @@ const MyDentAlignersScreen = () => {
           },
         ].map((item, index) => (
           <View key={index} style={styles.videoStepContainer}>
-            <Video
-              source={item.video}
-              style={styles.videoFull}
-              resizeMode={ResizeMode.CONTAIN}
-              isLooping
-              isMuted
-              shouldPlay
-            />
+            <TouchableWithoutFeedback
+              key={index}
+              onPress={() => handlePlayPause(index)}
+            >
+              <Video
+                ref={(ref) => (videoRefs.current[index] = ref)}
+                source={item.video}
+                style={styles.videoFull}
+                resizeMode={ResizeMode.CONTAIN}
+                useNativeControls
+                isLooping
+              />
+            </TouchableWithoutFeedback>
+
             <Text style={styles.videoStepTitle}>{item.title}</Text>
             <View style={styles.videoStepInfo}>
               <Text style={styles.stepNumberLabel}>{item.step}</Text>

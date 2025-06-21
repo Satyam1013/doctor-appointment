@@ -23,7 +23,7 @@ import { getCarousels } from '../api/carousel-api';
 import TeethAlignmentProblems from '../components/TeethAlignmentProblems';
 import { AuthContext } from '../contexts/AuthContext';
 
-type CarouselItem = {
+export type CarouselItem = {
   uri: string;
   type: string;
   group: string;

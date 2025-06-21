@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { getCarousels } from '../api/carousel-api';
 import Carousel from '../components/Carousel';
+import { CarouselItem } from './Home';
 
 const categories = [
   { title: 'Under bite', icon: 'https://i.ibb.co/Y70w2CK3/video.png' },
@@ -41,14 +42,19 @@ const categories = [
 ];
 
 export default function FindBiteTypeScreen({ navigation }: any) {
-  const [carousel, setCarousel] = useState<{ uri: string }[]>([]);
+  const [carousel, setCarousel] = useState<CarouselItem[]>([]);
 
   useEffect(() => {
     const fetchCarousels = async () => {
       try {
         const res = await getCarousels();
         setCarousel(
-          res.data.biteTypeCarousel.map((img: any) => ({ uri: img.imageUrl })),
+          res.data.biteTypeCarousel.map((img: any) => ({
+            uri: img.imageUrl,
+            type: img.type,
+            group: 'biteType',
+            navigateTo: img.screenName || 'DefaultScreen',
+          })),
         );
       } catch (error) {
         console.error('Failed to load carousels:', error);

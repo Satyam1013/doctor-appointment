@@ -23,6 +23,7 @@ import { RouteProp, useFocusEffect, useRoute } from '@react-navigation/native';
 import FeatureStats from '../components/FeatureStats';
 import { getCenters } from '../api/centers-api';
 import { getCarousels } from '../api/carousel-api';
+import { CarouselItem } from './Home';
 
 type RootStackParamList = {
   Centers: { selectedCity?: string };
@@ -48,7 +49,7 @@ export default function Centers() {
       }[]
     >
   >({});
-  const [bottomCarousel, setBottomCarousel] = useState<{ uri: string }[]>([]);
+  const [bottomCarousel, setBottomCarousel] = useState<CarouselItem[]>([]);
   const scrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
@@ -95,7 +96,12 @@ export default function Centers() {
         const res = await getCarousels();
 
         setBottomCarousel(
-          res.data.bottomCarousel.map((img: any) => ({ uri: img.imageUrl })),
+          res.data.home.bottomCarousel.map((img: any) => ({
+            uri: img.imageUrl,
+            type: img.type,
+            group: 'home',
+            navigateTo: img.screenName || 'DefaultScreen',
+          })),
         );
       } catch (error) {
         console.error('Failed to load carousels:', error);

@@ -29,15 +29,16 @@ import {
   removeFavoriteItem,
 } from '../api/fav-api';
 import { useFocusEffect } from '@react-navigation/native';
+import { CarouselItem } from './Home';
 
 const ad1 = 'https://i.ibb.co/x88xsysH/banner.png';
 const ad2 = 'https://i.ibb.co/JWgXbwRD/ad.png';
 const ad3 = 'https://i.ibb.co/1f0q1t54/banner3.png';
 
 export default function EComScreen({ navigation }: any) {
-  const [topCarousel, setTopCarousel] = useState<{ uri: string }[]>([]);
-  const [middleCarousel, setMiddleCarousel] = useState<{ uri: string }[]>([]);
-  const [bottomCarousel, setBottomCarousel] = useState<{ uri: string }[]>([]);
+  const [topCarousel, setTopCarousel] = useState<CarouselItem[]>([]);
+  const [middleCarousel, setMiddleCarousel] = useState<CarouselItem[]>([]);
+  const [bottomCarousel, setBottomCarousel] = useState<CarouselItem[]>([]);
 
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<any[]>([]);
@@ -79,16 +80,28 @@ export default function EComScreen({ navigation }: any) {
       try {
         const res = await getCarousels();
         setTopCarousel(
-          res.data.shop.topCarousel.map((img: any) => ({ uri: img.imageUrl })),
+          res.data.shop.topCarousel.map((img: any) => ({
+            uri: img.imageUrl,
+            type: img.type,
+            group: 'shop',
+            navigateTo: img.screenName || 'DefaultScreen',
+          })),
         );
+
         setMiddleCarousel(
           res.data.shop.middleCarousel.map((img: any) => ({
             uri: img.imageUrl,
+            type: img.type,
+            group: 'shop',
+            navigateTo: img.screenName || 'DefaultScreen',
           })),
         );
         setBottomCarousel(
           res.data.shop.bottomCarousel.map((img: any) => ({
             uri: img.imageUrl,
+            type: img.type,
+            group: 'shop',
+            navigateTo: img.screenName || 'DefaultScreen',
           })),
         );
       } catch (error) {

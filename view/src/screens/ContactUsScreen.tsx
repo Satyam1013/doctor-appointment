@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -13,6 +14,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { useUser } from '../contexts/UserContext';
 import {
@@ -153,6 +155,37 @@ export default function ContactUsScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [meetLink, setMeetLink] = useState('');
   const { user } = useUser();
+
+  const videoRefs = useRef<(Video | null)[]>([]);
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+
+  const handlePlayPause = async (index: number) => {
+    const currentRef = videoRefs.current[index];
+    if (!currentRef) return;
+
+    const status = await currentRef.getStatusAsync();
+
+    if ('isLoaded' in status && status.isLoaded) {
+      if (status.isPlaying) {
+        await currentRef.pauseAsync();
+        setPlayingIndex(null);
+      } else {
+        // Pause all others
+        await Promise.all(
+          videoRefs.current.map(async (ref, i) => {
+            if (ref && i !== index) {
+              const s = await ref.getStatusAsync();
+              if ('isLoaded' in s && s.isLoaded && s.isPlaying) {
+                await ref.pauseAsync();
+              }
+            }
+          }),
+        );
+        await currentRef.playAsync();
+        setPlayingIndex(index);
+      }
+    }
+  };
 
   const handleJoinClick = async () => {
     try {
@@ -515,15 +548,17 @@ export default function ContactUsScreen() {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ gap: 12, paddingHorizontal: 12 }}
-          renderItem={({ item }) => (
-            <Video
-              source={item}
-              style={styles.videoItem}
-              resizeMode={ResizeMode.CONTAIN}
-              isLooping
-              isMuted
-              shouldPlay
-            />
+          renderItem={({ item, index }) => (
+            <TouchableWithoutFeedback onPress={() => handlePlayPause(index)}>
+              <Video
+                ref={(ref) => (videoRefs.current[index] = ref)}
+                source={item}
+                style={styles.videoItem}
+                resizeMode={ResizeMode.CONTAIN}
+                isLooping
+                useNativeControls
+              />
+            </TouchableWithoutFeedback>
           )}
         />
       </View>
