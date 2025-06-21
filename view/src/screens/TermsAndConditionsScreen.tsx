@@ -32,11 +32,11 @@ export default function TermsAndConditionsScreen() {
         ))}
 
         <View style={styles.section}>
-          <Text style={styles.heading}>12. Contact Information</Text>
+          <Text style={styles.heading}>13. Contact Information</Text>
           <Text style={styles.paragraph}>
             <Text style={styles.bold}>mydent Pvt Ltd{'\n'}</Text>
             VM Steel Project S.O, Pragati Maidan, Pivot Building, AMTZ Campus,
-            Visakhapatnam, Andhra Pradesh 530031{'\n\n'}
+            Visakhapatnam, Andhra Pradesh 530031{'\n'}
             <Text style={styles.bold}>Customer Support:</Text> +91 9849492909
             {'\n'}
             <Text style={styles.bold}>Email:</Text> support@mydent.in{'\n'}
@@ -133,6 +133,39 @@ const sections = [
     title: '11. Jurisdiction',
     content:
       'All disputes will be subject to the exclusive jurisdiction of courts located in Visakhapatnam, Andhra Pradesh.',
+  },
+  {
+    title: '12. Clear Aligners – Direct-to-Consumer (D2C) Specific Terms',
+    content: [
+      "By availing Mydent's clear aligner services directly as a customer (D2C model), you acknowledge and agree to the following additional terms:",
+      '\n**a. Diagnosis & Planning**\n' +
+        'The treatment plan will be created based on the 3D scans, X-rays, and photos submitted or captured at our scanning centers.\n' +
+        'Treatment plans are approved or modified by registered orthodontists/dentists before fabrication.\n' +
+        'Customers must provide truthful and accurate medical/dental history. Failure to disclose may impact treatment results and Mydent holds no liability in such cases.',
+      '\n**b. Eligibility for Treatment**\n' +
+        'Not all customers are eligible for aligner treatment. After diagnosis, if you are found unsuitable (e.g. complex skeletal cases, untreated caries, periodontal disease), you will be notified and refunded accordingly.',
+      '\n**c. Aligner Delivery and Use**\n' +
+        'Aligners are custom-manufactured and shipped in batches to the registered delivery address.\n' +
+        'Users must strictly follow the prescribed wear schedule and care instructions provided by Mydent.\n' +
+        'Delays in treatment progress due to non-compliance, breakage, or skipping wear time will not be the responsibility of Mydent.',
+      '\n**d. Remote Monitoring and Support**\n' +
+        'Virtual follow-ups may be scheduled using video consultation tools (e.g., Google Meet).\n' +
+        'Progress tracking will be aided through periodic photo submissions or in-app features.\n' +
+        'In-person follow-up may be required in certain cases, and additional visits will be chargeable.',
+      '\n**e. Replacements and Refinements**\n' +
+        'Aligner replacements due to damage or loss will incur additional charges.\n' +
+        'One refinement (minor correction) may be offered at no additional cost if clinically justified and requested within 30 days of final aligner usage.\n' +
+        'Further refinements or re-treatment will be chargeable.',
+      '\n**f. Results & Guarantees**\n' +
+        'Results vary based on compliance and biological response. Mydent does not guarantee 100% outcome as seen in digital simulations.\n' +
+        'Mydent is not liable for relapse or dissatisfaction arising from non-compliance or lack of post-treatment retention (retainers).',
+      '\n**g. Retainers**\n' +
+        'Retainers are not included unless explicitly stated in the treatment plan package.\n' +
+        'It is the customer’s responsibility to use retainers post-treatment to maintain alignment.',
+      '\n**h. Refund & Cancellation (Aligner Orders)**\n' +
+        'Once the treatment plan is approved and aligner fabrication begins, cancellation is not permitted.\n' +
+        'No refund will be processed for partial usage or dissatisfaction unless a manufacturing defect is proven.',
+    ],
   },
 ];
 

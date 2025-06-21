@@ -236,25 +236,17 @@ const MyDentAlignersScreen = () => {
 
           {/* Rows */}
           {[
+            ['Conveniently removable during meals and brushing', true, false],
+            ['Virtually invisible for a discreet look', true, false],
+            ['No dietary limitations — enjoy your favorite foods', true, false],
             [
-              'Easily removable while eating, drinking or even brushing',
+              'Simple to maintain oral hygiene — brush and floss with ease!',
               true,
               false,
             ],
-            ['Invisible to the eyes', true, false],
-            [
-              'No restrictions on food. you can eat anything you want!',
-              true,
-              false,
-            ],
-            [
-              'Easy to maintain good oral hygiene. you can brush & floss, everyday!',
-              true,
-              false,
-            ],
-            ['Frequent clinic visits', false, true],
-            ['Comfort', true, false],
-            ['Faster results (6–8 months)', true, false],
+            ['Requires fewer dental appointments', true, false],
+            ['Offers a more comfortable experience', true, false],
+            ['Delivers quicker results (typically 6–8 months)', true, false],
           ].map(([perk, clear, braces], index) => (
             <View key={index} style={styles.row}>
               <Text style={[styles.cell, { flex: 2 }]}>{perk}</Text>
