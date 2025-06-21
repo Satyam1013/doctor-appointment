@@ -68,6 +68,36 @@ const MyDentAlignersScreen = () => {
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const videoRefs = useRef<(Video | null)[]>([]);
 
+  const videoSteps = [
+    {
+      title: 'At - mydent Centre',
+      description:
+        'Schedule a convenient at-homescan or visit one of our 100+ expert centers for a scan and consultation with an orthodontis',
+      step: '01',
+      video: videos[2],
+    },
+    {
+      title: 'At - your residence',
+      description: 'Start your treatment as soon as your aligners arrive.',
+      step: '02',
+      video: videos[3],
+    },
+    {
+      title: 'Insert and access',
+      description:
+        'Put on your aligners and track your treatment via our app with professional support every step of the way',
+      step: '03',
+      video: videos[1],
+    },
+    {
+      title: 'Celebrate your smile',
+      description:
+        'Complete your smile journey and preserve your perfect results with retainer',
+      step: '04',
+      video: videos[0],
+    },
+  ];
+
   const scrollRef = useRef<ScrollView>(null);
 
   useFocusEffect(
@@ -120,7 +150,6 @@ const MyDentAlignersScreen = () => {
         await currentRef.pauseAsync();
         setPlayingIndex(null);
       } else {
-        // Pause others
         await Promise.all(
           videoRefs.current.map(async (ref, i) => {
             if (ref && i !== index) {
@@ -131,7 +160,6 @@ const MyDentAlignersScreen = () => {
             }
           }),
         );
-
         await currentRef.playAsync();
         setPlayingIndex(index);
       }
@@ -301,41 +329,9 @@ const MyDentAlignersScreen = () => {
         <Text style={styles.title}>
           Your path to a stunning smile using clear aligners
         </Text>
-        {[
-          {
-            title: 'At - mydent Centre',
-            description:
-              'Schedule a convenient at-homescan or visit one of our 100+ expert centers for a scan and consultation with an orthodontis',
-            step: '01',
-            video: videos[2],
-          },
-          {
-            title: 'At - your residence',
-            description:
-              'Start your treatment as soon as your aligners arrive.',
-            step: '02',
-            video: videos[3],
-          },
-          {
-            title: 'Insert and access',
-            description:
-              'Put on your aligners and track your treatment via our app with professional support every step of the way',
-            step: '03',
-            video: videos[1],
-          },
-          {
-            title: 'Celebrate your smile',
-            description:
-              'Complete your smile journey and preserve your perfect results with retainer',
-            step: '04',
-            video: videos[0],
-          },
-        ].map((item, index) => (
+        {videoSteps.map((item, index) => (
           <View key={index} style={styles.videoStepContainer}>
-            <TouchableWithoutFeedback
-              key={index}
-              onPress={() => handlePlayPause(index)}
-            >
+            <TouchableWithoutFeedback onPress={() => handlePlayPause(index)}>
               <Video
                 ref={(ref) => (videoRefs.current[index] = ref)}
                 source={item.video}
