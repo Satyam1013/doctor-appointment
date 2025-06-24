@@ -693,7 +693,7 @@ export default function ContactUsScreen() {
             <Text style={styles.linkText}>support@mydent.com</Text>
 
             <Text style={[styles.linkText, { marginTop: 10 }]}>Mobile:</Text>
-            <Text style={styles.linkText}>+91 9381590963</Text>
+            <Text style={styles.linkText}>+9 19381590963</Text>
           </View>
         </View>
 

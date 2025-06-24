@@ -123,7 +123,7 @@ export class CentersService {
     };
   }) {
     return this.centersModel.updateOne(
-      { cityName },
+      { cityName: new RegExp(`^${cityName}$`, 'i') },
       { $push: { services: service } },
     );
   }

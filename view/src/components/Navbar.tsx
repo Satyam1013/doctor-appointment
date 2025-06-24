@@ -1,11 +1,5 @@
 import React, { useState, useContext } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useUser } from '../contexts/UserContext';
 import { AuthContext } from '../contexts/AuthContext';
@@ -75,24 +69,16 @@ export default function Navbar() {
             contentStyle={{ backgroundColor: 'white', marginTop: 6 }}
             anchorPosition="bottom"
           >
-            <Menu.Item
-              onPress={handleProfile}
-              title="My Profile"
-              titleStyle={{ color: '#000' }}
-            />
-            <Menu.Item
-              onPress={handleLogout}
-              title="Logout"
-              titleStyle={{ color: '#000' }}
-            />
+            <Menu.Item onPress={handleProfile} title="My Profile" />
+            <Menu.Item onPress={handleLogout} title="Logout" />
           </Menu>
         </View>
       </View>
 
-      {/* Search Bar Section */}
-      <View style={styles.searchRow}>
+      {/* Filter and Cart Row */}
+      <View style={styles.actionRow}>
         <TouchableOpacity
-          style={styles.filterButton}
+          style={styles.iconButton}
           onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
         >
           <MaterialCommunityIcons
@@ -102,33 +88,32 @@ export default function Navbar() {
           />
         </TouchableOpacity>
 
-        <View style={styles.searchContainer}>
-          <Ionicons
-            name="search-outline"
-            size={18}
-            color="#777"
-            style={styles.searchIcon}
-          />
-          <TextInput
-            placeholder="Search for products and services"
-            style={styles.input}
-            placeholderTextColor="#777"
-          />
-          <Ionicons name="mic-outline" size={18} color="#777" />
-        </View>
-
         <TouchableOpacity
-          style={styles.cartButton}
+          style={styles.iconButton}
           onPress={() => navigation.navigate('CartScreen')}
         >
           <Ionicons name="cart-outline" size={22} color="#4CAF50" />
         </TouchableOpacity>
+      </View>
+
+      {/* Banner Image */}
+      <View style={styles.imageContainer}>
+        <Image
+          source={{ uri: 'https://i.ibb.co/ycLp6sDq/mydent.jpg' }}
+          style={styles.logoImage}
+          resizeMode="cover"
+        />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  navbarWrapper: {
+    backgroundColor: '#fff',
+    zIndex: 1000,
+    elevation: 10,
+  },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -141,16 +126,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  menuWrapper: {
-    zIndex: 1000,
-    elevation: 10, // for Android
-  },
-  navbarWrapper: {
-    position: 'relative',
-    zIndex: 1000,
-    elevation: 10, // important for Android
-    backgroundColor: '#fff', // helps visually stack above
-  },
   location: {
     fontSize: 11,
     color: '#1e90ff',
@@ -159,43 +134,37 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  menuWrapper: {
+    zIndex: 1000,
+    elevation: 10,
+  },
   icon: {
     marginHorizontal: 4,
   },
-  searchRow: {
+  actionRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 12,
-    marginBottom: 8,
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+    paddingBottom: 8,
   },
-  filterButton: {
-    padding: 8,
-  },
-  searchContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    paddingHorizontal: 8,
-    height: 40,
-    marginHorizontal: 6,
-  },
-  searchIcon: {
-    marginRight: 6,
-  },
-  input: {
-    flex: 1,
-    paddingVertical: 4,
-    fontSize: 14,
-    color: '#000',
-  },
-  cartButton: {
+  iconButton: {
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 8,
     padding: 6,
+  },
+  imageContainer: {
+    width: '100%',
+    paddingHorizontal: 12,
+    marginBottom: 12,
+    marginTop: -50,
+    marginLeft: 85,
+  },
+
+  logoImage: {
+    width: 200,
+    height: undefined,
+    aspectRatio: 1080 / 289,
+    borderRadius: 10,
   },
 });
