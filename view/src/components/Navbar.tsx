@@ -99,7 +99,9 @@ export default function Navbar() {
       {/* Banner Image */}
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: 'https://i.ibb.co/ycLp6sDq/mydent.jpg' }}
+          source={{
+            uri: 'https://i.ibb.co/vx6zzjFK/mydent-removebg-preview.png',
+          }}
           style={styles.logoImage}
           resizeMode="cover"
         />
@@ -110,7 +112,7 @@ export default function Navbar() {
 
 const styles = StyleSheet.create({
   navbarWrapper: {
-    backgroundColor: '#fff',
+    backgroundColor: '#E9F9FA',
     zIndex: 1000,
     elevation: 10,
   },
