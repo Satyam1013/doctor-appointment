@@ -156,17 +156,18 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   imageContainer: {
+    position: 'absolute',
+    top: 15,
     width: '100%',
-    paddingHorizontal: 12,
-    marginBottom: 12,
-    marginTop: -50,
-    marginLeft: 85,
+    alignItems: 'center',
+    zIndex: -1,
   },
 
   logoImage: {
-    width: 200,
+    width: 240,
     height: undefined,
     aspectRatio: 1080 / 289,
     borderRadius: 10,
+    opacity: 0.95, // optional
   },
 });

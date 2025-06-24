@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useState } from 'react';
 import {
@@ -22,7 +18,6 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export default function SmilePreview() {
   const [ageConfirmed, setAgeConfirmed] = useState(false);
-  const [marketingConsent, setMarketingConsent] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleSelfie = async () => {
@@ -99,16 +94,6 @@ export default function SmilePreview() {
           </Text>
         </View>
 
-        <View style={styles.switchRow}>
-          <Switch
-            value={marketingConsent}
-            onValueChange={setMarketingConsent}
-          />
-          <Text style={styles.switchText}>
-            I agree to receive information about MyDent products and offers
-          </Text>
-        </View>
-
         <TouchableOpacity
           style={[
             styles.button,
@@ -130,10 +115,6 @@ export default function SmilePreview() {
           <Image source={{ uri: selectedImage }} style={styles.uploadedImage} />
         )}
 
-        {/* Scrollable Mydent Slider */}
-        <Text style={[styles.heading, { marginTop: 24, marginBottom: 8 }]}>
-          Can you tell who has Mydent on?
-        </Text>
         <ScrollView
           horizontal
           pagingEnabled
