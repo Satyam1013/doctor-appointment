@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
@@ -19,14 +18,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import type { ComponentProps } from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-// ✅ Grab the correct type for icon names
 type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 const PaymentScreen = () => {
   const route = useRoute();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const { amount } = route.params as { amount: number };
-  const [upi, setUpi] = useState('');
   const [selectedUpiApp, setSelectedUpiApp] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -38,27 +35,23 @@ const PaymentScreen = () => {
   ];
 
   const handlePayment = async () => {
-    const amountInPaise = amount * 100;
-
-    if (!upi || !upi.includes('@')) {
-      Alert.alert('Invalid UPI ID', 'Please enter a valid UPI ID.');
-      return;
-    }
-
     try {
       setLoading(true);
-      const { id: order_id, amount } = await createOrder(amountInPaise, upi);
+      const { id: order_id, amount: orderAmount } = await createOrder(amount);
 
       const options: any = {
         name: 'Mydent',
         description: 'Dental Product Purchase',
         currency: 'INR',
-        amount,
+        amount: orderAmount,
         order_id,
         key: 'yfUqsbfAGKQkXC4w6agUSs66',
         prefill: {
-          email: 'user@example.com',
-          contact: '9999999999',
+          email: 'shaikfarhat79@gmail.com',
+          contact: '9849492909',
+        },
+        method: {
+          upi: true,
         },
         theme: { color: '#F7D449' },
       };
@@ -85,15 +78,13 @@ const PaymentScreen = () => {
             payment_id: paymentData.razorpay_payment_id,
             signature: paymentData.razorpay_signature,
           });
+
           console.log('✨ ~ verifyRes:', verifyRes);
 
-          // ✅ Show success alert
           Alert.alert(
             '✅ Payment Successful',
             'Transaction verified successfully.',
           );
-
-          // ✅ Navigate to success screen
           navigation.navigate('BookingSuccessScreen');
         })
         .catch((error: any) => {
@@ -114,7 +105,7 @@ const PaymentScreen = () => {
   }: {
     label: string;
     offer?: string;
-    iconName: IconName; // ✅ Use the correct type
+    iconName: IconName;
   }) => (
     <View style={styles.methodCard}>
       <View style={styles.methodIconPlaceholder}>
@@ -134,14 +125,7 @@ const PaymentScreen = () => {
         <Text style={styles.header}>Select Payment Method</Text>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>UPI ID</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your UPI ID"
-            value={upi}
-            onChangeText={setUpi}
-            keyboardType="email-address"
-          />
+          <Text style={styles.sectionTitle}>Preferred UPI App</Text>
           <View style={styles.upiRow}>
             {upiApps.map((app) => (
               <TouchableOpacity
@@ -252,15 +236,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 12,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    backgroundColor: '#fff',
-    marginBottom: 16,
-  },
   upiRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -287,7 +262,6 @@ const styles = StyleSheet.create({
     color: '#aaa',
   },
   footer: {
-    // position: 'absolute',
     bottom: 0,
     padding: 16,
     backgroundColor: '#fff',

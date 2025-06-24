@@ -9,14 +9,13 @@ export class PaymentsService {
     private readonly userService: UserService,
   ) {}
 
-  async createOrder(amount: number, upiId: string) {
+  async createOrder(amount: number) {
     const order = await this.razorpayService.createOrder(amount);
     return {
       success: true,
       orderId: order.id,
       amount: order.amount,
       currency: order.currency,
-      upiId,
       key_id: process.env.RAZORPAY_KEY_ID,
     };
   }

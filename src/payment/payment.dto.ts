@@ -5,9 +5,6 @@ export class CreateOrderDto {
   amount!: number;
 
   @IsString()
-  upiId!: string;
-
-  @IsString()
   upiApp?: string; // Optional: gpay, phonepe, etc.
 }
 export class VerifyPaymentDto {

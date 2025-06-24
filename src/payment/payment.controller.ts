@@ -15,7 +15,7 @@ export class PaymentsController {
   @UseGuards(JwtAuthGuard)
   @Post('create-order')
   createOrder(@Body() dto: CreateOrderDto) {
-    return this.paymentsService.createOrder(dto.amount, dto.upiId);
+    return this.paymentsService.createOrder(dto.amount);
   }
 
   @UseGuards(JwtAuthGuard)

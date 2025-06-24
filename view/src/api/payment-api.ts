@@ -16,11 +16,9 @@ interface VerifyPaymentPayload {
 
 export const createOrder = async (
   amount: number,
-  upiId: string,
 ): Promise<CreateOrderResponse> => {
   const response = await axiosClient.post('/payments/create-order', {
     amount,
-    upiId,
   });
   return response.data;
 };
