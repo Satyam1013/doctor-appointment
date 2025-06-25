@@ -237,9 +237,17 @@ export default function ContactUsScreen() {
     const fetchContactData = async () => {
       try {
         const res = await getContactUs();
-        const videoData = res.data[0];
-        if (videoData?.videos?.length > 0) {
-          const sources = videoData.videos.map((url: string) => ({ uri: url }));
+        const allVideos: string[] = [];
+
+        // Flatten all videos from all documents
+        res.data.forEach((doc: any) => {
+          if (doc.videos && Array.isArray(doc.videos)) {
+            allVideos.push(...doc.videos);
+          }
+        });
+
+        if (allVideos.length > 0) {
+          const sources = allVideos.map((url) => ({ uri: url }));
           setVideos(sources);
         }
       } catch (err) {

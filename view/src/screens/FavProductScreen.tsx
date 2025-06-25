@@ -13,8 +13,8 @@ import {
 } from 'react-native';
 import ProductCard from '../components/ProductCard';
 import { getFavorites } from '../api/fav-api';
-import { addToCart } from '../api/cart-api';
 import { useCart } from '../contexts/CartContext';
+import { addToCart } from '../api/cart-api';
 
 type FavoriteItem = {
   _id: string;
@@ -41,7 +41,6 @@ const removeDuplicateProducts = (items: FavoriteItem[]): FavoriteItem[] => {
 const FavProductScreen = () => {
   const [favoriteProducts, setFavoriteProducts] = useState<FavoriteItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const { getQuantityFromCart } = useCart();
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -64,16 +63,11 @@ const FavProductScreen = () => {
     product: FavoriteItem['product'],
     quantity: number,
   ) => {
-    // Update both backend and context
     addToCart(product._id, quantity);
-    addToCartContext({
-      _id: product._id,
-      name: product.title, // or product.name if available
-      title: product.title,
-      price: 100, // ❗You must pass real price here
-      images: '', // ❗real image URL
-      quantity,
-    });
+    Alert.alert(
+      'Added to Cart',
+      `$New product added with quantity ${quantity}`,
+    );
   };
 
   const handleToggleFavorite = (productId: string, newState: boolean) => {
@@ -118,7 +112,6 @@ const FavProductScreen = () => {
             style={{ width: itemWidth }}
             onAddToCart={handleAddToCart}
             onToggleFavorite={handleToggleFavorite}
-            initialQuantity={getQuantityFromCart(item.product._id)} // ✅ Pass it here
           />
         )}
         showsVerticalScrollIndicator={false}
