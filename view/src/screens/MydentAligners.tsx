@@ -118,7 +118,7 @@ const MyDentAlignersScreen = () => {
             uri: img.imageUrl,
             type: img.type,
             group: 'home',
-            tab: img.tabName || 'HomeTabs',
+            tab: img.tabName || 'Home',
             navigateTo: img.screenName || 'DefaultScreen',
           })),
         );

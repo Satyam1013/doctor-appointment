@@ -84,6 +84,7 @@ export default function EComScreen({ navigation }: any) {
             uri: img.imageUrl,
             type: img.type,
             group: 'shop',
+            tab: img.tabName || 'Home',
             navigateTo: img.screenName || 'DefaultScreen',
           })),
         );
@@ -93,6 +94,7 @@ export default function EComScreen({ navigation }: any) {
             uri: img.imageUrl,
             type: img.type,
             group: 'shop',
+            tab: img.tabName || 'Home',
             navigateTo: img.screenName || 'DefaultScreen',
           })),
         );
@@ -101,6 +103,7 @@ export default function EComScreen({ navigation }: any) {
             uri: img.imageUrl,
             type: img.type,
             group: 'shop',
+            tab: img.tabName || 'Home',
             navigateTo: img.screenName || 'DefaultScreen',
           })),
         );
