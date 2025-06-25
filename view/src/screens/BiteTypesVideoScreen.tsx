@@ -25,6 +25,7 @@ export default function BiteTypeVideosScreen() {
   const { title } = route.params as { title: string };
 
   const [carousel, setCarousel] = useState<CarouselItem[]>([]);
+  console.log('✨ ~ carousel:', carousel);
   const [videos, setVideos] = useState<string[]>([]);
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const videoRefs = useRef<(Video | null)[]>([]);
@@ -34,10 +35,10 @@ export default function BiteTypeVideosScreen() {
       try {
         const res = await getCarousels();
         setCarousel(
-          res.data.home.biteTypeCarousel.map((img: any) => ({
+          res.data.biteTypeCarousel.map((img: any) => ({
             uri: img.imageUrl,
             type: img.type,
-            group: 'biteType',
+            group: 'bite-type',
             navigateTo: img.screenName || 'DefaultScreen',
           })),
         );
