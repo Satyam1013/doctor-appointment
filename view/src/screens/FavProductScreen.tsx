@@ -9,38 +9,49 @@ import {
   StyleSheet,
   ActivityIndicator,
   Dimensions,
+  Alert,
 } from 'react-native';
 import ProductCard from '../components/ProductCard';
 import { getFavorites } from '../api/fav-api';
+import { addToCart } from '../api/cart-api';
+import { useCart } from '../contexts/CartContext';
 
 type FavoriteItem = {
   _id: string;
   userId: string;
   product: {
     _id: string;
-    name: string;
-    title: string;
-    price: number;
-    originalPrice?: number;
-    images: string[] | string;
-    bestSeller?: boolean;
+    quantity: number;
   };
 };
 
 const screenWidth = Dimensions.get('window').width;
-const itemWidth = screenWidth / 2 - 20; // adjusts for margin/padding
+const itemWidth = screenWidth / 2 - 20;
+
+const removeDuplicateProducts = (items: FavoriteItem[]): FavoriteItem[] => {
+  const uniqueMap = new Map<string, FavoriteItem>();
+  items.forEach((item) => {
+    if (!uniqueMap.has(item.product._id)) {
+      uniqueMap.set(item.product._id, item);
+    }
+  });
+  return Array.from(uniqueMap.values());
+};
 
 const FavProductScreen = () => {
   const [favoriteProducts, setFavoriteProducts] = useState<FavoriteItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const { getQuantityFromCart } = useCart();
 
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
         const favorites = await getFavorites();
-        setFavoriteProducts(favorites.data);
+        const uniqueFavorites = removeDuplicateProducts(favorites.data);
+        setFavoriteProducts(uniqueFavorites);
       } catch (err) {
         console.error('Failed to load favorite products:', err);
+        Alert.alert('Error', 'Unable to fetch favorites.');
       } finally {
         setLoading(false);
       }
@@ -49,8 +60,20 @@ const FavProductScreen = () => {
     fetchFavorites();
   }, []);
 
-  const handleAddToCart = () => {
-    // Add cart logic
+  const handleAddToCart = (
+    product: FavoriteItem['product'],
+    quantity: number,
+  ) => {
+    // Update both backend and context
+    addToCart(product._id, quantity);
+    addToCartContext({
+      _id: product._id,
+      name: product.title, // or product.name if available
+      title: product.title,
+      price: 100, // ❗You must pass real price here
+      images: '', // ❗real image URL
+      quantity,
+    });
   };
 
   const handleToggleFavorite = (productId: string, newState: boolean) => {
@@ -95,6 +118,7 @@ const FavProductScreen = () => {
             style={{ width: itemWidth }}
             onAddToCart={handleAddToCart}
             onToggleFavorite={handleToggleFavorite}
+            initialQuantity={getQuantityFromCart(item.product._id)} // ✅ Pass it here
           />
         )}
         showsVerticalScrollIndicator={false}

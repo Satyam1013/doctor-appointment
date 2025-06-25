@@ -21,7 +21,6 @@ export default function Navbar() {
 
   const handleProfile = () => {
     closeMenu();
-    navigation.navigate('Profile');
   };
 
   const handleLogout = () => {
