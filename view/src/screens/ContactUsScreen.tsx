@@ -1142,7 +1142,7 @@ const styles = StyleSheet.create({
   },
   uploadText: {
     fontSize: 14,
-    color: 'blue',
+    color: '#00AEEF',
   },
   viewText: {
     fontSize: 14,

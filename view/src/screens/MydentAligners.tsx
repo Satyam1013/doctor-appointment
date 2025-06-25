@@ -407,6 +407,9 @@ const MyDentAlignersScreen = () => {
         <View style={[styles.separator, { marginTop: 16 }]} />
         {faqs.map((faq, index) => (
           <View key={index} style={styles.item}>
+            {/* Add line above all FAQs except the first */}
+            {index !== 0 && <View style={styles.separator} />}
+
             <TouchableOpacity
               onPress={() => toggleFAQ(index)}
               activeOpacity={0.8}
@@ -427,11 +430,10 @@ const MyDentAlignersScreen = () => {
             {activeIndex === index && (
               <Text style={styles.answer}>{faq.answer}</Text>
             )}
-            {/* Horizontal line after each FAQ */}
-            <View style={styles.separator} />
           </View>
         ))}
       </View>
+
       {/* CTA */}
       <Text style={styles.ctaText}>Ready to Start Your Smile Journey?</Text>
       <TouchableOpacity
@@ -551,6 +553,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     margin: 16,
     backgroundColor: '#fff',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#e0e0e0',
+    marginVertical: 12,
   },
   item: {
     marginBottom: 12,
@@ -713,10 +720,7 @@ const styles = StyleSheet.create({
   tableHeader: {
     fontWeight: 'bold',
   },
-  separator: {
-    height: 1,
-    marginVertical: 8,
-  },
+
   highlightRed: {
     color: '#D32F2F',
   },

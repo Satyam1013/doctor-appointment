@@ -110,7 +110,6 @@ export const treatmentData = [
       'https://i.ibb.co/qMKJ4swC/img9.png',
       'https://i.ibb.co/cSpP4jfw/img10.png',
       'https://i.ibb.co/MKLNptP/img11.png',
-      'https://i.ibb.co/433gn0g/img12.png',
     ],
   },
   {
@@ -204,7 +203,6 @@ export const treatmentData = [
       'https://i.ibb.co/rGtjHdCp/img5.png',
       'https://i.ibb.co/d0JyM6zL/img6.png',
       'https://i.ibb.co/Fk5GGpR5/img7.png',
-      'https://i.ibb.co/433gn0g/img12.png',
     ],
   },
   {
@@ -313,7 +311,6 @@ export const treatmentData = [
       'https://i.ibb.co/jvpwcvN9/img8.png',
       'https://i.ibb.co/qMKJ4swC/img9.png',
       'https://i.ibb.co/MKLNptP/img11.png',
-      'https://i.ibb.co/433gn0g/img12.png',
     ],
   },
   {
@@ -511,7 +508,6 @@ export const treatmentData = [
       'https://i.ibb.co/zWg1BVVs/img2.png',
       'https://i.ibb.co/fVJSzsj3/img3.png',
       'https://i.ibb.co/Qj3MV9rc/img4.png',
-      'https://i.ibb.co/433gn0g/img12.png',
     ],
   },
   {

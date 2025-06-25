@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   View,
   Text,
@@ -40,7 +39,6 @@ export default function TeethTreatmentScreen() {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>{data.title}</Text>
-
       {/* Intro Section */}
       <Section title={`What are ${routeKey}?`}>
         <Text style={styles.paragraph}>{data.intro.description}</Text>
@@ -50,7 +48,6 @@ export default function TeethTreatmentScreen() {
           </Text>
         ))}
       </Section>
-
       {/* Intro Illustration Image */}
       {data.images[0] && (
         <Image
@@ -59,7 +56,6 @@ export default function TeethTreatmentScreen() {
           resizeMode="contain"
         />
       )}
-
       {/* Symptoms Image */}
       {data.images[1] && (
         <Image
@@ -68,7 +64,6 @@ export default function TeethTreatmentScreen() {
           resizeMode="cover"
         />
       )}
-
       {/* Why Treat */}
       <Section title={`Why should you correct ${routeKey}?`}>
         {data.whyTreat.map((why, idx) => (
@@ -77,7 +72,6 @@ export default function TeethTreatmentScreen() {
           </Text>
         ))}
       </Section>
-
       {/* Aligners Image */}
       {data.images[2] && (
         <Image
@@ -86,7 +80,6 @@ export default function TeethTreatmentScreen() {
           resizeMode="cover"
         />
       )}
-
       {/* Journey / Process */}
       <Section title="How it Works – Your Smile Makeover Journey">
         {data.treatments.children.map((step, idx) => (
@@ -95,7 +88,6 @@ export default function TeethTreatmentScreen() {
           </Text>
         ))}
       </Section>
-
       {/* Aligner Demo Image */}
       {data.images[3] && (
         <Image
@@ -104,7 +96,6 @@ export default function TeethTreatmentScreen() {
           resizeMode="cover"
         />
       )}
-
       {/* Cost */}
       <Section title={`Cost of ${routeKey} treatment`}>
         {data.cost.map((costItem, idx) => (
@@ -113,7 +104,6 @@ export default function TeethTreatmentScreen() {
           </Text>
         ))}
       </Section>
-
       {/* Mydent Highlights */}
       <Section title={data.mydentHighlight.title}>
         {data.mydentHighlight.points.map((point, idx) => (
@@ -122,7 +112,6 @@ export default function TeethTreatmentScreen() {
           </Text>
         ))}
       </Section>
-
       {/* FAQs */}
       <Section title={`FAQs about ${routeKey}`}>
         {/* Horizontal line after Section title */}
@@ -160,20 +149,13 @@ export default function TeethTreatmentScreen() {
       </Section>
 
       {/* Gallery */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ marginVertical: 10 }}
-      >
-        {data.images.slice(4).map((img: any, idx) => (
-          <Image
-            key={idx}
-            source={img}
-            style={styles.galleryImage}
-            resizeMode="cover"
-          />
-        ))}
-      </ScrollView>
+      <View style={{ marginTop: -20 }}>
+        <Image
+          source={{ uri: 'https://i.ibb.co/433gn0g/img12.png' }}
+          style={styles.galleryImage}
+          resizeMode="cover"
+        />
+      </View>
     </ScrollView>
   );
 }

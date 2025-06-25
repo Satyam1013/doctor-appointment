@@ -156,14 +156,14 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     position: 'absolute',
-    top: 15,
+    top: 30,
     width: '100%',
     alignItems: 'center',
     zIndex: -1,
   },
 
   logoImage: {
-    width: 240,
+    width: 180,
     height: undefined,
     aspectRatio: 1080 / 289,
     borderRadius: 10,
