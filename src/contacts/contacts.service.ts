@@ -29,4 +29,18 @@ export class ContactUsService {
     const result = await this.contactUsModel.findByIdAndDelete(id).exec();
     if (!result) throw new NotFoundException('Contact entry not found');
   }
+
+  async removeVideo(videoUrl: string): Promise<ContactUs> {
+    const updated = await this.contactUsModel.findOneAndUpdate(
+      { videos: videoUrl }, // find a document containing the video
+      { $pull: { videos: videoUrl } }, // remove the video from array
+      { new: true },
+    );
+
+    if (!updated) {
+      throw new NotFoundException('Video not found in any document');
+    }
+
+    return updated;
+  }
 }

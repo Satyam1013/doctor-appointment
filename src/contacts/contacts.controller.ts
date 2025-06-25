@@ -5,6 +5,9 @@ import {
   Body,
   UseInterceptors,
   UploadedFiles,
+  Delete,
+  Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
@@ -44,5 +47,14 @@ export class ContactUsController {
   @Get()
   async getAllTestimonials() {
     return this.service.findAll();
+  }
+
+  @Delete('remove-video')
+  async deleteVideo(@Query('url') videoUrl: string) {
+    if (!videoUrl) {
+      throw new BadRequestException('Video URL is required');
+    }
+
+    return this.service.removeVideo(videoUrl);
   }
 }
