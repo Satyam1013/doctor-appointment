@@ -85,9 +85,10 @@ export default function TeethIssueSelectionScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Which teeth issue is bothering you?</Text>
+      <Text style={styles.header}>What's Your Teeth Concern?</Text>
       <Text style={styles.subText}>
-        Help us understand your case better to guide you on this journey.
+        Let us know your issue so we can guide you with the right treatment
+        plan.
       </Text>
 
       <FlatList

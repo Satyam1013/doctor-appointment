@@ -38,8 +38,7 @@ export default function AvailabilityScreen({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>
-        Would you be available in India or your current location for entire
-        treatment duration?
+        Will You Be in India or Your Current Location Throughout the Treatment?
       </Text>
 
       <View style={styles.optionsContainer}>

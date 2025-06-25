@@ -45,9 +45,9 @@ export default function AgeSelectionScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Please select your age</Text>
+      <Text style={styles.header}>Select Your Age</Text>
       <Text style={styles.subText}>
-        This is to check if aligners are suitable for your age
+        We ask this to ensure aligners are appropriate for your age group.
       </Text>
 
       <FlatList

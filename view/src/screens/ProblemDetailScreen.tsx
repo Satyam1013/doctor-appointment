@@ -34,10 +34,10 @@ export default function ProblemDetailScreen({ navigation }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>share your problem in detail</Text>
+      <Text style={styles.header}>Describe Your Problem in Detail</Text>
       <Text style={styles.subText}>
-        share your concerns or problems in detail which will help our doctors to
-        guide you more effectively
+        Sharing your concerns helps our doctors understand your case better and
+        offer the most effective guidance.
       </Text>
 
       <TextInput

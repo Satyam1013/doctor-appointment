@@ -1,5 +1,3 @@
-// Carousel.tsx
-
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
@@ -17,6 +15,7 @@ interface CarouselProps {
     uri: string;
     type: string;
     group: string;
+    tab?: string;
     navigateTo: string;
   }[];
 }
@@ -43,8 +42,12 @@ export default function Carousel({ images }: CarouselProps) {
     return () => clearInterval(interval);
   }, [currentIndex, images.length]);
 
-  const handlePress = (screen: string) => {
-    if (screen) {
+  const handlePress = (tab?: string, screen?: string) => {
+    if (!screen) return;
+
+    if (tab) {
+      navigation.navigate(tab, { screen });
+    } else {
       navigation.navigate(screen);
     }
   };
@@ -61,7 +64,7 @@ export default function Carousel({ images }: CarouselProps) {
       >
         {images.map((img, idx) => (
           <View key={idx} style={styles.imageWrapper}>
-            <Pressable onPress={() => handlePress(img.navigateTo)}>
+            <Pressable onPress={() => handlePress(img.tab, img.navigateTo)}>
               <Image source={{ uri: img.uri }} style={styles.image} />
             </Pressable>
           </View>

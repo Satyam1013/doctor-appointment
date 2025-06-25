@@ -55,7 +55,7 @@ export default function MedicalHistoryScreen({ navigation }: any) {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.header}>
-          Please select if you have any history of any of the following:
+          Do You Have a History of Any of the Following?
         </Text>
 
         {options.map((option, index) => (

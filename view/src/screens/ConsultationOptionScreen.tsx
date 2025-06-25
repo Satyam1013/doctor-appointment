@@ -19,10 +19,12 @@ export default function ConsultationOptionScreen({ navigation }: any) {
           }}
           style={styles.image}
         />
-        <Text style={styles.title}>Consult with our Doctor</Text>
+        <Text style={styles.title}>Talk to Our Expert Doctor First</Text>
         <Text style={styles.desc}>
-          Before your scan or 3D impression, our doctor will consult with you on
-          video call and guide you on your treatment plan
+          Before beginning your scan or 3D impression, you'll have a video
+          consultation with our doctor. During this session, the doctor will
+          assess your case and provide personalized guidance on the best
+          treatment plan for your smile transformation.
         </Text>
         <View style={styles.footer}>
           <Text style={styles.price}>₹ 199</Text>
