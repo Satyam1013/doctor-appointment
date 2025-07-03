@@ -29,17 +29,17 @@
 
 ## 🖼️ Screenshots
 
-| Educational Journey | Appointment Booking | Treatment Steps |
+| Appointment Booking | Treatment Steps |
 |---------------------|---------------------|-----------------|
-| ![mydent1](https://i.ibb.co/HpYxfMdm/mydent1.png) | ![mydent2](https://i.ibb.co/0VKL0TbQ/mydent2.png) | ![mydent3](https://i.ibb.co/vxrGcN6s/mydent3.png) |
+| ![mydent2](https://i.ibb.co/0VKL0TbQ/mydent2.png) | ![mydent3](https://i.ibb.co/vxrGcN6s/mydent3.png) |
 
-| E-commerce | Virtual Monitoring | Shop Section |
+| E-commerce | Virtual Monitoring | Mydent AI |
 |------------|--------------------|--------------|
-| ![mydent4](https://i.ibb.co/4R0x177p/mydent4.png) | ![mydent5](https://i.ibb.co/21RB1P34/mydent5.png) | ![mydent6](https://i.ibb.co/2YmdkZv8/mydent6.png) |
+| ![mydent4](https://i.ibb.co/4R0x177p/mydent4.png) | ![mydent1](https://i.ibb.co/HpYxfMdm/mydent1.png) | ![mydent6](https://i.ibb.co/2YmdkZv8/mydent6.png) |
 
 | Product View | Cart | Blog/Info Center |
 |--------------|------|------------------|
-| ![mydent7](https://i.ibb.co/YTN5yzpd/mydent7.png) | ![mydent8](https://i.ibb.co/fYbpT1tH/mydent8.png) | ![mydent9](https://i.ibb.co/YFKXYXB2/mydent9.png) |
+| ![mydent7](https://i.ibb.co/YTN5yzpd/mydent7.png) | ![mydent8](https://i.ibb.co/fYbpT1tH/mydent8.png) | ![mydent5](https://i.ibb.co/21RB1P34/mydent5.png) |
 
 | 🏠 Home Screen |
 |---------------|
