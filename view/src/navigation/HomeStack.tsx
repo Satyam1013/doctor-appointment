@@ -168,10 +168,10 @@ export default function HomeStack() {
         name="TransformationBlogDetailsScreen"
         component={withAppShell(TransformationBlogDetailsScreen)}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="ClinicMap"
         component={withAppShell(ClinicMapScreen)}
-      /> */}
+      />
       <Stack.Screen
         name="TreatmentInfoScreen"
         component={withAppShell(TreatmentInfoScreen)}
