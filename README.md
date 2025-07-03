@@ -31,23 +31,19 @@
 
 | 🏠 Home Screen |
 |-----------------|
-| ![Home](https://i.ibb.co/C3qbhRrP/home.png) |
+| <img src="https://i.ibb.co/C3qbhRrP/home.png" width="250"/> |
 
 | Appointment Booking | Video Consultation |
 |---------------------|--------------------|
-| ![Appointment Booking](https://i.ibb.co/HLnMfSrj/payment.png) | ![Video Consultation](https://i.ibb.co/ptyyLzN/video-consultation.png) |
+| <img src="https://i.ibb.co/HLnMfSrj/payment.png" width="250"/> | <img src="https://i.ibb.co/ptyyLzN/video-consultation.png" width="250"/> |
 
 | E-commerce | Product View | Mydent AI |
 |------------|--------------|-----------|
-| ![Product View](https://i.ibb.co/DfbVySjr/product-details.png) | ![E-commerce](https://i.ibb.co/4ZBBKP58/product-detail.png) | ![Mydent AI](https://i.ibb.co/jv0gnW9p/mydent-ai.png) |
+| <img src="https://i.ibb.co/4ZBBKP58/product-detail.png" width="250"/> | <img src="https://i.ibb.co/DfbVySjr/product-details.png" width="250"/> | <img src="https://i.ibb.co/jv0gnW9p/mydent-ai.png" width="250"/> |
 
 | Patient Form | Why MyDent is Better | Contact & Appointment |
 |--------------|----------------------|-----------------------|
-| ![Cart](https://i.ibb.co/rKT8t42R/patient-form.png) | ![Why MyDent is Better](https://i.ibb.co/7xVXqtn9/why-mydent-is-better-table.png) | ![Contact](https://i.ibb.co/whRZR13p/doctor-appointment-contact-us.png) |
-
-
-
-
+| <img src="https://i.ibb.co/rKT8t42R/patient-form.png" width="250"/> | <img src="https://i.ibb.co/7xVXqtn9/why-mydent-is-better-table.png" width="250"/> | <img src="https://i.ibb.co/whRZR13p/doctor-appointment-contact-us.png" width="250"/> |
 
 ---
 
