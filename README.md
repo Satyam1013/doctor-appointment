@@ -64,4 +64,4 @@
 git clone https://github.com/your-username/mydent.git
 cd mydent
 npm install
-npx expo start
+npx expo start --tunnel
