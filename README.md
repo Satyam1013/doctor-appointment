@@ -29,21 +29,21 @@
 
 ## 🖼️ Screenshots
 
-| Appointment Booking | Treatment Steps |
-|---------------------|---------------------|-----------------|
-| ![mydent2](https://i.ibb.co/0VKL0TbQ/mydent2.png) | ![mydent3](https://i.ibb.co/vxrGcN6s/mydent3.png) |
+| Virtual Monitoring | Appointment Booking | Video Consultation |
+|---------------------|---------------------|--------------------|
+| ![Virtual Monitoring](https://i.ibb.co/ptyyLzN/video-consultation.png) | ![Appointment Booking](https://i.ibb.co/HLnMfSrj/payment.png) | ![Video Consultation](https://i.ibb.co/ptyyLzN/video-consultation.png) |
 
-| E-commerce | Virtual Monitoring | Mydent AI |
-|------------|--------------------|--------------|
-| ![mydent4](https://i.ibb.co/4R0x177p/mydent4.png) | ![mydent1](https://i.ibb.co/HpYxfMdm/mydent1.png) | ![mydent6](https://i.ibb.co/2YmdkZv8/mydent6.png) |
+| E-commerce | Mydent AI | Mydent Centers |
+|------------|-----------|----------------|
+| ![E-commerce](https://i.ibb.co/4ZBBKP58/product-detail.png) | ![Mydent AI](https://i.ibb.co/jv0gnW9p/mydent-ai.png) | ![Mydent Centers](https://i.ibb.co/Nd6cyMWs/mydent-centers.png) |
 
-| Product View | Cart | Blog/Info Center |
-|--------------|------|------------------|
-| ![mydent7](https://i.ibb.co/YTN5yzpd/mydent7.png) | ![mydent8](https://i.ibb.co/fYbpT1tH/mydent8.png) | ![mydent5](https://i.ibb.co/21RB1P34/mydent5.png) |
+| Product View | Cart | Why MyDent is Better |
+|--------------|------|----------------------|
+| ![Product View](https://i.ibb.co/DfbVySjr/product-details.png) | ![Cart](https://i.ibb.co/rKT8t42R/patient-form.png) | ![Why MyDent is Better](https://i.ibb.co/7xVXqtn9/why-mydent-is-better-table.png) |
 
-| 🏠 Home Screen |
-|---------------|
-| ![mydent-home](https://i.ibb.co/4HmVGP0/mydent.png) |
+| Contact & Appointment | 🏠 Home Screen |
+|-----------------------|----------------|
+| ![Contact](https://i.ibb.co/whRZR13p/doctor-appointment-contact-us.png) | ![Home](https://i.ibb.co/C3qbhRrP/home.png) |
 
 ---
 
