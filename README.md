@@ -31,15 +31,15 @@
 
 | 🏠 Home Screen | Appointment Booking | Video Consultation |
 |-----------------|---------------------|--------------------|
-| <img src="https://i.ibb.co/C3qbhRrP/home.png" width="250"/> | <img src="https://i.ibb.co/HLnMfSrj/payment.png" width="250"/> | <img src="https://i.ibb.co/ptyyLzN/video-consultation.png" width="250"/> |
+| <img src="https://i.ibb.co/C3qbhRrP/home.png" width="250" height="500"/> | <img src="https://i.ibb.co/HLnMfSrj/payment.png" width="250" height="500"/> | <img src="https://i.ibb.co/ptyyLzN/video-consultation.png" width="250" height="500"/> |
 
 | E-commerce | Product View | Mydent AI |
 |------------|--------------|-----------|
-| <img src="https://i.ibb.co/4ZBBKP58/product-detail.png" width="250"/> | <img src="https://i.ibb.co/DfbVySjr/product-details.png" width="250"/> | <img src="https://i.ibb.co/jv0gnW9p/mydent-ai.png" width="250"/> |
+| <img src="https://i.ibb.co/4ZBBKP58/product-detail.png" width="250" height="500"/> | <img src="https://i.ibb.co/DfbVySjr/product-details.png" width="250" height="500"/> | <img src="https://i.ibb.co/jv0gnW9p/mydent-ai.png" width="250" height="500"/> |
 
 | Patient Form | Why MyDent is Better | Contact & Appointment |
 |--------------|----------------------|-----------------------|
-| <img src="https://i.ibb.co/rKT8t42R/patient-form.png" width="250"/> | <img src="https://i.ibb.co/7xVXqtn9/why-mydent-is-better-table.png" width="250"/> | <img src="https://i.ibb.co/whRZR13p/doctor-appointment-contact-us.png" width="250"/> |
+| <img src="https://i.ibb.co/rKT8t42R/patient-form.png" width="250" height="500"/> | <img src="https://i.ibb.co/7xVXqtn9/why-mydent-is-better-table.png" width="250" height="500"/> | <img src="https://i.ibb.co/whRZR13p/doctor-appointment-contact-us.png" width="250" height="500"/> |
 
 ---
 
