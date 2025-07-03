@@ -29,9 +29,9 @@
 
 ## 🖼️ Screenshots
 
-| Virtual Monitoring | Appointment Booking | Video Consultation |
-|---------------------|---------------------|--------------------|
-| ![Virtual Monitoring](https://i.ibb.co/ptyyLzN/video-consultation.png) | ![Appointment Booking](https://i.ibb.co/HLnMfSrj/payment.png) | ![Video Consultation](https://i.ibb.co/ptyyLzN/video-consultation.png) |
+| Appointment Booking | Video Consultation |
+|---------------------|--------------------|
+| ![Appointment Booking](https://i.ibb.co/HLnMfSrj/payment.png) | ![Video Consultation](https://i.ibb.co/ptyyLzN/video-consultation.png) |
 
 | E-commerce | Mydent AI | Mydent Centers |
 |------------|-----------|----------------|
