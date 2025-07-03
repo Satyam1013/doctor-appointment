@@ -491,7 +491,7 @@ export default function ContactUsScreen() {
               style={styles.noAppointmentImage}
             />
             <Text style={styles.noAppointmentText}>
-              No appointment scheduled
+              No appointment scheduled for today
             </Text>
             <TouchableOpacity style={styles.bookButton}>
               <Text style={styles.bookButtonText}>Book an Appointment</Text>
@@ -515,13 +515,10 @@ export default function ContactUsScreen() {
               <Text style={styles.expertName}>{item.name}</Text>
             </View>
           ))}
-
-          {doctorTeams.length === 0 && (
-            <View style={styles.noAppointmentText}>
-              No Doctors Team Assigned
-            </View>
-          )}
         </ScrollView>
+        {doctorTeams.length === 0 && (
+          <Text style={styles.noAppointmentText}>No Doctors Team Assigned</Text>
+        )}
 
         <Text style={[styles.sectionTitle, { marginTop: 16 }]}>
           Schedule Appointments
@@ -538,6 +535,12 @@ export default function ContactUsScreen() {
             </View>
           </View>
         ))}
+
+        {doctorTeams.length === 0 && (
+          <Text style={styles.noAppointmentText}>
+            No Appointments scheduled
+          </Text>
+        )}
       </View>
       {/* 5. Video Section */}
       <View style={styles.videoStepContainer}>
@@ -870,7 +873,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#65B300', // Matches your image's green heading
     marginBottom: 12,
   },
   timelineContainer: {

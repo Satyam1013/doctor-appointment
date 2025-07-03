@@ -40,12 +40,14 @@ import LoginScreen from '../screens/Login';
 import BiteTypeVideosScreen from '../screens/BiteTypesVideoScreen';
 import TeethWhiteningScreen from '../screens/TeethWhiteningScreen';
 import ClinicMapScreen from '../screens/ClinicMapScreen';
+import WelcomeVideoScreen from '../screens/WelcomeScreen';
 
 const Stack = createNativeStackNavigator();
 
 export default function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="WelcomeVideoScreen" component={WelcomeVideoScreen} />
       <Stack.Screen name="Home" component={withAppShell(HomeScreen)} />
       <Stack.Screen
         name="BookingSuccessScreen"
@@ -166,10 +168,10 @@ export default function HomeStack() {
         name="TransformationBlogDetailsScreen"
         component={withAppShell(TransformationBlogDetailsScreen)}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="ClinicMap"
         component={withAppShell(ClinicMapScreen)}
-      />
+      /> */}
       <Stack.Screen
         name="TreatmentInfoScreen"
         component={withAppShell(TreatmentInfoScreen)}
