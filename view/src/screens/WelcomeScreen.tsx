@@ -18,7 +18,7 @@ const WelcomeVideoScreen = ({ navigation }: any) => {
       } else {
         navigation.replace('Login');
       }
-    }, 4000); // fallback in case video callback doesn't trigger
+    }, 4000);
 
     return () => clearTimeout(timeout);
   }, [token]);
@@ -28,7 +28,7 @@ const WelcomeVideoScreen = ({ navigation }: any) => {
       <Video
         ref={video}
         source={require('../../assets/welcome.mp4')}
-        style={styles.video}
+        style={StyleSheet.absoluteFillObject}
         shouldPlay
         isLooping={false}
         resizeMode={ResizeMode.CONTAIN}
@@ -51,14 +51,9 @@ const WelcomeVideoScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  video: {
-    width: 300,
-    height: 300,
-    borderRadius: 16,
   },
 });
 
