@@ -15,14 +15,14 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.satyam786.mydent"
     },
     "web": {
       "bundler": "metro",
       "favicon": "./assets/images/favicon.png"
     },
     "entryPoint": "./App.tsx",
-
     "plugins": [
       [
         "expo-splash-screen",
@@ -33,6 +33,12 @@
           "backgroundColor": "#ffffff"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6c5ab38f-f574-4592-855a-e9f44fdd3ecd"
+      }
+    },
+    "owner": "satyam786"
   }
 }
